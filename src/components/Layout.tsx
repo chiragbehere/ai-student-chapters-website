@@ -95,50 +95,63 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </main>
 
       {/* Footer */}
-      <footer className="glass-panel border-t border-border py-16 mt-20 relative overflow-hidden">
-        {/* Subtle glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-secondary/50 to-transparent" />
+      <footer className="glass-panel border-t border-border py-12 md:py-16 mt-12 md:mt-20 relative overflow-hidden">
+        {/* Subtle glow aligned left */}
+        <div className="absolute top-0 left-0 w-full md:w-[600px] h-[1px] bg-gradient-to-r from-secondary/50 to-transparent" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <img src="/images/club-logo.png" alt="AI Student Chapters Logo" className="h-10 w-10 opacity-80" style={{ filter: 'drop-shadow(0 0 12px rgba(0,240,255,0.4))' }} />
-            <h2 className="font-heading font-bold text-2xl">
-              <span className="grad-text">AI Student Chapters</span>
-            </h2>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-start text-left">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-8 md:mb-12 border-b border-white/5 pb-10 md:pb-12">
+            
+            {/* Brand Column */}
+            <div className="col-span-1 sm:col-span-2 flex flex-col items-start space-y-4">
+              <div className="flex items-center gap-3">
+                <img src="/images/club-logo.png" alt="AI Student Chapters Logo" className="h-8 w-8 opacity-80" style={{ filter: 'drop-shadow(0 0 12px rgba(0,240,255,0.4))' }} />
+                <h2 className="font-heading font-bold text-xl md:text-2xl tracking-tight">
+                  <span className="grad-text">AI Student Chapters</span>
+                </h2>
+              </div>
+              <p className="text-foreground/50 font-body text-sm max-w-sm leading-relaxed">
+                Igniting innovation through Artificial Intelligence. Built for students, by students. RCPIMRD.
+              </p>
+            </div>
+
+            {/* Quick Links Vertical */}
+            <div className="flex flex-col items-start space-y-4 w-full">
+              <h3 className="text-white font-bold tracking-wider text-xs uppercase">Quick Links</h3>
+              <ul className="flex flex-col space-y-3">
+                {links.map((link) => (
+                  <li key={link.path}>
+                    <Link to={link.path} className="text-foreground/60 hover:text-white hover:translate-x-1 inline-block transition-all duration-300 text-sm font-medium">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Socials & Connect Vertical */}
+            <div className="flex flex-col items-start space-y-4 w-full">
+              <h3 className="text-white font-bold tracking-wider text-xs uppercase">Connect</h3>
+              <a href="mailto:imrdaistudentclub@gmail.com" className="text-foreground/60 hover:text-white transition-colors text-sm break-all">
+                imrdaistudentclub@gmail.com
+              </a>
+              <div className="flex items-center gap-3 pt-2">
+                <a href="https://www.instagram.com/ai.student_chapters/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-foreground/60 hover:text-secondary hover:border-secondary/30 hover:bg-secondary/10 transition-all duration-300">
+                  <Camera size={16} />
+                </a>
+                <a href="mailto:imrdaistudentclub@gmail.com" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-foreground/60 hover:text-primary hover:border-primary/30 hover:bg-primary/10 transition-all duration-300">
+                  <Mail size={16} />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-foreground/60 hover:text-accent hover:border-accent/30 hover:bg-accent/10 transition-all duration-300">
+                  <Briefcase size={16} />
+                </a>
+              </div>
+            </div>
+
           </div>
-          <p className="text-foreground/50 text-sm mb-2 font-body">RCPIMRD</p>
-          <a href="mailto:imrdaistudentclub@gmail.com" className="text-secondary/80 hover:text-secondary text-sm transition-colors">
-            imrdaistudentclub@gmail.com
-          </a>
 
-          <p className="text-foreground/60 mt-6 mb-8 font-body max-w-lg mx-auto text-sm">
-            Igniting the spark of innovation through Artificial Intelligence. Built for students, by students.
-          </p>
-
-          {/* Social Links */}
-          <div className="flex justify-center gap-4 mb-8">
-            <a href="https://www.instagram.com/ai.student_chapters" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-foreground/60 hover:text-secondary hover:border-secondary/30 hover:bg-secondary/5 transition-all duration-300">
-              <Camera size={20} />
-            </a>
-            <a href="mailto:imrdaistudentclub@gmail.com" className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-foreground/60 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300">
-              <Mail size={20} />
-            </a>
-            <a href="#" className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-foreground/60 hover:text-accent hover:border-accent/30 hover:bg-accent/5 transition-all duration-300">
-              <Briefcase size={20} />
-            </a>
-          </div>
-
-          {/* Footer Nav */}
-          <div className="flex flex-wrap justify-center gap-6 mb-8">
-            {links.map((link) => (
-              <Link key={link.path} to={link.path} className="text-foreground/40 hover:text-secondary transition-colors text-sm font-medium uppercase tracking-wider">
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          <div className="pt-8 border-t border-white/5 text-foreground/30 text-xs font-body">
-            © 2024–{new Date().getFullYear()} AI Student Chapters, RCPIMRD. All rights reserved.
+          <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-foreground/30 text-xs font-body">
+            <p>© {new Date().getFullYear()} AI Student Chapters, RCPIMRD. All rights reserved.</p>
           </div>
         </div>
       </footer>
