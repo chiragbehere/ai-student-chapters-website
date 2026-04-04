@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 240, 255, 0.3) rgba(255, 255, 255, 0.03);
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 240, 255, 0.3);
+    border-radius: 4px;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased font-body;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+
+  ::selection {
+    background: rgba(0, 240, 255, 0.25);
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-[#151520] border border-white/5;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .grad-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, #00f0ff, #9d00ff, #ff003c);
+    background-size: 200%;
+    animation: gradShift 5s linear infinite;
+  }
+}
+
+/* =====================================================
+   DYNAMIC ANIMATED BACKGROUND
+===================================================== */
+.bg-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: #0a0a0f;
+  overflow: hidden;
+}
+
+/* Animated gradient orbs */
+.bg-mesh::before {
+  content: '';
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  top: -200px;
+  left: -200px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, transparent 60%);
+  animation: orbDrift1 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.bg-mesh::after {
+  content: '';
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  bottom: -150px;
+  right: -150px;
+  background: radial-gradient(circle, rgba(157, 0, 255, 0.12) 0%, transparent 60%);
+  animation: orbDrift2 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Third orb via box-shadow trick on mesh */
+.bg-orb-accent {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 0, 60, 0.06) 0%, transparent 60%);
+  animation: orbDrift3 25s ease-in-out infinite;
+  z-index: -2;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Subtle grid pattern overlay */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+}
+
+/* Animated noise grain */
+.bg-noise {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
+
+@keyframes orbDrift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(150px, 100px) scale(1.2); }
+  50% { transform: translate(300px, 50px) scale(0.9); }
+  75% { transform: translate(100px, 200px) scale(1.1); }
+}
+
+@keyframes orbDrift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-120px, -80px) scale(1.15); }
+  50% { transform: translate(-200px, -150px) scale(0.85); }
+  75% { transform: translate(-60px, -200px) scale(1.05); }
+}
+
+@keyframes orbDrift3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  33% { transform: translate(-30%, -60%) scale(1.3); }
+  66% { transform: translate(-70%, -40%) scale(0.8); }
+}
+
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+
+/* Gradient text animation */
+@keyframes gradShift {
+  0% { background-position: 0%; }
+  100% { background-position: 200%; }
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Glow pulse */
+@keyframes glowPulse {
+  0% {
+    filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.4)) drop-shadow(0 0 40px rgba(157, 0, 255, 0.2));
+  }
+  100% {
+    filter: drop-shadow(0 0 40px rgba(0, 240, 255, 0.7)) drop-shadow(0 0 80px rgba(157, 0, 255, 0.45));
+  }
+}
+
+/* Ticker scroll */
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Pulse dot */
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* =====================================================
+   MOBILE RESPONSIVENESS OVERRIDES
+===================================================== */
+
+/* Ensure all content fits on mobile */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2.2rem !important;
+    line-height: 1.15 !important;
+  }
+
+  h2 {
+    font-size: 1.6rem !important;
+  }
+
+  /* Reduce section padding on mobile */
+  section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  /* Fix ticker overflow */
+  .ticker-overflow-fix {
+    overflow: hidden;
+  }
+
+  /* Reduce orb sizes on mobile for performance */
+  .bg-mesh::before {
+    width: 400px;
+    height: 400px;
+  }
+  .bg-mesh::after {
+    width: 350px;
+    height: 350px;
+  }
+  .bg-orb-accent {
+    width: 250px;
+    height: 250px;
+  }
+
+  /* Glass panels tighter padding */
+  .glass-panel {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Fix for very small screens */
+@media (max-width: 380px) {
+  h1 {
+    font-size: 1.8rem !important;
+  }
+
+  h2 {
+    font-size: 1.4rem !important;
+  }
+}
