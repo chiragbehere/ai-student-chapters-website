@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
 import SmoothScroll from './components/SmoothScroll';
 import ChatbotWidget from './components/ChatbotWidget';
+import WhatsAppWidget from './components/WhatsAppWidget';
 import Home from './pages/Home';
 
 // Lazy-load all non-home pages for faster initial load
@@ -131,6 +132,7 @@ function App() {
           </ErrorBoundary>
         </Layout>
         <ChatbotWidget />
+        <WhatsAppWidget />
       </SmoothScroll>
     </Router>
   );

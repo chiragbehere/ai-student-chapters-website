@@ -54,7 +54,7 @@ const ChatbotWidget = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20, delay: 1 }}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 w-14 h-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center z-50 hover:scale-110 active:scale-95 transition-transform duration-300 ${isOpen ? 'hidden' : 'flex'} group`}
+        className={`fixed bottom-[5.5rem] right-6 w-14 h-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center z-50 hover:scale-[1.05] active:scale-95 transition-transform duration-300 ${isOpen ? 'hidden' : 'flex'} group`}
         aria-label="Open Chat"
       >
         <MessageCircle size={26} className="group-hover:animate-pulse" />
@@ -73,7 +73,7 @@ const ChatbotWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9, transition: { duration: 0.2 } }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="fixed bottom-6 right-6 w-[90vw] sm:w-[380px] h-[600px] max-h-[80vh] bg-card border border-border/20 shadow-2xl rounded-2xl flex flex-col overflow-hidden z-50 backdrop-blur-xl"
+            className="fixed bottom-[5.5rem] right-6 w-[90vw] sm:w-[380px] h-[600px] max-h-[75vh] bg-card border border-border/20 shadow-2xl rounded-2xl flex flex-col overflow-hidden z-[60] backdrop-blur-xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 bg-primary/10 border-b border-border/10">
