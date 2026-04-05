@@ -1,72 +1,43 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Users, Zap, Rocket, Handshake, Trophy, TrendingUp, BookOpen } from 'lucide-react';
+import { ArrowRight, Users, Zap, Rocket, Trophy, Calendar, Info, Star, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const stats = [
-    { label: 'Active Members', value: '30+', icon: <Users size={24} className="text-secondary" /> },
-    { label: 'Hackathon', value: '1', icon: <Zap size={24} className="text-primary" /> },
-    { label: 'Workshops', value: '5+', icon: <BookOpen size={24} className="text-accent" /> },
-  ];
-
-  const highlights = [
-    { icon: <Rocket size={24} />, label: 'Innovation', color: 'text-secondary' },
-    { icon: <Handshake size={24} />, label: 'Community', color: 'text-primary' },
-    { icon: <Trophy size={24} />, label: 'Competitions', color: 'text-accent' },
-    { icon: <TrendingUp size={24} />, label: 'Growth', color: 'text-green-400' },
-  ];
-
-  const testimonials = [
-    {
-      text: "Joining AI Student Chapters was the best decision I made in college. The hackathons gave me real project experience that landed my first internship.",
-      name: "Chirag Behere",
-      batch: "2nd Year • IMCA",
-      initial: "C",
-      gradient: "from-secondary to-primary",
-    },
-    {
-      text: "The workshops here are on another level — real tools, real projects, and mentors who actually know what they're talking about.",
-      name: "Tejas Panchbhai",
-      batch: "4th Year • IMCA",
-      initial: "T",
-      gradient: "from-accent to-primary",
-    },
-  ];
-
   const tickerItems = [
-    'Hackathons', 'Competitions', 'Workshops', 'AI', 'Code-Carnival',
-    'Prompt Engineering', 'Events', 'Training', 'Team Work', 'Vibe Coding'
+    '🔥 Hackathons', '🤖 AI', '⚡ Code-Carnival', '🧠 Prompt Engineering',
+    '🎯 Events', '💻 Workshops', '🤝 Team Work', '✨ Vibe Coding', '🚀 Innovation'
   ];
 
   return (
-    <div className="w-full relative">
+    <div className="w-full relative min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Badge */}
+      <section className="relative pt-28 pb-16 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+          
+          {/* Floating badge */}
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-secondary/20 bg-secondary/5 text-secondary font-medium text-sm tracking-wide"
+            transition={{ duration: 0.6, type: "spring" }}
+            className="pill bg-primary/10 text-primary border border-primary/20 mb-8 flex items-center gap-2"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
             RCPIMRD • Est. 2025
           </motion.div>
 
           {/* Logo */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="flex justify-center mb-8"
+            transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+            className="flex justify-center mb-6"
           >
             <img
               src="/images/club-logo.png"
               alt="AI Chapters Logo"
-              className="w-28 h-28 md:w-40 md:h-40 object-contain"
+              className="w-24 h-24 md:w-32 md:h-32 object-contain"
               style={{
-                filter: 'drop-shadow(0 0 30px rgba(0,240,255,0.55)) drop-shadow(0 0 60px rgba(157,0,255,0.35))',
+                filter: 'drop-shadow(0 0 25px rgba(168,85,247,0.45)) drop-shadow(0 0 50px rgba(56,189,248,0.25))',
                 animation: 'float 5s ease-in-out infinite, glowPulse 3s ease-in-out infinite alternate',
               }}
             />
@@ -74,52 +45,48 @@ const Home = () => {
 
           {/* Title */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center max-w-4xl mx-auto"
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-center max-w-3xl"
           >
-            <p className="text-xs md:text-sm font-medium tracking-[0.15em] uppercase text-foreground/40 mb-4">Welcome to</p>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black font-heading leading-tight mb-6 text-foreground">
+            <h1 className="text-5xl md:text-7xl font-black font-heading leading-[1.1] mb-4 text-white">
               <span className="grad-text">AI Student</span><br />Chapters
             </h1>
-            <p className="text-lg md:text-xl text-foreground/70 mb-10 leading-relaxed font-body max-w-2xl mx-auto">
-              Innovation-driven student community exploring the frontiers of Artificial Intelligence — through building, competing & growing together.
+            <p className="text-base md:text-lg text-foreground/60 mb-8 leading-relaxed font-body max-w-xl mx-auto">
+              The coolest student community exploring AI — we learn, we build, we compete, and we grow together 💜
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                to="/events"
-                className="bg-gradient-to-r from-secondary via-primary to-accent text-white px-8 py-4 rounded-xl font-bold font-heading transition-all hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:-translate-y-0.5 flex items-center gap-2 w-full sm:w-auto justify-center"
-              >
-                Explore Events <ArrowRight size={20} />
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <a
                 href="https://chat.whatsapp.com/IfBOfK4bE7l1D0N5C9KXYv"
                 target="_blank"
                 rel="noreferrer"
-                className="border border-white/20 text-white px-8 py-4 rounded-xl font-medium font-heading transition-all hover:bg-white/5 hover:-translate-y-0.5 w-full sm:w-auto justify-center text-center"
+                className="genz-btn-primary w-full sm:w-auto flex items-center justify-center gap-2"
               >
-                Join Network
+                Join us on WhatsApp 🚀
               </a>
+              <Link
+                to="/sessions"
+                className="genz-btn-outline w-full sm:w-auto"
+              >
+                View Sessions →
+              </Link>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Marquee Ticker */}
-      <div className="py-4 border-y border-border bg-background/50 overflow-hidden relative z-10 w-full">
-        {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-        <div className="flex whitespace-nowrap gap-10 items-center" style={{ animation: 'tickerScroll 25s linear infinite' }}>
+      <div className="py-3 border-y border-white/[0.04] bg-card/30 overflow-hidden relative z-10 w-full mb-12">
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        <div className="flex whitespace-nowrap gap-8 items-center" style={{ animation: 'tickerScroll 30s linear infinite' }}>
           {[1, 2].map((set) => (
-            <div key={set} className="flex gap-10 items-center font-heading font-bold text-foreground/30 uppercase tracking-widest text-lg">
+            <div key={set} className="flex gap-8 items-center font-heading font-semibold text-foreground/25 text-sm">
               {tickerItems.map((item, i) => (
-                <span key={`${set}-${i}`} className="flex items-center gap-10">
-                  <span>{item}</span>
-                  <span className="text-secondary/30 text-sm">•</span>
+                <span key={`${set}-${i}`} className="hover:text-foreground/50 transition-colors cursor-default">
+                  {item}
                 </span>
               ))}
             </div>
@@ -127,183 +94,165 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Featured Event Banner */}
-      <section className="py-12 relative z-10">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="glass-panel rounded-2xl p-6 md:p-8 relative overflow-hidden border-green-500/20"
-          >
-            {/* Top accent line */}
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-green-400 via-secondary to-primary" />
-
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/25 text-green-400 text-xs font-bold tracking-wider uppercase mb-4">
-              ✅ Event Completed
-            </div>
-            <h3 className="text-xl md:text-2xl font-bold font-heading mb-2">Code-Carnival Hackathon</h3>
-            <p className="text-foreground/60 text-sm md:text-base mb-4">
-              The 6-hour build sprint was a massive success! 33 participants competed across UG & PG categories.
-            </p>
-            <Link
-              to="/events"
-              className="inline-flex items-center gap-2 text-secondary font-heading font-medium hover:gap-3 transition-all text-sm"
-            >
-              View Results <ArrowRight size={16} />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Highlights Grid */}
-      <section className="py-12 relative z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {highlights.map((h, idx) => (
-              <motion.div
-                key={h.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="glass-panel rounded-2xl p-6 text-center hover:bg-white/5 hover:-translate-y-1 transition-all duration-300 cursor-default group"
-              >
-                <div className={`${h.color} mb-3 flex justify-center transition-transform duration-300 group-hover:scale-110`} style={{ animation: `float ${4 + idx * 0.5}s ease-in-out infinite alternate` }}>
-                  {h.icon}
-                </div>
-                <span className="text-sm font-semibold text-foreground/80">{h.label}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats + Featured Card Section */}
-      <section className="py-20 relative z-10 border-t border-border bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Big feature card */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="lg:col-span-2 glass-panel rounded-2xl p-8 lg:p-12 hover:border-white/20 transition-all flex flex-col justify-end relative overflow-hidden group"
-            >
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-secondary via-primary to-accent opacity-50" />
-              <div className="relative z-10 max-w-lg mt-8 pt-8">
-                <div className="inline-flex px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold uppercase tracking-wider mb-4">
-                  Completed
-                </div>
-                <h3 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-foreground">Code Carnival Hackathon</h3>
-                <p className="text-foreground/70 font-body mb-6 text-lg">Over 30+ participants executed a 6-hour build sprint. A display of rapid prototyping and technical excellence.</p>
-                <Link to="/events" className="font-heading font-medium text-secondary flex items-center gap-2 hover:gap-4 transition-all w-fit">
-                  View Results <ArrowRight size={18} />
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Stats cards */}
-            <div className="grid grid-cols-1 gap-6">
-              {stats.map((stat, idx) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, x: 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="glass-panel p-6 rounded-2xl border-l-[3px] flex items-center gap-6 hover:border-white/20 transition-all"
-                  style={{ borderLeftColor: idx === 0 ? '#00f0ff' : idx === 1 ? '#ff003c' : '#9d00ff' }}
-                >
-                  <div className="p-4 bg-background rounded-xl border border-white/5">
-                    {stat.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-black font-heading mb-1">{stat.value}</h3>
-                    <p className="text-xs uppercase tracking-widest text-foreground/50 font-bold">{stat.label}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 relative z-10 border-t border-border">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-xs font-bold tracking-wider uppercase mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-secondary" style={{ animation: 'pulseDot 1.5s infinite' }} />
-              Member Voices
-            </div>
-            <h2 className="text-3xl md:text-4xl font-black font-heading text-white">What Members Say</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {testimonials.map((t, idx) => (
-              <motion.div
-                key={t.name}
-                initial={{ opacity: 0, x: idx === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="glass-panel rounded-2xl p-8 hover:border-white/20 transition-all relative overflow-hidden"
-              >
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-secondary to-primary opacity-0 hover:opacity-100 transition-opacity" />
-                <div className="relative pl-5 mb-6">
-                  <span className="absolute left-0 top-0 text-3xl text-secondary font-heading leading-none">"</span>
-                  <p className="text-foreground/70 font-body italic leading-relaxed">{t.text}</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center text-white font-bold text-sm shadow-lg`}>
-                    {t.initial}
-                  </div>
-                  <div>
-                    <div className="font-heading font-bold text-sm text-white">{t.name}</div>
-                    <div className="text-xs text-foreground/40">{t.batch}</div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 relative z-10">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
+      {/* Bento Grid Architecture */}
+      <section className="relative z-10 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
+          
+          {/* Main Hero Card — Code Carnival (Spans 2x2) */}
+          <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="rounded-3xl p-10 md:p-14 text-center relative overflow-hidden"
-            style={{
-              background: 'linear-gradient(135deg, rgba(157,0,255,0.18), rgba(255,0,60,0.12))',
-              border: '1px solid rgba(157,0,255,0.25)',
-              boxShadow: '0 0 60px rgba(157,0,255,0.2)',
-            }}
+            className="md:col-span-2 md:row-span-2 glass-panel p-8 relative overflow-hidden group card-hover flex flex-col justify-end"
           >
-            <div className="absolute top-[-40%] left-[-20%] w-[140%] h-[180%] bg-[radial-gradient(ellipse,rgba(157,0,255,0.1)_0%,transparent_65%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute top-6 right-6 opacity-[0.08] group-hover:opacity-[0.15] transition-opacity duration-500 pointer-events-none">
+              <Zap size={120} className="text-primary" />
+            </div>
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-xs font-bold tracking-wider uppercase mb-6">
-                🏆 Results Out
+              <div className="pill bg-lime/10 text-lime border border-lime/20 w-fit mb-4">
+                ✅ Completed
               </div>
-              <h2 className="text-3xl md:text-4xl font-black font-heading text-white mb-4">Code-Carnival Complete! 🎉</h2>
-              <p className="text-foreground/60 font-body mb-8 max-w-lg mx-auto">
-                The hackathon was a huge success! Check out the winners and their amazing projects.
+              <h2 className="text-3xl md:text-4xl font-black font-heading tracking-tight mb-2 text-white">Code-Carnival</h2>
+              <p className="text-foreground/50 text-sm mb-6 max-w-sm">
+                33+ builders competed in our flagship 6-hour AI hackathon sprint. It was epic! 🔥
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/events" className="bg-gradient-to-r from-secondary via-primary to-accent text-white px-8 py-4 rounded-xl font-bold font-heading transition-all hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:-translate-y-0.5">
-                  View Results
-                </Link>
-                <Link to="/about" className="border border-white/20 text-white px-8 py-4 rounded-xl font-medium font-heading transition-all hover:bg-white/5 hover:-translate-y-0.5">
-                  View Workshops
-                </Link>
-              </div>
+              <Link to="/events" className="genz-btn bg-white text-background text-sm px-5 py-2.5 flex items-center gap-2 w-fit hover:bg-primary hover:text-white">
+                See Winners <ArrowRight size={16} />
+              </Link>
             </div>
           </motion.div>
+
+          {/* Stat: Members */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="glass-panel p-6 flex flex-col justify-center relative overflow-hidden card-hover"
+          >
+            <div className="absolute top-3 right-3">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <Users size={16} className="text-primary" />
+              </div>
+            </div>
+            <h3 className="text-5xl font-black font-heading text-white">30<span className="text-primary">+</span></h3>
+            <p className="text-xs text-foreground/40 font-semibold mt-1.5 uppercase tracking-wider">Active Members</p>
+          </motion.div>
+
+          {/* Quick Link: Workshops */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="h-full"
+          >
+            <Link to="/sessions" className="glass-panel h-full p-6 flex flex-col justify-between group card-hover block">
+              <div className="flex justify-between items-start w-full">
+                <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
+                  <Calendar size={20} className="text-accent" />
+                </div>
+                <ArrowRight size={18} className="text-foreground/30 group-hover:text-accent group-hover:translate-x-1 transition-all" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold font-heading text-white group-hover:text-accent transition-colors">Workshops 🎓</h3>
+                <p className="text-xs text-foreground/40 mt-1">Learn something new today</p>
+              </div>
+            </Link>
+          </motion.div>
+
+          {/* Innovation Box */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="lg:col-span-2 glass-panel p-6 relative overflow-hidden group card-hover bg-gradient-to-br from-card to-muted"
+          >
+             <div className="absolute right-[-5%] top-[-15%] opacity-[0.06] group-hover:rotate-6 transition-transform duration-700 pointer-events-none">
+               <Rocket size={140} />
+             </div>
+             <div className="h-full flex flex-col justify-center relative z-10">
+               <div className="flex items-center gap-2 mb-2">
+                 <Star size={18} className="text-accent" />
+                 <span className="text-xs text-foreground/40 font-semibold uppercase tracking-wider">What we do</span>
+               </div>
+               <h3 className="text-xl font-bold font-heading mb-1.5 text-white">We Build Cool Stuff 🛠️</h3>
+               <p className="text-sm text-foreground/50">From prompt engineering to full-stack AI apps — if it's innovative, we're building it.</p>
+             </div>
+          </motion.div>
+
+          {/* Quick Link: FAQ */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="md:col-span-1 h-full"
+          >
+            <Link to="/faq" className="glass-panel h-full p-6 flex flex-col justify-between group card-hover block">
+              <div className="flex justify-between items-start w-full">
+                <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center">
+                  <Info size={20} className="text-secondary" />
+                </div>
+                <ArrowRight size={18} className="text-foreground/30 group-hover:text-secondary group-hover:translate-x-1 transition-all" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold font-heading text-white group-hover:text-secondary transition-colors">FAQ 💬</h3>
+                <p className="text-xs text-foreground/40 mt-1">Got q's? We got a's</p>
+              </div>
+            </Link>
+          </motion.div>
+
+           {/* Stat: Events */}
+           <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            className="glass-panel p-6 flex flex-col justify-center relative overflow-hidden card-hover"
+          >
+            <div className="absolute top-3 right-3">
+              <div className="w-8 h-8 rounded-full bg-lime/10 flex items-center justify-center">
+                <Trophy size={16} className="text-lime" />
+              </div>
+            </div>
+            <h3 className="text-5xl font-black font-heading text-white">5<span className="text-lime">+</span></h3>
+            <p className="text-xs text-foreground/40 font-semibold mt-1.5 uppercase tracking-wider">Events Done</p>
+          </motion.div>
+
         </div>
+
+        {/* Community CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-8 glass-panel p-8 md:p-10 text-center relative overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5" />
+          <div className="relative z-10">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Heart size={18} className="text-coral" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-foreground/40">Join the community</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-black font-heading text-white mb-2">
+              Ready to level up? 🚀
+            </h2>
+            <p className="text-foreground/50 text-sm mb-6 max-w-md mx-auto">
+              Join 30+ students who are already building the future with AI. No experience needed — just curiosity!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link to="/events" className="genz-btn-primary">
+                Explore Events ✨
+              </Link>
+              <Link to="/about" className="genz-btn-outline">
+                Learn More
+              </Link>
+            </div>
+          </div>
+        </motion.div>
       </section>
     </div>
   );

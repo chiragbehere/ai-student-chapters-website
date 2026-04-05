@@ -7,18 +7,35 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0a0a0f',
-        foreground: '#F3F4F6',
-        primary: '#9d00ff',     
-        secondary: '#00f0ff',   
-        accent: '#ff003c',      
-        muted: '#151520',       
-        border: 'rgba(255, 255, 255, 0.1)',
+        background: '#0c0a1a',
+        foreground: '#eeedf5',
+        primary: '#a855f7',
+        secondary: '#38bdf8',
+        accent: '#f472b6',
+        lime: '#a3e635',
+        coral: '#fb7185',
+        muted: '#16132a',
+        border: 'rgba(255, 255, 255, 0.08)',
+        card: '#1a1730',
       },
       fontFamily: {
-        heading: ['"Space Grotesk"', 'sans-serif'],
-        body: ['"DM Sans"', 'sans-serif'],
-      }
+        heading: ['"Outfit"', 'sans-serif'],
+        body: ['"Sora"', 'sans-serif'],
+      },
+      borderRadius: {
+        '4xl': '2rem',
+      },
+      keyframes: {
+        'blob': {
+          '0%, 100%': { transform: 'translate(0,0) scale(1)' },
+          '33%': { transform: 'translate(30px,-50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px,20px) scale(0.9)' },
+        },
+      },
+      animation: {
+        'blob': 'blob 7s ease-in-out infinite',
+        'blob-slow': 'blob 12s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

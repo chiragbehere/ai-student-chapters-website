@@ -1,0 +1,148 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, MessageCircleQuestion, Send } from 'lucide-react';
+
+const FAQItem = ({ question, answer, isOpen, onClick, index }: { question: string, answer: string, isOpen: boolean, onClick: () => void, index: number }) => {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.06 }}
+      className="glass-panel overflow-hidden mb-3 card-hover"
+    >
+      <button
+        onClick={onClick}
+        className="w-full text-left px-6 py-5 flex justify-between items-center group"
+      >
+        <span className="font-heading font-semibold text-base text-white/90 group-hover:text-primary transition-colors pr-4">
+          {question}
+        </span>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
+          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isOpen ? 'bg-primary/15 text-primary' : 'bg-white/5 text-foreground/40'}`}
+        >
+          <ChevronDown size={16} />
+        </motion.div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <div className="px-6 pb-5 pt-1 text-foreground/60 text-sm leading-relaxed">
+              {answer}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
+
+const FAQ = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const faqs = [
+    {
+      question: "What is AI Student Chapters? 🤔",
+      answer: "We're a student-led community at RCPIMRD that's all about AI. Think hackathons, workshops, building cool projects, and just vibing with people who love tech. No boring lectures, we promise."
+    },
+    {
+      question: "Who can join the club? 🙋",
+      answer: "Literally anyone at RCPIMRD! Doesn't matter if you've never written a line of code — if you're curious about AI and want to learn, you're in. We welcome all skill levels."
+    },
+    {
+      question: "Do I need coding experience? 💻",
+      answer: "Nope! We run beginner-friendly workshops to get you started. All you need is a laptop and the willingness to learn. We'll handle the rest."
+    },
+    {
+      question: "What kind of events do you organize? 🎉",
+      answer: "We do hands-on workshops, guest sessions, coding bootcamps, and our legendary 'Code-Carnival' Hackathon. Check out the Sessions page for what's coming up next!"
+    },
+    {
+      question: "How do I stay updated? 📱",
+      answer: "Join our WhatsApp group — that's where all the action happens. We also post on our Instagram (@ai.student_chapters). Links are on the Home page!"
+    }
+  ];
+
+  return (
+    <div className="w-full relative min-h-screen pt-28 pb-24 z-10">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div className="text-center mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, type: "spring" }}
+            className="pill bg-accent/10 text-accent border border-accent/20 mx-auto w-fit mb-6 flex items-center gap-2"
+          >
+            <MessageCircleQuestion size={14} />
+            you asked, we answered
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl md:text-5xl font-black font-heading leading-tight mb-3"
+          >
+            FAQ <span className="grad-text">💬</span>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-foreground/50 text-base max-w-lg mx-auto"
+          >
+            Everything you need to know about joining and being part of our community.
+          </motion.p>
+        </div>
+
+        {/* FAQ List */}
+        <div className="space-y-0">
+          {faqs.map((faq, index) => (
+            <FAQItem
+              key={index}
+              index={index}
+              question={faq.question}
+              answer={faq.answer}
+              isOpen={openIndex === index}
+              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+            />
+          ))}
+        </div>
+
+        {/* Bottom CTA */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 text-center glass-panel p-8 md:p-10 relative overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
+          <div className="relative z-10">
+            <h3 className="text-xl font-bold font-heading text-white mb-2">Still curious? 🤷‍♀️</h3>
+            <p className="text-foreground/50 text-sm mb-5">Drop us a message — we're super approachable, promise.</p>
+            <a
+              href="mailto:imrdaistudentclub@gmail.com"
+              className="genz-btn-primary inline-flex items-center gap-2"
+            >
+              <Send size={16} />
+              Reach Out
+            </a>
+          </div>
+        </motion.div>
+        
+      </div>
+    </div>
+  );
+};
+
+export default FAQ;

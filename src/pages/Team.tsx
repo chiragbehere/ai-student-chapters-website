@@ -1,16 +1,17 @@
 import { motion } from 'framer-motion';
+import { Star } from 'lucide-react';
 
 const Team = () => {
   const leaders = [
-    { name: 'Kartik Sharad Valhe', role: 'President', class: 'IMCA-IV' },
-    { name: 'Krushnali Vanusing Jadhav', role: 'Vice President', class: 'IMCA-II' },
-    { name: 'Tejas Dipak Panchbhai', role: 'Secretary', class: 'IMCA-IV' },
-    { name: 'Aastha Vilas Deshmukh', role: 'Treasurer', class: 'IMCA-II' },
-    { name: 'Chirag Rajesh Behere', role: 'Event Manager', class: 'IMCA-II' },
-    { name: 'Aniruddha Balaji Landge', role: 'Technical Department Head', class: 'IMCA-III' },
-    { name: 'Moin Altaf Ansari', role: 'Documentation and Report Head', class: 'IMCA-II' },
-    { name: 'Shreyash Sunil Patil', role: 'Camera Team Head', class: 'IMCA-IV' },
-    { name: 'Bhumika Vilas Patil', role: 'Social Media Head', class: 'IMCA-II' }
+    { name: 'Kartik Sharad Valhe', role: 'President', class: 'IMCA-IV', emoji: '👑' },
+    { name: 'Krushnali Vanusing Jadhav', role: 'Vice President', class: 'IMCA-II', emoji: '⭐' },
+    { name: 'Tejas Dipak Panchbhai', role: 'Secretary', class: 'IMCA-IV', emoji: '📋' },
+    { name: 'Aastha Vilas Deshmukh', role: 'Treasurer', class: 'IMCA-II', emoji: '💰' },
+    { name: 'Chirag Rajesh Behere', role: 'Event Manager', class: 'IMCA-II', emoji: '🎯' },
+    { name: 'Aniruddha Balaji Landge', role: 'Tech Lead', class: 'IMCA-III', emoji: '💻' },
+    { name: 'Moin Altaf Ansari', role: 'Documentation Head', class: 'IMCA-II', emoji: '📝' },
+    { name: 'Shreyash Sunil Patil', role: 'Camera Lead', class: 'IMCA-IV', emoji: '📸' },
+    { name: 'Bhumika Vilas Patil', role: 'Social Media', class: 'IMCA-II', emoji: '📱' }
   ];
 
   const members = [
@@ -35,71 +36,83 @@ const Team = () => {
     { name: 'Utkarsha Manohar Patil', class: 'MCA-I' }
   ];
 
-  const renderCard = (member: any, idx: number, isLeader: boolean) => (
-    <motion.div
-      key={member.name}
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: idx * 0.05 }}
-      className="glass-panel rounded-lg border border-white/5 p-5 shadow-sm hover:border-white/20 transition-all text-center group cursor-default relative overflow-hidden"
-    >
-      <div className="mx-auto rounded-full bg-muted border border-white/10 flex items-center justify-center text-white font-black font-heading w-16 h-16 text-2xl mb-4 relative z-10 transition-transform duration-500 group-hover:scale-110">
-        {member.name.charAt(0)}
-      </div>
-      
-      <h3 className="font-bold font-heading tracking-wide mb-1 relative z-10 text-base leading-tight text-white">
-        {member.name}
-      </h3>
-      {isLeader && (
-        <p className="text-secondary text-xs uppercase font-bold relative z-10 mb-1">{member.role}</p>
-      )}
-      <p className="text-foreground/50 text-[10px] uppercase font-bold relative z-10">Class: {member.class}</p>
-    </motion.div>
-  );
+  const colors = ['from-primary to-secondary', 'from-accent to-primary', 'from-secondary to-lime', 'from-coral to-accent', 'from-primary to-accent'];
 
   return (
     <div className="w-full relative">
-      <section className="pt-24 pb-16 glass-panel border-b border-border/30 relative z-10">
+      {/* Hero */}
+      <section className="pt-24 pb-14 bg-card/30 border-b border-white/[0.04] relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pill bg-primary/10 text-primary border border-primary/20 mx-auto w-fit mb-6 flex items-center gap-2">
+            <Star size={14} /> the crew
+          </motion.div>
           <motion.h1 
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-5xl font-black font-heading mb-4 tracking-wide text-white"
+            className="text-4xl md:text-5xl font-black font-heading mb-3 text-white"
           >
-            Meet the <span className="text-secondary">Core Team</span>
+            Meet the <span className="grad-text">Team</span> 👥
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-foreground/70 font-body text-base max-w-2xl mx-auto tracking-wide"
+            className="text-foreground/50 text-base max-w-lg mx-auto"
           >
-            The passionate individuals who make the magic happen.
+            The amazing humans behind AI Student Chapters ✨
           </motion.p>
         </div>
       </section>
 
-      <section className="py-12 relative z-10">
+      {/* Leaders */}
+      <section className="py-14 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Leaders Section */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-            {leaders.map((member, idx) => renderCard(member, idx, true))}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {leaders.map((member, idx) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.05, type: "spring" }}
+                className="glass-panel p-5 text-center group card-hover relative overflow-hidden"
+              >
+                <div className={`mx-auto rounded-2xl bg-gradient-to-br ${colors[idx % colors.length]} w-14 h-14 flex items-center justify-center text-2xl mb-3 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-lg`}>
+                  {member.emoji}
+                </div>
+                <h3 className="font-heading font-bold text-sm text-white leading-tight mb-1">{member.name}</h3>
+                <p className="text-primary text-[10px] uppercase font-bold tracking-wider mb-0.5">{member.role}</p>
+                <p className="text-foreground/30 text-[10px] uppercase font-medium">{member.class}</p>
+              </motion.div>
+            ))}
           </div>
 
           {/* Separator */}
-          <div className="my-12 flex items-center gap-4 opacity-50">
-            <div className="h-px bg-white/10 flex-1"></div>
-            <h2 className="text-lg font-bold font-heading text-white uppercase tracking-[0.2em]">Members</h2>
-            <div className="h-px bg-white/10 flex-1"></div>
+          <div className="my-12 flex items-center gap-4">
+            <div className="h-px bg-white/[0.06] flex-1"></div>
+            <span className="pill bg-white/[0.04] text-foreground/40 border border-white/[0.04]">members 💜</span>
+            <div className="h-px bg-white/[0.06] flex-1"></div>
           </div>
 
-          {/* Members Section */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-            {members.map((member, idx) => renderCard(member, idx, false))}
+          {/* Members */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+            {members.map((member, idx) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.03 }}
+                className="glass-panel p-4 text-center group card-hover"
+              >
+                <div className="mx-auto w-10 h-10 rounded-full bg-card border border-white/[0.06] flex items-center justify-center text-white font-bold font-heading text-sm mb-2.5 group-hover:scale-110 transition-transform">
+                  {member.name.charAt(0)}
+                </div>
+                <h3 className="font-heading font-semibold text-xs text-white/80 leading-tight mb-0.5">{member.name}</h3>
+                <p className="text-foreground/30 text-[10px] uppercase font-medium">{member.class}</p>
+              </motion.div>
+            ))}
           </div>
-
         </div>
       </section>
     </div>
