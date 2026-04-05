@@ -46,7 +46,7 @@ const Events = () => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: idx * 0.08, type: "spring" }}
+      transition={{ delay: idx * 0.04, type: "spring" }}
       className="glass-panel p-6 relative overflow-hidden group card-hover"
     >
       <div className={`absolute top-0 left-0 w-1 h-full rounded-r
@@ -103,7 +103,7 @@ const Events = () => {
               </p>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, type: "spring" }} className="flex-shrink-0">
+            <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.05, type: "spring" }} className="flex-shrink-0">
               <img
                 src="/images/code-carnival-logo.png"
                 alt="Code Carnival Logo"
@@ -137,7 +137,7 @@ const Events = () => {
               { medal: '🥈', amount: '₹500', label: '2nd Place' },
               { medal: '🥉', amount: '🏆', label: 'Runner-up' },
             ].map((prize, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="glass-panel p-4 text-center card-hover">
+              <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="glass-panel p-4 text-center card-hover">
                 <span className="text-2xl block mb-1">{prize.medal}</span>
                 <div className="font-bold text-heading text-base">{prize.amount}</div>
                 <div className="text-[10px] uppercase tracking-widest text-foreground/30 mt-1">{prize.label}</div>
@@ -193,7 +193,7 @@ const Events = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {videos.map((video, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className="glass-panel overflow-hidden card-hover">
+              <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.05 }} className="glass-panel overflow-hidden card-hover">
                 <div className="aspect-video bg-black relative">
                   <video controls preload="metadata" playsInline className="w-full h-full object-cover">
                     <source src={video.src} type="video/mp4" />
@@ -217,7 +217,7 @@ const Events = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {schedule.map((item, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.12 }} className="glass-panel p-6 relative overflow-hidden card-hover">
+              <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.06 }} className="glass-panel p-6 relative overflow-hidden card-hover">
                 <span className="text-3xl mb-3 block">{item.emoji}</span>
                 <div className="text-primary font-bold text-xs tracking-wider mb-2">{item.time}</div>
                 <h3 className="text-base font-bold font-heading text-heading mb-1 transition-colors">{item.label}</h3>

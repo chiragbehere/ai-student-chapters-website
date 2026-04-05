@@ -51,7 +51,7 @@ const Home = () => {
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
             className="text-center max-w-3xl"
           >
             <h1 className="text-5xl md:text-7xl font-black font-heading leading-[1.1] mb-4 text-heading transition-colors duration-300">
@@ -132,7 +132,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.05 }}
             className="glass-panel p-6 flex flex-col justify-center relative overflow-hidden card-hover"
           >
             <div className="absolute top-3 right-3">
@@ -149,7 +149,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.1 }}
             className="h-full"
           >
             <Link to="/sessions" className="glass-panel h-full p-6 flex flex-col justify-between group card-hover block">
@@ -171,7 +171,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.15 }}
             className="lg:col-span-2 glass-panel p-6 relative overflow-hidden group card-hover bg-gradient-to-br from-card to-muted border-border"
           >
              <div className="absolute right-[-5%] top-[-15%] opacity-[0.06] group-hover:rotate-6 transition-transform duration-700 pointer-events-none">
@@ -192,7 +192,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.2 }}
             className="md:col-span-1 h-full"
           >
             <Link to="/faq" className="glass-panel h-full p-6 flex flex-col justify-between group card-hover block">
@@ -214,7 +214,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.25 }}
             className="glass-panel p-6 flex flex-col justify-center relative overflow-hidden card-hover"
           >
             <div className="absolute top-3 right-3">

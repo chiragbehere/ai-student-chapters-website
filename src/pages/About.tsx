@@ -59,7 +59,7 @@ const About = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.08 * idx, type: "spring" }}
+                transition={{ delay: 0.04 * idx, type: "spring" }}
                 className="glass-panel p-7 flex flex-col sm:flex-row items-start gap-5 group card-hover relative overflow-hidden"
               >
                 <div className="w-12 h-12 rounded-2xl bg-card border border-border flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
@@ -80,7 +80,7 @@ const About = () => {
                         initial={{ width: 0 }}
                         whileInView={{ width: `${act.percent}%` }}
                         viewport={{ once: true }}
-                        transition={{ duration: 1.5, delay: 0.3, ease: 'easeOut' }}
+                        transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
                         className={`h-full ${act.color} rounded-full shadow-sm`}
                       />
                     </div>
@@ -106,7 +106,7 @@ const About = () => {
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.05 }}
+                transition={{ delay: idx * 0.02 }}
                 className={`glass-panel overflow-hidden transition-all duration-300 ${openFaq === idx ? 'border-primary/40 ring-1 ring-primary/10' : ''}`}
               >
                 <button

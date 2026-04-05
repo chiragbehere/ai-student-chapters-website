@@ -1,8 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Camera, Mail, Sun, Moon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+
+export const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [pathname]);
+
+  return null;
+};
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,20 +29,26 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     { path: '/about', label: 'About', emoji: '✨' },
   ];
 
+  // Close menu on route change
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
   return (
-    <div className="min-h-screen flex flex-col font-body bg-background text-foreground transition-colors duration-300">
-      {/* Dynamic Background Layers */}
-      <div className="bg-mesh" />
-      <div className="bg-orb-accent" />
-      <div className="bg-grid" />
-      <div className="bg-noise" />
+    <div className="min-h-screen flex flex-col font-body bg-background text-foreground transition-colors duration-300 relative">
+      <ScrollToTop />
+      
+      {/* Optimized Background Layers - GPU Accelerated, removed noise to reduce lag */}
+      <div className="fixed inset-0 z-[-10] pointer-events-none transform-gpu bg-mesh" />
+      <div className="fixed inset-0 z-[-5] pointer-events-none transform-gpu bg-orb-accent" />
+      <div className="fixed inset-0 z-[-1] pointer-events-none transform-gpu bg-grid" />
 
       {/* Navbar */}
-      <nav className="fixed w-full z-50 bg-background/60 backdrop-blur-xl border-b border-border transition-colors duration-300">
+      <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-border transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Link to="/" className="flex items-center gap-2.5 group">
-              <img src="/images/club-logo.png" alt="AI Student Chapters Logo" className="h-9 w-9 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110" style={{ filter: theme === 'dark' ? 'drop-shadow(0 0 10px rgba(168,85,247,0.4))' : 'none' }} />
+              <img src="/images/club-logo.png" alt="AI Student Chapters Logo" className="h-9 w-9 transition-transform duration-300 group-hover:rotate-6" style={{ filter: theme === 'dark' ? 'drop-shadow(0 0 10px rgba(168,85,247,0.4))' : 'none' }} />
               <span className="font-heading font-bold text-lg tracking-tight">
                 <span className="grad-text">AI</span> <span className="text-heading">Chapters</span>
               </span>
@@ -58,13 +74,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 className="ml-2 p-2.5 rounded-full bg-foreground/5 text-foreground hover:bg-foreground/10 transition-colors border border-border group"
                 aria-label="Toggle Theme"
               >
-                <motion.div
-                  initial={false}
-                  animate={{ rotate: theme === 'dark' ? 0 : 180, scale: [0.8, 1.1, 1] }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 10 }}
-                >
+                <div className="transition-transform duration-300 scale-100 active:scale-95">
                   {theme === 'dark' ? <Moon size={18} /> : <Sun size={18} className="text-amber-500" />}
-                </motion.div>
+                </div>
               </button>
             </div>
 
@@ -104,7 +116,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                         ? 'bg-primary/10 text-primary border border-primary/15'
                         : 'text-foreground/70 hover:bg-foreground/5 hover:text-heading'
                     }`}
-                    onClick={() => setIsMenuOpen(false)}
                   >
                     <span className="text-base">{link.emoji}</span>
                     {link.label}
@@ -122,7 +133,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
       {/* Footer */}
       <footer className="relative border-t border-border bg-card/50 backdrop-blur-lg mt-20 overflow-hidden transition-colors duration-300">
-        {/* Top gradient line */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">

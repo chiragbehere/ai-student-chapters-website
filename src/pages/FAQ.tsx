@@ -8,7 +8,7 @@ const FAQItem = ({ question, answer, isOpen, onClick, index }: { question: strin
       initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.06 }}
+      transition={{ delay: index * 0.03 }}
       className={`glass-panel overflow-hidden mb-3 card-hover transition-all duration-300 ${isOpen ? 'ring-1 ring-primary/20 border-primary/20 shadow-lg shadow-primary/5' : ''}`}
     >
       <button
@@ -89,7 +89,7 @@ const FAQ = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.4, delay: 0.05 }}
             className="text-4xl md:text-5xl font-black font-heading leading-tight mb-3 text-heading transition-colors"
           >
             FAQ <span className="grad-text">💬</span>
@@ -98,7 +98,7 @@ const FAQ = () => {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
             className="text-foreground/50 text-base max-w-lg mx-auto"
           >
             Everything you need to know about joining and being part of our community.

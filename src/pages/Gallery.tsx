@@ -92,7 +92,7 @@ const Gallery = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.06 }}
+                  transition={{ delay: idx * 0.03 }}
                   className="relative group overflow-hidden glass-panel aspect-[4/3] card-hover"
                 >
                   <img
@@ -125,7 +125,7 @@ const Gallery = () => {
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.08 }}
+                  transition={{ delay: idx * 0.04 }}
                   className="glass-panel overflow-hidden card-hover"
                 >
                   <div className="aspect-video bg-black relative">

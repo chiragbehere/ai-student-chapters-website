@@ -26,7 +26,7 @@ const Sessions = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.4, delay: 0.05 }}
             className="text-4xl md:text-5xl font-black font-heading leading-tight mb-3 text-heading transition-colors"
           >
             Workshops <span className="grad-text">& Sessions</span>
@@ -35,7 +35,7 @@ const Sessions = () => {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
             className="text-foreground/50 text-base max-w-lg mx-auto"
           >
             Presentations and resources from our past sessions 📖
@@ -50,7 +50,7 @@ const Sessions = () => {
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ delay: idx * 0.05 }}
               className="glass-panel p-6 relative overflow-hidden card-hover"
             >
               <h3 className="text-base font-bold font-heading mb-4 text-heading transition-colors">{ws.title}</h3>
