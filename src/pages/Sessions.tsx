@@ -1,5 +1,22 @@
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { Download, Star } from 'lucide-react';
+import SEO from '../components/SEO';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 25, scale: 0.98 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 120, damping: 14 } }
+};
 
 const Sessions = () => {
   const workshops = [
@@ -9,6 +26,7 @@ const Sessions = () => {
 
   return (
     <div className="w-full relative min-h-screen pt-28 pb-24 z-10 transition-colors duration-300">
+      <SEO title="Sessions & Workshops" description="Presentations and resources from our past AI sessions and workshops." />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -43,14 +61,17 @@ const Sessions = () => {
         </div>
 
         {/* Workshop PPTs */}
-        <div className="space-y-6">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.1 }}
+          className="space-y-6"
+        >
           {workshops.map((ws, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
+              variants={itemVariants}
               className="glass-panel p-6 relative overflow-hidden card-hover"
             >
               <h3 className="text-base font-bold font-heading mb-4 text-heading transition-colors">{ws.title}</h3>
@@ -74,7 +95,7 @@ const Sessions = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </div>

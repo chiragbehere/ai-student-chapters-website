@@ -1,7 +1,29 @@
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { Medal, Award, Star, Calendar, Clock, Users, MapPin, CheckCircle, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import SEO from '../components/SEO';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1, 
+    transition: { type: "spring", stiffness: 120, damping: 14 } 
+  }
+};
 
 const Events = () => {
   const { theme } = useTheme();
@@ -40,13 +62,10 @@ const Events = () => {
     { src: '/Hackthon Highlights/session.mp4', title: '💻 Live Session', desc: 'Workshop session on classes' },
   ];
 
-  const renderWinnerCard = (winner: typeof ugWinners[0], idx: number) => (
+  const renderWinnerCard = (winner: typeof ugWinners[0]) => (
     <motion.div
       key={winner.team}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: idx * 0.04, type: "spring" }}
+      variants={itemVariants}
       className="glass-panel p-6 relative overflow-hidden group card-hover"
     >
       <div className={`absolute top-0 left-0 w-1 h-full rounded-r
@@ -89,6 +108,8 @@ const Events = () => {
 
   return (
     <div className="w-full relative">
+      <SEO title="Events & Results" description="Code Carnival results, UG/PG winners, and hackathon highlights." />
+      
       {/* Hero */}
       <section className="pt-24 pb-14 relative z-10 bg-card/30 border-b border-border transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -137,7 +158,7 @@ const Events = () => {
               { medal: '🥈', amount: '₹500', label: '2nd Place' },
               { medal: '🥉', amount: '🏆', label: 'Runner-up' },
             ].map((prize, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="glass-panel p-4 text-center card-hover">
+              <motion.div key={i} variants={itemVariants} className="glass-panel p-4 text-center card-hover">
                 <span className="text-2xl block mb-1">{prize.medal}</span>
                 <div className="font-bold text-heading text-base">{prize.amount}</div>
                 <div className="text-[10px] uppercase tracking-widest text-foreground/30 mt-1">{prize.label}</div>
@@ -153,9 +174,9 @@ const Events = () => {
           <h2 className="text-2xl font-bold font-heading text-heading mb-8 flex items-center gap-3 transition-colors">
             <span className="text-2xl">🎓</span> UG Winners
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {ugWinners.map((w, i) => renderWinnerCard(w, i))}
-          </div>
+          <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {ugWinners.map((winner) => renderWinnerCard(winner))}
+          </motion.div>
         </div>
       </section>
 
@@ -165,9 +186,9 @@ const Events = () => {
           <h2 className="text-2xl font-bold font-heading text-heading mb-8 flex items-center gap-3 transition-colors">
             <span className="text-2xl">🔹</span> PG Winners
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {pgWinners.map((w, i) => renderWinnerCard(w, i))}
-          </div>
+          <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {pgWinners.map((winner) => renderWinnerCard(winner))}
+          </motion.div>
         </div>
       </section>
 
@@ -191,9 +212,9 @@ const Events = () => {
             <p className="text-foreground/40 text-sm mt-2">Relive the best moments from Code-Carnival 2026!</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {videos.map((video, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.05 }} className="glass-panel overflow-hidden card-hover">
+              <motion.div key={idx} variants={itemVariants} className="glass-panel overflow-hidden card-hover">
                 <div className="aspect-video bg-black relative">
                   <video controls preload="metadata" playsInline className="w-full h-full object-cover">
                     <source src={video.src} type="video/mp4" />
@@ -205,7 +226,7 @@ const Events = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -215,16 +236,16 @@ const Events = () => {
           <div className="text-center mb-10">
             <h2 className="text-2xl font-bold font-heading text-heading transition-colors">Event Timeline ⏰</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {schedule.map((item, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.06 }} className="glass-panel p-6 relative overflow-hidden card-hover">
+              <motion.div key={idx} variants={itemVariants} className="glass-panel p-6 relative overflow-hidden card-hover">
                 <span className="text-3xl mb-3 block">{item.emoji}</span>
                 <div className="text-primary font-bold text-xs tracking-wider mb-2">{item.time}</div>
                 <h3 className="text-base font-bold font-heading text-heading mb-1 transition-colors">{item.label}</h3>
                 <p className="text-foreground/40 text-xs">{item.sub}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 

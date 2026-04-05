@@ -1,6 +1,28 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { Image, Film } from 'lucide-react';
+import SEO from '../components/SEO';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 15, scale: 0.98 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1, 
+    transition: { type: "spring", stiffness: 120, damping: 14 } 
+  }
+};
 
 const Gallery = () => {
   const [activeTab, setActiveTab] = useState<'images' | 'videos'>('images');
@@ -22,6 +44,7 @@ const Gallery = () => {
 
   return (
     <div className="w-full">
+      <SEO title="Gallery" description="Photos and videos from AI Student Chapters events." />
       {/* Hero */}
       <section className="pt-24 pb-12 bg-card/30 border-b border-border transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -82,17 +105,16 @@ const Gallery = () => {
           {/* Images Grid */}
           {activeTab === 'images' && (
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.1 }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
             >
               {images.map((img, idx) => (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.03 }}
+                  variants={itemVariants}
                   className="relative group overflow-hidden glass-panel aspect-[4/3] card-hover"
                 >
                   <img
@@ -115,17 +137,16 @@ const Gallery = () => {
           {/* Videos Grid */}
           {activeTab === 'videos' && (
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.1 }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
             >
               {videos.map((video, idx) => (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.04 }}
+                  variants={itemVariants}
                   className="glass-panel overflow-hidden card-hover"
                 >
                   <div className="aspect-video bg-black relative">

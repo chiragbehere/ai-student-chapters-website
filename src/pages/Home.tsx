@@ -1,7 +1,34 @@
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { ArrowRight, Users, Zap, Rocket, Trophy, Calendar, Info, Star, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import SEO from '../components/SEO';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 40, scale: 0.9 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1, 
+    transition: { 
+      type: "spring", 
+      stiffness: 120, 
+      damping: 14 
+    } 
+  }
+};
 
 const Home = () => {
   const { theme } = useTheme();
@@ -12,6 +39,10 @@ const Home = () => {
 
   return (
     <div className="w-full relative min-h-screen">
+      <SEO 
+        title="Home" 
+        description="The coolest student community exploring AI — we learn, we build, we compete, and we grow together."
+      />
       {/* Hero Section */}
       <section className="relative pt-28 pb-16 z-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
@@ -100,13 +131,17 @@ const Home = () => {
 
       {/* Bento Grid Architecture */}
       <section className="relative z-10 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]"
+        >
           
           {/* Main Hero Card — Code Carnival (Spans 2x2) */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            variants={itemVariants}
             className="md:col-span-2 md:row-span-2 glass-panel p-8 relative overflow-hidden group card-hover flex flex-col justify-end"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -129,10 +164,7 @@ const Home = () => {
 
           {/* Stat: Members */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.05 }}
+            variants={itemVariants}
             className="glass-panel p-6 flex flex-col justify-center relative overflow-hidden card-hover"
           >
             <div className="absolute top-3 right-3">
@@ -146,10 +178,7 @@ const Home = () => {
 
           {/* Quick Link: Workshops */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            variants={itemVariants}
             className="h-full"
           >
             <Link to="/sessions" className="glass-panel h-full p-6 flex flex-col justify-between group card-hover block">
@@ -168,10 +197,7 @@ const Home = () => {
 
           {/* Innovation Box */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
+            variants={itemVariants}
             className="lg:col-span-2 glass-panel p-6 relative overflow-hidden group card-hover bg-gradient-to-br from-card to-muted border-border"
           >
              <div className="absolute right-[-5%] top-[-15%] opacity-[0.06] group-hover:rotate-6 transition-transform duration-700 pointer-events-none">
@@ -189,10 +215,7 @@ const Home = () => {
 
           {/* Quick Link: FAQ */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            variants={itemVariants}
             className="md:col-span-1 h-full"
           >
             <Link to="/faq" className="glass-panel h-full p-6 flex flex-col justify-between group card-hover block">
@@ -211,10 +234,7 @@ const Home = () => {
 
            {/* Stat: Events */}
            <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.25 }}
+            variants={itemVariants}
             className="glass-panel p-6 flex flex-col justify-center relative overflow-hidden card-hover"
           >
             <div className="absolute top-3 right-3">
@@ -226,7 +246,7 @@ const Home = () => {
             <p className="text-xs text-foreground/40 font-semibold mt-1.5 uppercase tracking-wider">Events Done</p>
           </motion.div>
 
-        </div>
+        </motion.div>
 
         {/* Community CTA */}
         <motion.div

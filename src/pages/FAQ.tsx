@@ -1,14 +1,33 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { ChevronDown, MessageCircleQuestion, Send } from 'lucide-react';
+import SEO from '../components/SEO';
 
-const FAQItem = ({ question, answer, isOpen, onClick, index }: { question: string, answer: string, isOpen: boolean, onClick: () => void, index: number }) => {
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20, scale: 0.98 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1, 
+    transition: { type: "spring", stiffness: 150, damping: 15 } 
+  }
+};
+
+const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answer: string, isOpen: boolean, onClick: () => void }) => {
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 15 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.03 }}
+      variants={itemVariants}
       className={`glass-panel overflow-hidden mb-3 card-hover transition-all duration-300 ${isOpen ? 'ring-1 ring-primary/20 border-primary/20 shadow-lg shadow-primary/5' : ''}`}
     >
       <button
@@ -72,6 +91,7 @@ const FAQ = () => {
 
   return (
     <div className="w-full relative min-h-screen pt-28 pb-24 z-10 transition-colors duration-300">
+      <SEO title="FAQ" description="Frequently asked questions about AI Student Chapters" />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -106,18 +126,23 @@ const FAQ = () => {
         </div>
 
         {/* FAQ List */}
-        <div className="space-y-0">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.1 }}
+          className="space-y-0"
+        >
           {faqs.map((faq, index) => (
             <FAQItem
               key={index}
-              index={index}
               question={faq.question}
               answer={faq.answer}
               isOpen={openIndex === index}
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
             />
           ))}
-        </div>
+        </motion.div>
 
         {/* Bottom CTA */}
         <motion.div 

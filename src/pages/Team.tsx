@@ -1,5 +1,27 @@
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { Star } from 'lucide-react';
+import SEO from '../components/SEO';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  show: { 
+    opacity: 1, 
+    scale: 1, 
+    transition: { type: "spring", stiffness: 150, damping: 15 } 
+  }
+};
+
 
 const Team = () => {
   const leaders = [
@@ -40,6 +62,7 @@ const Team = () => {
 
   return (
     <div className="w-full relative">
+      <SEO title="Team" description="Meet the people behind the AI Student Chapters." />
       {/* Hero */}
       <section className="pt-24 pb-14 bg-card/30 border-b border-border relative z-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -67,14 +90,11 @@ const Team = () => {
       {/* Leaders */}
       <section className="py-14 relative z-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {leaders.map((member, idx) => (
               <motion.div
                 key={member.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.03, type: "spring" }}
+                variants={itemVariants}
                 className="glass-panel p-5 text-center group card-hover relative overflow-hidden"
               >
                 <div className={`mx-auto rounded-full bg-gradient-to-br ${colors[idx % colors.length]} w-20 h-20 flex items-center justify-center text-2xl mb-4 transition-transform duration-500 hover:scale-105 border-2 border-border shadow-lg overflow-hidden`}>
@@ -94,7 +114,7 @@ const Team = () => {
                 <p className="text-foreground/30 text-[10px] uppercase font-medium">{member.class}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Separator */}
           <div className="my-12 flex items-center gap-4">
@@ -104,14 +124,11 @@ const Team = () => {
           </div>
 
           {/* Members */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-            {members.map((member, idx) => (
+          <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+            {members.map((member) => (
               <motion.div
                 key={member.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.015 }}
+                variants={itemVariants}
                 className="glass-panel p-4 text-center group card-hover"
               >
                 <div className="mx-auto w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-heading font-bold font-heading text-sm mb-3 group-hover:scale-105 transition-transform overflow-hidden">
@@ -130,7 +147,7 @@ const Team = () => {
                 <p className="text-foreground/30 text-[10px] uppercase font-medium">{member.class}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

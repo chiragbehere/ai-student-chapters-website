@@ -3,6 +3,7 @@ import type { ErrorInfo, ReactNode } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
+import SmoothScroll from './components/SmoothScroll';
 import Home from './pages/Home';
 
 // Lazy-load all non-home pages for faster initial load
@@ -59,9 +60,9 @@ class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean}
 
 // Page transition wrapper
 const pageVariants = {
-  initial: { opacity: 0, y: 12 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -8 },
+  initial: { opacity: 0, y: 20, scale: 0.98 },
+  animate: { opacity: 1, y: 0, scale: 1 },
+  exit: { opacity: 0, y: -20, scale: 0.98 },
 };
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => (
@@ -70,7 +71,7 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => (
     initial="initial"
     animate="animate"
     exit="exit"
-    transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+    transition={{ type: "spring", stiffness: 200, damping: 20, mass: 1 }}
   >
     {children}
   </motion.div>
@@ -122,11 +123,13 @@ const AnimatedRoutes = () => {
 function App() {
   return (
     <Router>
-      <Layout>
-        <ErrorBoundary>
-          <AnimatedRoutes />
-        </ErrorBoundary>
-      </Layout>
+      <SmoothScroll>
+        <Layout>
+          <ErrorBoundary>
+            <AnimatedRoutes />
+          </ErrorBoundary>
+        </Layout>
+      </SmoothScroll>
     </Router>
   );
 }

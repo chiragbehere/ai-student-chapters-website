@@ -1,6 +1,28 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { ChevronDown, Zap, Lightbulb, Users, Target } from 'lucide-react';
+import SEO from '../components/SEO';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 15, scale: 0.98 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1, 
+    transition: { type: "spring", stiffness: 120, damping: 14 } 
+  }
+};
 
 const About = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -23,6 +45,7 @@ const About = () => {
 
   return (
     <div className="w-full relative">
+      <SEO title="About" description="From hackathons to workshops — we cover every dimension of AI education." />
       {/* Hero */}
       <section className="pt-24 pb-14 bg-card/30 border-b border-border relative z-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -52,14 +75,11 @@ const About = () => {
             <h2 className="text-2xl font-bold font-heading text-heading transition-colors">What We Do 🛠️</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {activities.map((act, idx) => (
+          <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {activities.map((act) => (
               <motion.div
                 key={act.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.04 * idx, type: "spring" }}
+                variants={itemVariants}
                 className="glass-panel p-7 flex flex-col sm:flex-row items-start gap-5 group card-hover relative overflow-hidden"
               >
                 <div className="w-12 h-12 rounded-2xl bg-card border border-border flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
@@ -88,7 +108,7 @@ const About = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -99,14 +119,11 @@ const About = () => {
             <h2 className="text-2xl font-bold font-heading text-heading transition-colors">Quick FAQ 💬</h2>
           </div>
 
-          <div className="space-y-3">
+          <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="space-y-3">
             {faqs.map((faq, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.02 }}
+                variants={itemVariants}
                 className={`glass-panel overflow-hidden transition-all duration-300 ${openFaq === idx ? 'border-primary/40 ring-1 ring-primary/10' : ''}`}
               >
                 <button
@@ -138,7 +155,7 @@ const About = () => {
                 </AnimatePresence>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>
