@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, Component } from 'react';
+import type { ErrorInfo, ReactNode } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
@@ -21,6 +22,40 @@ const PageLoader = () => (
     </div>
   </div>
 );
+
+// Handle lazy load chunk errors (stuck "Loading..." upon deployment)
+class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean}> {
+  constructor(props: {children: ReactNode}) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(_: Error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("Route Error:", error, errorInfo);
+    // If we fail to fetch a component chunk (meaning a new deployment happened), auto-reload it
+    if (error.name === 'ChunkLoadError' || error.message.includes('dynamically imported module') || error.message.includes('fetch') || error.message.toLowerCase().includes('syntaxerror')) {
+      window.location.reload();
+    }
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center flex-col gap-4">
+          <h2 className="text-xl text-heading font-bold font-heading">Syncing new updates...</h2>
+          <button onClick={() => window.location.reload()} className="px-6 py-2 bg-primary/20 text-primary border border-primary/20 rounded-full hover:bg-primary/30 transition-colors">
+            Tap to Reload
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 // Page transition wrapper
 const pageVariants = {
@@ -88,7 +123,9 @@ function App() {
   return (
     <Router>
       <Layout>
-        <AnimatedRoutes />
+        <ErrorBoundary>
+          <AnimatedRoutes />
+        </ErrorBoundary>
       </Layout>
     </Router>
   );
