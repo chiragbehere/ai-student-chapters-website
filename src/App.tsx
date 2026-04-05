@@ -6,6 +6,8 @@ import Layout from './components/Layout';
 import SmoothScroll from './components/SmoothScroll';
 import ChatbotWidget from './components/ChatbotWidget';
 import WhatsAppWidget from './components/WhatsAppWidget';
+import EmailWidget from './components/EmailWidget';
+import InstagramWidget from './components/InstagramWidget';
 import Home from './pages/Home';
 
 // Lazy-load all non-home pages for faster initial load
@@ -133,6 +135,8 @@ function App() {
         </Layout>
         <ChatbotWidget />
         <WhatsAppWidget />
+        <EmailWidget />
+        <InstagramWidget />
       </SmoothScroll>
     </Router>
   );

@@ -9,7 +9,7 @@ const WhatsAppWidget = () => {
       href="https://chat.whatsapp.com/FQdz9mHb4y37ooH1JxiYoF"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 flex items-center justify-center z-40 hover:scale-110 active:scale-95 transition-transform duration-300 group"
+      className="fixed bottom-[9.5rem] right-6 w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 flex items-center justify-center z-40 hover:scale-110 active:scale-95 transition-transform duration-300 group"
       aria-label="Join WhatsApp Group"
     >
       <svg 
