@@ -3,22 +3,22 @@ import { Star } from 'lucide-react';
 
 const Team = () => {
   const leaders = [
-    { name: 'Kartik Sharad Valhe', role: 'President', class: 'IMCA-IV', emoji: '👑' },
-    { name: 'Krushnali Vanusing Jadhav', role: 'Vice President', class: 'IMCA-II', emoji: '⭐' },
-    { name: 'Tejas Dipak Panchbhai', role: 'Secretary', class: 'IMCA-IV', emoji: '📋' },
-    { name: 'Aastha Vilas Deshmukh', role: 'Treasurer', class: 'IMCA-II', emoji: '💰' },
-    { name: 'Chirag Rajesh Behere', role: 'Event Manager', class: 'IMCA-II', emoji: '🎯' },
-    { name: 'Aniruddha Balaji Landge', role: 'Tech Lead', class: 'IMCA-III', emoji: '💻' },
-    { name: 'Moin Altaf Ansari', role: 'Documentation Head', class: 'IMCA-II', emoji: '📝' },
-    { name: 'Shreyash Sunil Patil', role: 'Camera Lead', class: 'IMCA-IV', emoji: '📸' },
-    { name: 'Bhumika Vilas Patil', role: 'Social Media', class: 'IMCA-II', emoji: '📱' }
+    { name: 'Kartik Sharad Valhe', role: 'President', class: 'IMCA-IV', emoji: '👑', image: '/team/Kartik-Valhe.png' },
+    { name: 'Krushnali Vanusing Jadhav', role: 'Vice President', class: 'IMCA-II', emoji: '⭐', image: '/team/Krushnali-Jadhav.png' },
+    { name: 'Tejas Dipak Panchbhai', role: 'Secretary', class: 'IMCA-IV', emoji: '📋', image: '/team/Tejas-Panchbhai.png' },
+    { name: 'Aastha Vilas Deshmukh', role: 'Treasurer', class: 'IMCA-II', emoji: '💰', image: '/team/Aastha-Deshmukh.png' },
+    { name: 'Chirag Rajesh Behere', role: 'Event Manager', class: 'IMCA-II', emoji: '🎯', image: '/team/Chirag-Behere.png' },
+    { name: 'Aniruddha Balaji Landge', role: 'Tech Lead', class: 'IMCA-III', emoji: '💻', image: '/team/Aniruddha-Landge.png' },
+    { name: 'Moin Altaf Ansari', role: 'Documentation Head', class: 'IMCA-II', emoji: '📝', image: '/team/Moin-Ansari.png' },
+    { name: 'Shreyash Sunil Patil', role: 'Camera Lead', class: 'IMCA-IV', emoji: '📸', image: '/team/Shreyash-Patil.png' },
+    { name: 'Bhumika Vilas Patil', role: 'Social Media', class: 'IMCA-II', emoji: '📱', image: '/team/Bhumika-Patil-I-2.png' }
   ];
 
   const members = [
-    { name: 'Vaibhav Jaywantorao Patil', class: 'IMCA-IV' },
-    { name: 'Sejal Prashant Patil', class: 'IMCA-II' },
-    { name: 'Sai Paresh Upakare', class: 'IMCA-IV' },
-    { name: 'Bhumika Nitin Patil', class: 'IMCA-IV' },
+    { name: 'Vaibhav Jaywantorao Patil', class: 'IMCA-IV', image: '/team/Vaibhav-Patil.png' },
+    { name: 'Sejal Prashant Patil', class: 'IMCA-II', image: '/team/Sejal-Patil.png' },
+    { name: 'Sai Paresh Upakare', class: 'IMCA-IV', image: '/team/Sai-Upakare.png' },
+    { name: 'Bhumika Nitin Patil', class: 'IMCA-IV', image: '/team/Bhumika-Patil.png' },
     { name: 'Tejaswini Pravin Pawar', class: 'IMCA-I' },
     { name: 'Tejas Aaba Bagul', class: 'IMCA-I' },
     { name: 'Shrikant Dinesh Borase', class: 'IMCA-I' },
@@ -77,8 +77,17 @@ const Team = () => {
                 transition={{ delay: idx * 0.05, type: "spring" }}
                 className="glass-panel p-5 text-center group card-hover relative overflow-hidden"
               >
-                <div className={`mx-auto rounded-2xl bg-gradient-to-br ${colors[idx % colors.length]} w-14 h-14 flex items-center justify-center text-2xl mb-3 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-lg`}>
-                  {member.emoji}
+                <div className={`mx-auto rounded-full bg-gradient-to-br ${colors[idx % colors.length]} w-20 h-20 flex items-center justify-center text-2xl mb-4 transition-transform duration-500 hover:scale-105 border-2 border-border shadow-lg overflow-hidden`}>
+                  {member.image ? (
+                    <img 
+                      src={member.image} 
+                      alt={member.name} 
+                      className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1 group-hover:scale-[1.8] group-hover:rotate-2 transition-transform duration-500"
+                    />
+                  ) : (
+                    <span className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">{member.emoji}</span>
+                  )
+                  }
                 </div>
                 <h3 className="font-heading font-bold text-sm text-heading leading-tight mb-1 transition-colors">{member.name}</h3>
                 <p className="text-primary text-[10px] uppercase font-bold tracking-wider mb-0.5">{member.role}</p>
@@ -105,8 +114,17 @@ const Team = () => {
                 transition={{ delay: idx * 0.03 }}
                 className="glass-panel p-4 text-center group card-hover"
               >
-                <div className="mx-auto w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center text-heading font-bold font-heading text-sm mb-2.5 group-hover:scale-110 transition-transform">
-                  {member.name.charAt(0)}
+                <div className="mx-auto w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-heading font-bold font-heading text-sm mb-3 group-hover:scale-105 transition-transform overflow-hidden">
+                  {member.image ? (
+                    <img 
+                      src={member.image} 
+                      alt={member.name} 
+                      className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1 group-hover:scale-[1.8] transition-transform duration-500"
+                    />
+                  ) : (
+                    member.name.charAt(0)
+                  )
+                  }
                 </div>
                 <h3 className="font-heading font-semibold text-xs text-heading/80 leading-tight mb-0.5 transition-colors">{member.name}</h3>
                 <p className="text-foreground/30 text-[10px] uppercase font-medium">{member.class}</p>
