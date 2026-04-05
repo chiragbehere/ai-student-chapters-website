@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Camera, Mail } from 'lucide-react';
+import { Menu, X, Camera, Mail, Sun, Moon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   const links = [
     { path: '/', label: 'Home', emoji: '🏠' },
@@ -18,7 +20,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col font-body bg-background text-foreground selection:bg-primary/30 selection:text-white">
+    <div className="min-h-screen flex flex-col font-body bg-background text-foreground transition-colors duration-300">
       {/* Dynamic Background Layers */}
       <div className="bg-mesh" />
       <div className="bg-orb-accent" />
@@ -26,13 +28,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className="bg-noise" />
 
       {/* Navbar */}
-      <nav className="fixed w-full z-50 bg-background/60 backdrop-blur-xl border-b border-white/[0.06]">
+      <nav className="fixed w-full z-50 bg-background/60 backdrop-blur-xl border-b border-border transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Link to="/" className="flex items-center gap-2.5 group">
-              <img src="/images/club-logo.png" alt="AI Student Chapters Logo" className="h-9 w-9 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110" style={{ filter: 'drop-shadow(0 0 10px rgba(168,85,247,0.4))' }} />
+              <img src="/images/club-logo.png" alt="AI Student Chapters Logo" className="h-9 w-9 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110" style={{ filter: theme === 'dark' ? 'drop-shadow(0 0 10px rgba(168,85,247,0.4))' : 'none' }} />
               <span className="font-heading font-bold text-lg tracking-tight">
-                <span className="grad-text">AI</span> <span className="text-white/90">Chapters</span>
+                <span className="grad-text">AI</span> <span className="text-heading">Chapters</span>
               </span>
             </Link>
 
@@ -44,18 +46,39 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   className={`px-3.5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     location.pathname === link.path
                       ? 'bg-primary/15 text-primary border border-primary/20'
-                      : 'text-foreground/60 hover:text-white hover:bg-white/5'
+                      : 'text-foreground/60 hover:text-heading hover:bg-foreground/5'
                   }`}
                 >
                   {link.label}
                 </Link>
               ))}
+              
+              <button
+                onClick={toggleTheme}
+                className="ml-2 p-2.5 rounded-full bg-foreground/5 text-foreground hover:bg-foreground/10 transition-colors border border-border group"
+                aria-label="Toggle Theme"
+              >
+                <motion.div
+                  initial={false}
+                  animate={{ rotate: theme === 'dark' ? 0 : 180, scale: [0.8, 1.1, 1] }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 10 }}
+                >
+                  {theme === 'dark' ? <Moon size={18} /> : <Sun size={18} className="text-amber-500" />}
+                </motion.div>
+              </button>
             </div>
 
-            <div className="md:hidden flex items-center">
+            <div className="md:hidden flex items-center gap-2">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-xl bg-foreground/5 text-foreground border border-border"
+                aria-label="Toggle Theme"
+              >
+                {theme === 'dark' ? <Moon size={20} /> : <Sun size={20} className="text-amber-500" />}
+              </button>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-foreground/80 hover:text-primary transition-all p-2 rounded-xl hover:bg-white/5"
+                className="text-foreground hover:text-primary transition-all p-2 rounded-xl bg-foreground/5 border border-border"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -69,7 +92,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-card/95 backdrop-blur-xl border-t border-white/[0.06] overflow-hidden"
+              className="md:hidden bg-card/95 backdrop-blur-xl border-t border-border overflow-hidden"
             >
               <div className="px-4 py-4 space-y-2 flex flex-col">
                 {links.map((link) => (
@@ -79,7 +102,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       location.pathname === link.path
                         ? 'bg-primary/10 text-primary border border-primary/15'
-                        : 'text-foreground/70 hover:bg-white/5 hover:text-white'
+                        : 'text-foreground/70 hover:bg-foreground/5 hover:text-heading'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -98,7 +121,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </main>
 
       {/* Footer */}
-      <footer className="relative border-t border-white/[0.06] bg-card/50 backdrop-blur-lg mt-20 overflow-hidden">
+      <footer className="relative border-t border-border bg-card/50 backdrop-blur-lg mt-20 overflow-hidden transition-colors duration-300">
         {/* Top gradient line */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
         
@@ -108,24 +131,24 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center gap-2.5">
-                <img src="/images/club-logo.png" alt="Logo" className="h-8 w-8 opacity-80" style={{ filter: 'drop-shadow(0 0 8px rgba(168,85,247,0.3))' }} />
-                <h2 className="font-heading font-bold text-lg">
+                <img src="/images/club-logo.png" alt="Logo" className="h-8 w-8 opacity-80" style={{ filter: theme === 'dark' ? 'drop-shadow(0 0 8px rgba(168,85,247,0.3))' : 'none' }} />
+                <h2 className="font-heading font-bold text-lg text-heading">
                   <span className="grad-text">AI Student Chapters</span>
                 </h2>
               </div>
-              <p className="text-foreground/40 text-sm leading-relaxed max-w-xs">
+              <p className="text-foreground/50 text-sm leading-relaxed max-w-xs">
                 Where curiosity meets code. Built for students who want to shape the future with AI. ✨
               </p>
             </div>
 
             {/* Links */}
             <div className="space-y-3">
-              <h3 className="text-white/80 font-heading font-semibold text-sm">
+              <h3 className="text-heading font-heading font-semibold text-sm">
                 Quick Links
               </h3>
               <div className="flex flex-wrap gap-2">
                 {links.map((link) => (
-                  <Link key={link.path} to={link.path} className="px-3 py-1.5 rounded-full bg-white/[0.04] text-foreground/50 text-xs hover:bg-primary/10 hover:text-primary transition-all border border-white/[0.04]">
+                  <Link key={link.path} to={link.path} className="px-3 py-1.5 rounded-full bg-foreground/5 text-foreground/60 text-xs hover:bg-primary/10 hover:text-primary transition-all border border-border">
                     {link.emoji} {link.label}
                   </Link>
                 ))}
@@ -134,15 +157,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
             {/* Connect */}
             <div className="space-y-3">
-              <h3 className="text-white/80 font-heading font-semibold text-sm">Let's Connect 🤝</h3>
-              <a href="mailto:imrdaistudentclub@gmail.com" className="text-foreground/50 hover:text-primary transition-colors text-sm block truncate">
+              <h3 className="text-heading font-heading font-semibold text-sm">Let's Connect 🤝</h3>
+              <a href="mailto:imrdaistudentclub@gmail.com" className="text-foreground/60 hover:text-primary transition-colors text-sm block truncate">
                 imrdaistudentclub@gmail.com
               </a>
               <div className="flex items-center gap-2 pt-1">
-                <a href="https://www.instagram.com/ai.student_chapters/" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-foreground/50 hover:text-accent hover:border-accent/30 hover:bg-accent/10 transition-all duration-300">
+                <a href="https://www.instagram.com/ai.student_chapters/" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-foreground/5 border border-border flex items-center justify-center text-foreground/50 hover:text-accent hover:border-accent/30 hover:bg-accent/10 transition-all duration-300">
                   <Camera size={15} />
                 </a>
-                <a href="mailto:imrdaistudentclub@gmail.com" className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-foreground/50 hover:text-primary hover:border-primary/30 hover:bg-primary/10 transition-all duration-300">
+                <a href="mailto:imrdaistudentclub@gmail.com" className="w-9 h-9 rounded-full bg-foreground/5 border border-border flex items-center justify-center text-foreground/50 hover:text-primary hover:border-primary/30 hover:bg-primary/10 transition-all duration-300">
                   <Mail size={15} />
                 </a>
               </div>
@@ -150,7 +173,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
           </div>
 
-          <div className="pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row justify-between items-center gap-3 text-foreground/25 text-xs">
+          <div className="pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-3 text-foreground/30 text-xs">
             <p>© {new Date().getFullYear()} AI Student Chapters, RCPIMRD</p>
             <p className="flex items-center gap-1.5">made with 💜 by students</p>
           </div>

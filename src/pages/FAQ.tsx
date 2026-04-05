@@ -9,19 +9,19 @@ const FAQItem = ({ question, answer, isOpen, onClick, index }: { question: strin
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.06 }}
-      className="glass-panel overflow-hidden mb-3 card-hover"
+      className={`glass-panel overflow-hidden mb-3 card-hover transition-all duration-300 ${isOpen ? 'ring-1 ring-primary/20 border-primary/20 shadow-lg shadow-primary/5' : ''}`}
     >
       <button
         onClick={onClick}
         className="w-full text-left px-6 py-5 flex justify-between items-center group"
       >
-        <span className="font-heading font-semibold text-base text-white/90 group-hover:text-primary transition-colors pr-4">
+        <span className={`font-heading font-semibold text-base transition-colors duration-300 pr-4 ${isOpen ? 'text-heading' : 'text-foreground/70 group-hover:text-heading'}`}>
           {question}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
-          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isOpen ? 'bg-primary/15 text-primary' : 'bg-white/5 text-foreground/40'}`}
+          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isOpen ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-foreground/5 text-foreground/40'}`}
         >
           <ChevronDown size={16} />
         </motion.div>
@@ -34,7 +34,7 @@ const FAQItem = ({ question, answer, isOpen, onClick, index }: { question: strin
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-6 pb-5 pt-1 text-foreground/60 text-sm leading-relaxed">
+            <div className="px-6 pb-5 pt-1 text-foreground/60 text-sm leading-relaxed border-t border-border/50">
               {answer}
             </div>
           </motion.div>
@@ -71,7 +71,7 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="w-full relative min-h-screen pt-28 pb-24 z-10">
+    <div className="w-full relative min-h-screen pt-28 pb-24 z-10 transition-colors duration-300">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -90,7 +90,7 @@ const FAQ = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black font-heading leading-tight mb-3"
+            className="text-4xl md:text-5xl font-black font-heading leading-tight mb-3 text-heading transition-colors"
           >
             FAQ <span className="grad-text">💬</span>
           </motion.h1>
@@ -128,7 +128,7 @@ const FAQ = () => {
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
           <div className="relative z-10">
-            <h3 className="text-xl font-bold font-heading text-white mb-2">Still curious? 🤷‍♀️</h3>
+            <h3 className="text-xl font-bold font-heading text-heading mb-2 transition-colors">Still curious? 🤷‍♀️</h3>
             <p className="text-foreground/50 text-sm mb-5">Drop us a message — we're super approachable, promise.</p>
             <a
               href="mailto:imrdaistudentclub@gmail.com"

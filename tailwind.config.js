@@ -7,16 +7,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0c0a1a',
-        foreground: '#eeedf5',
-        primary: '#a855f7',
-        secondary: '#38bdf8',
-        accent: '#f472b6',
-        lime: '#a3e635',
-        coral: '#fb7185',
-        muted: '#16132a',
-        border: 'rgba(255, 255, 255, 0.08)',
-        card: '#1a1730',
+        background: 'rgb(var(--color-background) / <alpha-value>)',
+        foreground: 'rgb(var(--color-foreground) / <alpha-value>)',
+        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
+        accent: 'rgb(var(--color-accent) / <alpha-value>)',
+        lime: 'rgb(var(--color-lime) / <alpha-value>)',
+        coral: 'rgb(var(--color-coral) / <alpha-value>)',
+        muted: 'rgb(var(--color-muted) / <alpha-value>)',
+        border: 'rgb(var(--color-border) / <alpha-value>)',
+        card: 'rgb(var(--color-card) / <alpha-value>)',
+        heading: 'rgb(var(--color-heading) / <alpha-value>)',
       },
       fontFamily: {
         heading: ['"Outfit"', 'sans-serif'],

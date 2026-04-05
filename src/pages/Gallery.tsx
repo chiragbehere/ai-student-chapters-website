@@ -23,7 +23,7 @@ const Gallery = () => {
   return (
     <div className="w-full">
       {/* Hero */}
-      <section className="pt-24 pb-12 bg-card/30 border-b border-white/[0.04]">
+      <section className="pt-24 pb-12 bg-card/30 border-b border-border transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -37,7 +37,7 @@ const Gallery = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: "spring" }}
-            className="text-4xl md:text-5xl font-black font-heading mb-3 text-white"
+            className="text-4xl md:text-5xl font-black font-heading mb-3 text-heading transition-colors"
           >
             Gallery <span className="grad-text">📸</span>
           </motion.h1>
@@ -53,26 +53,26 @@ const Gallery = () => {
       </section>
 
       {/* Content */}
-      <section className="py-10">
+      <section className="py-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Tab Switcher */}
           <div className="flex justify-center mb-10">
-            <div className="bg-card/50 p-1.5 rounded-full inline-flex border border-white/[0.06]">
+            <div className="bg-card p-1.5 rounded-full inline-flex border border-border shadow-sm">
               <button
                 onClick={() => setActiveTab('images')}
-                className={`relative px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all z-10 flex items-center gap-2 ${activeTab === 'images' ? 'text-white' : 'text-foreground/50 hover:text-white'}`}
+                className={`relative px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all z-10 flex items-center gap-2 ${activeTab === 'images' ? 'text-white' : 'text-foreground/50 hover:text-heading'}`}
               >
                 {activeTab === 'images' && (
-                  <motion.div layoutId="galleryTab" className="absolute inset-0 bg-primary rounded-full -z-10" />
+                  <motion.div layoutId="galleryTab" className="absolute inset-0 bg-primary rounded-full shadow-lg shadow-primary/20 -z-10" />
                 )}
                 <Image size={14} /> Photos
               </button>
               <button
                 onClick={() => setActiveTab('videos')}
-                className={`relative px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all z-10 flex items-center gap-2 ${activeTab === 'videos' ? 'text-white' : 'text-foreground/50 hover:text-white'}`}
+                className={`relative px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all z-10 flex items-center gap-2 ${activeTab === 'videos' ? 'text-white' : 'text-foreground/50 hover:text-heading'}`}
               >
                 {activeTab === 'videos' && (
-                  <motion.div layoutId="galleryTab" className="absolute inset-0 bg-accent rounded-full -z-10" />
+                  <motion.div layoutId="galleryTab" className="absolute inset-0 bg-accent rounded-full shadow-lg shadow-accent/20 -z-10" />
                 )}
                 <Film size={14} /> Videos
               </button>
@@ -102,10 +102,10 @@ const Gallery = () => {
                     loading="lazy"
                   />
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   {/* Caption */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-white text-sm font-heading font-semibold">{img.caption}</p>
+                  <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-white text-sm font-heading font-semibold drop-shadow-md">{img.caption}</p>
                   </div>
                 </motion.div>
               ))}
@@ -133,8 +133,8 @@ const Gallery = () => {
                       <source src={video.src} type="video/mp4" />
                     </video>
                   </div>
-                  <div className="p-4 border-t border-white/[0.04]">
-                    <h3 className="font-bold font-heading text-base text-white mb-0.5">{video.title}</h3>
+                  <div className="p-4 border-t border-border bg-card/30">
+                    <h3 className="font-bold font-heading text-base text-heading mb-0.5 transition-colors">{video.title}</h3>
                     <p className="text-foreground/40 text-xs">{video.desc}</p>
                   </div>
                 </motion.div>

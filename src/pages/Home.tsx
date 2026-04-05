@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Users, Zap, Rocket, Trophy, Calendar, Info, Star, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 const Home = () => {
+  const { theme } = useTheme();
   const tickerItems = [
     '🔥 Hackathons', '🤖 AI', '⚡ Code-Carnival', '🧠 Prompt Engineering',
     '🎯 Events', '💻 Workshops', '🤝 Team Work', '✨ Vibe Coding', '🚀 Innovation'
@@ -11,7 +13,7 @@ const Home = () => {
   return (
     <div className="w-full relative min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-28 pb-16 z-10">
+      <section className="relative pt-28 pb-16 z-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
           
           {/* Floating badge */}
@@ -37,7 +39,9 @@ const Home = () => {
               alt="AI Chapters Logo"
               className="w-24 h-24 md:w-32 md:h-32 object-contain"
               style={{
-                filter: 'drop-shadow(0 0 25px rgba(168,85,247,0.45)) drop-shadow(0 0 50px rgba(56,189,248,0.25))',
+                filter: theme === 'dark' 
+                  ? 'drop-shadow(0 0 25px rgba(168,85,247,0.45)) drop-shadow(0 0 50px rgba(56,189,248,0.25))'
+                  : 'drop-shadow(0 10px 20px rgba(168,85,247,0.15))',
                 animation: 'float 5s ease-in-out infinite, glowPulse 3s ease-in-out infinite alternate',
               }}
             />
@@ -50,7 +54,7 @@ const Home = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-center max-w-3xl"
           >
-            <h1 className="text-5xl md:text-7xl font-black font-heading leading-[1.1] mb-4 text-white">
+            <h1 className="text-5xl md:text-7xl font-black font-heading leading-[1.1] mb-4 text-heading transition-colors duration-300">
               <span className="grad-text">AI Student</span><br />Chapters
             </h1>
             <p className="text-base md:text-lg text-foreground/60 mb-8 leading-relaxed font-body max-w-xl mx-auto">
@@ -78,7 +82,7 @@ const Home = () => {
       </section>
 
       {/* Marquee Ticker */}
-      <div className="py-3 border-y border-white/[0.04] bg-card/30 overflow-hidden relative z-10 w-full mb-12">
+      <div className="py-3 border-y border-border bg-card/30 overflow-hidden relative z-10 w-full mb-12 transition-colors duration-300">
         <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
         <div className="flex whitespace-nowrap gap-8 items-center" style={{ animation: 'tickerScroll 30s linear infinite' }}>
@@ -113,11 +117,11 @@ const Home = () => {
               <div className="pill bg-lime/10 text-lime border border-lime/20 w-fit mb-4">
                 ✅ Completed
               </div>
-              <h2 className="text-3xl md:text-4xl font-black font-heading tracking-tight mb-2 text-white">Code-Carnival</h2>
+              <h2 className="text-3xl md:text-4xl font-black font-heading tracking-tight mb-2 text-heading transition-colors duration-300">Code-Carnival</h2>
               <p className="text-foreground/50 text-sm mb-6 max-w-sm">
                 33+ builders competed in our flagship 6-hour AI hackathon sprint. It was epic! 🔥
               </p>
-              <Link to="/events" className="genz-btn bg-white text-background text-sm px-5 py-2.5 flex items-center gap-2 w-fit hover:bg-primary hover:text-white">
+              <Link to="/events" className="genz-btn bg-heading text-background text-sm px-5 py-2.5 flex items-center gap-2 w-fit hover:bg-primary hover:text-white transition-colors duration-300">
                 See Winners <ArrowRight size={16} />
               </Link>
             </div>
@@ -136,7 +140,7 @@ const Home = () => {
                 <Users size={16} className="text-primary" />
               </div>
             </div>
-            <h3 className="text-5xl font-black font-heading text-white">30<span className="text-primary">+</span></h3>
+            <h3 className="text-5xl font-black font-heading text-heading transition-colors duration-300">30<span className="text-primary">+</span></h3>
             <p className="text-xs text-foreground/40 font-semibold mt-1.5 uppercase tracking-wider">Active Members</p>
           </motion.div>
 
@@ -156,7 +160,7 @@ const Home = () => {
                 <ArrowRight size={18} className="text-foreground/30 group-hover:text-accent group-hover:translate-x-1 transition-all" />
               </div>
               <div>
-                <h3 className="text-lg font-bold font-heading text-white group-hover:text-accent transition-colors">Workshops 🎓</h3>
+                <h3 className="text-lg font-bold font-heading text-heading group-hover:text-accent transition-colors">Workshops 🎓</h3>
                 <p className="text-xs text-foreground/40 mt-1">Learn something new today</p>
               </div>
             </Link>
@@ -168,17 +172,17 @@ const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="lg:col-span-2 glass-panel p-6 relative overflow-hidden group card-hover bg-gradient-to-br from-card to-muted"
+            className="lg:col-span-2 glass-panel p-6 relative overflow-hidden group card-hover bg-gradient-to-br from-card to-muted border-border"
           >
              <div className="absolute right-[-5%] top-[-15%] opacity-[0.06] group-hover:rotate-6 transition-transform duration-700 pointer-events-none">
-               <Rocket size={140} />
+               <Rocket size={140} className="text-heading" />
              </div>
              <div className="h-full flex flex-col justify-center relative z-10">
                <div className="flex items-center gap-2 mb-2">
                  <Star size={18} className="text-accent" />
                  <span className="text-xs text-foreground/40 font-semibold uppercase tracking-wider">What we do</span>
                </div>
-               <h3 className="text-xl font-bold font-heading mb-1.5 text-white">We Build Cool Stuff 🛠️</h3>
+               <h3 className="text-xl font-bold font-heading mb-1.5 text-heading transition-colors duration-300">We Build Cool Stuff 🛠️</h3>
                <p className="text-sm text-foreground/50">From prompt engineering to full-stack AI apps — if it's innovative, we're building it.</p>
              </div>
           </motion.div>
@@ -199,7 +203,7 @@ const Home = () => {
                 <ArrowRight size={18} className="text-foreground/30 group-hover:text-secondary group-hover:translate-x-1 transition-all" />
               </div>
               <div>
-                <h3 className="text-lg font-bold font-heading text-white group-hover:text-secondary transition-colors">FAQ 💬</h3>
+                <h3 className="text-lg font-bold font-heading text-heading group-hover:text-secondary transition-colors">FAQ 💬</h3>
                 <p className="text-xs text-foreground/40 mt-1">Got q's? We got a's</p>
               </div>
             </Link>
@@ -218,7 +222,7 @@ const Home = () => {
                 <Trophy size={16} className="text-lime" />
               </div>
             </div>
-            <h3 className="text-5xl font-black font-heading text-white">5<span className="text-lime">+</span></h3>
+            <h3 className="text-5xl font-black font-heading text-heading transition-colors duration-300">5<span className="text-lime">+</span></h3>
             <p className="text-xs text-foreground/40 font-semibold mt-1.5 uppercase tracking-wider">Events Done</p>
           </motion.div>
 
@@ -237,7 +241,7 @@ const Home = () => {
               <Heart size={18} className="text-coral" />
               <span className="text-xs font-semibold uppercase tracking-wider text-foreground/40">Join the community</span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-black font-heading text-white mb-2">
+            <h2 className="text-2xl md:text-3xl font-black font-heading text-heading mb-2 transition-colors duration-300">
               Ready to level up? 🚀
             </h2>
             <p className="text-foreground/50 text-sm mb-6 max-w-md mx-auto">

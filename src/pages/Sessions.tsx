@@ -8,7 +8,7 @@ const Sessions = () => {
   ];
 
   return (
-    <div className="w-full relative min-h-screen pt-28 pb-24 z-10">
+    <div className="w-full relative min-h-screen pt-28 pb-24 z-10 transition-colors duration-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -27,7 +27,7 @@ const Sessions = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black font-heading leading-tight mb-3"
+            className="text-4xl md:text-5xl font-black font-heading leading-tight mb-3 text-heading transition-colors"
           >
             Workshops <span className="grad-text">& Sessions</span>
           </motion.h1>
@@ -53,8 +53,8 @@ const Sessions = () => {
               transition={{ delay: idx * 0.1 }}
               className="glass-panel p-6 relative overflow-hidden card-hover"
             >
-              <h3 className="text-base font-bold font-heading mb-4 text-white">{ws.title}</h3>
-              <div className="rounded-xl overflow-hidden border border-white/[0.06] mb-4">
+              <h3 className="text-base font-bold font-heading mb-4 text-heading transition-colors">{ws.title}</h3>
+              <div className="rounded-xl overflow-hidden border border-border mb-4 bg-background/50">
                 <iframe
                   src={ws.embedUrl}
                   frameBorder="0"
@@ -63,10 +63,11 @@ const Sessions = () => {
                   allowFullScreen
                   style={{ border: 'none' }}
                   title={ws.title}
+                  className="bg-white/5 shadow-inner"
                 />
               </div>
               <div className="text-center">
-                <a href={ws.downloadUrl} className="genz-btn-outline inline-flex items-center gap-2 text-sm py-2.5">
+                <a href={ws.downloadUrl} className="genz-btn-primary inline-flex items-center gap-2 text-sm py-2.5">
                   <Download size={14} />
                   Download PPT
                 </a>

@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion';
 import { Medal, Award, Star, Calendar, Clock, Users, MapPin, CheckCircle, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 const Events = () => {
+  const { theme } = useTheme();
+  
   const ugWinners = [
     { team: 'STAR', rank: '1st Rank', prize: '₹500', medal: <Medal size={24} className="text-yellow-400" />, medalKey: 'gold', members: [{ name: 'Vishwakarma Rishabh Pandurang', class: 'IMCA 2' }] },
     { team: 'The Ultron', rank: '2nd Rank', prize: '₹500', medal: <Medal size={24} className="text-gray-300" />, medalKey: 'silver', members: [{ name: 'Yash Mahendra Patil', class: 'IMCA 2' }, { name: 'Hrishikesh Sambhaji Bari', class: 'IMCA 2' }, { name: 'Tejas Haresh Sonavane', class: 'IMCA 2' }] },
@@ -55,16 +58,16 @@ const Events = () => {
       
       <div className="flex justify-between items-start mb-5 ml-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-card border border-white/[0.06] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center">
             {winner.medal}
           </div>
           <div>
-            <h3 className="text-lg font-bold font-heading text-white">{winner.team}</h3>
+            <h3 className="text-lg font-bold font-heading text-heading transition-colors duration-300">{winner.team}</h3>
             <p className="text-foreground/40 text-xs font-medium">{winner.rank}</p>
           </div>
         </div>
         {winner.prize && (
-          <span className="pill bg-yellow-500/10 text-yellow-400 border border-yellow-500/15">
+          <span className="pill bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">
             {winner.prize}
           </span>
         )}
@@ -77,7 +80,7 @@ const Events = () => {
               <Star size={10} className={winner.medalKey === 'gold' ? 'text-yellow-400' : 'text-primary/60'} />
               <span className="text-foreground/80 text-xs font-medium">{member.name}</span>
             </div>
-            <span className="px-2 py-0.5 rounded-full bg-card text-foreground/40 text-[10px] border border-white/[0.04]">{member.class}</span>
+            <span className="px-2 py-0.5 rounded-full bg-card text-foreground/40 text-[10px] border border-border">{member.class}</span>
           </div>
         ))}
       </div>
@@ -87,12 +90,12 @@ const Events = () => {
   return (
     <div className="w-full relative">
       {/* Hero */}
-      <section className="pt-24 pb-14 relative z-10 bg-card/30 border-b border-white/[0.04]">
+      <section className="pt-24 pb-14 relative z-10 bg-card/30 border-b border-border transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-10">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex-1 space-y-5 text-center md:text-left">
               <div className="pill bg-lime/10 text-lime border border-lime/20 w-fit mx-auto md:mx-0">✅ Completed</div>
-              <h1 className="text-4xl md:text-6xl font-black font-heading leading-tight text-white">
+              <h1 className="text-4xl md:text-6xl font-black font-heading leading-tight text-heading transition-colors">
                 Code Carnival <span className="grad-text">Results</span> 🏆
               </h1>
               <p className="text-foreground/50 text-base max-w-xl mx-auto md:mx-0">
@@ -104,8 +107,13 @@ const Events = () => {
               <img
                 src="/images/code-carnival-logo.png"
                 alt="Code Carnival Logo"
-                className="w-40 h-40 md:w-52 md:h-52 object-contain rounded-full border-2 border-white/10"
-                style={{ boxShadow: '0 0 30px rgba(168,85,247,0.3), 0 0 60px rgba(56,189,248,0.15)', animation: 'glowPulse 3s ease-in-out infinite alternate' }}
+                className="w-40 h-40 md:w-52 md:h-52 object-contain rounded-full border-2 border-border"
+                style={{ 
+                  boxShadow: theme === 'dark' 
+                    ? '0 0 30px rgba(168,85,247,0.3), 0 0 60px rgba(56,189,248,0.15)' 
+                    : '0 10px 30px rgba(168,85,247,0.1)', 
+                  animation: 'glowPulse 3s ease-in-out infinite alternate' 
+                }}
               />
             </motion.div>
           </div>
@@ -113,11 +121,11 @@ const Events = () => {
       </section>
 
       {/* Info Chips + Prize */}
-      <section className="py-10 relative z-10">
+      <section className="py-10 relative z-10 transition-colors duration-300">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <div className="flex flex-wrap gap-2 justify-center mb-6">
             {infoChips.map((chip, i) => (
-              <div key={i} className={`pill flex items-center gap-1.5 ${chip.special ? 'bg-lime/10 border border-lime/20 text-lime' : 'bg-white/[0.04] border border-white/[0.04] text-foreground/50'}`}>
+              <div key={i} className={`pill flex items-center gap-1.5 ${chip.special ? 'bg-lime/10 border border-lime/20 text-lime' : 'bg-foreground/5 border border-border text-foreground/50'}`}>
                 {chip.icon} {chip.text}
               </div>
             ))}
@@ -131,7 +139,7 @@ const Events = () => {
             ].map((prize, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="glass-panel p-4 text-center card-hover">
                 <span className="text-2xl block mb-1">{prize.medal}</span>
-                <div className="font-bold text-white text-base">{prize.amount}</div>
+                <div className="font-bold text-heading text-base">{prize.amount}</div>
                 <div className="text-[10px] uppercase tracking-widest text-foreground/30 mt-1">{prize.label}</div>
               </motion.div>
             ))}
@@ -142,7 +150,7 @@ const Events = () => {
       {/* UG Winners */}
       <section className="py-16 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold font-heading text-white mb-8 flex items-center gap-3">
+          <h2 className="text-2xl font-bold font-heading text-heading mb-8 flex items-center gap-3 transition-colors">
             <span className="text-2xl">🎓</span> UG Winners
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -152,9 +160,9 @@ const Events = () => {
       </section>
 
       {/* PG Winners */}
-      <section className="py-16 bg-card/20 border-y border-white/[0.04] relative z-10">
+      <section className="py-16 bg-card/20 border-y border-border relative z-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold font-heading text-white mb-8 flex items-center gap-3">
+          <h2 className="text-2xl font-bold font-heading text-heading mb-8 flex items-center gap-3 transition-colors">
             <span className="text-2xl">🔹</span> PG Winners
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -173,13 +181,13 @@ const Events = () => {
       </section>
 
       {/* Video Highlights */}
-      <section className="py-16 border-t border-white/[0.04] relative z-10">
+      <section className="py-16 border-t border-border relative z-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <div className="pill bg-secondary/10 text-secondary border border-secondary/20 mx-auto w-fit mb-4 flex items-center gap-2">
               <Play size={12} /> highlights
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-white">Hackathon Highlights 🎬</h2>
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-heading transition-colors">Hackathon Highlights 🎬</h2>
             <p className="text-foreground/40 text-sm mt-2">Relive the best moments from Code-Carnival 2026!</p>
           </div>
 
@@ -191,8 +199,8 @@ const Events = () => {
                     <source src={video.src} type="video/mp4" />
                   </video>
                 </div>
-                <div className="p-4 border-t border-white/[0.04]">
-                  <h3 className="font-bold font-heading text-base text-white mb-0.5">{video.title}</h3>
+                <div className="p-4 border-t border-border bg-card/30">
+                  <h3 className="font-bold font-heading text-base text-heading mb-0.5 transition-colors">{video.title}</h3>
                   <p className="text-foreground/40 text-xs">{video.desc}</p>
                 </div>
               </motion.div>
@@ -202,17 +210,17 @@ const Events = () => {
       </section>
 
       {/* Schedule */}
-      <section className="py-16 border-t border-white/[0.04] bg-card/20 relative z-10">
+      <section className="py-16 border-t border-border bg-card/20 relative z-10 transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold font-heading text-white">Event Timeline ⏰</h2>
+            <h2 className="text-2xl font-bold font-heading text-heading transition-colors">Event Timeline ⏰</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {schedule.map((item, idx) => (
               <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.12 }} className="glass-panel p-6 relative overflow-hidden card-hover">
                 <span className="text-3xl mb-3 block">{item.emoji}</span>
                 <div className="text-primary font-bold text-xs tracking-wider mb-2">{item.time}</div>
-                <h3 className="text-base font-bold font-heading text-white mb-1">{item.label}</h3>
+                <h3 className="text-base font-bold font-heading text-heading mb-1 transition-colors">{item.label}</h3>
                 <p className="text-foreground/40 text-xs">{item.sub}</p>
               </motion.div>
             ))}
@@ -223,7 +231,7 @@ const Events = () => {
       {/* Gallery CTA */}
       <section className="py-16 relative z-10">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold font-heading text-white mb-3">Want to see more? 📸</h2>
+          <h2 className="text-2xl font-bold font-heading text-heading mb-3 transition-colors">Want to see more? 📸</h2>
           <p className="text-foreground/50 text-sm mb-6">Check out our exclusive photo and video gallery from the event.</p>
           <Link to="/gallery" className="genz-btn-primary inline-block">
             Go to Gallery →
