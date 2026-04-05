@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
 import SmoothScroll from './components/SmoothScroll';
+import ChatbotWidget from './components/ChatbotWidget';
 import Home from './pages/Home';
 
 // Lazy-load all non-home pages for faster initial load
@@ -129,6 +130,7 @@ function App() {
             <AnimatedRoutes />
           </ErrorBoundary>
         </Layout>
+        <ChatbotWidget />
       </SmoothScroll>
     </Router>
   );
