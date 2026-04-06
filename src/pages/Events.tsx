@@ -126,7 +126,7 @@ const Events = () => {
 
             <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.05, type: "spring" }} className="flex-shrink-0">
               <img
-                src="/images/code-carnival-logo.png"
+                src="/images/code-carnival-logo.webp"
                 alt="Code Carnival Logo"
                 className="w-40 h-40 md:w-52 md:h-52 object-contain rounded-full border-2 border-border"
                 style={{ 

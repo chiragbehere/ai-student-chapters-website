@@ -9,7 +9,7 @@ interface SEOProps {
 
 export default function SEO({ title, description, image, url }: SEOProps) {
   const defaultDesc = "Exploring AI — we learn, we build, we compete, and we grow together at AI Student Chapters.";
-  const defaultImage = "/images/club-logo.png";
+  const defaultImage = "/images/club-logo.webp";
   
   return (
     <Helmet>

@@ -28,12 +28,12 @@ const Gallery = () => {
   const [activeTab, setActiveTab] = useState<'images' | 'videos'>('images');
 
   const images = [
-    { src: '/images/event1.jpg', caption: 'Workshop on IMCA classes' },
-    { src: '/images/event2.jpg', caption: 'Workshop on MCA classes' },
-    { src: '/images/event3.jpg', caption: 'Workshop by Hon. HOD Dr. M. N. Behere' },
-    { src: '/images/event4.jpg', caption: 'Mentors Meet' },
-    { src: '/images/event5.jpg', caption: 'Team AISC' },
-    { src: '/images/event6.jpg', caption: 'Inauguration' },
+    { src: '/images/event1.webp', caption: 'Workshop on IMCA classes' },
+    { src: '/images/event2.webp', caption: 'Workshop on MCA classes' },
+    { src: '/images/event3.webp', caption: 'Workshop by Hon. HOD Dr. M. N. Behere' },
+    { src: '/images/event4.webp', caption: 'Mentors Meet' },
+    { src: '/images/event5.webp', caption: 'Team AISC' },
+    { src: '/images/event6.webp', caption: 'Inauguration' },
   ];
 
   const videos = [

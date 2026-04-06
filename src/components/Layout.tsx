@@ -48,7 +48,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Link to="/" className="flex items-center gap-2.5 group">
-              <img src="/images/club-logo.png" alt="AI Student Chapters Logo" className="h-9 w-9 transition-transform duration-300 group-hover:rotate-6" style={{ filter: theme === 'dark' ? 'drop-shadow(0 0 10px rgba(168,85,247,0.4))' : 'none' }} />
+              <img src="/images/club-logo.webp" alt="AI Student Chapters Logo" className="h-9 w-9 transition-transform duration-300 group-hover:rotate-6" style={{ filter: theme === 'dark' ? 'drop-shadow(0 0 10px rgba(168,85,247,0.4))' : 'none' }} />
               <span className="font-heading font-bold text-lg tracking-tight">
                 <span className="grad-text">AI</span> <span className="text-heading">Chapters</span>
               </span>
@@ -141,7 +141,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center gap-2.5">
-                <img src="/images/club-logo.png" alt="Logo" className="h-8 w-8 opacity-80" style={{ filter: theme === 'dark' ? 'drop-shadow(0 0 8px rgba(168,85,247,0.3))' : 'none' }} />
+                <img src="/images/club-logo.webp" alt="Logo" className="h-8 w-8 opacity-80" style={{ filter: theme === 'dark' ? 'drop-shadow(0 0 8px rgba(168,85,247,0.3))' : 'none' }} />
                 <h2 className="font-heading font-bold text-lg text-heading">
                   <span className="grad-text">AI Student Chapters</span>
                 </h2>

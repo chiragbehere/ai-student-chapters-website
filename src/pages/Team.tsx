@@ -25,22 +25,22 @@ const itemVariants: Variants = {
 
 const Team = () => {
   const leaders = [
-    { name: 'Kartik Sharad Valhe', role: 'President', class: 'IMCA-IV', emoji: '👑', image: '/team/Kartik-Valhe.png' },
-    { name: 'Krushnali Vanusing Jadhav', role: 'Vice President', class: 'IMCA-II', emoji: '⭐', image: '/team/Krushnali-Jadhav.png' },
-    { name: 'Tejas Dipak Panchbhai', role: 'Secretary', class: 'IMCA-IV', emoji: '📋', image: '/team/Tejas-Panchbhai.png' },
-    { name: 'Aastha Vilas Deshmukh', role: 'Treasurer', class: 'IMCA-II', emoji: '💰', image: '/team/Aastha-Deshmukh.png' },
-    { name: 'Chirag Rajesh Behere', role: 'Event Manager', class: 'IMCA-II', emoji: '🎯', image: '/team/Chirag-Behere.png' },
-    { name: 'Aniruddha Balaji Landge', role: 'Tech Lead', class: 'IMCA-III', emoji: '💻', image: '/team/Aniruddha-Landge.png' },
-    { name: 'Moin Altaf Ansari', role: 'Documentation Head', class: 'IMCA-II', emoji: '📝', image: '/team/Moin-Ansari.png' },
-    { name: 'Shreyash Sunil Patil', role: 'Camera Lead', class: 'IMCA-IV', emoji: '📸', image: '/team/Shreyash-Patil.png' },
-    { name: 'Bhumika Vilas Patil', role: 'Social Media', class: 'IMCA-II', emoji: '📱', image: '/team/Bhumika-Patil-I-2.png' }
+    { name: 'Kartik Sharad Valhe', role: 'President', class: 'IMCA-IV', emoji: '👑', image: '/team/Kartik-Valhe.webp' },
+    { name: 'Krushnali Vanusing Jadhav', role: 'Vice President', class: 'IMCA-II', emoji: '⭐', image: '/team/Krushnali-Jadhav.webp' },
+    { name: 'Tejas Dipak Panchbhai', role: 'Secretary', class: 'IMCA-IV', emoji: '📋', image: '/team/Tejas-Panchbhai.webp' },
+    { name: 'Aastha Vilas Deshmukh', role: 'Treasurer', class: 'IMCA-II', emoji: '💰', image: '/team/Aastha-Deshmukh.webp' },
+    { name: 'Chirag Rajesh Behere', role: 'Event Manager', class: 'IMCA-II', emoji: '🎯', image: '/team/Chirag-Behere.webp' },
+    { name: 'Aniruddha Balaji Landge', role: 'Tech Lead', class: 'IMCA-III', emoji: '💻', image: '/team/Aniruddha-Landge.webp' },
+    { name: 'Moin Altaf Ansari', role: 'Documentation Head', class: 'IMCA-II', emoji: '📝', image: '/team/Moin-Ansari.webp' },
+    { name: 'Shreyash Sunil Patil', role: 'Camera Lead', class: 'IMCA-IV', emoji: '📸', image: '/team/Shreyash-Patil.webp' },
+    { name: 'Bhumika Vilas Patil', role: 'Social Media', class: 'IMCA-II', emoji: '📱', image: '/team/Bhumika-Patil-I-2.webp' }
   ];
 
   const members = [
-    { name: 'Vaibhav Jaywantorao Patil', class: 'IMCA-IV', image: '/team/Vaibhav-Patil.png' },
-    { name: 'Sejal Prashant Patil', class: 'IMCA-II', image: '/team/Sejal-Patil.png' },
-    { name: 'Sai Paresh Upakare', class: 'IMCA-IV', image: '/team/Sai-Upakare.png' },
-    { name: 'Bhumika Nitin Patil', class: 'IMCA-IV', image: '/team/Bhumika-Patil.png' },
+    { name: 'Vaibhav Jaywantorao Patil', class: 'IMCA-IV', image: '/team/Vaibhav-Patil.webp' },
+    { name: 'Sejal Prashant Patil', class: 'IMCA-II', image: '/team/Sejal-Patil.webp' },
+    { name: 'Sai Paresh Upakare', class: 'IMCA-IV', image: '/team/Sai-Upakare.webp' },
+    { name: 'Bhumika Nitin Patil', class: 'IMCA-IV', image: '/team/Bhumika-Patil.webp' },
     { name: 'Tejaswini Pravin Pawar', class: 'IMCA-I' },
     { name: 'Tejas Aaba Bagul', class: 'IMCA-I' },
     { name: 'Shrikant Dinesh Borase', class: 'IMCA-I' },
@@ -102,6 +102,7 @@ const Team = () => {
                     <img 
                       src={member.image} 
                       alt={member.name} 
+                      loading="lazy"
                       className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1 group-hover:scale-[1.8] group-hover:rotate-2 transition-transform duration-500"
                     />
                   ) : (
@@ -136,6 +137,7 @@ const Team = () => {
                     <img 
                       src={member.image} 
                       alt={member.name} 
+                      loading="lazy"
                       className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1 group-hover:scale-[1.8] transition-transform duration-500"
                     />
                   ) : (
