@@ -10,22 +10,21 @@ const containerVariants: Variants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
+      staggerChildren: 0.07,
+      delayChildren: 0.1
     }
   }
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 40, scale: 0.9 },
+  hidden: { opacity: 0, y: 22 },
   show: { 
     opacity: 1, 
-    y: 0, 
-    scale: 1, 
+    y: 0,
     transition: { 
       type: "spring", 
-      stiffness: 120, 
-      damping: 14 
+      stiffness: 260, 
+      damping: 22
     } 
   }
 };
@@ -60,9 +59,9 @@ const Home = () => {
 
           {/* Logo */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
             className="flex justify-center mb-6"
           >
             <img
@@ -70,10 +69,12 @@ const Home = () => {
               alt="AI Chapters Logo"
               className="w-24 h-24 md:w-32 md:h-32 object-contain"
               style={{
-                filter: theme === 'dark' 
-                  ? 'drop-shadow(0 0 25px rgba(168,85,247,0.45)) drop-shadow(0 0 50px rgba(56,189,248,0.25))'
-                  : 'drop-shadow(0 10px 20px rgba(168,85,247,0.15))',
-                animation: 'float 5s ease-in-out infinite, glowPulse 3s ease-in-out infinite alternate',
+                // float only — no filter animation (filter blocks GPU compositing)
+                animation: 'float 5s ease-in-out infinite',
+                willChange: 'transform',
+                filter: theme === 'dark'
+                  ? 'drop-shadow(0 0 18px rgba(168,85,247,0.35))'
+                  : 'drop-shadow(0 6px 16px rgba(168,85,247,0.12))',
               }}
             />
           </motion.div>
@@ -113,14 +114,17 @@ const Home = () => {
       </section>
 
       {/* Marquee Ticker */}
-      <div className="py-3 border-y border-border bg-card/30 overflow-hidden relative z-10 w-full mb-12 transition-colors duration-300">
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-        <div className="flex whitespace-nowrap gap-8 items-center" style={{ animation: 'tickerScroll 30s linear infinite' }}>
+      <div className="py-3 border-y border-border bg-card/30 overflow-hidden relative z-10 w-full mb-12 transition-colors duration-200">
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        <div
+          className="ticker-track flex whitespace-nowrap gap-8 items-center"
+          style={{ animation: 'tickerScroll 30s linear infinite' }}
+        >
           {[1, 2].map((set) => (
             <div key={set} className="flex gap-8 items-center font-heading font-semibold text-foreground/25 text-sm">
               {tickerItems.map((item, i) => (
-                <span key={`${set}-${i}`} className="hover:text-foreground/50 transition-colors cursor-default">
+                <span key={`${set}-${i}`} className="cursor-default">
                   {item}
                 </span>
               ))}

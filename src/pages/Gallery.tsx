@@ -15,12 +15,11 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 15, scale: 0.98 },
+  hidden: { opacity: 0, y: 16 },
   show: { 
     opacity: 1, 
     y: 0, 
-    scale: 1, 
-    transition: { type: "spring", stiffness: 120, damping: 14 } 
+    transition: { type: "spring", stiffness: 280, damping: 24 } 
   }
 };
 
@@ -57,10 +56,9 @@ const Gallery = () => {
             captured moments
           </motion.div>
           <motion.h1
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring" }}
-            className="text-4xl md:text-5xl font-black font-heading mb-3 text-heading transition-colors"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl font-black font-heading mb-3 text-heading transition-colors duration-200"
           >
             Gallery <span className="grad-text">📸</span>
           </motion.h1>
@@ -120,7 +118,7 @@ const Gallery = () => {
                   <img
                     src={img.src}
                     alt={img.caption}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-opacity duration-300"
                     loading="lazy"
                   />
                   {/* Overlay */}

@@ -14,11 +14,11 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.9 },
+  hidden: { opacity: 0, y: 16 },
   show: { 
     opacity: 1, 
-    scale: 1, 
-    transition: { type: "spring", stiffness: 150, damping: 15 } 
+    y: 0,
+    transition: { type: "spring", stiffness: 280, damping: 24 } 
   }
 };
 
@@ -97,16 +97,16 @@ const Team = () => {
                 variants={itemVariants}
                 className="glass-panel p-5 text-center group card-hover relative overflow-hidden"
               >
-                <div className={`mx-auto rounded-full bg-gradient-to-br ${colors[idx % colors.length]} w-20 h-20 flex items-center justify-center text-2xl mb-4 transition-transform duration-500 hover:scale-105 border-2 border-border shadow-lg overflow-hidden`}>
+                <div className={`mx-auto rounded-full bg-gradient-to-br ${colors[idx % colors.length]} w-20 h-20 flex items-center justify-center text-2xl mb-4 border-2 border-border shadow-lg overflow-hidden`}>
                   {member.image ? (
                     <img 
                       src={member.image} 
                       alt={member.name} 
                       loading="lazy"
-                      className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1 group-hover:scale-[1.8] group-hover:rotate-2 transition-transform duration-500"
+                      className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1"
                     />
                   ) : (
-                    <span className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">{member.emoji}</span>
+                    <span>{member.emoji}</span>
                   )
                   }
                 </div>
@@ -132,13 +132,13 @@ const Team = () => {
                 variants={itemVariants}
                 className="glass-panel p-4 text-center group card-hover"
               >
-                <div className="mx-auto w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-heading font-bold font-heading text-sm mb-3 group-hover:scale-105 transition-transform overflow-hidden">
+                <div className="mx-auto w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-heading font-bold font-heading text-sm mb-3 overflow-hidden">
                   {member.image ? (
                     <img 
                       src={member.image} 
                       alt={member.name} 
                       loading="lazy"
-                      className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1 group-hover:scale-[1.8] transition-transform duration-500"
+                      className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1"
                     />
                   ) : (
                     member.name.charAt(0)

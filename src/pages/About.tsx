@@ -15,12 +15,11 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 15, scale: 0.98 },
+  hidden: { opacity: 0, y: 16 },
   show: { 
     opacity: 1, 
     y: 0, 
-    scale: 1, 
-    transition: { type: "spring", stiffness: 120, damping: 14 } 
+    transition: { type: "spring", stiffness: 280, damping: 24 } 
   }
 };
 
@@ -50,10 +49,9 @@ const About = () => {
       <section className="pt-24 pb-14 bg-card/30 border-b border-border relative z-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring" }}
-            className="text-4xl md:text-5xl font-black font-heading mb-3 text-heading transition-colors duration-300"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl font-black font-heading mb-3 text-heading transition-colors duration-200"
           >
             About <span className="grad-text">AI Chapters</span> ✨
           </motion.h1>
@@ -82,7 +80,7 @@ const About = () => {
                 variants={itemVariants}
                 className="glass-panel p-7 flex flex-col sm:flex-row items-start gap-5 group card-hover relative overflow-hidden"
               >
-                <div className="w-12 h-12 rounded-2xl bg-card border border-border flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-card border border-border flex items-center justify-center flex-shrink-0 transition-colors duration-200">
                   {act.icon}
                 </div>
 

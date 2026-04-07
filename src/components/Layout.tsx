@@ -44,7 +44,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className="fixed inset-0 z-[-1] pointer-events-none transform-gpu bg-grid" />
 
       {/* Navbar */}
-      <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-border transition-colors duration-300">
+      <nav className="fixed w-full z-50 bg-background/90 border-b border-border transition-colors duration-200 md:backdrop-blur-md md:bg-background/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Link to="/" className="flex items-center gap-2.5 group">

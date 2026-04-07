@@ -62,11 +62,11 @@ class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean}
   }
 }
 
-// Page transition wrapper
+// Page transition — opacity only, no scale/spring to avoid repaints on mobile
 const pageVariants = {
-  initial: { opacity: 0, y: 20, scale: 0.98 },
-  animate: { opacity: 1, y: 0, scale: 1 },
-  exit: { opacity: 0, y: -20, scale: 0.98 },
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit:    { opacity: 0 },
 };
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => (
@@ -75,7 +75,8 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => (
     initial="initial"
     animate="animate"
     exit="exit"
-    transition={{ type: "spring", stiffness: 200, damping: 20, mass: 1 }}
+    transition={{ duration: 0.18, ease: 'easeOut' }}
+    style={{ willChange: 'opacity' }}
   >
     {children}
   </motion.div>
