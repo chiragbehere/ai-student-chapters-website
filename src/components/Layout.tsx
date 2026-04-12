@@ -107,43 +107,46 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               </span>
             </Link>
 
-            {/* Desktop Nav Links in Pill */}
-            <div className="hidden lg:flex items-center">
-              <div className="space-nav-pill">
-                {links.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`space-nav-link ${
-                      location.pathname === link.path ? 'active' : 'text-foreground/60'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Right side: Theme toggle + Mobile hamburger */}
-            <div className="flex items-center gap-3">
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className="p-2.5 rounded-full bg-foreground/5 text-foreground hover:bg-foreground/10 transition-all duration-300 border border-border/10 group"
-                aria-label="Toggle Theme"
-              >
-                <div className="transition-transform duration-300 scale-100 active:scale-95">
-                  {theme === 'dark' ? <Moon size={18} /> : <Sun size={18} className="text-amber-500" />}
+            {/* Right Side Nav Group */}
+            <div className="flex items-center gap-4">
+              {/* Desktop Nav Links in Pill */}
+              <div className="hidden lg:flex items-center">
+                <div className="space-nav-pill">
+                  {links.map((link) => (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className={`space-nav-link ${
+                        location.pathname === link.path ? 'active' : 'text-foreground/60'
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
                 </div>
-              </button>
+              </div>
 
-              {/* Mobile Hamburger */}
-              <button
-                className="lg:hidden text-foreground hover:text-primary transition-all p-2 rounded-xl bg-foreground/5 border border-border/10"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
+              {/* Theme toggle + Mobile hamburger */}
+              <div className="flex items-center gap-3">
+                {/* Theme Toggle */}
+                <button
+                  onClick={toggleTheme}
+                  className="p-2.5 rounded-full bg-foreground/5 text-foreground hover:bg-foreground/10 transition-all duration-300 border border-border/10 group"
+                  aria-label="Toggle Theme"
+                >
+                  <div className="transition-transform duration-300 scale-100 active:scale-95">
+                    {theme === 'dark' ? <Moon size={18} /> : <Sun size={18} className="text-amber-500" />}
+                  </div>
+                </button>
+
+                {/* Mobile Hamburger */}
+                <button
+                  className="lg:hidden text-foreground hover:text-primary transition-all p-2 rounded-xl bg-foreground/5 border border-border/10"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+              </div>
             </div>
           </div>
 
