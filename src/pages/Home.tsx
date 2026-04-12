@@ -4,6 +4,7 @@ import { ArrowRight, Users, Zap, Rocket, Trophy, Calendar, Info, Star, Heart } f
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import SEO from '../components/SEO';
+import { slideInFromLeft, slideInFromRight } from '../lib/motion';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -42,15 +43,16 @@ const Home = () => {
         title="Home" 
         description="The coolest student community exploring AI — we learn, we build, we compete, and we grow together."
       />
+
       {/* Hero Section */}
-      <section className="relative pt-28 pb-16 z-10 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+      <section className="relative pt-28 pb-16 z-10 transition-colors duration-300 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center relative z-10">
           
-          {/* Floating badge */}
+          {/* Floating badge with slide-in animation */}
           <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, type: "spring" }}
+            variants={slideInFromLeft(0.3)}
+            initial="hidden"
+            animate="visible"
             className="pill bg-primary/10 text-primary border border-primary/20 mb-8 flex items-center gap-2"
           >
             <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
@@ -69,7 +71,6 @@ const Home = () => {
               alt="AI Chapters Logo"
               className="w-24 h-24 md:w-32 md:h-32 object-contain"
               style={{
-                // float only — no filter animation (filter blocks GPU compositing)
                 animation: 'float 5s ease-in-out infinite',
                 willChange: 'transform',
                 filter: theme === 'dark'
@@ -79,21 +80,31 @@ const Home = () => {
             />
           </motion.div>
 
-          {/* Title */}
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            className="text-center max-w-3xl"
-          >
-            <h1 className="text-5xl md:text-7xl font-black font-heading leading-[1.1] mb-4 text-heading transition-colors duration-300">
+          {/* Title with slide-in animations */}
+          <div className="text-center max-w-3xl">
+            <motion.h1 
+              variants={slideInFromRight(0.4)}
+              initial="hidden"
+              animate="visible"
+              className="text-5xl md:text-7xl font-black font-heading leading-[1.1] mb-4 text-heading transition-colors duration-300"
+            >
               <span className="grad-text">AI Student</span><br />Chapters
-            </h1>
-            <p className="text-base md:text-lg text-foreground/60 mb-8 leading-relaxed font-body max-w-xl mx-auto">
+            </motion.h1>
+            <motion.p 
+              variants={slideInFromLeft(0.6)}
+              initial="hidden"
+              animate="visible"
+              className="text-base md:text-lg text-foreground/60 mb-8 leading-relaxed font-body max-w-xl mx-auto"
+            >
               The coolest student community exploring AI — we learn, we build, we compete, and we grow together 💜
-            </p>
+            </motion.p>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <motion.div 
+              variants={slideInFromRight(0.8)}
+              initial="hidden"
+              animate="visible"
+              className="flex flex-col sm:flex-row gap-3 justify-center items-center"
+            >
               <a
                 href="https://chat.whatsapp.com/IfBOfK4bE7l1D0N5C9KXYv"
                 target="_blank"
@@ -108,13 +119,13 @@ const Home = () => {
               >
                 View Sessions →
               </Link>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Marquee Ticker */}
-      <div className="py-3 border-y border-border bg-card/30 overflow-hidden relative z-10 w-full mb-12 transition-colors duration-200">
+      <div className="py-3 border-y border-border/10 bg-card/30 overflow-hidden relative z-10 w-full mb-12 transition-colors duration-200">
         <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
         <div

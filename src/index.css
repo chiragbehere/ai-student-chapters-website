@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,20 +17,38 @@
     --color-border: 0 0 0;
     --color-card: 255 255 255;
     --color-heading: 30 27 75;
+    --space-bg: 252 253 255;
+    --space-nav: rgba(255,255,255,0.85);
+    --space-nav-shadow: rgba(168,85,247,0.08);
+    --space-nav-pill: rgba(245,243,255,0.8);
+    --space-nav-pill-border: rgba(168,85,247,0.15);
+    --space-link-hover: rgb(112,66,248);
+    --space-footer-bg: rgba(245,243,255,0.6);
+    --star-opacity: 0;
+    --blackhole-opacity: 0;
   }
 
   [data-theme='dark'] {
-    --color-background: 12 10 26;
+    --color-background: 3 0 20;
     --color-foreground: 238 237 245;
     --color-primary: 168 85 247;
     --color-secondary: 56 189 248;
     --color-accent: 244 114 182;
     --color-lime: 163 230 53;
     --color-coral: 251 113 133;
-    --color-muted: 22 19 42;
+    --color-muted: 15 12 35;
     --color-border: 255 255 255;
-    --color-card: 26 23 48;
+    --color-card: 16 13 38;
     --color-heading: 255 255 255;
+    --space-bg: 3 0 20;
+    --space-nav: rgba(3,0,20,0.3);
+    --space-nav-shadow: transparent;
+    --space-nav-pill: rgba(3,0,20,0.4);
+    --space-nav-pill-border: rgba(112,66,248,0.2);
+    --space-link-hover: rgb(112,66,248);
+    --space-footer-bg: rgba(3,0,20,0.7);
+    --star-opacity: 1;
+    --blackhole-opacity: 1;
   }
 
   html {
@@ -48,8 +68,7 @@
     @apply bg-background text-foreground antialiased font-body;
     -webkit-tap-highlight-color: transparent;
     overflow-x: hidden;
-    /* Only transition background — avoids triggering thousands of repaints */
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -63,12 +82,11 @@
 }
 
 @layer utilities {
-  /* glass-panel: no backdrop-filter on mobile (huge perf win) */
+  /* glass-panel: space-themed glassmorphism */
   .glass-panel {
     @apply bg-card/70 border border-border/10 rounded-2xl shadow-sm;
   }
 
-  /* Only apply expensive backdrop-filter on capable desktop browsers */
   @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
     .glass-panel {
       backdrop-filter: blur(12px);
@@ -80,7 +98,7 @@
     @apply transition-colors duration-200 ease-in-out;
   }
 
-  /* grad-text: static gradient, no animation (saves constant CPU cycles) */
+  /* grad-text: static gradient */
   .grad-text {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-secondary)), rgb(var(--color-accent)));
@@ -90,11 +108,11 @@
     @apply px-4 py-1.5 rounded-full text-xs font-bold tracking-wide transition-colors duration-200;
   }
 
-  /* card-hover: use translate instead of scale to avoid layout thrash */
+  /* card-hover */
   .card-hover {
     @apply transition-transform duration-300 ease-out;
     will-change: transform;
-    transform: translateZ(0); /* promote to own composite layer */
+    transform: translateZ(0);
   }
   .card-hover:hover {
     transform: translateY(-2px) translateZ(0);
@@ -105,21 +123,93 @@
   }
 }
 
-/* ── Background Layers ──────────────────────────────────────────────── */
-/*
- * Key fix: replace fixed+blur layers with a single CSS background on <html>.
- * No separate fixed divs = no extra composite layers = massive GPU saving.
- */
+/* ── Space Portfolio Styles ──────────────────────────────────────────── */
+
+.cursive {
+  font-family: "Cedarville Cursive", cursive;
+}
+
+.Welcome-text {
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.4)
+    ),
+    linear-gradient(90.01deg, #e59cff 0.01%, #ba9cff 50.01%, #9cb2ff 100%);
+  background-blend-mode: normal, screen;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.Welcome-box {
+  isolation: isolate;
+  overflow: hidden;
+  align-items: center;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-radius: 32px;
+  box-shadow: inset 0 -7px 11px #a48fff1f;
+  display: flex;
+  position: relative;
+  width: max-content;
+  transition: 0.45s cubic-bezier(0.6, 0.6, 0, 1) box-shadow;
+}
+
+.button-primary {
+  background: linear-gradient(
+      180deg,
+      rgba(60, 8, 126, 0) 0%,
+      rgba(60, 8, 126, 0.32) 100%
+    ),
+    rgba(113, 47, 255, 0.12);
+  box-shadow: inset 0 0 12px #bf97ff3d;
+}
+.button-primary:hover {
+  background: linear-gradient(
+      180deg,
+      rgba(60, 8, 126, 0) 0%,
+      rgba(60, 8, 126, 0.42) 100%
+    ),
+    rgba(113, 47, 255, 0.24);
+  box-shadow: inset 0 0 12px #bf97ff70;
+}
+
+/* Hide scrollbar */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Stars Canvas ────────────────────────────────────────────────────── */
+.stars-canvas-opacity {
+  opacity: var(--star-opacity);
+  transition: opacity 0.6s ease;
+}
+
+/* ── Blackhole Video ─────────────────────────────────────────────────── */
+.blackhole-video-wrapper {
+  opacity: var(--blackhole-opacity);
+  transition: opacity 0.6s ease;
+}
+
+/* ── Background Layers (light mode) ──────────────────────────────────── */
 .bg-mesh {
   position: fixed;
   inset: 0;
   z-index: -10;
-  /* Replaced filter:blur with pre-blurred radial gradients — no GPU filter */
   background:
     radial-gradient(ellipse 60% 50% at 0% 0%,   rgb(var(--color-primary) / 0.06) 0%, transparent 100%),
     radial-gradient(ellipse 60% 50% at 100% 100%, rgb(var(--color-secondary) / 0.06) 0%, transparent 100%);
   transform: translateZ(0);
   pointer-events: none;
+}
+
+[data-theme='dark'] .bg-mesh {
+  opacity: 0;
 }
 
 .bg-orb-accent {
@@ -128,16 +218,17 @@
   right: -10%;
   width: 50vw;
   height: 50vw;
-  /* Pre-blurred radial, no filter: property at all */
   background: radial-gradient(circle, rgb(var(--color-primary) / 0.07) 0%, transparent 70%);
   border-radius: 50%;
   z-index: -5;
   transform: translateZ(0);
   pointer-events: none;
-  /* No animation on mobile; subtle fade on desktop only */
 }
 
-/* Dot grid — static, no animation */
+[data-theme='dark'] .bg-orb-accent {
+  opacity: 0;
+}
+
 .bg-grid {
   position: fixed;
   inset: 0;
@@ -150,27 +241,99 @@
   transform: translateZ(0);
 }
 
+[data-theme='dark'] .bg-grid {
+  opacity: 0;
+}
+
+/* ── Space Navbar ────────────────────────────────────────────────────── */
+.space-navbar {
+  position: fixed;
+  width: 100%;
+  height: 65px;
+  top: 0;
+  z-index: 50;
+  padding: 0 1.5rem;
+  background: var(--space-nav);
+  box-shadow: 0 10px 15px -3px var(--space-nav-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.space-nav-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  height: auto;
+  background: var(--space-nav-pill);
+  border: 1px solid var(--space-nav-pill-border);
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.space-nav-link {
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.space-nav-link:hover {
+  color: var(--space-link-hover);
+}
+
+.space-nav-link.active {
+  background: rgb(var(--color-primary) / 0.15);
+  color: rgb(var(--color-primary));
+}
+
+/* ── Space Footer ────────────────────────────────────────────────────── */
+.space-footer {
+  position: relative;
+  background: var(--space-footer-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgb(var(--color-border) / 0.08);
+  margin-top: 5rem;
+  overflow: hidden;
+  transition: background 0.4s ease;
+}
+
+.space-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgb(var(--color-primary) / 0.5), transparent);
+}
 
 /* ── Animations ─────────────────────────────────────────────────────── */
-
-/* Float: only translate, never filter — GPU compositor handles it */
 @keyframes float {
   0%, 100% { transform: translateY(0px) translateZ(0); }
   50%       { transform: translateY(-12px) translateZ(0); }
 }
 
-/* Glow pulse: use opacity instead of filter for compositing */
 @keyframes glowPulse {
   from { opacity: 0.85; }
   to   { opacity: 1; }
 }
 
-/* Ticker: GPU-composited transform only */
 @keyframes tickerScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgb(var(--color-primary) / 0.2); }
+  50% { box-shadow: 0 0 40px rgb(var(--color-primary) / 0.4); }
+}
 
 /* ── Buttons ────────────────────────────────────────────────────────── */
 .genz-btn {
