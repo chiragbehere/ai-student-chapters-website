@@ -55,7 +55,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         left: 0,
         width: '100%',
         height: '100vh',
-        zIndex: 1,
+        zIndex: 0,
         pointerEvents: 'none',
         overflow: 'hidden',
       }}>

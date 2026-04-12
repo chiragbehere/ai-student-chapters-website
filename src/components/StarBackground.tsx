@@ -53,7 +53,7 @@ export const StarsCanvas = () => (
   <div style={{
     position: 'fixed',
     inset: 0,
-    zIndex: 0,
+    zIndex: 1,
     pointerEvents: 'none',
   }} className="stars-canvas-opacity">
     <Canvas camera={{ position: [0, 0, 1] }}>
