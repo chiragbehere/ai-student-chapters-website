@@ -58,7 +58,7 @@ const ChatbotWidget = () => {
     },
     {
       keywords: ['team', 'lead', 'president', 'who leads', 'members', 'committee', 'core'],
-      answer: "Here's our awesome team! 🌟\n👑 President: Kartik Kulkarni\n🤝 Vice President: Krushnali Ghodake\n📝 Secretary: Tejas Suradkar\n💰 Treasurer: Aastha Shirke\n🎯 Events Manager: Chirag Behere\n💻 Technical Lead: Aniruddha Deshmukh"
+      answer: "Here's our awesome core team! 🌟\n👑 President: Kartik Sharad Valhe\n⭐ Vice President: Krushnali Vanusing Jadhav\n📋 Secretary: Tejas Dipak Panchbhai\n💰 Treasurer: Aastha Vilas Deshmukh\n🎯 Event Manager: Chirag Rajesh Behere\n💻 Tech Lead: Aniruddha Balaji Landge\n📝 Documentation Head: Moin Altaf Ansari\n📸 Camera Lead: Shreyash Sunil Patil\n📱 Social Media: Bhumika Vilas Patil"
     },
     {
       keywords: ['event', 'hackathon', 'workshop', 'session', 'activity', 'done', 'past'],
@@ -82,27 +82,39 @@ const ChatbotWidget = () => {
     },
     {
       keywords: ['kartik'],
-      answer: "Kartik Kulkarni is our President! 👑 He leads the club and drives our vision forward. A passionate tech enthusiast who's always looking for ways to make the club better!"
+      answer: "Kartik Sharad Valhe is our President! 👑 He leads the club and drives our vision forward."
     },
     {
       keywords: ['krushnali'],
-      answer: "Krushnali Ghodake is our Vice President! 🤝 She supports the president and helps coordinate all club activities. An amazing leader and organizer!"
+      answer: "Krushnali Vanusing Jadhav is our Vice President! ⭐ She supports the president and helps coordinate all club activities."
     },
     {
       keywords: ['tejas'],
-      answer: "Tejas Suradkar is our Secretary! 📝 He manages club communications and keeps everything organized. Always on top of things!"
+      answer: "Tejas Dipak Panchbhai is our Secretary! 📋 He manages club communications and keeps everything organized."
     },
     {
       keywords: ['aastha'],
-      answer: "Aastha Shirke is our Treasurer! 💰 She manages the club's finances and makes sure our events are budgeted perfectly."
+      answer: "Aastha Vilas Deshmukh is our Treasurer! 💰 She manages the club's finances and budgets."
     },
     {
       keywords: ['chirag'],
-      answer: "Chirag Behere is our Events Manager! 🎯 He plans and executes all our amazing events, from hackathons to workshops. The mastermind behind our events!"
+      answer: "Chirag Rajesh Behere is our Event Manager! 🎯 He plans and executes all our amazing events, from hackathons to workshops."
     },
     {
       keywords: ['aniruddha'],
-      answer: "Aniruddha Deshmukh is our Technical Lead! 💻 He handles all the tech infrastructure and leads our technical workshops. A coding wizard!"
+      answer: "Aniruddha Balaji Landge is our Tech Lead! 💻 He handles technical workshops and leads the tech infrastructure."
+    },
+    {
+      keywords: ['moin'],
+      answer: "Moin Altaf Ansari is our Documentation Head! 📝 He is responsible for managing all the important documents and reports."
+    },
+    {
+      keywords: ['shreyash'],
+      answer: "Shreyash Sunil Patil is our Camera Lead! 📸 He captures all the great moments at our events."
+    },
+    {
+      keywords: ['bhumika'],
+      answer: "Bhumika Vilas Patil handles Social Media! 📱 She manages our online presence and keeps the community engaged."
     },
     {
       keywords: ['hi', 'hello', 'hey', 'hii', 'hiii', 'sup', 'yo', 'hola', 'greetings'],

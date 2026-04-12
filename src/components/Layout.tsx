@@ -88,7 +88,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
         {/* ═══════════════ Space Navbar ═══════════════ */}
         <nav className="space-navbar" style={{ zIndex: 50 }}>
-          <div className="w-full h-full flex items-center justify-between max-w-7xl mx-auto">
+          <div className="w-full h-full flex items-center justify-between">
             {/* Logo + Name */}
             <Link to="/" className="flex items-center gap-2.5 group shrink-0">
               <img 
