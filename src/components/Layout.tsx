@@ -28,6 +28,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     { path: '/gallery', label: 'Gallery', emoji: '📸' },
     { path: '/team', label: 'Team', emoji: '👥' },
     { path: '/sessions', label: 'Sessions', emoji: '🎓' },
+    { path: '/announcements', label: 'Announcements', emoji: '📢' },
     { path: '/faq', label: 'FAQ', emoji: '💬' },
     { path: '/about', label: 'About', emoji: '✨' },
   ];
