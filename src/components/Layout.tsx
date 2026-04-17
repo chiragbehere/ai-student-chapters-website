@@ -4,8 +4,11 @@ import { X, Menu, Camera, Mail, Sun, Moon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 
-// Lazy load the heavy Three.js star background
-const StarsCanvas = lazy(() => import('./StarBackground'));
+// Detect mobile/touch devices once at module level reliably
+const isMobile = typeof window !== 'undefined' && (window.innerWidth <= 768 || window.matchMedia('(hover: none) and (pointer: coarse)').matches);
+
+// Lazy load the heavy Three.js star background — skip entirely on mobile
+const StarsCanvas = isMobile ? null : lazy(() => import('./StarBackground'));
 
 export const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -28,7 +31,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     { path: '/gallery', label: 'Gallery', emoji: '📸' },
     { path: '/team', label: 'Team', emoji: '👥' },
     { path: '/sessions', label: 'Sessions', emoji: '🎓' },
-    { path: '/announcements', label: 'Announcements', emoji: '📢' },
     { path: '/faq', label: 'FAQ', emoji: '💬' },
     { path: '/about', label: 'About', emoji: '✨' },
   ];
@@ -44,40 +46,44 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
       {/* ═══ Fixed Background Layers (behind everything) ═══ */}
 
-      {/* Stars Background (dark mode only via CSS) */}
-      <Suspense fallback={null}>
-        <StarsCanvas />
-      </Suspense>
+      {/* Stars Background (dark mode only via CSS) — disabled on mobile for perf */}
+      {StarsCanvas && (
+        <Suspense fallback={null}>
+          <StarsCanvas />
+        </Suspense>
+      )}
 
-      {/* Blackhole Video Background (dark mode only via CSS, all pages) */}
-      <div className="blackhole-video-wrapper" style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100vh',
-        zIndex: 0,
-        pointerEvents: 'none',
-        overflow: 'hidden',
-      }}>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{
-            transform: 'rotate(180deg)',
-            position: 'absolute',
-            top: '-340px',
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-          }}
-        >
-          <source src="/videos/blackhole.webm" type="video/webm" />
-        </video>
-      </div>
+      {/* Blackhole Video Background (dark mode only via CSS) — disabled on mobile for perf */}
+      {!isMobile && (
+        <div className="blackhole-video-wrapper" style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100vh',
+          zIndex: 0,
+          pointerEvents: 'none',
+          overflow: 'hidden',
+        }}>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{
+              transform: 'rotate(180deg)',
+              position: 'absolute',
+              top: '-340px',
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          >
+            <source src="/videos/blackhole.webm" type="video/webm" />
+          </video>
+        </div>
+      )}
 
       {/* Light mode background layers (hidden in dark mode via CSS) */}
       <div className="bg-mesh" style={{ zIndex: 0 }} />
@@ -161,9 +167,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
                 className="lg:hidden absolute top-[65px] left-0 w-full overflow-hidden"
                 style={{
-                  background: theme === 'dark' ? 'rgba(3,0,20,0.95)' : 'rgba(255,255,255,0.95)',
-                  backdropFilter: 'blur(20px)',
-                  WebkitBackdropFilter: 'blur(20px)',
+                  background: theme === 'dark' ? 'rgba(3,0,20,0.98)' : 'rgba(255,255,255,0.98)',
                 }}
               >
                 <div className="px-4 py-5 space-y-2 flex flex-col">

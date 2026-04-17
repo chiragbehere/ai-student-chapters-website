@@ -19,7 +19,7 @@ const itemVariants: Variants = {
   show: { 
     opacity: 1, 
     y: 0,
-    transition: { type: "spring", stiffness: 280, damping: 24 } 
+    transition: { type: "tween", ease: "easeOut", duration: 0.4 } 
   }
 };
 
@@ -38,7 +38,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answ
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
+          transition={{ duration: 0.3, type: "tween", ease: "easeOut" }}
           className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isOpen ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-foreground/5 text-foreground/40'}`}
         >
           <ChevronDown size={16} />
@@ -98,7 +98,7 @@ const FAQ = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, type: "spring" }}
+            transition={{ duration: 0.5, type: "tween", ease: "easeOut" }}
             className="pill bg-accent/10 text-accent border border-accent/20 mx-auto w-fit mb-6 flex items-center gap-2"
           >
             <MessageCircleQuestion size={14} />

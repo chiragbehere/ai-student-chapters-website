@@ -192,7 +192,7 @@ const ChatbotWidget = () => {
       <motion.button
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 260, damping: 20, delay: 1 }}
+        transition={{ type: "tween", ease: "easeOut", duration: 0.4, delay: 0.3 }}
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-[13.5rem] right-6 w-14 h-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center z-50 hover:scale-[1.05] active:scale-95 transition-transform duration-300 ${isOpen ? 'hidden' : 'flex'} group`}
         aria-label="Open AI Chat"
@@ -201,11 +201,6 @@ const ChatbotWidget = () => {
         {/* AI badge */}
         <span className="absolute -top-1 -left-1 px-1.5 py-0.5 bg-accent text-white text-[8px] font-bold rounded-full uppercase tracking-wider shadow-sm">
           AI
-        </span>
-        {/* Ping indicator */}
-        <span className="absolute top-0 right-0 flex h-3.5 w-3.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-accent border-2 border-background"></span>
         </span>
       </motion.button>
 
@@ -216,8 +211,8 @@ const ChatbotWidget = () => {
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9, transition: { duration: 0.2 } }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="fixed bottom-[5.5rem] right-6 w-[90vw] sm:w-[400px] h-[620px] max-h-[78vh] bg-card border border-border/20 shadow-2xl rounded-2xl flex flex-col overflow-hidden z-[60] backdrop-blur-xl"
+            transition={{ type: "tween", ease: "circOut", duration: 0.3 }}
+            className="fixed bottom-[5.5rem] right-6 w-[90vw] sm:w-[400px] h-[620px] max-h-[78vh] bg-card sm:bg-card/90 border border-border/20 shadow-2xl rounded-2xl flex flex-col overflow-hidden z-[60] sm:backdrop-blur-xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-3.5 bg-gradient-to-r from-primary/15 via-accent/10 to-secondary/10 border-b border-border/10">
@@ -314,7 +309,7 @@ const ChatbotWidget = () => {
             )}
 
             {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-3 border-t border-border/10 bg-background/50 backdrop-blur-md">
+            <form onSubmit={handleSubmit} className="p-3 border-t border-border/10 bg-background/95 sm:bg-background/50 sm:backdrop-blur-md">
               <div className="flex items-center gap-2">
                 <input
                   ref={inputRef}

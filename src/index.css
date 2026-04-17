@@ -241,6 +241,16 @@
   transform: translateZ(0);
 }
 
+/* Hide dot-grid on mobile — it causes compositing overhead for minimal visual impact */
+@media (hover: none) and (pointer: coarse) {
+  .bg-grid {
+    display: none;
+  }
+  .bg-orb-accent {
+    display: none;
+  }
+}
+
 [data-theme='dark'] .bg-grid {
   opacity: 0;
 }
@@ -294,12 +304,18 @@
 .space-footer {
   position: relative;
   background: var(--space-footer-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border-top: 1px solid rgb(var(--color-border) / 0.08);
   margin-top: 5rem;
   overflow: hidden;
   transition: background 0.4s ease;
+}
+
+/* Only enable footer backdrop-blur on devices with a fine pointer (non-touch / desktop) */
+@media (hover: hover) and (pointer: fine) {
+  .space-footer {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
 }
 
 .space-footer::before {

@@ -15,7 +15,7 @@ const containerVariants: Variants = {
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 280, damping: 24 } }
+  show: { opacity: 1, y: 0, transition: { type: "tween", ease: "easeOut", duration: 0.4 } }
 };
 
 const Sessions = () => {
@@ -34,7 +34,7 @@ const Sessions = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, type: "spring" }}
+            transition={{ duration: 0.5, type: "tween", ease: "easeOut" }}
             className="pill bg-secondary/10 text-secondary border border-secondary/20 mx-auto w-fit mb-6 flex items-center gap-2"
           >
             <Star size={14} />

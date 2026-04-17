@@ -18,7 +18,7 @@ const itemVariants: Variants = {
   show: { 
     opacity: 1, 
     y: 0,
-    transition: { type: "spring", stiffness: 280, damping: 24 } 
+    transition: { type: "tween", ease: "easeOut", duration: 0.4 } 
   }
 };
 

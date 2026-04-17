@@ -20,7 +20,7 @@ const itemVariants: Variants = {
   show: { 
     opacity: 1, 
     y: 0, 
-    transition: { type: "spring", stiffness: 280, damping: 24 } 
+    transition: { type: "tween", ease: "easeOut", duration: 0.4 } 
   }
 };
 
@@ -123,7 +123,7 @@ const Events = () => {
               </p>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.05, type: "spring" }} className="flex-shrink-0">
+            <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.05, type: "tween", ease: "easeOut", duration: 0.3 }} className="flex-shrink-0">
               <img
                 src="/images/code-carnival-logo.webp"
                 alt="Code Carnival Logo"

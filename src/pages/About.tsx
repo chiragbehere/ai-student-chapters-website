@@ -19,7 +19,7 @@ const itemVariants: Variants = {
   show: { 
     opacity: 1, 
     y: 0, 
-    transition: { type: "spring", stiffness: 280, damping: 24 } 
+    transition: { type: "tween", ease: "easeOut", duration: 0.4 } 
   }
 };
 
@@ -131,7 +131,7 @@ const About = () => {
                   <span className={`font-heading font-semibold text-sm transition-colors ${openFaq === idx ? 'text-heading' : 'text-foreground/70 group-hover:text-heading'}`}>{faq.q}</span>
                   <motion.div
                     animate={{ rotate: openFaq === idx ? 180 : 0 }}
-                    transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
+                    transition={{ duration: 0.3, type: "tween", ease: "easeOut" }}
                     className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors ${openFaq === idx ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-foreground/5 text-foreground/30'}`}
                   >
                     <ChevronDown size={14} />

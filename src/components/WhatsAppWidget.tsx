@@ -5,7 +5,7 @@ const WhatsAppWidget = () => {
     <motion.a
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.8 }}
+      transition={{ type: "tween", ease: "easeOut", duration: 0.4, delay: 0.3 }}
       href="https://chat.whatsapp.com/FQdz9mHb4y37ooH1JxiYoF"
       target="_blank"
       rel="noopener noreferrer"

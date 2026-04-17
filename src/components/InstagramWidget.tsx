@@ -5,7 +5,7 @@ const InstagramWidget = () => {
     <motion.a
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.6 }}
+      transition={{ type: "tween", ease: "easeOut", duration: 0.4, delay: 0.1 }}
       href="https://www.instagram.com/ai.student_chapters/"
       target="_blank"
       rel="noopener noreferrer"

@@ -5,7 +5,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   useEffect(() => {
     // On touch/mobile devices, native scroll is already smooth and fast.
     // Lenis on mobile with touchMultiplier fights the browser and causes jank.
-    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    const isTouchDevice = window.innerWidth <= 768 || window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isTouchDevice) return; // let native scroll handle it on mobile
 
     const lenis = new Lenis({

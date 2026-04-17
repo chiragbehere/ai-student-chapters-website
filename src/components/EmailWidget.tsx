@@ -5,7 +5,7 @@ const EmailWidget = () => {
     <motion.a
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.7 }}
+      transition={{ type: "tween", ease: "easeOut", duration: 0.4, delay: 0.2 }}
       href="https://mail.google.com/mail/?view=cm&fs=1&to=imrdaistudentclub@gmail.com"
       target="_blank"
       rel="noopener noreferrer"

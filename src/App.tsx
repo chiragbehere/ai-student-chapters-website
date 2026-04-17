@@ -17,7 +17,7 @@ const About = lazy(() => import('./pages/About'));
 const Gallery = lazy(() => import('./pages/Gallery'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const Sessions = lazy(() => import('./pages/Sessions'));
-const Announcements = lazy(() => import('./pages/Announcements'));
+
 
 // Page loading skeleton
 const PageLoader = () => (
@@ -121,11 +121,7 @@ const AnimatedRoutes = () => {
             <PageTransition><Sessions /></PageTransition>
           </Suspense>
         } />
-        <Route path="/announcements" element={
-          <Suspense fallback={<PageLoader />}>
-            <PageTransition><Announcements /></PageTransition>
-          </Suspense>
-        } />
+
       </Routes>
     </AnimatePresence>
   );
