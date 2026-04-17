@@ -7,8 +7,8 @@ import { useTheme } from '../context/ThemeContext';
 // Detect mobile/touch devices once at module level reliably
 const isMobile = typeof window !== 'undefined' && (window.innerWidth <= 768 || window.matchMedia('(hover: none) and (pointer: coarse)').matches);
 
-// Lazy load the heavy Three.js star background — skip entirely on mobile
-const StarsCanvas = isMobile ? null : lazy(() => import('./StarBackground'));
+// Lazy load the heavy Three.js star background — enabled on all devices as requested
+const StarsCanvas = lazy(() => import('./StarBackground'));
 
 export const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -53,9 +53,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </Suspense>
       )}
 
-      {/* Blackhole Video Background (dark mode only via CSS) — disabled on mobile for perf */}
-      {!isMobile && (
-        <div className="blackhole-video-wrapper" style={{
+      {/* Blackhole Video Background (dark mode only via CSS) — enabled globally as requested */}
+      <div className="blackhole-video-wrapper" style={{
           position: 'fixed',
           top: 0,
           left: 0,
@@ -83,7 +82,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <source src="/videos/blackhole.webm" type="video/webm" />
           </video>
         </div>
-      )}
 
       {/* Light mode background layers (hidden in dark mode via CSS) */}
       <div className="bg-mesh" style={{ zIndex: 0 }} />

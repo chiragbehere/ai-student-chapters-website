@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { Star } from 'lucide-react';
 import SEO from '../components/SEO';
+import Image from '../components/Image';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -99,10 +100,9 @@ const Team = () => {
               >
                 <div className={`mx-auto rounded-full bg-gradient-to-br ${colors[idx % colors.length]} w-20 h-20 flex items-center justify-center text-2xl mb-4 border-2 border-border shadow-lg overflow-hidden`}>
                   {member.image ? (
-                    <img 
+                    <Image 
                       src={member.image} 
                       alt={member.name} 
-                      loading="lazy"
                       className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1"
                     />
                   ) : (
@@ -134,10 +134,9 @@ const Team = () => {
               >
                 <div className="mx-auto w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-heading font-bold font-heading text-sm mb-3 overflow-hidden">
                   {member.image ? (
-                    <img 
+                    <Image 
                       src={member.image} 
                       alt={member.name} 
-                      loading="lazy"
                       className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1"
                     />
                   ) : (

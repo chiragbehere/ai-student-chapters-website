@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { Image, Film } from 'lucide-react';
+import { Image as ImageIcon, Film } from 'lucide-react';
 import SEO from '../components/SEO';
+import Image from '../components/Image';
+import Lightbox from '../components/Lightbox';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -25,6 +27,8 @@ const itemVariants: Variants = {
 
 const Gallery = () => {
   const [activeTab, setActiveTab] = useState<'images' | 'videos'>('images');
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = [
     { src: '/images/event1.webp', caption: 'Workshop on IMCA classes' },
@@ -52,7 +56,7 @@ const Gallery = () => {
             animate={{ opacity: 1, y: 0 }}
             className="pill bg-accent/10 text-accent border border-accent/20 mx-auto w-fit mb-6 flex items-center gap-2"
           >
-            <Image size={14} />
+            <ImageIcon size={14} />
             captured moments
           </motion.div>
           <motion.h1
@@ -86,7 +90,7 @@ const Gallery = () => {
                 {activeTab === 'images' && (
                   <motion.div layoutId="galleryTab" className="absolute inset-0 bg-primary rounded-full shadow-lg shadow-primary/20 -z-10" />
                 )}
-                <Image size={14} /> Photos
+                <ImageIcon size={14} /> Photos
               </button>
               <button
                 onClick={() => setActiveTab('videos')}
@@ -113,13 +117,16 @@ const Gallery = () => {
                 <motion.div
                   key={idx}
                   variants={itemVariants}
-                  className="relative group overflow-hidden glass-panel aspect-[4/3] card-hover"
+                  className="relative group overflow-hidden glass-panel aspect-[4/3] card-hover cursor-pointer"
+                  onClick={() => {
+                    setCurrentImageIndex(idx);
+                    setIsLightboxOpen(true);
+                  }}
                 >
-                  <img
+                  <Image
                     src={img.src}
                     alt={img.caption}
-                    className="w-full h-full object-cover transition-opacity duration-300"
-                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -162,6 +169,14 @@ const Gallery = () => {
           )}
         </div>
       </section>
+
+      <Lightbox 
+        images={images}
+        isOpen={isLightboxOpen}
+        currentIndex={currentImageIndex}
+        onClose={() => setIsLightboxOpen(false)}
+        onNavigate={(newIdx) => setCurrentImageIndex(newIdx)}
+      />
     </div>
   );
 };
