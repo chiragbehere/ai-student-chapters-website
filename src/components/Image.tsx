@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { HTMLMotionProps } from 'framer-motion';
 import { Image as ImageIcon } from 'lucide-react';
 
-interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface ImageProps extends HTMLMotionProps<"img"> {
   containerClassName?: string;
 }
 

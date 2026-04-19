@@ -4,9 +4,6 @@ import { X, Menu, Camera, Mail, Sun, Moon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 
-// Detect mobile/touch devices once at module level reliably
-const isMobile = typeof window !== 'undefined' && (window.innerWidth <= 768 || window.matchMedia('(hover: none) and (pointer: coarse)').matches);
-
 // Lazy load the heavy Three.js star background — enabled on all devices as requested
 const StarsCanvas = lazy(() => import('./StarBackground'));
 
