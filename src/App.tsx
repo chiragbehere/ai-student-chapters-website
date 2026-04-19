@@ -127,6 +127,8 @@ const AnimatedRoutes = () => {
   );
 };
 
+import { Analytics } from '@vercel/analytics/react';
+
 function App() {
   return (
     <Router>
@@ -140,6 +142,7 @@ function App() {
         <WhatsAppWidget />
         <EmailWidget />
         <InstagramWidget />
+        <Analytics />
       </SmoothScroll>
     </Router>
   );
