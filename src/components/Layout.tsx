@@ -54,30 +54,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       )}
 
       {/* Blackhole Video Background (dark mode only via CSS) — enabled globally as requested */}
-      <div className="blackhole-video-wrapper" style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100vh',
-          zIndex: 0,
-          pointerEvents: 'none',
-          overflow: 'hidden',
-        }}>
+      <div className="blackhole-video-wrapper">
           <video
             autoPlay
             muted
             loop
             playsInline
-            style={{
-              transform: 'rotate(180deg)',
-              position: 'absolute',
-              top: '-340px',
-              left: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-            }}
+            className="blackhole-video"
           >
             <source src="/videos/blackhole.webm" type="video/webm" />
           </video>

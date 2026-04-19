@@ -209,8 +209,33 @@
 
 /* ── Blackhole Video ─────────────────────────────────────────────────── */
 .blackhole-video-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
   opacity: var(--blackhole-opacity);
   transition: opacity 0.6s ease;
+}
+
+.blackhole-video {
+  transform: rotate(180deg);
+  position: absolute;
+  top: -340px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .blackhole-video {
+    top: -50px;
+    height: 100%;
+  }
 }
 
 /* ── Background Layers (light mode) ──────────────────────────────────── */

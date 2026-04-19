@@ -40,7 +40,7 @@ const StarBackground = () => {
         <PointMaterial
           transparent
           color="#fff"
-          size={0.002}
+          size={typeof window !== 'undefined' && window.innerWidth <= 768 ? 0.005 : 0.002}
           sizeAttenuation
           depthWrite={false}
         />
