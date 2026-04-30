@@ -57,7 +57,7 @@ class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean}
             Tap to Reload
           </button>
         </div>
-      );
+      );       
     }
     return this.props.children;
   }
