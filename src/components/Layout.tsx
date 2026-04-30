@@ -50,19 +50,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </Suspense>
       )}
 
-      {/* Blackhole Video Background (dark mode only via CSS) — enabled globally as requested */}
-      <div className="blackhole-video-wrapper">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="blackhole-video"
-          >
-            <source src="/videos/blackhole.webm" type="video/webm" />
-          </video>
-        </div>
-
       {/* Light mode background layers (hidden in dark mode via CSS) */}
       <div className="bg-mesh" style={{ zIndex: 0 }} />
       <div className="bg-orb-accent" style={{ zIndex: 0 }} />
