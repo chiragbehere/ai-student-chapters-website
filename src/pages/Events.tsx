@@ -127,12 +127,11 @@ const Events = () => {
               <img
                 src="/images/code-carnival-logo.webp"
                 alt="Code Carnival Logo"
-                className="w-40 h-40 md:w-52 md:h-52 object-contain rounded-full border-2 border-border"
+                className="w-40 h-40 md:w-52 md:h-52 object-contain rounded-full border-2 border-border glow-pulse-anim"
                 style={{ 
                   boxShadow: theme === 'dark' 
                     ? '0 0 30px rgba(168,85,247,0.3), 0 0 60px rgba(56,189,248,0.15)' 
-                    : '0 10px 30px rgba(168,85,247,0.1)', 
-                  animation: 'glowPulse 3s ease-in-out infinite alternate' 
+                    : '0 10px 30px rgba(168,85,247,0.1)',
                 }}
               />
             </motion.div>

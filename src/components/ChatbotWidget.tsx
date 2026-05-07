@@ -212,7 +212,7 @@ const ChatbotWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9, transition: { duration: 0.2 } }}
             transition={{ type: "tween", ease: "circOut", duration: 0.3 }}
-            className="fixed bottom-[5.5rem] right-6 w-[90vw] sm:w-[400px] h-[620px] max-h-[78vh] bg-card sm:bg-card/90 border border-border/20 shadow-2xl rounded-2xl flex flex-col overflow-hidden z-[60] sm:backdrop-blur-xl"
+            className="fixed bottom-[5.5rem] right-6 w-[90vw] sm:w-[400px] h-[620px] max-h-[78vh] bg-card border border-border/20 shadow-2xl rounded-2xl flex flex-col overflow-hidden z-[60]"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-3.5 bg-gradient-to-r from-primary/15 via-accent/10 to-secondary/10 border-b border-border/10">
@@ -309,7 +309,7 @@ const ChatbotWidget = () => {
             )}
 
             {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-3 border-t border-border/10 bg-background/95 sm:bg-background/50 sm:backdrop-blur-md">
+            <form onSubmit={handleSubmit} className="p-3 border-t border-border/10 bg-background">
               <div className="flex items-center gap-2">
                 <input
                   ref={inputRef}

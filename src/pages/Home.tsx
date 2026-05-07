@@ -72,7 +72,6 @@ const Home = () => {
               className="w-32 h-32 md:w-40 md:h-40 xl:w-48 xl:h-48 object-contain"
               style={{
                 animation: 'float 5s ease-in-out infinite',
-                willChange: 'transform',
                 filter: theme === 'dark'
                   ? 'drop-shadow(0 0 18px rgba(168,85,247,0.35))'
                   : 'drop-shadow(0 6px 16px rgba(168,85,247,0.12))',
