@@ -17,6 +17,7 @@ const About = lazy(() => import('./pages/About'));
 const Gallery = lazy(() => import('./pages/Gallery'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const Sessions = lazy(() => import('./pages/Sessions'));
+const Tools = lazy(() => import('./pages/Tools'));
 
 
 // Page loading skeleton
@@ -119,6 +120,11 @@ const AnimatedRoutes = () => {
         <Route path="/sessions" element={
           <Suspense fallback={<PageLoader />}>
             <PageTransition><Sessions /></PageTransition>
+          </Suspense>
+        } />
+        <Route path="/tools" element={
+          <Suspense fallback={<PageLoader />}>
+            <PageTransition><Tools /></PageTransition>
           </Suspense>
         } />
 
