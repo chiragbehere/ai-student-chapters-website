@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { Wrench, Award, ExternalLink, Lock, ShieldCheck, BookOpen } from 'lucide-react';
+import { Wrench, Award, ExternalLink, Lock, ShieldCheck, BookOpen, Download } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const PASSWORD = 'member@aisc';
@@ -29,6 +29,7 @@ const tools = [
     url: 'https://certificate-aisc.vercel.app/',
     color: 'primary',
     badge: 'Live',
+    ctaText: 'Open Tool',
   },
   {
     title: 'studymatrrial',
@@ -37,6 +38,8 @@ const tools = [
     url: '/studymeterial.pdf',
     color: 'primary',
     badge: 'PDF',
+    ctaText: 'Download PDF',
+    isDownload: true,
   },
 ];
 
@@ -181,8 +184,9 @@ const Tools = () => {
                     <motion.a
                       key={idx}
                       href={tool.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      target={tool.isDownload ? undefined : "_blank"}
+                      rel={tool.isDownload ? undefined : "noopener noreferrer"}
+                      download={tool.isDownload ? true : undefined}
                       variants={itemVariants}
                       className="glass-panel p-6 relative overflow-hidden card-hover group cursor-pointer block"
                     >
@@ -208,8 +212,12 @@ const Tools = () => {
 
                       {/* CTA */}
                       <div className="flex items-center gap-1.5 text-primary text-sm font-semibold group-hover:gap-2.5 transition-all duration-300">
-                        Open Tool
-                        <ExternalLink size={14} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                        {tool.ctaText || 'Open Tool'}
+                        {tool.isDownload ? (
+                          <Download size={14} className="transition-transform duration-300 group-hover:translate-y-0.5" />
+                        ) : (
+                          <ExternalLink size={14} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                        )}
                       </div>
                     </motion.a>
                   );
