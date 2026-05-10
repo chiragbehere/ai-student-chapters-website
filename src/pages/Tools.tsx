@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { Wrench, Award, ExternalLink, Lock, ShieldCheck } from 'lucide-react';
+import { Wrench, Award, ExternalLink, Lock, ShieldCheck, BookOpen } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const PASSWORD = 'member@aisc';
@@ -29,6 +29,14 @@ const tools = [
     url: 'https://certificate-aisc.vercel.app/',
     color: 'primary',
     badge: 'Live',
+  },
+  {
+    title: 'studymatrrial',
+    description: 'Access the official study material document.',
+    icon: BookOpen,
+    url: '/studymeterial.pdf',
+    color: 'primary',
+    badge: 'PDF',
   },
 ];
 
