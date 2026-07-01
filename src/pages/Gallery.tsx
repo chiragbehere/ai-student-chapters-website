@@ -25,25 +25,26 @@ const itemVariants: Variants = {
   }
 };
 
+import { useGalleryImages, useGalleryVideos } from '../hooks/useSupabaseData';
+
 const Gallery = () => {
   const [activeTab, setActiveTab] = useState<'images' | 'videos'>('images');
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const images = [
-    { src: '/images/event1.webp', caption: 'Workshop on IMCA classes' },
-    { src: '/images/event2.webp', caption: 'Workshop on MCA classes' },
-    { src: '/images/event3.webp', caption: 'Workshop by Hon. HOD Dr. M. N. Behere' },
-    { src: '/images/event4.webp', caption: 'Mentors Meet' },
-    { src: '/images/event5.webp', caption: 'Team AISC' },
-    { src: '/images/event6.webp', caption: 'Inauguration' },
-  ];
+  const { data: galleryImages } = useGalleryImages();
+  const { data: galleryVideos } = useGalleryVideos();
 
-  const videos = [
-    { src: '/Hackthon Highlights/hacakthon.mp4', title: '🏆 Hackathon Moments', desc: 'Best highlights from the competition' },
-    { src: '/Hackthon Highlights/invetations.mp4', title: '🎤 Invites & Guests', desc: 'The team invited special guests' },
-    { src: '/Hackthon Highlights/session.mp4', title: '💻 Live Session', desc: 'Workshop session on classes' },
-  ];
+  const images = galleryImages.map(img => ({
+    src: img.url,
+    caption: img.caption || '',
+  }));
+
+  const videos = galleryVideos.map(v => ({
+    src: v.url,
+    title: v.title || '',
+    desc: v.description || '',
+  }));
 
   return (
     <div className="w-full">

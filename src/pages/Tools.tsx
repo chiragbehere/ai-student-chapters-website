@@ -3,8 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { Wrench, Award, ExternalLink, Lock, ShieldCheck, BookOpen, Download } from 'lucide-react';
 import SEO from '../components/SEO';
+import { useTools, useSiteSetting } from '../hooks/useSupabaseData';
 
-const PASSWORD = 'member@aisc';
+// Icon name → component mapping
+const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+  Award, BookOpen, Wrench, Download,
+};
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -21,37 +25,29 @@ const itemVariants: Variants = {
   show: { opacity: 1, y: 0, transition: { type: "tween", ease: "easeOut", duration: 0.4 } }
 };
 
-const tools = [
-  {
-    title: 'AISC Certificate Studio',
-    description: 'Generate professional certificates for event participants, workshop attendees, and club members. Paste names from Excel/PDF and download beautifully designed certificates instantly.',
-    icon: Award,
-    url: 'https://certificate-aisc.vercel.app/',
-    color: 'primary',
-    badge: 'Live',
-    ctaText: 'Open Tool',
-  },
-  {
-    title: 'studymatrrial',
-    description: 'Access the official study material document.',
-    icon: BookOpen,
-    url: '/studymeterial.pdf',
-    color: 'primary',
-    badge: 'PDF',
-    ctaText: 'Download PDF',
-    isDownload: true,
-  },
-];
-
 const Tools = () => {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [shaking, setShaking] = useState(false);
 
+  const { data: toolsData } = useTools();
+  const { data: storedPassword } = useSiteSetting('tools_password', 'member@aisc');
+
+  const tools = toolsData.map(t => ({
+    title: t.title,
+    description: t.description,
+    icon: ICON_MAP[t.icon_name] || Wrench,
+    url: t.url,
+    color: t.color,
+    badge: t.badge,
+    ctaText: t.cta_text,
+    isDownload: t.is_download,
+  }));
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === PASSWORD) {
+    if (password === storedPassword) {
       setError(false);
       setIsUnlocked(true);
     } else {

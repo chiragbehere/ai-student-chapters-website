@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Bot, User, Sparkles, Send, RotateCcw } from 'lucide-react';
+import { useChatbotQA } from '../hooks/useSupabaseData';
 
 type Message = {
   id: string;
@@ -32,6 +33,9 @@ const ChatbotWidget = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Load Q&A from Supabase (with fallback to hardcoded data)
+  const { data: qaDatabase } = useChatbotQA();
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -46,103 +50,11 @@ const ChatbotWidget = () => {
     }
   }, [isOpen]);
 
-  // Knowledge base - keyword patterns mapped to answers
-  const QA_DATABASE: { keywords: string[]; answer: string }[] = [
-    {
-      keywords: ['what is', 'about', 'tell me about', 'what are', 'who are you', 'introduce'],
-      answer: "AI Student Chapters is a student-run tech club at RCPIMRD college focused on AI, ML, and emerging technologies! 🚀 We host hackathons, workshops, coding sessions, and tech talks to help students explore the world of tech."
-    },
-    {
-      keywords: ['join', 'member', 'sign up', 'register', 'enroll', 'how to join', 'become'],
-      answer: "Joining is super easy! 🎉 You don't need any coding experience — we welcome everyone. Just reach out to us on Instagram @ai.student_chapters or email us at imrdaistudentclub@gmail.com and we'll get you onboard!"
-    },
-    {
-      keywords: ['team', 'lead', 'president', 'who leads', 'members', 'committee', 'core'],
-      answer: "Here's our awesome core team! 🌟\n👑 President: Kartik Sharad Valhe\n⭐ Vice President: Krushnali Vanusing Jadhav\n📋 Secretary: Tejas Dipak Panchbhai\n💰 Treasurer: Aastha Vilas Deshmukh\n🎯 Event Manager: Chirag Rajesh Behere\n💻 Tech Lead: Aniruddha Balaji Landge\n📝 Documentation Head: Moin Altaf Ansari\n📸 Camera Lead: Shreyash Sunil Patil\n📱 Social Media: Bhumika Vilas Patil"
-    },
-    {
-      keywords: ['event', 'hackathon', 'workshop', 'session', 'activity', 'done', 'past'],
-      answer: "We've hosted some amazing events! 🎪\n🏆 Code-Carnival Hackathon (March 2026) — our flagship event!\n💻 Vibe Coding Workshop — hands-on coding fun\n🤖 AI/ML Workshops — learn cutting-edge tech\n🎤 Guest lectures from industry experts\nStay tuned on our Instagram for upcoming events!"
-    },
-    {
-      keywords: ['coding', 'code', 'programming', 'skill', 'experience', 'beginner', 'need'],
-      answer: "Nope, you don't need any coding skills to join! 💪 We welcome complete beginners and experienced coders alike. Our workshops start from the basics, so everyone can learn and grow together."
-    },
-    {
-      keywords: ['vibe coding', 'vibe'],
-      answer: "Vibe Coding is our signature workshop format! 🎶 It's all about coding in a chill, collaborative environment with music, snacks, and good vibes. We make learning to code fun and stress-free!"
-    },
-    {
-      keywords: ['next event', 'upcoming', 'when', 'schedule', 'next'],
-      answer: "Follow us on Instagram @ai.student_chapters to stay updated on upcoming events! 📱 You can also email us at imrdaistudentclub@gmail.com to get on our mailing list. Exciting things are always in the works! 🔥"
-    },
-    {
-      keywords: ['contact', 'reach', 'email', 'instagram', 'social', 'connect', 'talk'],
-      answer: "You can reach us through:\n📧 Email: imrdaistudentclub@gmail.com\n📸 Instagram: @ai.student_chapters\nFeel free to DM us or drop an email — we'd love to hear from you! 💬"
-    },
-    {
-      keywords: ['kartik'],
-      answer: "Kartik Sharad Valhe is our President! 👑 He leads the club and drives our vision forward."
-    },
-    {
-      keywords: ['krushnali'],
-      answer: "Krushnali Vanusing Jadhav is our Vice President! ⭐ She supports the president and helps coordinate all club activities."
-    },
-    {
-      keywords: ['tejas'],
-      answer: "Tejas Dipak Panchbhai is our Secretary! 📋 He manages club communications and keeps everything organized."
-    },
-    {
-      keywords: ['aastha'],
-      answer: "Aastha Vilas Deshmukh is our Treasurer! 💰 She manages the club's finances and budgets."
-    },
-    {
-      keywords: ['chirag'],
-      answer: "Chirag Rajesh Behere is our Event Manager! 🎯 He plans and executes all our amazing events, from hackathons to workshops."
-    },
-    {
-      keywords: ['aniruddha'],
-      answer: "Aniruddha Balaji Landge is our Tech Lead! 💻 He handles technical workshops and leads the tech infrastructure."
-    },
-    {
-      keywords: ['moin'],
-      answer: "Moin Altaf Ansari is our Documentation Head! 📝 He is responsible for managing all the important documents and reports."
-    },
-    {
-      keywords: ['shreyash'],
-      answer: "Shreyash Sunil Patil is our Camera Lead! 📸 He captures all the great moments at our events."
-    },
-    {
-      keywords: ['bhumika'],
-      answer: "Bhumika Vilas Patil handles Social Media! 📱 She manages our online presence and keeps the community engaged."
-    },
-    {
-      keywords: ['hi', 'hello', 'hey', 'hii', 'hiii', 'sup', 'yo', 'hola', 'greetings'],
-      answer: "Hey there! 👋 Welcome to AI Student Chapters! How can I help you today? You can ask me about the club, events, team, or how to join!"
-    },
-    {
-      keywords: ['thanks', 'thank', 'thx', 'ty', 'appreciate'],
-      answer: "You're welcome! 😊 Happy to help! If you have more questions, feel free to ask anytime. See you at our next event! ⚡"
-    },
-    {
-      keywords: ['bye', 'goodbye', 'see you', 'later', 'cya'],
-      answer: "See you later! 👋 Don't forget to follow us on Instagram @ai.student_chapters for updates. Have an awesome day! 🌟"
-    },
-    {
-      keywords: ['ai', 'artificial intelligence', 'machine learning', 'ml', 'deep learning'],
-      answer: "We're all about AI & ML! 🤖 Our club explores artificial intelligence, machine learning, deep learning, and other emerging technologies through hands-on workshops and projects. Join us to dive into the world of AI!"
-    },
-    {
-      keywords: ['college', 'rcpimrd', 'school', 'university'],
-      answer: "AI Student Chapters is based at RCPIMRD college! 🏫 We're a student-run tech club that's open to all students of the college. Come join our tech community!"
-    },
-  ];
-
-  const getAnswer = (question: string): string => {
+  const getAnswer = useCallback((question: string): string => {
     const q = question.toLowerCase().trim();
 
     // Check each Q&A entry for keyword matches
-    for (const qa of QA_DATABASE) {
+    for (const qa of qaDatabase) {
       for (const keyword of qa.keywords) {
         if (q.includes(keyword.toLowerCase())) {
           return qa.answer;
@@ -152,7 +64,7 @@ const ChatbotWidget = () => {
 
     // Default fallback response
     return "Great question! 🤔 I don't have a specific answer for that, but our team would love to help! Reach out to us:\n📧 Email: imrdaistudentclub@gmail.com\n📸 Instagram: @ai.student_chapters\n\nOr try asking about: the club, events, team, how to join, or coding skills!";
-  };
+  }, [qaDatabase]);
 
   const sendMessage = useCallback((userText: string) => {
     if (isLoading || !userText.trim()) return;

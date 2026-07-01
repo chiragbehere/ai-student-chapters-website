@@ -23,6 +23,8 @@ const itemVariants: Variants = {
   }
 };
 
+import { useFaqs } from '../hooks/useSupabaseData';
+
 const About = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
@@ -33,14 +35,8 @@ const About = () => {
     { name: 'Networking 🤝', percent: 80, icon: <Users size={24} className="text-lime" />, color: 'bg-lime', desc: 'Connect with AI enthusiasts, alumni, and professionals to build lasting tech relationships.' }
   ];
 
-  const faqs = [
-    { q: "Who can join AI Student Chapters?", a: "Any student at RCPIMRD, from MCA and IMCA (1st year), can apply. We welcome all backgrounds — technical or not!" },
-    { q: "Is there any fee to join?", a: "Nope, absolutely free! No hidden costs. Everything is open to students." },
-    { q: "Do I need to know coding?", a: "Not necessarily! We have roles for designers, speakers, content creators, and event managers too." },
-    { q: "What is Vibe Coding?", a: "Vibe coding is an intuitive approach to building software where you focus on flow, logic, and AI-assisted generation rather than writing every single line." },
-    { q: "How often do you host events?", a: "Typically one major event per month — from hackathons to guest speakers and workshops." },
-    { q: "How do I register for Code-Carnival?", a: "Click the \"Register Now\" button on the Events page and fill out the form. But hurry — spots are limited! ⚡" }
-  ];
+  const { data: faqsData } = useFaqs('about');
+  const faqs = faqsData.map(f => ({ q: f.question, a: f.answer }));
 
   return (
     <div className="w-full relative">

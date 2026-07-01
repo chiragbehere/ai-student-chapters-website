@@ -18,11 +18,16 @@ const itemVariants: Variants = {
   show: { opacity: 1, y: 0, transition: { type: "tween", ease: "easeOut", duration: 0.4 } }
 };
 
+import { useSessions } from '../hooks/useSupabaseData';
+
 const Sessions = () => {
-  const workshops = [
-    { title: '1. What is Hackathon', embedUrl: 'https://docs.google.com/presentation/d/1mLfETYAr32KgcQeict9f856BxBwgRPye/embed?start=false&loop=false&delayms=3000', downloadUrl: '/ppt/What is hackathon.pptx' },
-    { title: '2. What is Vibe Coding', embedUrl: 'https://docs.google.com/presentation/d/11B9NhHo_G7Jhv9G807eqxSyIQhddXCWh/embed?start=false&loop=false&delayms=3000', downloadUrl: '/ppt/What is Vibe coding.pptx' },
-  ];
+  const { data: sessionsData } = useSessions();
+
+  const workshops = sessionsData.map(s => ({
+    title: s.title,
+    embedUrl: s.embed_url,
+    downloadUrl: s.download_url || '',
+  }));
 
   return (
     <div className="w-full relative min-h-screen pt-28 pb-24 z-10 transition-colors duration-300">

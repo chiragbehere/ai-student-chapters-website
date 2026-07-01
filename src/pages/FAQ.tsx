@@ -62,31 +62,16 @@ const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answ
   );
 };
 
+import { useFaqs } from '../hooks/useSupabaseData';
+
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const { data: faqsData } = useFaqs('faq');
 
-  const faqs = [
-    {
-      question: "What is AI Student Chapters? 🤔",
-      answer: "We're a student-led community at RCPIMRD that's all about AI. Think hackathons, workshops, building cool projects, and just vibing with people who love tech. No boring lectures, we promise."
-    },
-    {
-      question: "Who can join the club? 🙋",
-      answer: "Literally anyone at RCPIMRD! Doesn't matter if you've never written a line of code — if you're curious about AI and want to learn, you're in. We welcome all skill levels."
-    },
-    {
-      question: "Do I need coding experience? 💻",
-      answer: "Nope! We run beginner-friendly workshops to get you started. All you need is a laptop and the willingness to learn. We'll handle the rest."
-    },
-    {
-      question: "What kind of events do you organize? 🎉",
-      answer: "We do hands-on workshops, guest sessions, coding bootcamps, and our legendary 'Code-Carnival' Hackathon. Check out the Sessions page for what's coming up next!"
-    },
-    {
-      question: "How do I stay updated? 📱",
-      answer: "Join our WhatsApp group — that's where all the action happens. We also post on our Instagram (@ai.student_chapters). Links are on the Home page!"
-    }
-  ];
+  const faqs = faqsData.map(f => ({
+    question: f.question,
+    answer: f.answer,
+  }));
 
   return (
     <div className="w-full relative min-h-screen pt-28 pb-24 z-10 transition-colors duration-300">

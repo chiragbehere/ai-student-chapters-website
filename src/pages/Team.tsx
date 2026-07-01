@@ -23,41 +23,26 @@ const itemVariants: Variants = {
   }
 };
 
+import { useTeamLeaders, useTeamMembers } from '../hooks/useSupabaseData';
 
 const Team = () => {
-  const leaders = [
-    { name: 'Kartik Sharad Valhe', role: 'President', class: 'IMCA-IV', emoji: '👑', image: '/team/Kartik-Valhe.webp' },
-    { name: 'Krushnali Vanusing Jadhav', role: 'Vice President', class: 'IMCA-II', emoji: '⭐', image: '/team/Krushnali-Jadhav.webp' },
-    { name: 'Tejas Dipak Panchbhai', role: 'Secretary', class: 'IMCA-IV', emoji: '📋', image: '/team/Tejas-Panchbhai.webp' },
-    { name: 'Aastha Vilas Deshmukh', role: 'Treasurer', class: 'IMCA-II', emoji: '💰', image: '/team/Aastha-Deshmukh.webp' },
-    { name: 'Chirag Rajesh Behere', role: 'Event Manager', class: 'IMCA-II', emoji: '🎯', image: '/team/Chirag-Behere.webp' },
-    { name: 'Aniruddha Balaji Landge', role: 'Tech Lead', class: 'IMCA-III', emoji: '💻', image: '/team/Aniruddha-Landge.webp' },
-    { name: 'Moin Altaf Ansari', role: 'Documentation Head', class: 'IMCA-II', emoji: '📝', image: '/team/Moin-Ansari.webp' },
-    { name: 'Shreyash Sunil Patil', role: 'Camera Lead', class: 'IMCA-IV', emoji: '📸', image: '/team/Shreyash-Patil.webp' },
-    { name: 'Bhumika Vilas Patil', role: 'Social Media', class: 'IMCA-II', emoji: '📱', image: '/team/Bhumika-Patil-I-2.webp' }
-  ];
+  const { data: leadersData } = useTeamLeaders();
+  const { data: membersData } = useTeamMembers();
 
-  const members = [
-    { name: 'Vaibhav Jaywantorao Patil', class: 'IMCA-IV', image: '/team/Vaibhav-Patil.webp' },
-    { name: 'Sejal Prashant Patil', class: 'IMCA-II', image: '/team/Sejal-Patil.webp' },
-    { name: 'Sai Paresh Upakare', class: 'IMCA-IV', image: '/team/Sai-Upakare.webp' },
-    { name: 'Bhumika Nitin Patil', class: 'IMCA-IV', image: '/team/Bhumika-Patil.webp' },
-    { name: 'Tejaswini Pravin Pawar', class: 'IMCA-I' },
-    { name: 'Tejas Aaba Bagul', class: 'IMCA-I' },
-    { name: 'Shrikant Dinesh Borase', class: 'IMCA-I' },
-    { name: 'Manasi Dipak Bhamare', class: 'IMCA-I' },
-    { name: 'Ruchita Prabhakar Chaudhari', class: 'IMCA-I' },
-    { name: 'Radhika Vijay Patil', class: 'IMCA-I' },
-    { name: 'Yogesh Adhikar Badgujar', class: 'IMCA-I' },
-    { name: 'Harshada Manohar Bagul', class: 'IMCA-I' },
-    { name: 'Om Bhaskar Borse', class: 'IMCA-I' },
-    { name: 'Harsh Naresh Fulari', class: 'IMCA-I' },
-    { name: 'Purushottam Kishor Patil', class: 'IMCA-I' },
-    { name: 'Ketana Ambalal Lohar', class: 'MCA-I' },
-    { name: 'Karuna Nitin Soni', class: 'MCA-I' },
-    { name: 'Pushpanjali Manohar Patil', class: 'MCA-I' },
-    { name: 'Utkarsha Manohar Patil', class: 'MCA-I' }
-  ];
+  // Map DB shape to component shape
+  const leaders = leadersData.map(l => ({
+    name: l.name,
+    role: l.role || '',
+    class: l.class,
+    emoji: l.emoji || '',
+    image: l.image_url || undefined,
+  }));
+
+  const members = membersData.map(m => ({
+    name: m.name,
+    class: m.class,
+    image: m.image_url || undefined,
+  }));
 
   const colors = ['from-primary to-secondary', 'from-accent to-primary', 'from-secondary to-lime', 'from-coral to-accent', 'from-primary to-accent'];
 
@@ -103,7 +88,7 @@ const Team = () => {
                     <Image 
                       src={member.image} 
                       alt={member.name} 
-                      className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1"
+                      className="w-full h-full object-cover"
                     />
                   ) : (
                     <span>{member.emoji}</span>
@@ -137,7 +122,7 @@ const Team = () => {
                     <Image 
                       src={member.image} 
                       alt={member.name} 
-                      className="w-full h-full object-cover scale-[1.7] object-[center_40%] translate-y-1"
+                      className="w-full h-full object-cover"
                     />
                   ) : (
                     member.name.charAt(0)
