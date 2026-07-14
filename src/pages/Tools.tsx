@@ -209,7 +209,7 @@ const Tools = () => {
 
                       {/* Icon */}
                       <div className="w-12 h-12 flex items-center justify-center mb-5 transition-colors duration-300" style={{ border: '1px solid rgb(var(--color-border))', background: 'rgb(var(--color-muted))' }}>
-                        <IconComponent size={22} style={{ color: 'var(--ink)' }} />
+                        <IconComponent size={22} className="tool-icon-color" />
                       </div>
 
                       {/* Content */}

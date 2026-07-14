@@ -549,3 +549,7 @@
     box-shadow: none;
   }
 }
+
+.tool-icon-color {
+  color: var(--ink, rgb(var(--color-foreground)));
+}
