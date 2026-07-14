@@ -1,11 +1,8 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Menu, Camera, Mail, Sun, Moon } from 'lucide-react';
+import { X, Menu, Sun, Moon, ArrowUpRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-
-// Lazy load the heavy Three.js star background — enabled on all devices as requested
-const StarsCanvas = lazy(() => import('./StarBackground'));
 
 export const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -23,14 +20,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const { theme, toggleTheme } = useTheme();
 
   const links = [
-    { path: '/', label: 'Home', emoji: '🏠' },
-    { path: '/events', label: 'Events', emoji: '🏆' },
-    { path: '/gallery', label: 'Gallery', emoji: '📸' },
-    { path: '/team', label: 'Team', emoji: '👥' },
-    { path: '/sessions', label: 'Sessions', emoji: '🎓' },
-    { path: '/tools', label: 'Tools', emoji: '🔧' },
-    { path: '/faq', label: 'FAQ', emoji: '💬' },
-    { path: '/about', label: 'About', emoji: '✨' },
+    { path: '/', label: 'Home' },
+    { path: '/events', label: 'Events' },
+    { path: '/gallery', label: 'Gallery' },
+    { path: '/team', label: 'Team' },
+    { path: '/sessions', label: 'Sessions' },
+    { path: '/tools', label: 'Tools' },
+    { path: '/faq', label: 'FAQ' },
+    { path: '/about', label: 'About' },
   ];
 
   // Close menu on route change
@@ -42,24 +39,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <>
       <ScrollToTop />
 
-      {/* ═══ Fixed Background Layers (behind everything) ═══ */}
-
-      {/* Stars Background (dark mode only via CSS) — disabled on mobile for perf */}
-      {StarsCanvas && (
-        <Suspense fallback={null}>
-          <StarsCanvas />
-        </Suspense>
-      )}
-
-      {/* Light mode background layers (hidden in dark mode via CSS) */}
-      <div className="bg-mesh" style={{ zIndex: 0 }} />
-      <div className="bg-orb-accent" style={{ zIndex: 0 }} />
-      <div className="bg-grid" style={{ zIndex: 0 }} />
-
       {/* ═══ Main App Shell ═══ */}
-      <div className="min-h-screen flex flex-col font-body text-foreground transition-colors duration-300" style={{ position: 'relative', zIndex: 2 }}>
+      <div className="min-h-screen flex flex-col" style={{ position: 'relative', zIndex: 2 }}>
 
-        {/* ═══════════════ Space Navbar ═══════════════ */}
+        {/* ═══════════════ Editorial Navbar ═══════════════ */}
         <nav className="space-navbar" style={{ zIndex: 50 }}>
           <div className="w-full h-full flex items-center justify-between">
             {/* Logo + Name */}
@@ -68,21 +51,16 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 src="/images/club-logo.webp" 
                 alt="AI Student Chapters Logo" 
                 className="h-9 w-9 transition-transform duration-300 group-hover:rotate-6" 
-                style={{ 
-                  filter: theme === 'dark' 
-                    ? 'drop-shadow(0 0 10px rgba(168,85,247,0.4))' 
-                    : 'none' 
-                }} 
               />
-              <span className="font-heading font-bold text-lg tracking-tight hidden sm:inline">
-                <span className="grad-text">AI</span>{' '}
-                <span className="text-heading">Chapters</span>
+              <span className="font-bold text-lg tracking-tight hidden sm:inline" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <span style={{ color: 'var(--acid)' }}>AI</span>{' '}
+                <span style={{ color: 'rgb(var(--color-heading))' }}>Chapters</span>
               </span>
             </Link>
 
             {/* Right Side Nav Group */}
             <div className="flex items-center gap-4">
-              {/* Desktop Nav Links in Pill */}
+              {/* Desktop Nav Links */}
               <div className="hidden lg:flex items-center">
                 <div className="space-nav-pill">
                   {links.map((link) => (
@@ -90,7 +68,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                       key={link.path}
                       to={link.path}
                       className={`space-nav-link ${
-                        location.pathname === link.path ? 'active' : 'text-foreground/60'
+                        location.pathname === link.path ? 'active' : ''
                       }`}
                     >
                       {link.label}
@@ -104,18 +82,30 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 {/* Theme Toggle */}
                 <button
                   onClick={toggleTheme}
-                  className="p-2.5 rounded-full bg-foreground/5 text-foreground hover:bg-foreground/10 transition-all duration-300 border border-border/10 group"
+                  className="p-2.5 transition-all duration-300 border group"
                   aria-label="Toggle Theme"
+                  style={{
+                    borderRadius: 0,
+                    background: 'transparent',
+                    borderColor: 'rgb(var(--color-border))',
+                    color: 'rgb(var(--color-heading))',
+                  }}
                 >
                   <div className="transition-transform duration-300 scale-100 active:scale-95">
-                    {theme === 'dark' ? <Moon size={18} /> : <Sun size={18} className="text-amber-500" />}
+                    {theme === 'dark' ? <Moon size={18} /> : <Sun size={18} />}
                   </div>
                 </button>
 
                 {/* Mobile Hamburger */}
                 <button
-                  className="lg:hidden text-foreground hover:text-primary transition-all p-2 rounded-xl bg-foreground/5 border border-border/10"
+                  className="lg:hidden p-2 transition-all border"
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  style={{
+                    borderRadius: 0,
+                    background: 'transparent',
+                    borderColor: 'rgb(var(--color-border))',
+                    color: 'rgb(var(--color-heading))',
+                  }}
                 >
                   {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
@@ -133,22 +123,28 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
                 className="lg:hidden absolute top-[65px] left-0 w-full overflow-hidden"
                 style={{
-                  background: theme === 'dark' ? 'rgba(3,0,20,0.98)' : 'rgba(255,255,255,0.98)',
+                  background: theme === 'dark' ? 'rgba(18,16,12,0.98)' : 'rgba(243,240,233,0.98)',
+                  borderBottom: '1px solid rgb(var(--color-border))',
                 }}
               >
-                <div className="px-4 py-5 space-y-2 flex flex-col">
+                <div className="px-4 py-5 space-y-1 flex flex-col">
                   {links.map((link) => (
                     <Link
                       key={link.path}
                       to={link.path}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                        location.pathname === link.path
-                          ? 'bg-primary/10 text-primary border border-primary/15'
-                          : 'text-foreground/70 hover:bg-foreground/5 hover:text-heading'
-                      }`}
+                      className="flex items-center gap-3 px-4 py-3 text-xs font-medium transition-all uppercase tracking-wider"
+                      style={{
+                        fontFamily: "'DM Mono', monospace",
+                        borderRadius: 0,
+                        background: location.pathname === link.path
+                          ? 'var(--ink)'
+                          : 'transparent',
+                        color: location.pathname === link.path
+                          ? 'var(--acid)'
+                          : 'rgb(var(--color-foreground) / 0.6)',
+                      }}
                     >
-                      <span className="text-base">{link.emoji}</span>
                       {link.label}
                     </Link>
                   ))}
@@ -163,83 +159,127 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           {children}
         </main>
 
-        {/* ═══════════════ Space Footer ═══════════════ */}
+        {/* ═══════════════ New Editorial Footer ═══════════════ */}
         <footer className="space-footer">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            
+            {/* Top section */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-14">
               
               {/* Brand */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2.5">
+              <div className="md:col-span-5 space-y-5">
+                <div className="flex items-center gap-3">
                   <img 
                     src="/images/club-logo.webp" 
                     alt="Logo" 
-                    className="h-8 w-8 opacity-80" 
-                    style={{ 
-                      filter: theme === 'dark' 
-                        ? 'drop-shadow(0 0 8px rgba(168,85,247,0.3))' 
-                        : 'none' 
-                    }} 
+                    className="h-8 w-8 opacity-80"
+                    style={{ filter: 'brightness(1.2)' }}
                   />
-                  <h2 className="font-heading font-bold text-lg text-heading">
-                    <span className="grad-text">AI Student Chapters</span>
+                  <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '18px', color: '#f3f0e9', letterSpacing: '-0.03em' }}>
+                    AI Student Chapters
                   </h2>
                 </div>
-                <p className="text-foreground/50 text-sm leading-relaxed max-w-xs">
-                  Where curiosity meets code. Built for students who want to shape the future with AI. ✨
+                <p style={{ color: 'rgba(243,240,233,0.45)', fontSize: '12px', lineHeight: 1.7, maxWidth: '320px', fontFamily: "'DM Mono', monospace" }}>
+                  Where curiosity meets code. Built for students who want to shape the future with AI.
                 </p>
+                <div className="flex items-center gap-3 pt-1">
+                  <a 
+                    href="https://www.instagram.com/ai.student_chapters/" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="flex items-center justify-center transition-all duration-300"
+                    style={{ width: '36px', height: '36px', border: '1px solid rgba(243,240,233,0.15)', color: 'rgba(243,240,233,0.5)', background: 'transparent' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d8ff3e'; e.currentTarget.style.color = '#d8ff3e'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(243,240,233,0.15)'; e.currentTarget.style.color = 'rgba(243,240,233,0.5)'; }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                  </a>
+                  <a 
+                    href="mailto:imrdaistudentclub@gmail.com" 
+                    className="flex items-center justify-center transition-all duration-300"
+                    style={{ width: '36px', height: '36px', border: '1px solid rgba(243,240,233,0.15)', color: 'rgba(243,240,233,0.5)', background: 'transparent' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d8ff3e'; e.currentTarget.style.color = '#d8ff3e'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(243,240,233,0.15)'; e.currentTarget.style.color = 'rgba(243,240,233,0.5)'; }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  </a>
+                  <a 
+                    href="https://chat.whatsapp.com/IfBOfK4bE7l1D0N5C9KXYv" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="flex items-center justify-center transition-all duration-300"
+                    style={{ width: '36px', height: '36px', border: '1px solid rgba(243,240,233,0.15)', color: 'rgba(243,240,233,0.5)', background: 'transparent' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d8ff3e'; e.currentTarget.style.color = '#d8ff3e'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(243,240,233,0.15)'; e.currentTarget.style.color = 'rgba(243,240,233,0.5)'; }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  </a>
+                </div>
               </div>
 
-              {/* Links */}
-              <div className="space-y-3">
-                <h3 className="text-heading font-heading font-semibold text-sm">
-                  Quick Links
+              {/* Quick Links */}
+              <div className="md:col-span-3">
+                <h3 style={{ fontFamily: "'DM Mono', monospace", fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(243,240,233,0.35)', marginBottom: '20px' }}>
+                  Navigate
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                   {links.map((link) => (
                     <Link 
                       key={link.path} 
                       to={link.path} 
-                      className="px-3 py-1.5 rounded-full bg-foreground/5 text-foreground/60 text-xs hover:bg-primary/10 hover:text-primary transition-all border border-border/8"
+                      className="transition-colors duration-200 block"
+                      style={{ fontFamily: "'DM Mono', monospace", fontSize: '12px', color: 'rgba(243,240,233,0.5)', paddingBlock: '3px' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = '#d8ff3e'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(243,240,233,0.5)'; }}
                     >
-                      {link.emoji} {link.label}
+                      {link.label}
                     </Link>
                   ))}
                 </div>
               </div>
 
-              {/* Connect */}
-              <div className="space-y-3">
-                <h3 className="text-heading font-heading font-semibold text-sm">Let's Connect 🤝</h3>
+              {/* Contact */}
+              <div className="md:col-span-4">
+                <h3 style={{ fontFamily: "'DM Mono', monospace", fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(243,240,233,0.35)', marginBottom: '20px' }}>
+                  Get in touch
+                </h3>
                 <a 
                   href="mailto:imrdaistudentclub@gmail.com" 
-                  className="text-foreground/60 hover:text-primary transition-colors text-sm block truncate"
+                  className="transition-colors duration-200 block"
+                  style={{ fontFamily: "'DM Mono', monospace", fontSize: '12px', color: 'rgba(243,240,233,0.5)', marginBottom: '12px' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#d8ff3e'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(243,240,233,0.5)'; }}
                 >
                   imrdaistudentclub@gmail.com
                 </a>
-                <div className="flex items-center gap-2 pt-1">
-                  <a 
-                    href="https://www.instagram.com/ai.student_chapters/" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="w-9 h-9 rounded-full bg-foreground/5 border border-border/10 flex items-center justify-center text-foreground/50 hover:text-accent hover:border-accent/30 hover:bg-accent/10 transition-all duration-300"
-                  >
-                    <Camera size={15} />
-                  </a>
-                  <a 
-                    href="mailto:imrdaistudentclub@gmail.com" 
-                    className="w-9 h-9 rounded-full bg-foreground/5 border border-border/10 flex items-center justify-center text-foreground/50 hover:text-primary hover:border-primary/30 hover:bg-primary/10 transition-all duration-300"
-                  >
-                    <Mail size={15} />
-                  </a>
-                </div>
+                <p style={{ fontFamily: "'DM Mono', monospace", fontSize: '12px', color: 'rgba(243,240,233,0.35)', lineHeight: 1.7 }}>
+                  RCPIMRD, India
+                </p>
+                <a
+                  href="https://chat.whatsapp.com/IfBOfK4bE7l1D0N5C9KXYv"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 mt-4 transition-all duration-200"
+                  style={{ fontFamily: "'DM Mono', monospace", fontSize: '11px', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', background: '#d8ff3e', color: '#11110f', padding: '10px 16px' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px,-2px)'; e.currentTarget.style.boxShadow = '3px 3px 0 #a9c7ff'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}
+                >
+                  Join the chapter <ArrowUpRight size={13} />
+                </a>
               </div>
-
             </div>
 
-            <div className="pt-6 border-t border-border/8 flex flex-col sm:flex-row justify-between items-center gap-3 text-foreground/30 text-xs">
-              <p>© {new Date().getFullYear()} AI Student Chapters, RCPIMRD</p>
-              <p className="flex items-center gap-1.5">made with 💜 by students</p>
+            {/* Bottom bar */}
+            <div 
+              className="flex flex-col sm:flex-row justify-between items-center gap-3 py-5"
+              style={{ borderTop: '1px solid rgba(243,240,233,0.1)' }}
+            >
+              <p style={{ fontFamily: "'DM Mono', monospace", fontSize: '10px', letterSpacing: '0.06em', color: 'rgba(243,240,233,0.3)', textTransform: 'uppercase' }}>
+                © {new Date().getFullYear()} AI Student Chapters, RCPIMRD
+              </p>
+              <p style={{ fontFamily: "'Syne', sans-serif", fontSize: '11px', fontWeight: 600, color: 'rgba(243,240,233,0.45)', letterSpacing: '-0.01em' }}>
+                Designed by <span style={{ color: '#d8ff3e', fontWeight: 700 }}>Team AISC</span>
+              </p>
             </div>
           </div>
         </footer>

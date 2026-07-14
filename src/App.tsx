@@ -8,8 +8,6 @@ import ChatbotWidget from './components/ChatbotWidget';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import EmailWidget from './components/EmailWidget';
 import InstagramWidget from './components/InstagramWidget';
-import { AuthProvider } from './context/AuthContext';
-import AdminRoute from './components/AdminRoute';
 import Home from './pages/Home';
 
 // Lazy-load all non-home pages for faster initial load
@@ -21,11 +19,6 @@ const FAQ = lazy(() => import('./pages/FAQ'));
 const Sessions = lazy(() => import('./pages/Sessions'));
 const Tools = lazy(() => import('./pages/Tools'));
 
-// Admin pages
-const AdminLogin = lazy(() => import('./pages/admin/Login'));
-const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
-const EventWinners = lazy(() => import('./pages/admin/EventWinners'));
-const EventTimeline = lazy(() => import('./pages/admin/EventTimeline'));
 
 
 // Page loading skeleton
@@ -136,34 +129,6 @@ const AnimatedRoutes = () => {
           </Suspense>
         } />
 
-        {/* Admin Routes */}
-        <Route path="/admin/login" element={
-          <Suspense fallback={<PageLoader />}>
-            <PageTransition><AdminLogin /></PageTransition>
-          </Suspense>
-        } />
-        <Route path="/admin/dashboard" element={
-          <Suspense fallback={<PageLoader />}>
-            <AdminRoute>
-              <PageTransition><AdminDashboard /></PageTransition>
-            </AdminRoute>
-          </Suspense>
-        } />
-        <Route path="/admin/events/:eventId/winners" element={
-          <Suspense fallback={<PageLoader />}>
-            <AdminRoute>
-              <PageTransition><EventWinners /></PageTransition>
-            </AdminRoute>
-          </Suspense>
-        } />
-        <Route path="/admin/events/:eventId/timeline" element={
-          <Suspense fallback={<PageLoader />}>
-            <AdminRoute>
-              <PageTransition><EventTimeline /></PageTransition>
-            </AdminRoute>
-          </Suspense>
-        } />
-
       </Routes>
     </AnimatePresence>
   );
@@ -173,8 +138,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
         <SmoothScroll>
           <Layout>
             <ErrorBoundary>
@@ -187,8 +151,7 @@ function App() {
           <InstagramWidget />
           <Analytics />
         </SmoothScroll>
-      </Router>
-    </AuthProvider>
+    </Router>
   );
 }
 

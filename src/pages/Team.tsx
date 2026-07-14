@@ -44,46 +44,50 @@ const Team = () => {
     image: m.image_url || undefined,
   }));
 
-  const colors = ['from-primary to-secondary', 'from-accent to-primary', 'from-secondary to-lime', 'from-coral to-accent', 'from-primary to-accent'];
+  const gradients = ['#11110f', '#a9c7ff', '#d8ff3e', '#11110f', '#a9c7ff'];
 
   return (
     <div className="w-full relative">
       <SEO title="Team" description="Meet the people behind the AI Student Chapters." />
       {/* Hero */}
-      <section className="pt-24 pb-14 bg-card/30 border-b border-border relative z-10 transition-colors duration-300">
+      <section className="editorial-hero">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pill bg-primary/10 text-primary border border-primary/20 mx-auto w-fit mb-6 flex items-center gap-2">
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pill mx-auto w-fit mb-6 flex items-center gap-2" style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}>
             <Star size={14} /> the crew
           </motion.div>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black font-heading mb-3 text-heading transition-colors"
+            className="text-4xl md:text-5xl font-black mb-3"
           >
-            Meet the <span className="grad-text">Team</span> 👥
+            Meet the <span className="grad-text">Team</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-foreground/50 text-base max-w-lg mx-auto"
+            className="text-base max-w-lg mx-auto"
+            style={{ color: 'rgb(var(--color-foreground) / 0.5)', fontFamily: "'DM Mono', monospace", fontSize: '13px' }}
           >
-            The amazing humans behind AI Student Chapters ✨
+            The amazing humans behind AI Student Chapters.
           </motion.p>
         </div>
       </section>
 
       {/* Leaders */}
-      <section className="py-14 relative z-10 transition-colors duration-300">
+      <section className="py-14 editorial-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {leaders.map((member, idx) => (
               <motion.div
                 key={member.name}
                 variants={itemVariants}
-                className="glass-panel p-5 text-center group card-hover relative overflow-hidden"
+                className="glass-panel p-5 text-center group relative overflow-hidden"
               >
-                <div className={`mx-auto rounded-full bg-gradient-to-br ${colors[idx % colors.length]} w-20 h-20 flex items-center justify-center text-2xl mb-4 border-2 border-border shadow-lg overflow-hidden`}>
+                <div 
+                  className="mx-auto w-20 h-20 flex items-center justify-center text-2xl mb-4 overflow-hidden"
+                  style={{ border: '2px solid rgb(var(--color-border))', background: gradients[idx % gradients.length], color: gradients[idx % gradients.length] === '#11110f' ? '#d8ff3e' : '#11110f' }}
+                >
                   {member.image ? (
                     <Image 
                       src={member.image} 
@@ -91,22 +95,22 @@ const Team = () => {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <span>{member.emoji}</span>
+                    <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '28px' }}>{member.name.charAt(0)}</span>
                   )
                   }
                 </div>
-                <h3 className="font-heading font-bold text-sm text-heading leading-tight mb-1 transition-colors">{member.name}</h3>
-                <p className="text-primary text-[10px] uppercase font-bold tracking-wider mb-0.5">{member.role}</p>
-                <p className="text-foreground/30 text-[10px] uppercase font-medium">{member.class}</p>
+                <h3 className="font-bold text-sm leading-tight mb-1" style={{ fontFamily: "'Syne', sans-serif" }}>{member.name}</h3>
+                <p className="text-[10px] uppercase font-bold tracking-wider mb-0.5" style={{ color: 'var(--acid)', fontFamily: "'DM Mono', monospace" }}>{member.role}</p>
+                <p className="text-[10px] uppercase font-medium" style={{ color: 'rgb(var(--color-foreground) / 0.3)', fontFamily: "'DM Mono', monospace" }}>{member.class}</p>
               </motion.div>
             ))}
           </motion.div>
 
           {/* Separator */}
           <div className="my-12 flex items-center gap-4">
-            <div className="h-px bg-border flex-1"></div>
-            <span className="pill bg-background/5 text-foreground/40 border border-border">members 💜</span>
-            <div className="h-px bg-border flex-1"></div>
+            <div className="h-px flex-1" style={{ background: 'rgb(var(--color-border))' }}></div>
+            <span className="pill" style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.4)' }}>members</span>
+            <div className="h-px flex-1" style={{ background: 'rgb(var(--color-border))' }}></div>
           </div>
 
           {/* Members */}
@@ -115,9 +119,9 @@ const Team = () => {
               <motion.div
                 key={member.name}
                 variants={itemVariants}
-                className="glass-panel p-4 text-center group card-hover"
+                className="glass-panel p-4 text-center group"
               >
-                <div className="mx-auto w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-heading font-bold font-heading text-sm mb-3 overflow-hidden">
+                <div className="mx-auto w-12 h-12 flex items-center justify-center font-bold text-sm mb-3 overflow-hidden" style={{ border: '1px solid rgb(var(--color-border))', fontFamily: "'Syne', sans-serif" }}>
                   {member.image ? (
                     <Image 
                       src={member.image} 
@@ -129,8 +133,8 @@ const Team = () => {
                   )
                   }
                 </div>
-                <h3 className="font-heading font-semibold text-xs text-heading/80 leading-tight mb-0.5 transition-colors">{member.name}</h3>
-                <p className="text-foreground/30 text-[10px] uppercase font-medium">{member.class}</p>
+                <h3 className="font-semibold text-xs leading-tight mb-0.5" style={{ fontFamily: "'Syne', sans-serif" }}>{member.name}</h3>
+                <p className="text-[10px] uppercase font-medium" style={{ color: 'rgb(var(--color-foreground) / 0.3)', fontFamily: "'DM Mono', monospace" }}>{member.class}</p>
               </motion.div>
             ))}
           </motion.div>

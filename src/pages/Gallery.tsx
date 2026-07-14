@@ -50,12 +50,13 @@ const Gallery = () => {
     <div className="w-full">
       <SEO title="Gallery" description="Photos and videos from AI Student Chapters events." />
       {/* Hero */}
-      <section className="pt-24 pb-12 bg-card/30 border-b border-border transition-colors duration-300">
+      <section className="editorial-hero">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="pill bg-accent/10 text-accent border border-accent/20 mx-auto w-fit mb-6 flex items-center gap-2"
+            className="pill mx-auto w-fit mb-6 flex items-center gap-2"
+            style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}
           >
             <ImageIcon size={14} />
             captured moments
@@ -63,43 +64,49 @@ const Gallery = () => {
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black font-heading mb-3 text-heading transition-colors duration-200"
+            className="text-4xl md:text-5xl font-black mb-3"
           >
-            Gallery <span className="grad-text">📸</span>
+            Our <span className="grad-text">Gallery</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-foreground/50 text-base max-w-lg mx-auto"
+            className="text-base max-w-lg mx-auto"
+            style={{ color: 'rgb(var(--color-foreground) / 0.5)', fontFamily: "'DM Mono', monospace", fontSize: '13px' }}
           >
-            All the moments that made our journey special ✨
+            All the moments that made our journey special.
           </motion.p>
         </div>
       </section>
 
       {/* Content */}
-      <section className="py-10 transition-colors duration-300">
+      <section className="py-10 editorial-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Tab Switcher */}
           <div className="flex justify-center mb-10">
-            <div className="bg-card p-1.5 rounded-full inline-flex border border-border shadow-sm">
+            <div className="inline-flex" style={{ border: '1px solid rgb(var(--color-border))' }}>
               <button
                 onClick={() => setActiveTab('images')}
-                className={`relative px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all z-10 flex items-center gap-2 ${activeTab === 'images' ? 'text-white' : 'text-foreground/50 hover:text-heading'}`}
+                className="px-6 py-2.5 text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-2"
+                style={{
+                  fontFamily: "'DM Mono', monospace",
+                  background: activeTab === 'images' ? 'var(--ink)' : 'transparent',
+                  color: activeTab === 'images' ? 'var(--acid)' : 'rgb(var(--color-foreground) / 0.5)',
+                }}
               >
-                {activeTab === 'images' && (
-                  <motion.div layoutId="galleryTab" className="absolute inset-0 bg-primary rounded-full shadow-lg shadow-primary/20 -z-10" />
-                )}
                 <ImageIcon size={14} /> Photos
               </button>
               <button
                 onClick={() => setActiveTab('videos')}
-                className={`relative px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all z-10 flex items-center gap-2 ${activeTab === 'videos' ? 'text-white' : 'text-foreground/50 hover:text-heading'}`}
+                className="px-6 py-2.5 text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-2"
+                style={{
+                  fontFamily: "'DM Mono', monospace",
+                  background: activeTab === 'videos' ? 'var(--ink)' : 'transparent',
+                  color: activeTab === 'videos' ? 'var(--acid)' : 'rgb(var(--color-foreground) / 0.5)',
+                  borderLeft: '1px solid rgb(var(--color-border))',
+                }}
               >
-                {activeTab === 'videos' && (
-                  <motion.div layoutId="galleryTab" className="absolute inset-0 bg-accent rounded-full shadow-lg shadow-accent/20 -z-10" />
-                )}
                 <Film size={14} /> Videos
               </button>
             </div>
@@ -118,7 +125,7 @@ const Gallery = () => {
                 <motion.div
                   key={idx}
                   variants={itemVariants}
-                  className="relative group overflow-hidden glass-panel aspect-[4/3] card-hover cursor-pointer"
+                  className="relative group overflow-hidden glass-panel aspect-[4/3] cursor-pointer"
                   onClick={() => {
                     setCurrentImageIndex(idx);
                     setIsLightboxOpen(true);
@@ -133,7 +140,7 @@ const Gallery = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   {/* Caption */}
                   <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-white text-sm font-heading font-semibold drop-shadow-md">{img.caption}</p>
+                    <p className="text-white text-sm font-semibold drop-shadow-md" style={{ fontFamily: "'Syne', sans-serif" }}>{img.caption}</p>
                   </div>
                 </motion.div>
               ))}
@@ -153,16 +160,16 @@ const Gallery = () => {
                 <motion.div
                   key={idx}
                   variants={itemVariants}
-                  className="glass-panel overflow-hidden card-hover"
+                  className="glass-panel overflow-hidden"
                 >
                   <div className="aspect-video bg-black relative">
                     <video controls preload="metadata" playsInline className="w-full h-full object-cover">
                       <source src={video.src} type="video/mp4" />
                     </video>
                   </div>
-                  <div className="p-4 border-t border-border bg-card/30">
-                    <h3 className="font-bold font-heading text-base text-heading mb-0.5 transition-colors">{video.title}</h3>
-                    <p className="text-foreground/40 text-xs">{video.desc}</p>
+                  <div className="p-4" style={{ borderTop: '1px solid rgb(var(--color-border))' }}>
+                    <h3 className="font-bold text-base mb-0.5" style={{ fontFamily: "'Syne', sans-serif" }}>{video.title}</h3>
+                    <p className="text-xs" style={{ color: 'rgb(var(--color-foreground) / 0.4)' }}>{video.desc}</p>
                   </div>
                 </motion.div>
               ))}

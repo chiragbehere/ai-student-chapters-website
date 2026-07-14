@@ -30,17 +30,18 @@ const Sessions = () => {
   }));
 
   return (
-    <div className="w-full relative min-h-screen pt-28 pb-24 z-10 transition-colors duration-300">
+    <div className="w-full relative min-h-screen z-10">
       <SEO title="Sessions & Workshops" description="Presentations and resources from our past AI sessions and workshops." />
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <div className="text-center mb-14">
+      
+      {/* Hero */}
+      <section className="editorial-hero">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, type: "tween", ease: "easeOut" }}
-            className="pill bg-secondary/10 text-secondary border border-secondary/20 mx-auto w-fit mb-6 flex items-center gap-2"
+            className="pill mx-auto w-fit mb-6 flex items-center gap-2"
+            style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}
           >
             <Star size={14} />
             learn & level up
@@ -50,7 +51,7 @@ const Sessions = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.05 }}
-            className="text-4xl md:text-5xl font-black font-heading leading-tight mb-3 text-heading transition-colors"
+            className="text-4xl md:text-5xl font-black leading-tight mb-3"
           >
             Workshops <span className="grad-text">& Sessions</span>
           </motion.h1>
@@ -59,12 +60,15 @@ const Sessions = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="text-foreground/50 text-base max-w-lg mx-auto"
+            className="text-base max-w-lg mx-auto"
+            style={{ color: 'rgb(var(--color-foreground) / 0.5)', fontFamily: "'DM Mono', monospace", fontSize: '13px' }}
           >
-            Presentations and resources from our past sessions 📖
+            Presentations and resources from our past sessions.
           </motion.p>
         </div>
+      </section>
 
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         {/* Workshop PPTs */}
         <motion.div 
           variants={containerVariants}
@@ -77,10 +81,10 @@ const Sessions = () => {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className="glass-panel p-6 relative overflow-hidden card-hover"
+              className="glass-panel p-6 relative overflow-hidden"
             >
-              <h3 className="text-base font-bold font-heading mb-4 text-heading transition-colors">{ws.title}</h3>
-              <div className="rounded-xl overflow-hidden border border-border mb-4 bg-background/50">
+              <h3 className="text-base font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>{ws.title}</h3>
+              <div className="overflow-hidden mb-4" style={{ border: '1px solid rgb(var(--color-border))' }}>
                 <iframe
                   src={ws.embedUrl}
                   frameBorder="0"
@@ -89,7 +93,6 @@ const Sessions = () => {
                   allowFullScreen
                   style={{ border: 'none' }}
                   title={ws.title}
-                  className="bg-white/5 shadow-inner"
                 />
               </div>
               <div className="text-center">
@@ -101,7 +104,6 @@ const Sessions = () => {
             </motion.div>
           ))}
         </motion.div>
-
       </div>
     </div>
   );

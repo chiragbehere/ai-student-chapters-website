@@ -58,7 +58,7 @@ const Tools = () => {
   };
 
   return (
-    <div className="w-full relative min-h-screen pt-28 pb-24 z-10 transition-colors duration-300">
+    <div className="w-full relative min-h-screen z-10">
       <SEO title="Tools" description="Explore useful tools built by AI Student Chapters — certificate generators, AI utilities, and more." />
 
       <AnimatePresence mode="wait">
@@ -70,7 +70,7 @@ const Tools = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3 }}
-            className="flex items-center justify-center min-h-[60vh] px-4"
+            className="flex items-center justify-center min-h-[80vh] px-4"
           >
             <motion.div
               className="glass-panel p-8 sm:p-10 max-w-sm w-full text-center"
@@ -79,14 +79,14 @@ const Tools = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               {/* Lock Icon */}
-              <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-6">
-                <Lock size={28} className="text-primary" />
+              <div className="w-16 h-16 flex items-center justify-center mx-auto mb-6" style={{ border: '2px solid var(--ink)', background: 'var(--ink)', color: 'var(--acid)' }}>
+                <Lock size={28} />
               </div>
 
-              <h2 className="text-2xl font-black font-heading text-heading mb-2">
+              <h2 className="text-2xl font-black mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>
                 Members <span className="grad-text">Only</span>
               </h2>
-              <p className="text-foreground/40 text-sm mb-7">
+              <p className="text-sm mb-7" style={{ color: 'rgb(var(--color-foreground) / 0.4)' }}>
                 Enter the access code to view tools
               </p>
 
@@ -100,7 +100,17 @@ const Tools = () => {
                     value={password}
                     onChange={(e) => { setPassword(e.target.value); setError(false); }}
                     placeholder="Enter password"
-                    className="w-full px-5 py-3.5 rounded-xl bg-foreground/5 border border-border/15 text-heading text-sm font-medium placeholder:text-foreground/30 focus:outline-none focus:border-primary/40 focus:bg-foreground/8 transition-all duration-300"
+                    className="w-full px-5 py-3.5 text-sm font-medium transition-all duration-300"
+                    style={{
+                      fontFamily: "'DM Mono', monospace",
+                      border: '1px solid rgb(var(--color-border))',
+                      background: 'rgb(var(--color-muted))',
+                      color: 'rgb(var(--color-heading))',
+                      borderRadius: 0,
+                      outline: 'none',
+                    }}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--ink)'; }}
+                    onBlur={(e) => { e.currentTarget.style.borderColor = 'rgb(var(--color-border))'; }}
                     autoFocus
                   />
                 </motion.div>
@@ -109,7 +119,8 @@ const Tools = () => {
                   <motion.p
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-coral text-xs font-medium"
+                    className="text-xs font-medium"
+                    style={{ color: '#dc2626' }}
                   >
                     Incorrect password. Please try again.
                   </motion.p>
@@ -132,15 +143,15 @@ const Tools = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-
-              {/* Header */}
-              <div className="text-center mb-14">
+            {/* Hero */}
+            <section className="editorial-hero">
+              <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, type: "tween", ease: "easeOut" }}
-                  className="pill bg-primary/10 text-primary border border-primary/20 mx-auto w-fit mb-6 flex items-center gap-2"
+                  className="pill mx-auto w-fit mb-6 flex items-center gap-2"
+                  style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}
                 >
                   <Wrench size={14} />
                   built by aisc
@@ -150,7 +161,7 @@ const Tools = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.05 }}
-                  className="text-4xl md:text-5xl font-black font-heading leading-tight mb-3 text-heading transition-colors"
+                  className="text-4xl md:text-5xl font-black leading-tight mb-3"
                 >
                   Our <span className="grad-text">Tools</span>
                 </motion.h1>
@@ -159,13 +170,16 @@ const Tools = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
-                  className="text-foreground/50 text-base max-w-lg mx-auto flex items-center justify-center gap-2"
+                  className="text-base max-w-lg mx-auto flex items-center justify-center gap-2"
+                  style={{ color: 'rgb(var(--color-foreground) / 0.5)', fontFamily: "'DM Mono', monospace", fontSize: '13px' }}
                 >
-                  <ShieldCheck size={16} className="text-lime" />
-                  Handy utilities built by the team to make life easier 🛠️
+                  <ShieldCheck size={16} style={{ color: 'var(--acid)' }} />
+                  Handy utilities built by the team to make life easier.
                 </motion.p>
               </div>
+            </section>
 
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
               {/* Tools Grid */}
               <motion.div
                 variants={containerVariants}
@@ -184,30 +198,30 @@ const Tools = () => {
                       rel={tool.isDownload ? undefined : "noopener noreferrer"}
                       download={tool.isDownload ? true : undefined}
                       variants={itemVariants}
-                      className="glass-panel p-6 relative overflow-hidden card-hover group cursor-pointer block"
+                      className="glass-panel p-6 relative overflow-hidden group cursor-pointer block"
                     >
                       {/* Badge */}
                       {tool.badge && (
-                        <span className="absolute top-4 right-4 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-lime/15 text-lime border border-lime/20">
+                        <span className="absolute top-4 right-4 pill text-[10px] font-bold tracking-wider uppercase" style={{ background: 'rgba(216,255,62,0.15)', color: '#566d00', border: '1px solid rgba(216,255,62,0.3)' }}>
                           {tool.badge}
                         </span>
                       )}
 
                       {/* Icon */}
-                      <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors duration-300">
-                        <IconComponent size={22} className="text-primary" />
+                      <div className="w-12 h-12 flex items-center justify-center mb-5 transition-colors duration-300" style={{ border: '1px solid rgb(var(--color-border))', background: 'rgb(var(--color-muted))' }}>
+                        <IconComponent size={22} style={{ color: 'var(--ink)' }} />
                       </div>
 
                       {/* Content */}
-                      <h3 className="text-lg font-bold font-heading mb-2 text-heading transition-colors">
+                      <h3 className="text-lg font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>
                         {tool.title}
                       </h3>
-                      <p className="text-foreground/50 text-sm leading-relaxed mb-5">
+                      <p className="text-sm leading-relaxed mb-5" style={{ color: 'rgb(var(--color-foreground) / 0.5)' }}>
                         {tool.description}
                       </p>
 
                       {/* CTA */}
-                      <div className="flex items-center gap-1.5 text-primary text-sm font-semibold group-hover:gap-2.5 transition-all duration-300">
+                      <div className="flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all duration-300" style={{ color: 'var(--ink)', fontFamily: "'DM Mono', monospace", fontSize: '11px', letterSpacing: '0.04em', textTransform: 'uppercase' as const }}>
                         {tool.ctaText || 'Open Tool'}
                         {tool.isDownload ? (
                           <Download size={14} className="transition-transform duration-300 group-hover:translate-y-0.5" />
@@ -219,7 +233,6 @@ const Tools = () => {
                   );
                 })}
               </motion.div>
-
             </div>
           </motion.div>
         )}

@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { Medal, Award, Star, Calendar, Clock, Users, MapPin, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
 import SEO from '../components/SEO';
 import { useEvents, useAllEventWinners, useAllEventTimelines } from '../hooks/useSupabaseData';
 import Image from '../components/Image';
@@ -17,7 +16,6 @@ const itemVariants: Variants = {
 };
 
 const Events = () => {
-  const { theme } = useTheme();
   const { data: eventsData, loading: eventsLoading } = useEvents();
   const { data: allWinners } = useAllEventWinners();
   const { data: allTimelines } = useAllEventTimelines();
@@ -40,7 +38,7 @@ const Events = () => {
     gold: <Medal size={24} className="text-yellow-400" />,
     silver: <Medal size={24} className="text-gray-300" />,
     bronze: <Medal size={24} className="text-amber-600" />,
-    runner: <Award size={24} className="text-secondary" />,
+    runner: <Award size={24} style={{ color: 'var(--sky)' }} />,
   };
 
   const formatDate = (d: string) => {
@@ -52,40 +50,40 @@ const Events = () => {
     <motion.div
       key={winner.team}
       variants={itemVariants}
-      className="glass-panel p-6 relative overflow-hidden group card-hover"
+      className="glass-panel p-6 relative overflow-hidden group"
     >
-      <div className={`absolute top-0 left-0 w-1 h-full rounded-r
+      <div className={`absolute top-0 left-0 w-1 h-full
         ${winner.medalKey === 'gold' ? 'bg-yellow-400' : ''}
         ${winner.medalKey === 'silver' ? 'bg-gray-400' : ''}
         ${winner.medalKey === 'bronze' ? 'bg-amber-600' : ''}
-        ${winner.medalKey === 'runner' ? 'bg-secondary' : ''}
+        ${winner.medalKey === 'runner' ? 'bg-[#a9c7ff]' : ''}
       `} />
       
       <div className="flex justify-between items-start mb-5 ml-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center">
+          <div className="w-10 h-10 flex items-center justify-center" style={{ border: '1px solid rgb(var(--color-border))' }}>
             {medalMap[winner.medalKey] || medalMap.runner}
           </div>
           <div>
-            <h3 className="text-lg font-bold font-heading text-heading transition-colors duration-300">{winner.team}</h3>
-            <p className="text-foreground/40 text-xs font-medium">{winner.rank}</p>
+            <h3 className="text-lg font-bold" style={{ fontFamily: "'Syne', sans-serif" }}>{winner.team}</h3>
+            <p className="text-xs font-medium" style={{ color: 'rgb(var(--color-foreground) / 0.4)' }}>{winner.rank}</p>
           </div>
         </div>
         {winner.prize && (
-          <span className="pill bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">
+          <span className="pill" style={{ background: 'rgba(234,179,8,0.1)', color: '#ca8a04', border: '1px solid rgba(234,179,8,0.2)' }}>
             {winner.prize}
           </span>
         )}
       </div>
 
-      <div className="space-y-2 bg-background/40 p-3 rounded-xl ml-3">
+      <div className="space-y-2 p-3 ml-3" style={{ background: 'rgb(var(--color-muted))', border: '1px solid rgb(var(--color-border) / 0.5)' }}>
         {winner.members && winner.members.map((member: any, i: number) => (
           <div key={i} className="flex flex-wrap gap-2 justify-between items-center text-sm">
             <div className="flex items-center gap-2">
-              <Star size={10} className={winner.medalKey === 'gold' ? 'text-yellow-400' : 'text-primary/60'} />
-              <span className="text-foreground/80 text-xs font-medium">{member.name}</span>
+              <Star size={10} style={{ color: winner.medalKey === 'gold' ? '#facc15' : 'rgb(var(--color-foreground) / 0.3)' }} />
+              <span className="text-xs font-medium" style={{ color: 'rgb(var(--color-foreground) / 0.8)' }}>{member.name}</span>
             </div>
-            <span className="px-2 py-0.5 rounded-full bg-card text-foreground/40 text-[10px] border border-border">{member.class}</span>
+            <span className="px-2 py-0.5 text-[10px]" style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.4)' }}>{member.class}</span>
           </div>
         ))}
       </div>
@@ -106,33 +104,35 @@ const Events = () => {
         layout
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`border rounded-3xl overflow-hidden transition-all duration-500 ${
-          isExpanded 
-            ? 'border-primary/20 bg-card/20 shadow-2xl shadow-primary/5' 
-            : 'border-border bg-card/40 hover:bg-card/60 hover:border-border/60 cursor-pointer'
-        }`}
+        className="overflow-hidden transition-all duration-500"
+        style={{
+          border: isExpanded ? '1px solid var(--ink)' : '1px solid rgb(var(--color-border))',
+          background: isExpanded ? 'rgb(var(--color-card) / 0.6)' : 'rgb(var(--color-card) / 0.4)',
+          boxShadow: isExpanded ? '6px 6px 0 var(--sky)' : 'none',
+          cursor: isExpanded ? 'default' : 'pointer',
+        }}
         onClick={() => !isExpanded && setExpandedId(event.id)}
       >
         {/* Header */}
-        <div className={`p-6 sm:p-8 flex items-center justify-between gap-6 transition-colors ${isExpanded ? 'border-b border-border bg-card/50' : ''}`}>
+        <div className="p-6 sm:p-8 flex items-center justify-between gap-6 transition-colors" style={isExpanded ? { borderBottom: '1px solid rgb(var(--color-border))' } : {}}>
           <div className="flex items-center gap-5">
             {event.logo_url && (
-              <div className="hidden sm:flex w-14 h-14 rounded-2xl overflow-hidden bg-background border border-border flex-shrink-0 items-center justify-center">
+              <div className="hidden sm:flex w-14 h-14 overflow-hidden flex-shrink-0 items-center justify-center" style={{ border: '1px solid rgb(var(--color-border))' }}>
                 <Image src={event.logo_url} alt={event.title} className="w-full h-full object-cover" />
               </div>
             )}
             <div>
               <div className="flex items-center gap-3 mb-1.5">
-                <span className={`px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-bold border ${
-                  isUpcoming 
-                    ? 'bg-lime/10 text-lime border-lime/20 animate-pulse' 
-                    : 'bg-foreground/5 text-foreground/50 border-border'
-                }`}>
-                  {isUpcoming ? '🔴 Upcoming' : '✅ Completed'}
+                <span className="pill text-[10px] uppercase tracking-wider font-bold" style={{
+                  background: isUpcoming ? 'rgba(216,255,62,0.15)' : 'rgb(var(--color-muted))',
+                  color: isUpcoming ? '#566d00' : 'rgb(var(--color-foreground) / 0.5)',
+                  border: isUpcoming ? '1px solid rgba(216,255,62,0.3)' : '1px solid rgb(var(--color-border))',
+                }}>
+                  {isUpcoming ? 'Upcoming' : 'Completed'}
                 </span>
-                <span className="text-xs text-foreground/40 font-medium">{formatDate(event.date)}</span>
+                <span className="text-xs font-medium" style={{ color: 'rgb(var(--color-foreground) / 0.4)', fontFamily: "'DM Mono', monospace" }}>{formatDate(event.date)}</span>
               </div>
-              <h2 className={`font-black font-heading text-heading ${isExpanded ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>{event.title}</h2>
+              <h2 className={`font-black ${isExpanded ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`} style={{ fontFamily: "'Syne', sans-serif" }}>{event.title}</h2>
             </div>
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
@@ -149,7 +149,8 @@ const Events = () => {
             )}
             <button 
               onClick={(e) => { e.stopPropagation(); setExpandedId(isExpanded ? null : event.id); }}
-              className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground/50 hover:bg-foreground/10 hover:text-heading transition-colors"
+              className="w-10 h-10 flex items-center justify-center transition-colors"
+              style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.5)' }}
             >
               {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
@@ -172,15 +173,15 @@ const Events = () => {
                 <div className="flex flex-col md:flex-row gap-10 items-center">
                   <div className="flex-1 space-y-6">
                     {event.description && (
-                      <p className="text-foreground/70 text-base leading-relaxed">
+                      <p className="text-base leading-relaxed" style={{ color: 'rgb(var(--color-foreground) / 0.7)', fontFamily: "'Syne', sans-serif" }}>
                         {event.description}
                       </p>
                     )}
                     <div className="flex flex-wrap gap-3">
-                      <div className="pill flex items-center gap-1.5 bg-foreground/5 border border-border text-foreground/60"><Calendar size={14}/> {formatDate(event.date)}</div>
-                      {event.duration && <div className="pill flex items-center gap-1.5 bg-foreground/5 border border-border text-foreground/60"><Clock size={14}/> {event.duration}</div>}
-                      {(event.participants_count ?? 0) > 0 && <div className="pill flex items-center gap-1.5 bg-foreground/5 border border-border text-foreground/60"><Users size={14}/> {event.participants_count} Participants</div>}
-                      {event.location && <div className="pill flex items-center gap-1.5 bg-foreground/5 border border-border text-foreground/60"><MapPin size={14}/> {event.location}</div>}
+                      <div className="pill flex items-center gap-1.5" style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}><Calendar size={14}/> {formatDate(event.date)}</div>
+                      {event.duration && <div className="pill flex items-center gap-1.5" style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}><Clock size={14}/> {event.duration}</div>}
+                      {(event.participants_count ?? 0) > 0 && <div className="pill flex items-center gap-1.5" style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}><Users size={14}/> {event.participants_count} Participants</div>}
+                      {event.location && <div className="pill flex items-center gap-1.5" style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}><MapPin size={14}/> {event.location}</div>}
                     </div>
 
                     {/* Register Button — shown prominently when expanded for upcoming events */}
@@ -200,8 +201,8 @@ const Events = () => {
                       <Image 
                         src={event.logo_url} 
                         alt={event.title} 
-                        className="w-40 h-40 sm:w-52 sm:h-52 object-contain rounded-full border-4 border-card shadow-2xl"
-                        style={{ boxShadow: theme === 'dark' ? '0 0 40px rgba(168,85,247,0.2)' : '0 10px 40px rgba(168,85,247,0.1)' }}
+                        className="w-40 h-40 sm:w-52 sm:h-52 object-contain"
+                        style={{ border: '3px solid rgb(var(--color-border))', boxShadow: '8px 8px 0 var(--sky)' }}
                       />
                     </div>
                   )}
@@ -213,10 +214,10 @@ const Events = () => {
                     {ugWinners.length > 0 && (
                       <div>
                         <div className="flex items-center gap-3 mb-6">
-                          <h3 className="text-xl font-bold font-heading text-heading flex items-center gap-3">
-                            <span>🎓</span> UG Winners
+                          <h3 className="text-xl font-bold flex items-center gap-3" style={{ fontFamily: "'Syne', sans-serif" }}>
+                            UG Winners
                           </h3>
-                          <div className="h-px bg-border flex-1 ml-2"></div>
+                          <div className="h-px flex-1 ml-2" style={{ background: 'rgb(var(--color-border))' }}></div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                           {ugWinners.map(renderWinnerCard)}
@@ -227,10 +228,10 @@ const Events = () => {
                     {pgWinners.length > 0 && (
                       <div>
                         <div className="flex items-center gap-3 mb-6">
-                          <h3 className="text-xl font-bold font-heading text-heading flex items-center gap-3">
-                            <span>🔹</span> PG Winners
+                          <h3 className="text-xl font-bold flex items-center gap-3" style={{ fontFamily: "'Syne', sans-serif" }}>
+                            PG Winners
                           </h3>
-                          <div className="h-px bg-border flex-1 ml-2"></div>
+                          <div className="h-px flex-1 ml-2" style={{ background: 'rgb(var(--color-border))' }}></div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                           {pgWinners.map(renderWinnerCard)}
@@ -244,16 +245,15 @@ const Events = () => {
                 {schedule.length > 0 && (
                   <div>
                     <div className="flex items-center gap-3 mb-8">
-                      <h3 className="text-xl font-bold font-heading text-heading">Event Timeline ⏰</h3>
-                      <div className="h-px bg-border flex-1 ml-4"></div>
+                      <h3 className="text-xl font-bold" style={{ fontFamily: "'Syne', sans-serif" }}>Event Timeline</h3>
+                      <div className="h-px flex-1 ml-4" style={{ background: 'rgb(var(--color-border))' }}></div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                       {schedule.map((item: any, idx: number) => (
-                        <motion.div key={idx} variants={itemVariants} initial="hidden" whileInView="show" viewport={{ once: true }} className="glass-panel p-6 relative overflow-hidden card-hover">
-                          <span className="text-3xl mb-3 block">{item.emoji || '📌'}</span>
-                          <div className="text-primary font-bold text-xs tracking-wider mb-2">{item.time}</div>
-                          <h4 className="text-base font-bold font-heading text-heading mb-1 transition-colors">{item.label}</h4>
-                          {item.sub_text && <p className="text-foreground/40 text-xs">{item.sub_text}</p>}
+                        <motion.div key={idx} variants={itemVariants} initial="hidden" whileInView="show" viewport={{ once: true }} className="glass-panel p-6 relative overflow-hidden">
+                          <div className="text-xs font-bold tracking-wider mb-2" style={{ color: 'var(--acid)', fontFamily: "'DM Mono', monospace", background: 'var(--ink)', display: 'inline-block', padding: '4px 10px' }}>{item.time}</div>
+                          <h4 className="text-base font-bold mb-1 mt-3" style={{ fontFamily: "'Syne', sans-serif" }}>{item.label}</h4>
+                          {item.sub_text && <p className="text-xs" style={{ color: 'rgb(var(--color-foreground) / 0.4)' }}>{item.sub_text}</p>}
                         </motion.div>
                       ))}
                     </div>
@@ -271,7 +271,7 @@ const Events = () => {
   if (eventsLoading) {
     return (
       <div className="min-h-screen pt-32 pb-20 px-4 flex items-center justify-center">
-        <div className="w-10 h-10 border-3 border-primary/30 border-t-primary rounded-full animate-spin" />
+        <div className="w-10 h-10 border-2 border-t-[var(--ink)] rounded-full animate-spin" style={{ borderColor: 'rgb(var(--color-border))', borderTopColor: 'var(--ink)' }} />
       </div>
     );
   }
@@ -281,23 +281,24 @@ const Events = () => {
       <SEO title="Events" description="Explore our upcoming and past events, hackathons, and results." />
       
       {/* Page Header */}
-      <section className="pt-28 pb-10 bg-card/30 border-b border-border relative z-10">
+      <section className="editorial-hero">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pill bg-primary/10 text-primary border border-primary/20 mx-auto w-fit mb-6 flex items-center gap-2">
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pill mx-auto w-fit mb-6 flex items-center gap-2" style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}>
             <Calendar size={14} /> all events
           </motion.div>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black font-heading mb-4 text-heading"
+            className="text-4xl md:text-5xl font-black mb-4"
           >
-            Our <span className="grad-text">Events</span> 🚀
+            Our <span className="grad-text">Events</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-foreground/50 text-base max-w-lg mx-auto"
+            className="text-base max-w-lg mx-auto"
+            style={{ color: 'rgb(var(--color-foreground) / 0.5)', fontFamily: "'DM Mono', monospace", fontSize: '13px' }}
           >
             Hackathons, workshops, and competitions — all in one place.
           </motion.p>
@@ -306,10 +307,10 @@ const Events = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
         {eventsData.length === 0 ? (
-          <div className="text-center py-20 bg-card/30 border border-border rounded-3xl">
-            <Calendar className="mx-auto text-foreground/30 mb-4" size={40} />
-            <h2 className="text-xl font-heading text-heading mb-2">No Events Yet</h2>
-            <p className="text-foreground/50 text-sm">Check back later for upcoming events!</p>
+          <div className="text-center py-20 glass-panel">
+            <Calendar className="mx-auto mb-4" size={40} style={{ color: 'rgb(var(--color-foreground) / 0.3)' }} />
+            <h2 className="text-xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>No Events Yet</h2>
+            <p className="text-sm" style={{ color: 'rgb(var(--color-foreground) / 0.5)' }}>Check back later for upcoming events!</p>
           </div>
         ) : (
           <div className="space-y-16">
@@ -317,11 +318,11 @@ const Events = () => {
             {upcomingEvents.length > 0 && (
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
-                  <h2 className="text-lg font-bold font-heading text-heading flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-lime animate-pulse"></span>
+                  <h2 className="text-lg font-bold flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <span className="w-2 h-2" style={{ background: 'var(--acid)' }}></span>
                     Upcoming Events
                   </h2>
-                  <div className="h-px bg-border flex-1"></div>
+                  <div className="h-px flex-1" style={{ background: 'rgb(var(--color-border))' }}></div>
                 </div>
                 {upcomingEvents.map(renderEventCard)}
               </div>
@@ -331,11 +332,11 @@ const Events = () => {
             {completedEvents.length > 0 && (
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
-                  <h2 className="text-lg font-bold font-heading text-heading flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-foreground/30"></span>
+                  <h2 className="text-lg font-bold flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <span className="w-2 h-2" style={{ background: 'rgb(var(--color-border))' }}></span>
                     Previous Events
                   </h2>
-                  <div className="h-px bg-border flex-1"></div>
+                  <div className="h-px flex-1" style={{ background: 'rgb(var(--color-border))' }}></div>
                 </div>
                 {completedEvents.map(renderEventCard)}
               </div>
@@ -345,8 +346,8 @@ const Events = () => {
 
         {/* Gallery CTA */}
         <section className="py-16 mt-10 text-center">
-          <h2 className="text-2xl font-bold font-heading text-heading mb-3 transition-colors">Want to see more? 📸</h2>
-          <p className="text-foreground/50 text-sm mb-6">Check out our exclusive photo and video gallery from the events.</p>
+          <h2 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif" }}>Want to see more?</h2>
+          <p className="text-sm mb-6" style={{ color: 'rgb(var(--color-foreground) / 0.5)' }}>Check out our exclusive photo and video gallery from the events.</p>
           <Link to="/gallery" className="genz-btn-primary inline-block">
             Go to Gallery →
           </Link>

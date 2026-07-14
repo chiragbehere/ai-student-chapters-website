@@ -24,5 +24,11 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/pages/admin",
+    "src/context/AuthContext.tsx",
+    "src/components/AdminRoute.tsx",
+    "src/lib/supabase.ts"
+  ]
 }

@@ -27,19 +27,24 @@ const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answ
   return (
     <motion.div 
       variants={itemVariants}
-      className={`glass-panel overflow-hidden mb-3 card-hover transition-all duration-300 ${isOpen ? 'ring-1 ring-primary/20 border-primary/20 shadow-lg shadow-primary/5' : ''}`}
+      className={`glass-panel overflow-hidden mb-3 transition-all duration-300`}
+      style={isOpen ? { borderColor: 'var(--ink)', boxShadow: '4px 4px 0 var(--sky)' } : {}}
     >
       <button
         onClick={onClick}
         className="w-full text-left px-6 py-5 flex justify-between items-center group"
       >
-        <span className={`font-heading font-semibold text-base transition-colors duration-300 pr-4 ${isOpen ? 'text-heading' : 'text-foreground/70 group-hover:text-heading'}`}>
+        <span className="font-semibold text-base transition-colors duration-300 pr-4" style={{ fontFamily: "'Syne', sans-serif", color: isOpen ? 'rgb(var(--color-heading))' : 'rgb(var(--color-foreground) / 0.7)' }}>
           {question}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3, type: "tween", ease: "easeOut" }}
-          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isOpen ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-foreground/5 text-foreground/40'}`}
+          className="flex-shrink-0 w-8 h-8 flex items-center justify-center transition-colors"
+          style={{
+            background: isOpen ? 'var(--ink)' : 'rgb(var(--color-muted))',
+            color: isOpen ? 'var(--acid)' : 'rgb(var(--color-foreground) / 0.4)',
+          }}
         >
           <ChevronDown size={16} />
         </motion.div>
@@ -52,7 +57,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answ
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-6 pb-5 pt-1 text-foreground/60 text-sm leading-relaxed border-t border-border/50">
+            <div className="px-6 pb-5 pt-1 text-sm leading-relaxed" style={{ color: 'rgb(var(--color-foreground) / 0.6)', borderTop: '1px solid rgb(var(--color-border) / 0.5)' }}>
               {answer}
             </div>
           </motion.div>
@@ -74,17 +79,18 @@ const FAQ = () => {
   }));
 
   return (
-    <div className="w-full relative min-h-screen pt-28 pb-24 z-10 transition-colors duration-300">
+    <div className="w-full relative min-h-screen z-10">
       <SEO title="FAQ" description="Frequently asked questions about AI Student Chapters" />
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <div className="text-center mb-14">
+      
+      {/* Hero */}
+      <section className="editorial-hero">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, type: "tween", ease: "easeOut" }}
-            className="pill bg-accent/10 text-accent border border-accent/20 mx-auto w-fit mb-6 flex items-center gap-2"
+            className="pill mx-auto w-fit mb-6 flex items-center gap-2"
+            style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}
           >
             <MessageCircleQuestion size={14} />
             you asked, we answered
@@ -94,22 +100,25 @@ const FAQ = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.05 }}
-            className="text-4xl md:text-5xl font-black font-heading leading-tight mb-3 text-heading transition-colors"
+            className="text-4xl md:text-5xl font-black leading-tight mb-3"
           >
-            FAQ <span className="grad-text">💬</span>
+            Frequently Asked <span className="grad-text">Questions</span>
           </motion.h1>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="text-foreground/50 text-base max-w-lg mx-auto"
+            className="text-base max-w-lg mx-auto"
+            style={{ color: 'rgb(var(--color-foreground) / 0.5)', fontFamily: "'DM Mono', monospace", fontSize: '13px' }}
           >
             Everything you need to know about joining and being part of our community.
           </motion.p>
         </div>
+      </section>
 
-        {/* FAQ List */}
+      {/* FAQ List */}
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <motion.div 
           variants={containerVariants}
           initial="hidden"
@@ -135,10 +144,9 @@ const FAQ = () => {
           viewport={{ once: true }}
           className="mt-16 text-center glass-panel p-8 md:p-10 relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
           <div className="relative z-10">
-            <h3 className="text-xl font-bold font-heading text-heading mb-2 transition-colors">Still curious? 🤷‍♀️</h3>
-            <p className="text-foreground/50 text-sm mb-5">Drop us a message — we're super approachable, promise.</p>
+            <h3 className="text-xl font-bold mb-2">Still curious?</h3>
+            <p className="text-sm mb-5" style={{ color: 'rgb(var(--color-foreground) / 0.5)' }}>Drop us a message — we're super approachable, promise.</p>
             <a
               href="mailto:imrdaistudentclub@gmail.com"
               className="genz-btn-primary inline-flex items-center gap-2"
@@ -148,7 +156,6 @@ const FAQ = () => {
             </a>
           </div>
         </motion.div>
-        
       </div>
     </div>
   );
