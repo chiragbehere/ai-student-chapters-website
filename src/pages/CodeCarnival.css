@@ -25,8 +25,6 @@
   overflow-x: hidden;
   position: relative;
   font-family: 'DM Mono', monospace;
-  /* GPU: promote page to its own layer */
-  transform: translateZ(0);
   -webkit-font-smoothing: antialiased;
 }
 
