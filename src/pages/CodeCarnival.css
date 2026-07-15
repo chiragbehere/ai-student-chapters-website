@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════════════
    CODE CARNIVAL 2.0 — STRANGER THINGS THEME
    Fully isolated styles — won't bleed into the rest of the site
+   Performance-optimized for Vercel / mobile
    ═══════════════════════════════════════════════════════ */
 
 /* Benguiat-like font (Stranger Things title vibe) */
@@ -11,18 +12,14 @@
   --st-red: #e50914;
   --st-red-bright: #ff1a1a;
   --st-red-dark: #8b0000;
-  --st-dark: #151520;
-  --st-darker: #0e0e18;
+  --st-dark: #1a1a2e;
+  --st-darker: #12121f;
   --st-cream: #e8d5b5;
   --st-amber: #f5a623;
   --st-blue: #1a3a5c;
   --st-gold: #ffd700;
 
-  background: var(--st-dark);
-  background-image:
-    radial-gradient(ellipse at 20% 0%, rgba(229, 9, 20, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(26, 58, 92, 0.08) 0%, transparent 50%),
-    linear-gradient(180deg, var(--st-darker) 0%, var(--st-dark) 30%, #1a1a28 70%, var(--st-darker) 100%);
+  background-color: var(--st-dark);
   color: var(--st-cream);
   min-height: 100vh;
   overflow-x: hidden;
@@ -31,46 +28,295 @@
   scroll-behavior: smooth;
 }
 
-/* ── VHS Scan-line overlay ──────────────────────────── */
-.st-page::before {
-  content: '';
+/* Subtle Stranger Things background images */
+.st-bg-upside-down {
   position: fixed;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.04) 2px,
-    rgba(0, 0, 0, 0.04) 4px
-  );
+  z-index: 0;
   pointer-events: none;
-  z-index: 100;
+  background:
+    linear-gradient(180deg, rgba(26,26,46,0.82) 0%, rgba(18,18,31,0.75) 40%, rgba(26,26,46,0.82) 100%),
+    url('/images/st/upside-down-bg.png') center / cover no-repeat;
 }
 
-/* ── VHS tracking noise ─────────────────────────────── */
-.st-page::after {
-  content: '';
+/* Portal image — subtle, positioned */
+.st-bg-portal {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+  background: url('/images/st/portal-gate.png') center / contain no-repeat;
+}
+
+/* Demogorgon image — subtle, positioned */
+.st-bg-demogorgon {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 0;
+  background: url('/images/st/demogorgon.png') center / contain no-repeat;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SPLASH SCREEN — Fingerprint Scanner Door
+   ═══════════════════════════════════════════════════════ */
+.st-splash {
   position: fixed;
-  top: 0;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Two door panels */
+.st-door-top,
+.st-door-bottom {
+  position: absolute;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    transparent 0%,
-    rgba(229, 9, 20, 0.02) 50%,
-    transparent 100%
-  );
-  animation: st-vhs-track 8s linear infinite;
+  right: 0;
+  height: 50%;
+  background: #0a0a0f;
+  z-index: 1;
+  transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.st-door-top {
+  top: 0;
+  background:
+    linear-gradient(180deg, #080810 0%, #0e0e1a 100%),
+    url('/images/st/upside-down-bg.png') center top / cover no-repeat;
+  background-blend-mode: overlay;
+  border-bottom: 1px solid rgba(229, 9, 20, 0.2);
+}
+
+.st-door-bottom {
+  bottom: 0;
+  background:
+    linear-gradient(0deg, #080810 0%, #0e0e1a 100%),
+    url('/images/st/upside-down-bg.png') center bottom / cover no-repeat;
+  background-blend-mode: overlay;
+  border-top: 1px solid rgba(229, 9, 20, 0.2);
+}
+
+/* Door crack glow when ready */
+.st-door-top::after,
+.st-door-bottom::after {
+  content: '';
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(229, 9, 20, 0.6), transparent);
+  animation: st-crack-pulse 2s ease-in-out infinite;
+}
+
+.st-door-top::after { bottom: -1px; }
+.st-door-bottom::after { top: -1px; }
+
+@keyframes st-crack-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; box-shadow: 0 0 20px rgba(229, 9, 20, 0.4); }
+}
+
+/* Opening animation */
+.st-splash.closing .st-door-top {
+  transform: translateY(-100%);
+}
+
+.st-splash.closing .st-door-bottom {
+  transform: translateY(100%);
+}
+
+.st-splash.closing {
   pointer-events: none;
-  z-index: 100;
 }
 
-@keyframes st-vhs-track {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+/* Hidden after animation */
+.st-splash.closed {
+  display: none;
 }
 
-/* ── Text flicker (title) ───────────────────────────── */
+/* Splash content — sits on top of doors */
+.st-splash-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  transition: opacity 0.4s ease;
+}
+
+.st-splash.closing .st-splash-content {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.st-splash-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 700;
+  color: var(--st-red);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  line-height: 1.1;
+  text-align: center;
+  animation: st-flicker 4s infinite alternate;
+  margin-bottom: 1rem;
+}
+
+.st-splash-subtitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 181, 0.4);
+  margin-bottom: 3rem;
+}
+
+/* ── Fingerprint Scanner Button ────────────────────── */
+.st-fingerprint-btn {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid rgba(229, 9, 20, 0.3);
+  background: rgba(229, 9, 20, 0.05);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(229, 9, 20, 0.7);
+  transition: all 0.4s ease;
+  outline: none;
+  margin-bottom: 1.5rem;
+}
+
+.st-fingerprint-btn::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(229, 9, 20, 0.15);
+  animation: st-fp-ring-pulse 2.5s ease-in-out infinite;
+}
+
+.st-fingerprint-btn::after {
+  content: '';
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  border: 1px solid rgba(229, 9, 20, 0.08);
+  animation: st-fp-ring-pulse 2.5s ease-in-out infinite 0.5s;
+}
+
+@keyframes st-fp-ring-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.st-fingerprint-btn:hover {
+  border-color: rgba(229, 9, 20, 0.7);
+  background: rgba(229, 9, 20, 0.12);
+  color: #e50914;
+  box-shadow: 0 0 30px rgba(229, 9, 20, 0.3), 0 0 60px rgba(229, 9, 20, 0.1);
+  transform: scale(1.05);
+}
+
+.st-fingerprint-btn:active {
+  transform: scale(0.95);
+}
+
+/* Scanning animation on press */
+.st-fingerprint-btn.scanning {
+  border-color: rgba(229, 9, 20, 0.9);
+  color: #e50914;
+  box-shadow: 0 0 40px rgba(229, 9, 20, 0.5), 0 0 80px rgba(229, 9, 20, 0.2);
+}
+
+.st-fingerprint-btn.scanning .st-fp-scan-line {
+  animation: st-fp-scan 0.8s ease-in-out;
+}
+
+@keyframes st-fp-scan {
+  0% { top: 10%; opacity: 1; }
+  100% { top: 90%; opacity: 0.3; }
+}
+
+.st-fp-scan-line {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #e50914, transparent);
+  top: 10%;
+  opacity: 0;
+  border-radius: 1px;
+  box-shadow: 0 0 8px rgba(229, 9, 20, 0.6);
+}
+
+.st-fingerprint-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 181, 0.35);
+  animation: st-splash-blink 2s ease-in-out infinite;
+}
+
+@keyframes st-splash-blink {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.8; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   AUDIO TOGGLE BUTTON
+   ═══════════════════════════════════════════════════════ */
+.st-audio-toggle {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 200;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  background: rgba(20, 20, 35, 0.9);
+  color: var(--st-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.st-audio-toggle:hover {
+  transform: scale(1.1);
+  border-color: var(--st-red);
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
+}
+
+.st-audio-toggle.playing {
+  animation: st-audio-pulse 2s ease-in-out infinite;
+}
+
+@keyframes st-audio-pulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(229, 9, 20, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(229, 9, 20, 0.6); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   TEXT FLICKER — kept for title + alphabet
+   ═══════════════════════════════════════════════════════ */
 @keyframes st-flicker {
   0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
     opacity: 1;
@@ -123,67 +369,14 @@
   animation: st-flicker-fast 2s infinite;
 }
 
-/* ── Neon glow pulsing ──────────────────────────────── */
-@keyframes st-neon-pulse {
-  0%, 100% {
-    box-shadow:
-      0 0 5px rgba(229, 9, 20, 0.5),
-      0 0 10px rgba(229, 9, 20, 0.3),
-      0 0 20px rgba(229, 9, 20, 0.15),
-      inset 0 0 5px rgba(229, 9, 20, 0.1);
-  }
-  50% {
-    box-shadow:
-      0 0 10px rgba(229, 9, 20, 0.8),
-      0 0 20px rgba(229, 9, 20, 0.5),
-      0 0 40px rgba(229, 9, 20, 0.25),
-      inset 0 0 10px rgba(229, 9, 20, 0.15);
-  }
-}
-
-@keyframes st-gold-pulse {
-  0%, 100% {
-    text-shadow:
-      0 0 10px rgba(255, 215, 0, 0.6),
-      0 0 20px rgba(255, 215, 0, 0.3),
-      0 0 40px rgba(255, 215, 0, 0.15);
-  }
-  50% {
-    text-shadow:
-      0 0 15px rgba(255, 215, 0, 0.8),
-      0 0 30px rgba(255, 215, 0, 0.5),
-      0 0 60px rgba(255, 215, 0, 0.25);
-  }
-}
-
-.st-neon-border {
-  border: 1px solid rgba(229, 9, 20, 0.4);
-  animation: st-neon-pulse 3s ease-in-out infinite;
-  transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-  border-radius: 6px;
-}
-
-.st-neon-border:hover {
-  transform: translateY(-2px);
-  background: rgba(30, 30, 50, 0.8) !important;
-  border-color: rgba(229, 9, 20, 0.6);
-}
-
-.st-gold-glow {
-  animation: st-gold-pulse 3s ease-in-out infinite;
-}
-
-/* ── Floating embers / particles ────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   FLOATING EMBERS — reduced count, GPU-optimized
+   ═══════════════════════════════════════════════════════ */
 @keyframes st-float {
   0%   { transform: translateY(100vh) scale(0); opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.8; }
   100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-}
-
-@keyframes st-drift {
-  0%, 100% { transform: translateX(0); }
-  50%      { transform: translateX(30px); }
 }
 
 .st-ember {
@@ -192,22 +385,68 @@
   height: 3px;
   background: var(--st-red);
   border-radius: 50%;
-  box-shadow: 0 0 6px var(--st-red), 0 0 12px rgba(229, 9, 20, 0.5);
+  box-shadow: 0 0 4px var(--st-red);
   animation: st-float linear infinite;
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
-.st-ember::after {
+/* ═══════════════════════════════════════════════════════
+   CHRISTMAS LIGHTS STRING — Pure CSS
+   ═══════════════════════════════════════════════════════ */
+.st-christmas-lights {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  padding: 1rem 0;
+  flex-wrap: wrap;
+  user-select: none;
+  position: relative;
+}
+
+/* The wire between bulbs */
+.st-christmas-lights::before {
   content: '';
   position: absolute;
-  inset: -1px;
-  background: var(--st-amber);
-  border-radius: 50%;
-  opacity: 0.5;
-  animation: st-drift 3s ease-in-out infinite;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: rgba(232, 213, 181, 0.12);
+  z-index: 0;
 }
 
-/* ── Alphabet wall ──────────────────────────────────── */
+.st-light-bulb {
+  width: 10px;
+  height: 14px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: relative;
+  z-index: 1;
+  animation: st-light-twinkle var(--duration, 3s) var(--delay, 0s) ease-in-out infinite;
+  will-change: opacity;
+}
+
+/* Bulb cap */
+.st-light-bulb::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 4px;
+  background: rgba(232, 213, 181, 0.2);
+  border-radius: 2px 2px 0 0;
+}
+
+@keyframes st-light-twinkle {
+  0%, 100% { opacity: 0.4; filter: brightness(0.6); }
+  50% { opacity: 1; filter: brightness(1.4); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ALPHABET WALL — kept as-is
+   ═══════════════════════════════════════════════════════ */
 .st-alphabet-wall {
   display: flex;
   flex-wrap: wrap;
@@ -265,56 +504,46 @@
   animation: st-wall-light 2s ease-in-out infinite;
 }
 
-/* ── Portal / Gate effect ───────────────────────────── */
-@keyframes st-portal-pulse {
+/* ═══════════════════════════════════════════════════════
+   NEON GLOW — simplified, no infinite box-shadow animation
+   ═══════════════════════════════════════════════════════ */
+.st-neon-border {
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  box-shadow: 0 0 8px rgba(229, 9, 20, 0.2), inset 0 0 4px rgba(229, 9, 20, 0.05);
+  transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  border-radius: 6px;
+}
+
+.st-neon-border:hover {
+  transform: translateY(-2px);
+  background: rgba(30, 30, 50, 0.8) !important;
+  border-color: rgba(229, 9, 20, 0.6);
+  box-shadow: 0 0 20px rgba(229, 9, 20, 0.4), inset 0 0 8px rgba(229, 9, 20, 0.1);
+}
+
+/* Gold glow for prizes — kept */
+@keyframes st-gold-pulse {
   0%, 100% {
-    box-shadow:
-      0 0 60px rgba(229, 9, 20, 0.15),
-      0 0 120px rgba(229, 9, 20, 0.08),
-      inset 0 0 60px rgba(229, 9, 20, 0.05);
-    transform: scale(1);
+    text-shadow:
+      0 0 10px rgba(255, 215, 0, 0.6),
+      0 0 20px rgba(255, 215, 0, 0.3),
+      0 0 40px rgba(255, 215, 0, 0.15);
   }
   50% {
-    box-shadow:
-      0 0 80px rgba(229, 9, 20, 0.25),
-      0 0 160px rgba(229, 9, 20, 0.12),
-      inset 0 0 80px rgba(229, 9, 20, 0.08);
-    transform: scale(1.02);
+    text-shadow:
+      0 0 15px rgba(255, 215, 0, 0.8),
+      0 0 30px rgba(255, 215, 0, 0.5),
+      0 0 60px rgba(255, 215, 0, 0.25);
   }
 }
 
-.st-portal {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(229, 9, 20, 0.06) 0%, transparent 70%);
-  border: 1px solid rgba(229, 9, 20, 0.08);
-  animation: st-portal-pulse 6s ease-in-out infinite;
-  pointer-events: none;
+.st-gold-glow {
+  animation: st-gold-pulse 3s ease-in-out infinite;
 }
 
-/* ── Vine/tendril decorations ───────────────────────── */
-@keyframes st-vine-sway {
-  0%, 100% { transform: rotate(-2deg) scaleY(1); }
-  50%      { transform: rotate(2deg) scaleY(1.02); }
-}
-
-.st-vine {
-  position: absolute;
-  width: 2px;
-  background: linear-gradient(
-    to bottom,
-    rgba(229, 9, 20, 0.3),
-    rgba(229, 9, 20, 0.05),
-    transparent
-  );
-  border-radius: 1px;
-  animation: st-vine-sway 8s ease-in-out infinite;
-  pointer-events: none;
-}
-
-/* ── Title styling ──────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   TITLE — kept with glow
+   ═══════════════════════════════════════════════════════ */
 .st-title {
   font-family: 'Libre Baskerville', serif;
   font-weight: 700;
@@ -333,23 +562,70 @@
   opacity: 0.75;
 }
 
-/* ── Info cards ─────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   GLITCH TEXT — kept for title
+   ═══════════════════════════════════════════════════════ */
+@keyframes st-glitch-1 {
+  0%, 100% { clip-path: inset(0 0 95% 0); transform: translate(2px, -2px); }
+  20% { clip-path: inset(30% 0 50% 0); transform: translate(-2px, 2px); }
+  40% { clip-path: inset(70% 0 10% 0); transform: translate(2px, 0); }
+  60% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 1px); }
+  80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, -1px); }
+}
+
+@keyframes st-glitch-2 {
+  0%, 100% { clip-path: inset(95% 0 0 0); transform: translate(-2px, 2px); }
+  20% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -1px); }
+  40% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 0); }
+  60% { clip-path: inset(70% 0 10% 0); transform: translate(1px, -2px); }
+  80% { clip-path: inset(30% 0 50% 0); transform: translate(-1px, 1px); }
+}
+
+.st-glitch {
+  position: relative;
+}
+
+.st-glitch::before,
+.st-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.st-glitch::before {
+  color: #0ff;
+  animation: st-glitch-1 3s infinite linear;
+  opacity: 0.5;
+}
+
+.st-glitch::after {
+  color: #f0f;
+  animation: st-glitch-2 3s infinite linear;
+  opacity: 0.5;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CARDS — no backdrop-filter (expensive), use solid bg
+   ═══════════════════════════════════════════════════════ */
 .st-card {
-  background: rgba(25, 25, 40, 0.7);
-  backdrop-filter: blur(12px);
+  background: rgba(25, 25, 40, 0.85);
   border: 1px solid rgba(229, 9, 20, 0.15);
   border-radius: 6px;
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
+  contain: content;
   transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
 }
 
 .st-card:hover {
   border-color: rgba(229, 9, 20, 0.4);
-  box-shadow: 0 0 25px rgba(229, 9, 20, 0.1), 0 4px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 0 20px rgba(229, 9, 20, 0.1), 0 4px 16px rgba(0,0,0,0.3);
   transform: translateY(-2px);
-  background: rgba(30, 30, 50, 0.8);
+  background: rgba(30, 30, 50, 0.9);
 }
 
 .st-card::before {
@@ -364,7 +640,7 @@
 
 /* ── Classified / Lab file card ─────────────────────── */
 .st-classified {
-  background: rgba(20, 20, 35, 0.85);
+  background: rgba(20, 20, 35, 0.9);
   border: 1px solid rgba(229, 9, 20, 0.2);
   border-radius: 6px;
   position: relative;
@@ -387,7 +663,9 @@
   z-index: 2;
 }
 
-/* ── Register button ────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   REGISTER BUTTON
+   ═══════════════════════════════════════════════════════ */
 @keyframes st-btn-glow {
   0%, 100% {
     box-shadow:
@@ -454,31 +732,123 @@
   100% { transform: translateX(100%) rotate(45deg); }
 }
 
-/* ── Divider line ───────────────────────────────────── */
-.st-divider {
+/* ═══════════════════════════════════════════════════════
+   DEMOGORGON DIVIDER — CSS-only petal shape
+   ═══════════════════════════════════════════════════════ */
+.st-demogorgon-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 3rem auto;
+  position: relative;
+  width: fit-content;
+}
+
+.st-demogorgon-divider .st-petal {
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to top, transparent, var(--st-red));
+  transform-origin: bottom center;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.st-demogorgon-divider:hover .st-petal {
+  opacity: 1;
+}
+
+/* Lines extending from the petals */
+.st-demogorgon-divider::before,
+.st-demogorgon-divider::after {
+  content: '';
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(229, 9, 20, 0.3),
-    rgba(229, 9, 20, 0.5),
-    rgba(229, 9, 20, 0.3),
-    transparent
+  width: 80px;
+  background: linear-gradient(to right, transparent, rgba(229, 9, 20, 0.4));
+}
+
+.st-demogorgon-divider::after {
+  background: linear-gradient(to left, transparent, rgba(229, 9, 20, 0.4));
+}
+
+@media (min-width: 640px) {
+  .st-demogorgon-divider::before,
+  .st-demogorgon-divider::after {
+    width: 160px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   UPSIDE DOWN ZONE — inverted section
+   ═══════════════════════════════════════════════════════ */
+.st-upside-down-zone {
+  position: relative;
+  padding: 3rem 0;
+}
+
+.st-upside-down-zone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(229, 9, 20, 0.03) 20%, rgba(229, 9, 20, 0.06) 50%, rgba(229, 9, 20, 0.03) 80%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Spore particles floating in the upside down */
+.st-spore {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(229, 9, 20, 0.3);
+  border-radius: 50%;
+  animation: st-spore-float 8s ease-in-out infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+
+@keyframes st-spore-float {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+  25% { transform: translateY(-15px) translateX(8px); opacity: 0.6; }
+  50% { transform: translateY(-5px) translateX(-5px); opacity: 0.3; }
+  75% { transform: translateY(-20px) translateX(3px); opacity: 0.5; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   STATIC / GLITCH TRANSITION
+   ═══════════════════════════════════════════════════════ */
+.st-static-bar {
+  width: 100%;
+  height: 3px;
+  position: relative;
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+.st-static-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(229, 9, 20, 0.4) 0px,
+    transparent 1px,
+    transparent 3px,
+    rgba(229, 9, 20, 0.2) 4px,
+    transparent 5px,
+    transparent 8px
   );
-  margin: 3rem 0;
+  animation: st-static-shift 0.5s steps(4) infinite;
 }
 
-/* ── Section label ──────────────────────────────────── */
-.st-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--st-red);
-  opacity: 0.85;
+@keyframes st-static-shift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(8px); }
 }
 
-/* ── Prize counter ──────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   NOSEBLEED DRIP on prize amounts
+   ═══════════════════════════════════════════════════════ */
 @keyframes st-counter-glow {
   0%, 100% {
     text-shadow:
@@ -501,9 +871,59 @@
   font-weight: 700;
   color: var(--st-gold);
   animation: st-counter-glow 3s ease-in-out infinite;
+  position: relative;
 }
 
-/* ── Timeline vertical line ─────────────────────────── */
+.st-prize-amount.nosebleed::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(to bottom, var(--st-red), transparent);
+  animation: st-drip 4s 2s ease-in infinite;
+}
+
+@keyframes st-drip {
+  0%, 60% { height: 0; opacity: 0; }
+  70% { height: 12px; opacity: 0.8; }
+  100% { height: 20px; opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   STAT BOXES — no backdrop-filter
+   ═══════════════════════════════════════════════════════ */
+.st-stat-box {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border: 1px solid rgba(229, 9, 20, 0.2);
+  background: rgba(25, 25, 40, 0.85);
+  position: relative;
+  border-radius: 6px;
+  contain: content;
+  transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+}
+
+.st-stat-box:hover {
+  transform: translateY(-2px);
+  background: rgba(30, 30, 50, 0.9);
+  border-color: rgba(229, 9, 20, 0.4);
+}
+
+.st-stat-box::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--st-red), transparent);
+}
+
+/* ═══════════════════════════════════════════════════════
+   TIMELINE
+   ═══════════════════════════════════════════════════════ */
 .st-timeline-line {
   position: absolute;
   left: 20px;
@@ -537,78 +957,34 @@
   box-shadow: 0 0 12px rgba(229, 9, 20, 0.8), 0 0 24px rgba(229, 9, 20, 0.4);
 }
 
-/* ── Glitch text ────────────────────────────────────── */
-@keyframes st-glitch-1 {
-  0%, 100% { clip-path: inset(0 0 95% 0); transform: translate(2px, -2px); }
-  20% { clip-path: inset(30% 0 50% 0); transform: translate(-2px, 2px); }
-  40% { clip-path: inset(70% 0 10% 0); transform: translate(2px, 0); }
-  60% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 1px); }
-  80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, -1px); }
+/* ═══════════════════════════════════════════════════════
+   SECTION LABELS & DIVIDER
+   ═══════════════════════════════════════════════════════ */
+.st-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(229, 9, 20, 0.3),
+    rgba(229, 9, 20, 0.5),
+    rgba(229, 9, 20, 0.3),
+    transparent
+  );
+  margin: 3rem 0;
 }
 
-@keyframes st-glitch-2 {
-  0%, 100% { clip-path: inset(95% 0 0 0); transform: translate(-2px, 2px); }
-  20% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -1px); }
-  40% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 0); }
-  60% { clip-path: inset(70% 0 10% 0); transform: translate(1px, -2px); }
-  80% { clip-path: inset(30% 0 50% 0); transform: translate(-1px, 1px); }
+.st-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--st-red);
+  opacity: 0.85;
 }
 
-.st-glitch {
-  position: relative;
-}
-
-.st-glitch::before,
-.st-glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.st-glitch::before {
-  color: #0ff;
-  animation: st-glitch-1 3s infinite linear;
-  opacity: 0.5;
-}
-
-.st-glitch::after {
-  color: #f0f;
-  animation: st-glitch-2 3s infinite linear;
-  opacity: 0.5;
-}
-
-/* ── Stat counter boxes ─────────────────────────────── */
-.st-stat-box {
-  text-align: center;
-  padding: 1.5rem 1rem;
-  border: 1px solid rgba(229, 9, 20, 0.2);
-  background: rgba(25, 25, 40, 0.7);
-  backdrop-filter: blur(8px);
-  position: relative;
-  border-radius: 6px;
-  transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease;
-}
-
-.st-stat-box:hover {
-  transform: translateY(-2px);
-  background: rgba(30, 30, 50, 0.8);
-  border-color: rgba(229, 9, 20, 0.4);
-}
-
-.st-stat-box::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(to right, transparent, var(--st-red), transparent);
-}
-
-/* ── Upside down text flip ──────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   UPSIDE DOWN TEXT FLIP
+   ═══════════════════════════════════════════════════════ */
 @keyframes st-flip-text {
   0%, 45%, 55%, 100% { transform: rotateX(0deg); }
   48%, 52% { transform: rotateX(180deg); }
@@ -619,17 +995,32 @@
   animation: st-flip-text 8s ease-in-out infinite;
 }
 
-/* ── Responsive ─────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   SECTION FADE-IN — CSS-only, no JS observers
+   ═══════════════════════════════════════════════════════ */
+.st-section-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: st-section-reveal 0.6s ease-out forwards;
+  animation-play-state: paused;
+}
+
+.st-section-animate.visible {
+  animation-play-state: running;
+}
+
+@keyframes st-section-reveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
   .st-wall-letter {
     width: 24px;
     height: 32px;
     font-size: 14px;
-  }
-
-  .st-portal {
-    width: 300px;
-    height: 300px;
   }
 
   .st-btn-register {
@@ -655,5 +1046,40 @@
     font-size: 6px;
     top: 6px;
     right: -30px;
+  }
+
+  .st-splash-title {
+    font-size: clamp(2rem, 10vw, 4rem);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   REDUCED MOTION — accessibility
+   ═══════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .st-flicker,
+  .st-flicker-subtle,
+  .st-flicker-fast,
+  .st-ember,
+  .st-wall-letter.lit,
+  .st-wall-letter.lit::before,
+  .st-upside-down-flip,
+  .st-btn-register,
+  .st-btn-register::after,
+  .st-gold-glow,
+  .st-prize-amount,
+  .st-audio-toggle.playing,
+  .st-spore,
+  .st-light-bulb,
+  .st-glitch::before,
+  .st-glitch::after,
+  .st-static-bar::before {
+    animation: none !important;
+  }
+
+  .st-splash.closing {
+    animation: none !important;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
 }

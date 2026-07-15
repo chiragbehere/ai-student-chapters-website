@@ -1,15 +1,15 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   ExternalLink, Calendar, MapPin, Clock, Users, Zap, Code, Trophy,
   Skull, Shield, Flame, Eye, Target, Lightbulb, Award, Star,
-  GitBranch, Cpu, Brain, Swords
+  GitBranch, Cpu, Brain, Swords, Volume2, VolumeX, Fingerprint
 } from 'lucide-react';
 import SEO from '../components/SEO';
 import './CodeCarnival.css';
 
 // ═══════════════════════════════════════════════════════
-// CONFIG — Update these for each event
+// CONFIG
 // ═══════════════════════════════════════════════════════
 const UNSTOP_URL = '#'; // ← Replace with your Unstop registration link
 
@@ -18,18 +18,25 @@ const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const LIGHT_COLORS = ['#e50914', '#ff6b35', '#f5a623', '#4ecdc4', '#45b7d1', '#96e6a1', '#dda0dd', '#ff69b4'];
 const SPELL_WORD = 'CODECARNIVAL';
 
-// ── Floating embers ───────────────────────────────────
-const Embers = ({ count = 30 }: { count?: number }) => {
+// ── Christmas light colors ────────────────────────────
+const XMAS_COLORS = ['#e50914', '#f5a623', '#4ecdc4', '#45b7d1', '#96e6a1', '#dda0dd', '#ff69b4', '#ffd700', '#e50914', '#ff6b35', '#4ecdc4', '#f5a623'];
+
+// ═══════════════════════════════════════════════════════
+// LIGHTWEIGHT COMPONENTS
+// ═══════════════════════════════════════════════════════
+
+// ── Floating embers (reduced to 12) ───────────────────
+const Embers = () => {
   const embers = useMemo(() =>
-    Array.from({ length: count }, (_, i) => ({
+    Array.from({ length: 12 }, (_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
       size: 2 + Math.random() * 3,
-      duration: 6 + Math.random() * 10,
-      delay: Math.random() * 8,
-      opacity: 0.3 + Math.random() * 0.7,
+      duration: 8 + Math.random() * 12,
+      delay: Math.random() * 10,
+      opacity: 0.3 + Math.random() * 0.5,
     })),
-  [count]);
+  []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[1]" aria-hidden="true">
@@ -51,40 +58,7 @@ const Embers = ({ count = 30 }: { count?: number }) => {
   );
 };
 
-// ── Vine decorations ──────────────────────────────────
-const Vines = () => {
-  const vines = useMemo(() => [
-    { top: '10%', left: '2%', height: '120px', delay: '0s', rotate: '-5deg' },
-    { top: '25%', right: '3%', height: '180px', delay: '2s', rotate: '3deg' },
-    { top: '40%', left: '1%', height: '160px', delay: '5s', rotate: '4deg' },
-    { top: '55%', right: '2%', height: '140px', delay: '1s', rotate: '6deg' },
-    { top: '70%', left: '4%', height: '100px', delay: '4s', rotate: '-8deg' },
-    { top: '85%', right: '5%', height: '90px', delay: '3s', rotate: '-3deg' },
-    { top: '15%', right: '8%', height: '110px', delay: '6s', rotate: '2deg' },
-    { top: '50%', left: '3%', height: '130px', delay: '7s', rotate: '-4deg' },
-  ], []);
-
-  return (
-    <>
-      {vines.map((v, i) => (
-        <div
-          key={i}
-          className="st-vine hidden md:block"
-          style={{
-            top: v.top,
-            left: (v as any).left,
-            right: (v as any).right,
-            height: v.height,
-            animationDelay: v.delay,
-            transform: `rotate(${v.rotate})`,
-          }}
-        />
-      ))}
-    </>
-  );
-};
-
-// ── Alphabet Wall ─────────────────────────────────────
+// ── Alphabet Wall (kept as-is) ────────────────────────
 const AlphabetWall = () => {
   const [litLetters, setLitLetters] = useState<Set<number>>(new Set());
 
@@ -126,25 +100,215 @@ const AlphabetWall = () => {
   );
 };
 
-// ── Fade animation presets ────────────────────────────
-const fadeUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6, ease: 'easeOut' as const },
+// ── Christmas Lights ──────────────────────────────────
+const ChristmasLights = () => (
+  <div className="st-christmas-lights">
+    {XMAS_COLORS.map((color, i) => (
+      <div
+        key={i}
+        className="st-light-bulb"
+        style={{
+          background: color,
+          boxShadow: `0 0 6px ${color}, 0 0 12px ${color}50`,
+          '--duration': `${2 + Math.random() * 2}s`,
+          '--delay': `${i * 0.2}s`,
+        } as React.CSSProperties}
+      />
+    ))}
+  </div>
+);
+
+// ── Demogorgon Petal Divider ──────────────────────────
+const DemogorgonDivider = () => {
+  const petals = 5;
+  const angles = Array.from({ length: petals }, (_, i) => {
+    const spread = 120; // total spread in degrees
+    const start = -spread / 2;
+    return start + (spread / (petals - 1)) * i;
+  });
+
+  return (
+    <div className="st-demogorgon-divider">
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 0, position: 'relative', height: '24px' }}>
+        {angles.map((angle, i) => (
+          <div
+            key={i}
+            className="st-petal"
+            style={{ transform: `rotate(${angle}deg)` }}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
-const fadeIn = {
-  initial: { opacity: 0 },
-  whileInView: { opacity: 1 },
-  viewport: { once: true },
-  transition: { duration: 0.8 },
+// ── Upside Down Spores ────────────────────────────────
+const UpsideDownSpores = ({ count = 6 }: { count?: number }) => {
+  const spores = useMemo(() =>
+    Array.from({ length: count }, (_, i) => ({
+      id: i,
+      left: `${10 + Math.random() * 80}%`,
+      top: `${10 + Math.random() * 80}%`,
+      delay: `${Math.random() * 5}s`,
+      size: 1 + Math.random() * 2,
+    })),
+  [count]);
+
+  return (
+    <>
+      {spores.map((s) => (
+        <div
+          key={s.id}
+          className="st-spore"
+          style={{
+            left: s.left,
+            top: s.top,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
+            animationDelay: s.delay,
+          }}
+        />
+      ))}
+    </>
+  );
 };
+
+// ── Splash Screen ─────────────────────────────────────
+const SplashScreen = ({ onEnter }: { onEnter: () => void }) => {
+  const [closing, setClosing] = useState(false);
+  const [scanning, setScanning] = useState(false);
+  const [closed, setClosed] = useState(false);
+
+  const handleScan = () => {
+    if (closing) return;
+    setScanning(true);
+    // Scan animation, then open doors
+    setTimeout(() => {
+      setClosing(true);
+      // Wait for door animation to complete
+      setTimeout(() => {
+        setClosed(true);
+        onEnter();
+      }, 1400);
+    }, 800);
+  };
+
+  if (closed) return null;
+
+  return (
+    <div className={`st-splash ${closing ? 'closing' : ''}`}>
+      {/* Top door panel */}
+      <div className="st-door-top" />
+      {/* Bottom door panel */}
+      <div className="st-door-bottom" />
+
+      {/* Content on top of doors */}
+      <div className="st-splash-content">
+        <h1 className="st-splash-title">
+          CODE<br />CARNIVAL
+        </h1>
+        <p className="st-splash-subtitle">
+          The Upside Down of Code
+        </p>
+
+        {/* Fingerprint Scanner Button */}
+        <button
+          className={`st-fingerprint-btn ${scanning ? 'scanning' : ''}`}
+          onClick={handleScan}
+          aria-label="Scan to enter"
+        >
+          <div className="st-fp-scan-line" />
+          <Fingerprint size={40} />
+        </button>
+        <p className="st-fingerprint-label">Scan to Enter</p>
+      </div>
+    </div>
+  );
+};
+
+// ── Audio Player Hook ─────────────────────────────────
+function useAudioPlayer() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const init = useCallback(() => {
+    if (!audioRef.current) {
+      const audio = new Audio('/audio/strangerthings_theme.mp3');
+      audio.loop = true;
+      audio.volume = 0.4;
+      audioRef.current = audio;
+    }
+  }, []);
+
+  const play = useCallback(() => {
+    init();
+    audioRef.current?.play().then(() => setIsPlaying(true)).catch(() => {});
+  }, [init]);
+
+  const toggle = useCallback(() => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+    }
+  }, [isPlaying]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  return { play, toggle, isPlaying };
+}
+
+// ── Simple section-reveal using IntersectionObserver (one observer for all) ──
+function useSectionReveal() {
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const registerRef = useCallback((el: HTMLElement | null) => {
+    if (!el) return;
+    if (!observerRef.current) {
+      observerRef.current = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observerRef.current?.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+    }
+    observerRef.current.observe(el);
+  }, []);
+
+  useEffect(() => {
+    return () => observerRef.current?.disconnect();
+  }, []);
+
+  return registerRef;
+}
 
 // ═══════════════════════════════════════════════════════
 // MAIN PAGE
 // ═══════════════════════════════════════════════════════
 const CodeCarnival = () => {
+  const [showSplash, setShowSplash] = useState(true);
+  const audio = useAudioPlayer();
+  const registerSection = useSectionReveal();
+
+  const handleEnter = () => {
+    setShowSplash(false);
+    audio.play();
+  };
 
   // ── Event Details ──
   const eventDetails = [
@@ -182,7 +346,7 @@ const CodeCarnival = () => {
     { time: 'T+27:00', label: 'The Closing Gate', desc: 'Winners announced. Prizes distributed.', icon: <Award size={16} /> },
   ];
 
-  // ── Tracks / Themes ──
+  // ── Tracks ──
   const tracks = [
     { icon: <Brain size={24} />, name: 'AI / ML', desc: 'Build intelligent systems that think' },
     { icon: <Cpu size={24} />, name: 'IoT & Hardware', desc: 'Connect the physical to the digital' },
@@ -209,19 +373,40 @@ const CodeCarnival = () => {
         description="Enter the Upside Down! Code Carnival 2.0 — a 24-hour State Level Hackathon with ₹50K+ prize pool by AI Student Chapters. Register now on Unstop."
       />
 
-      <Embers count={35} />
-      <Vines />
+      {/* Subtle Stranger Things background images */}
+      <div className="st-bg-upside-down" />
+      <div className="st-bg-portal" style={{ top: '-5%', right: '-8%' }} />
+      <div className="st-bg-portal" style={{ bottom: '20%', left: '-10%', width: '400px', height: '400px' }} />
+      <div className="st-bg-demogorgon" style={{ top: '35%', right: '2%' }} />
+      <div className="st-bg-demogorgon" style={{ bottom: '5%', left: '5%', width: '300px', height: '300px', opacity: 0.12 }} />
 
-      {/* Portal background glows */}
-      <div className="st-portal" style={{ top: '-10%', left: '50%', transform: 'translateX(-50%)' }} />
-      <div className="st-portal" style={{ bottom: '10%', right: '-10%', width: '350px', height: '350px', animationDelay: '3s' }} />
-      <div className="st-portal" style={{ top: '40%', left: '-15%', width: '400px', height: '400px', animationDelay: '5s' }} />
+      {/* Splash Screen */}
+      <SplashScreen onEnter={handleEnter} />
+
+      {/* Audio Toggle */}
+      {!showSplash && (
+        <button
+          className={`st-audio-toggle ${audio.isPlaying ? 'playing' : ''}`}
+          onClick={audio.toggle}
+          aria-label={audio.isPlaying ? 'Mute music' : 'Play music'}
+          title={audio.isPlaying ? 'Mute' : 'Play music'}
+        >
+          {audio.isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
+        </button>
+      )}
+
+      <Embers />
 
       {/* ═══════════════════════════════════════════════════
           HERO SECTION
           ═══════════════════════════════════════════════════ */}
       <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 pt-24 pb-16 z-10">
-        
+
+        {/* Christmas Lights at top */}
+        <div className="absolute top-16 left-0 right-0 z-20">
+          <ChristmasLights />
+        </div>
+
         {/* State-level badge */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -244,7 +429,7 @@ const CodeCarnival = () => {
           </span>
         </motion.div>
 
-        {/* Alphabet Wall */}
+        {/* Alphabet Wall — kept as-is with glow */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -264,7 +449,7 @@ const CodeCarnival = () => {
           AI Student Chapters presents
         </motion.p>
 
-        {/* Main Title with glitch effect */}
+        {/* Main Title with glitch + flicker — kept as-is */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -311,7 +496,7 @@ const CodeCarnival = () => {
           <span className="text-sm opacity-80">24 Hours. One Shot. Will you survive?</span>
         </motion.p>
 
-        {/* Prize Pool highlight */}
+        {/* Prize Pool */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -321,7 +506,7 @@ const CodeCarnival = () => {
           <p className="text-xs tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(232,213,181,0.55)' }}>
             Total Prize Pool
           </p>
-          <p className="st-prize-amount text-5xl sm:text-6xl md:text-7xl">₹50,000+</p>
+          <p className="st-prize-amount nosebleed text-5xl sm:text-6xl md:text-7xl">₹50,000+</p>
         </motion.div>
 
         {/* Register Button */}
@@ -372,8 +557,8 @@ const CodeCarnival = () => {
       {/* ═══════════════════════════════════════════════════
           STATS BAR
           ═══════════════════════════════════════════════════ */}
-      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
-        <motion.div {...fadeIn} className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <section ref={registerSection} className="st-section-animate relative z-10 max-w-5xl mx-auto px-4 sm:px-6" style={{ animationDelay: '0.1s' }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {stats.map((s, i) => (
             <div key={i} className="st-stat-box">
               <div className="text-[#e50914] mb-2 flex justify-center">{s.icon}</div>
@@ -385,16 +570,16 @@ const CodeCarnival = () => {
               </p>
             </div>
           ))}
-        </motion.div>
+        </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════
           EVENT DETAILS
           ═══════════════════════════════════════════════════ */}
-      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-20">
-        <div className="st-divider" />
+      <section ref={registerSection} className="st-section-animate relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-20" style={{ animationDelay: '0.2s' }}>
+        <DemogorgonDivider />
 
-        <motion.div {...fadeUp} className="text-center mb-12">
+        <div className="text-center mb-12">
           <span className="st-label">// hawkins_lab.details</span>
           <h2
             className="text-3xl sm:text-4xl font-bold mt-3"
@@ -403,32 +588,26 @@ const CodeCarnival = () => {
             What Awaits in the{' '}
             <span className="text-[#e50914] st-flicker-subtle st-upside-down-flip">Upside Down</span>
           </h2>
-        </motion.div>
+        </div>
 
         {/* Detail cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
           {eventDetails.map((d, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="st-card text-center"
-            >
+            <div key={i} className="st-card text-center" style={{ animationDelay: `${i * 0.1}s` }}>
               <div className="text-[#e50914] mb-3 flex justify-center">{d.icon}</div>
               <p className="st-label mb-1">{d.label}</p>
               <p className="text-base font-bold" style={{ fontFamily: "'Libre Baskerville', serif", color: '#e8d5b5' }}>
                 {d.value}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        <div className="st-divider" />
+        {/* Static glitch bar */}
+        <div className="st-static-bar" />
 
         {/* Highlights */}
-        <motion.div {...fadeUp} className="text-center mb-12 mt-16">
+        <div className="text-center mb-12 mt-16">
           <span className="st-label">// mission_briefing</span>
           <h2
             className="text-3xl sm:text-4xl font-bold mt-3"
@@ -436,18 +615,11 @@ const CodeCarnival = () => {
           >
             The <span className="text-[#e50914]">Mission</span>
           </h2>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {highlights.map((h, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12, duration: 0.5 }}
-              className="st-card group"
-            >
+            <div key={i} className="st-card group" style={{ animationDelay: `${i * 0.1}s` }}>
               <div className="text-[#e50914] mb-4 transition-transform group-hover:scale-110 duration-300">
                 {h.icon}
               </div>
@@ -460,18 +632,19 @@ const CodeCarnival = () => {
               <p className="text-sm leading-relaxed" style={{ color: 'rgba(232,213,181,0.7)' }}>
                 {h.desc}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════
-          TRACKS / THEMES
+          TRACKS — UPSIDE DOWN ZONE
           ═══════════════════════════════════════════════════ */}
-      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pb-20">
-        <div className="st-divider" />
+      <section ref={registerSection} className="st-section-animate st-upside-down-zone relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pb-20" style={{ animationDelay: '0.3s' }}>
+        <UpsideDownSpores count={8} />
+        <DemogorgonDivider />
 
-        <motion.div {...fadeUp} className="text-center mb-12 mt-8">
+        <div className="text-center mb-12 mt-8">
           <span className="st-label">// experiment_tracks</span>
           <h2
             className="text-3xl sm:text-4xl font-bold mt-3"
@@ -482,16 +655,12 @@ const CodeCarnival = () => {
           <p className="text-sm mt-3 max-w-md mx-auto" style={{ color: 'rgba(232,213,181,0.65)' }}>
             Pick a track or go rogue with Open Innovation
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {tracks.map((t, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.4 }}
               className="st-neon-border p-6 text-center group cursor-default"
               style={{ background: 'rgba(10,10,10,0.7)' }}
             >
@@ -502,18 +671,21 @@ const CodeCarnival = () => {
                 {t.name}
               </h3>
               <p className="text-xs" style={{ color: 'rgba(232,213,181,0.65)' }}>{t.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════
-          PRIZE POOL SECTION
+          PRIZE POOL
           ═══════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-20 px-4">
-        <div className="st-divider max-w-5xl mx-auto" />
+      <section ref={registerSection} className="st-section-animate relative z-10 py-20 px-4" style={{ animationDelay: '0.2s' }}>
+        <DemogorgonDivider />
 
-        <motion.div {...fadeUp} className="text-center mt-8">
+        {/* Christmas lights above prizes */}
+        <ChristmasLights />
+
+        <div className="text-center mt-8">
           <span className="st-label">// rewards.exe</span>
           <h2
             className="text-3xl sm:text-4xl font-bold mt-3 mb-12"
@@ -521,35 +693,25 @@ const CodeCarnival = () => {
           >
             The <span className="text-[#ffd700] st-gold-glow">Treasure</span> of Hawkins
           </h2>
-        </motion.div>
+        </div>
 
         <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* 1st Prize */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+          <div
             className="st-classified p-6 text-center md:order-2"
             style={{ border: '1px solid rgba(255,215,0,0.3)' }}
           >
             <Trophy size={40} className="mx-auto mb-4" style={{ color: '#ffd700' }} />
             <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,215,0,0.6)' }}>1st Place</p>
-            <p className="st-prize-amount text-4xl mb-2">₹25,000</p>
+            <p className="st-prize-amount nosebleed text-4xl mb-2">₹25,000</p>
             <p className="text-xs" style={{ color: 'rgba(232,213,181,0.65)' }}>+ Trophy + Certificates</p>
             <div className="mt-4 flex justify-center gap-1">
               {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#ffd700" color="#ffd700" />)}
             </div>
-          </motion.div>
+          </div>
 
           {/* 2nd Prize */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.35 }}
-            className="st-card text-center md:order-1"
-          >
+          <div className="st-card text-center md:order-1">
             <Award size={32} className="mx-auto mb-4" style={{ color: '#c0c0c0' }} />
             <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(192,192,192,0.6)' }}>2nd Place</p>
             <p className="text-3xl font-bold mb-2" style={{ fontFamily: "'Libre Baskerville', serif", color: '#c0c0c0' }}>₹15,000</p>
@@ -557,16 +719,10 @@ const CodeCarnival = () => {
             <div className="mt-4 flex justify-center gap-1">
               {[...Array(4)].map((_, i) => <Star key={i} size={10} fill="#c0c0c0" color="#c0c0c0" />)}
             </div>
-          </motion.div>
+          </div>
 
           {/* 3rd Prize */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="st-card text-center md:order-3"
-          >
+          <div className="st-card text-center md:order-3">
             <Award size={32} className="mx-auto mb-4" style={{ color: '#cd7f32' }} />
             <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(205,127,50,0.6)' }}>3rd Place</p>
             <p className="text-3xl font-bold mb-2" style={{ fontFamily: "'Libre Baskerville', serif", color: '#cd7f32' }}>₹10,000</p>
@@ -574,26 +730,21 @@ const CodeCarnival = () => {
             <div className="mt-4 flex justify-center gap-1">
               {[...Array(3)].map((_, i) => <Star key={i} size={10} fill="#cd7f32" color="#cd7f32" />)}
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Extra prizes */}
-        <motion.p
-          {...fadeIn}
-          className="text-center mt-8 text-sm"
-          style={{ color: 'rgba(232,213,181,0.65)' }}
-        >
+        <p className="text-center mt-8 text-sm" style={{ color: 'rgba(232,213,181,0.65)' }}>
           + Certificates for all participants • Swag kits • Mentorship opportunities
-        </motion.p>
+        </p>
       </section>
 
       {/* ═══════════════════════════════════════════════════
-          TIMELINE — "HAWKINS LAB EXPERIMENT LOG"
+          TIMELINE
           ═══════════════════════════════════════════════════ */}
-      <section className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pb-20">
-        <div className="st-divider" />
+      <section ref={registerSection} className="st-section-animate relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pb-20" style={{ animationDelay: '0.2s' }}>
+        <DemogorgonDivider />
 
-        <motion.div {...fadeUp} className="text-center mb-12 mt-8">
+        <div className="text-center mb-12 mt-8">
           <span className="st-label">// experiment_log</span>
           <h2
             className="text-3xl sm:text-4xl font-bold mt-3"
@@ -604,20 +755,13 @@ const CodeCarnival = () => {
           <p className="text-sm mt-3 max-w-md mx-auto" style={{ color: 'rgba(232,213,181,0.65)' }}>
             24 hours. 8 phases. Every minute counts.
           </p>
-        </motion.div>
+        </div>
 
         <div className="relative pl-10 sm:pl-14 space-y-6">
           <div className="st-timeline-line" />
 
           {timeline.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.4 }}
-              className="relative"
-            >
+            <div key={i} className="relative">
               <div className={`st-timeline-dot ${item.active ? 'active' : ''}`} />
               <div className="st-card ml-6 sm:ml-8">
                 <div className="flex items-center gap-3 mb-2">
@@ -642,18 +786,18 @@ const CodeCarnival = () => {
                 </h3>
                 <p className="text-xs" style={{ color: 'rgba(232,213,181,0.65)' }}>{item.desc}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════
-          RULES — "CLASSIFIED FILES"
+          RULES — CLASSIFIED FILES
           ═══════════════════════════════════════════════════ */}
-      <section className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pb-20">
-        <div className="st-divider" />
+      <section ref={registerSection} className="st-section-animate relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pb-20" style={{ animationDelay: '0.2s' }}>
+        <DemogorgonDivider />
 
-        <motion.div {...fadeUp} className="text-center mb-12 mt-8">
+        <div className="text-center mb-12 mt-8">
           <span className="st-label">// classified_rules.doc</span>
           <h2
             className="text-3xl sm:text-4xl font-bold mt-3"
@@ -661,17 +805,13 @@ const CodeCarnival = () => {
           >
             Lab <span className="text-[#e50914]">Protocols</span>
           </h2>
-        </motion.div>
+        </div>
 
-        <motion.div {...fadeIn} className="st-classified p-6 sm:p-8">
+        <div className="st-classified p-6 sm:p-8">
           <div className="space-y-4">
             {rules.map((rule, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
                 className="flex items-start gap-3 pb-4"
                 style={{ borderBottom: i < rules.length - 1 ? '1px solid rgba(229,9,20,0.1)' : 'none' }}
               >
@@ -689,19 +829,19 @@ const CodeCarnival = () => {
                 <p className="text-sm leading-relaxed" style={{ color: 'rgba(232,213,181,0.85)' }}>
                   {rule}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════
           BOTTOM CTA — "THE GATE IS CLOSING"
           ═══════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-24 text-center px-4">
-        <div className="st-divider max-w-5xl mx-auto" />
+      <section ref={registerSection} className="st-section-animate relative z-10 py-24 text-center px-4" style={{ animationDelay: '0.2s' }}>
+        <DemogorgonDivider />
 
-        <motion.div {...fadeUp} className="mt-16">
+        <div className="mt-16">
           <p className="st-label mb-4">// final_warning</p>
           <p
             className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
@@ -719,7 +859,7 @@ const CodeCarnival = () => {
           {/* Prize reminder */}
           <div className="flex items-center justify-center gap-4 mb-10">
             <span className="h-px w-10 bg-[#ffd700]/20" />
-            <span className="st-prize-amount text-2xl sm:text-3xl">₹50,000+</span>
+            <span className="st-prize-amount nosebleed text-2xl sm:text-3xl">₹50,000+</span>
             <span className="text-xs tracking-widest uppercase" style={{ color: 'rgba(255,215,0,0.4)' }}>in prizes</span>
             <span className="h-px w-10 bg-[#ffd700]/20" />
           </div>
@@ -737,9 +877,10 @@ const CodeCarnival = () => {
           <p className="mt-6 text-xs" style={{ color: 'rgba(229,9,20,0.4)' }}>
             Free entry • Open to all state-level college students
           </p>
-        </motion.div>
+        </div>
 
-        <div className="st-divider max-w-5xl mx-auto mt-16" />
+        {/* Static bar before footer */}
+        <div className="st-static-bar max-w-5xl mx-auto mt-16" />
 
         <p className="mt-8 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(232,213,181,0.35)', fontFamily: "'DM Mono', monospace" }}>
           CODE CARNIVAL 2.0 — AI STUDENT CHAPTERS — THE UPSIDE DOWN AWAITS — EST. 2025

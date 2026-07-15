@@ -20,6 +20,20 @@ const Sessions = lazy(() => import('./pages/Sessions'));
 const Tools = lazy(() => import('./pages/Tools'));
 const CodeCarnival = lazy(() => import('./pages/CodeCarnival'));
 
+// Hide all floating widgets on the Code Carnival page (immersive themed experience)
+const WidgetsOverlay = () => {
+  const location = useLocation();
+  if (location.pathname === '/code-carnival') return null;
+  return (
+    <>
+      <ChatbotWidget />
+      <WhatsAppWidget />
+      <EmailWidget />
+      <InstagramWidget />
+    </>
+  );
+};
+
 
 
 // Page loading skeleton
@@ -151,10 +165,7 @@ function App() {
               <AnimatedRoutes />
             </ErrorBoundary>
           </Layout>
-          <ChatbotWidget />
-          <WhatsAppWidget />
-          <EmailWidget />
-          <InstagramWidget />
+          <WidgetsOverlay />
           <Analytics />
         </SmoothScroll>
     </Router>
