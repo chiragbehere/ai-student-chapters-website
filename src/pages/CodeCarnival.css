@@ -1,0 +1,631 @@
+/* ═══════════════════════════════════════════════════════
+   CODE CARNIVAL 2.0 — STRANGER THINGS THEME
+   Fully isolated styles — won't bleed into the rest of the site
+   ═══════════════════════════════════════════════════════ */
+
+/* Benguiat-like font (Stranger Things title vibe) */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ── Base page ──────────────────────────────────────── */
+.st-page {
+  --st-red: #e50914;
+  --st-red-bright: #ff1a1a;
+  --st-red-dark: #8b0000;
+  --st-dark: #0a0a0a;
+  --st-darker: #050505;
+  --st-cream: #e8d5b5;
+  --st-amber: #f5a623;
+  --st-blue: #1a3a5c;
+  --st-gold: #ffd700;
+
+  background: var(--st-dark);
+  color: var(--st-cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── VHS Scan-line overlay ──────────────────────────── */
+.st-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ── VHS tracking noise ─────────────────────────────── */
+.st-page::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    transparent 0%,
+    rgba(229, 9, 20, 0.02) 50%,
+    transparent 100%
+  );
+  animation: st-vhs-track 8s linear infinite;
+  pointer-events: none;
+  z-index: 100;
+}
+
+@keyframes st-vhs-track {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* ── Text flicker (title) ───────────────────────────── */
+@keyframes st-flicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 4px #e50914,
+      0 0 10px #e50914,
+      0 0 20px #e50914,
+      0 0 40px #e50914,
+      0 0 80px rgba(229, 9, 20, 0.4),
+      0 0 120px rgba(229, 9, 20, 0.2);
+  }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+    opacity: 0.5;
+    text-shadow:
+      0 0 2px #e50914,
+      0 0 5px rgba(229, 9, 20, 0.5);
+  }
+}
+
+@keyframes st-flicker-subtle {
+  0%, 100% { opacity: 1; }
+  41% { opacity: 1; }
+  42% { opacity: 0.6; }
+  43% { opacity: 1; }
+  45% { opacity: 0.3; }
+  46% { opacity: 1; }
+}
+
+@keyframes st-flicker-fast {
+  0%, 100% { opacity: 1; }
+  10% { opacity: 0.8; }
+  11% { opacity: 1; }
+  50% { opacity: 1; }
+  51% { opacity: 0.4; }
+  52% { opacity: 1; }
+  80% { opacity: 1; }
+  81% { opacity: 0.6; }
+  82% { opacity: 1; }
+}
+
+.st-flicker {
+  animation: st-flicker 4s infinite alternate;
+}
+
+.st-flicker-subtle {
+  animation: st-flicker-subtle 5s infinite;
+}
+
+.st-flicker-fast {
+  animation: st-flicker-fast 2s infinite;
+}
+
+/* ── Neon glow pulsing ──────────────────────────────── */
+@keyframes st-neon-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 5px rgba(229, 9, 20, 0.5),
+      0 0 10px rgba(229, 9, 20, 0.3),
+      0 0 20px rgba(229, 9, 20, 0.15),
+      inset 0 0 5px rgba(229, 9, 20, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(229, 9, 20, 0.8),
+      0 0 20px rgba(229, 9, 20, 0.5),
+      0 0 40px rgba(229, 9, 20, 0.25),
+      inset 0 0 10px rgba(229, 9, 20, 0.15);
+  }
+}
+
+@keyframes st-gold-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(255, 215, 0, 0.6),
+      0 0 20px rgba(255, 215, 0, 0.3),
+      0 0 40px rgba(255, 215, 0, 0.15);
+  }
+  50% {
+    text-shadow:
+      0 0 15px rgba(255, 215, 0, 0.8),
+      0 0 30px rgba(255, 215, 0, 0.5),
+      0 0 60px rgba(255, 215, 0, 0.25);
+  }
+}
+
+.st-neon-border {
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  animation: st-neon-pulse 3s ease-in-out infinite;
+}
+
+.st-gold-glow {
+  animation: st-gold-pulse 3s ease-in-out infinite;
+}
+
+/* ── Floating embers / particles ────────────────────── */
+@keyframes st-float {
+  0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+@keyframes st-drift {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(30px); }
+}
+
+.st-ember {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--st-red);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--st-red), 0 0 12px rgba(229, 9, 20, 0.5);
+  animation: st-float linear infinite;
+  pointer-events: none;
+}
+
+.st-ember::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: var(--st-amber);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: st-drift 3s ease-in-out infinite;
+}
+
+/* ── Alphabet wall ──────────────────────────────────── */
+.st-alphabet-wall {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  max-width: 600px;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.st-wall-letter {
+  width: 32px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(232, 213, 181, 0.15);
+  position: relative;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.st-wall-letter.lit {
+  animation: st-wall-light 2s ease-in-out infinite;
+}
+
+@keyframes st-wall-light {
+  0%, 100% {
+    color: rgba(232, 213, 181, 0.15);
+    text-shadow: none;
+  }
+  15%, 85% {
+    color: var(--light-color, #e50914);
+    text-shadow:
+      0 0 8px var(--light-color, #e50914),
+      0 0 20px var(--light-color, rgba(229, 9, 20, 0.5));
+  }
+}
+
+/* Fairy-light bulb dot above each letter */
+.st-wall-letter::before {
+  content: '●';
+  position: absolute;
+  top: -8px;
+  font-size: 6px;
+  color: rgba(232, 213, 181, 0.1);
+  transition: color 0.3s;
+}
+
+.st-wall-letter.lit::before {
+  color: var(--light-color, #e50914);
+  text-shadow: 0 0 6px var(--light-color, #e50914);
+  animation: st-wall-light 2s ease-in-out infinite;
+}
+
+/* ── Portal / Gate effect ───────────────────────────── */
+@keyframes st-portal-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 60px rgba(229, 9, 20, 0.15),
+      0 0 120px rgba(229, 9, 20, 0.08),
+      inset 0 0 60px rgba(229, 9, 20, 0.05);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 80px rgba(229, 9, 20, 0.25),
+      0 0 160px rgba(229, 9, 20, 0.12),
+      inset 0 0 80px rgba(229, 9, 20, 0.08);
+    transform: scale(1.02);
+  }
+}
+
+.st-portal {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(229, 9, 20, 0.06) 0%, transparent 70%);
+  border: 1px solid rgba(229, 9, 20, 0.08);
+  animation: st-portal-pulse 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Vine/tendril decorations ───────────────────────── */
+@keyframes st-vine-sway {
+  0%, 100% { transform: rotate(-2deg) scaleY(1); }
+  50%      { transform: rotate(2deg) scaleY(1.02); }
+}
+
+.st-vine {
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(229, 9, 20, 0.3),
+    rgba(229, 9, 20, 0.05),
+    transparent
+  );
+  border-radius: 1px;
+  animation: st-vine-sway 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Title styling ──────────────────────────────────── */
+.st-title {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 700;
+  color: var(--st-red);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  line-height: 1.1;
+}
+
+.st-subtitle {
+  font-family: 'Libre Baskerville', serif;
+  color: var(--st-cream);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+/* ── Info cards ─────────────────────────────────────── */
+.st-card {
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(229, 9, 20, 0.15);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.st-card:hover {
+  border-color: rgba(229, 9, 20, 0.4);
+  box-shadow: 0 0 20px rgba(229, 9, 20, 0.1);
+}
+
+.st-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--st-red), transparent);
+}
+
+/* ── Classified / Lab file card ─────────────────────── */
+.st-classified {
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(229, 9, 20, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.st-classified::before {
+  content: 'CLASSIFIED';
+  position: absolute;
+  top: 10px;
+  right: -25px;
+  background: var(--st-red);
+  color: white;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 3px 30px;
+  transform: rotate(45deg);
+  z-index: 2;
+}
+
+/* ── Register button ────────────────────────────────── */
+@keyframes st-btn-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 10px rgba(229, 9, 20, 0.5),
+      0 0 20px rgba(229, 9, 20, 0.3),
+      0 0 40px rgba(229, 9, 20, 0.15);
+  }
+  50% {
+    box-shadow:
+      0 0 15px rgba(229, 9, 20, 0.7),
+      0 0 30px rgba(229, 9, 20, 0.4),
+      0 0 60px rgba(229, 9, 20, 0.2);
+  }
+}
+
+.st-btn-register {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: var(--st-red);
+  color: white;
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 2px solid var(--st-red-bright);
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  animation: st-btn-glow 3s ease-in-out infinite;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.st-btn-register:hover {
+  transform: scale(1.05);
+  background: var(--st-red-bright);
+}
+
+.st-btn-register:active {
+  transform: scale(0.97);
+}
+
+.st-btn-register::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 60%
+  );
+  animation: st-btn-shine 4s linear infinite;
+}
+
+@keyframes st-btn-shine {
+  0%   { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
+}
+
+/* ── Divider line ───────────────────────────────────── */
+.st-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(229, 9, 20, 0.4),
+    transparent
+  );
+  margin: 3rem 0;
+}
+
+/* ── Section label ──────────────────────────────────── */
+.st-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--st-red);
+  opacity: 0.7;
+}
+
+/* ── Prize counter ──────────────────────────────────── */
+@keyframes st-counter-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 20px rgba(255, 215, 0, 0.5),
+      0 0 40px rgba(255, 215, 0, 0.3),
+      0 0 80px rgba(255, 215, 0, 0.15);
+    filter: brightness(1);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(255, 215, 0, 0.7),
+      0 0 60px rgba(255, 215, 0, 0.4),
+      0 0 100px rgba(255, 215, 0, 0.2);
+    filter: brightness(1.1);
+  }
+}
+
+.st-prize-amount {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 700;
+  color: var(--st-gold);
+  animation: st-counter-glow 3s ease-in-out infinite;
+}
+
+/* ── Timeline vertical line ─────────────────────────── */
+.st-timeline-line {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--st-red),
+    rgba(229, 9, 20, 0.3),
+    var(--st-red),
+    rgba(229, 9, 20, 0.1)
+  );
+}
+
+.st-timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--st-dark);
+  border: 2px solid var(--st-red);
+  box-shadow: 0 0 8px rgba(229, 9, 20, 0.5);
+  position: absolute;
+  left: 15px;
+  top: 6px;
+  z-index: 2;
+}
+
+.st-timeline-dot.active {
+  background: var(--st-red);
+  box-shadow: 0 0 12px rgba(229, 9, 20, 0.8), 0 0 24px rgba(229, 9, 20, 0.4);
+}
+
+/* ── Glitch text ────────────────────────────────────── */
+@keyframes st-glitch-1 {
+  0%, 100% { clip-path: inset(0 0 95% 0); transform: translate(2px, -2px); }
+  20% { clip-path: inset(30% 0 50% 0); transform: translate(-2px, 2px); }
+  40% { clip-path: inset(70% 0 10% 0); transform: translate(2px, 0); }
+  60% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 1px); }
+  80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, -1px); }
+}
+
+@keyframes st-glitch-2 {
+  0%, 100% { clip-path: inset(95% 0 0 0); transform: translate(-2px, 2px); }
+  20% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -1px); }
+  40% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 0); }
+  60% { clip-path: inset(70% 0 10% 0); transform: translate(1px, -2px); }
+  80% { clip-path: inset(30% 0 50% 0); transform: translate(-1px, 1px); }
+}
+
+.st-glitch {
+  position: relative;
+}
+
+.st-glitch::before,
+.st-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.st-glitch::before {
+  color: #0ff;
+  animation: st-glitch-1 3s infinite linear;
+  opacity: 0.5;
+}
+
+.st-glitch::after {
+  color: #f0f;
+  animation: st-glitch-2 3s infinite linear;
+  opacity: 0.5;
+}
+
+/* ── Stat counter boxes ─────────────────────────────── */
+.st-stat-box {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border: 1px solid rgba(229, 9, 20, 0.2);
+  background: rgba(10, 10, 10, 0.6);
+  position: relative;
+}
+
+.st-stat-box::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--st-red), transparent);
+}
+
+/* ── Upside down text flip ──────────────────────────── */
+@keyframes st-flip-text {
+  0%, 45%, 55%, 100% { transform: rotateX(0deg); }
+  48%, 52% { transform: rotateX(180deg); }
+}
+
+.st-upside-down-flip {
+  display: inline-block;
+  animation: st-flip-text 8s ease-in-out infinite;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .st-wall-letter {
+    width: 24px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .st-portal {
+    width: 300px;
+    height: 300px;
+  }
+
+  .st-btn-register {
+    padding: 14px 28px;
+    font-size: 0.95rem;
+  }
+
+  .st-title {
+    letter-spacing: 0.08em;
+  }
+
+  .st-timeline-line {
+    left: 12px;
+  }
+
+  .st-timeline-dot {
+    left: 7px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .st-classified::before {
+    font-size: 6px;
+    top: 6px;
+    right: -30px;
+  }
+}

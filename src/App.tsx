@@ -18,6 +18,7 @@ const Gallery = lazy(() => import('./pages/Gallery'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const Sessions = lazy(() => import('./pages/Sessions'));
 const Tools = lazy(() => import('./pages/Tools'));
+const CodeCarnival = lazy(() => import('./pages/CodeCarnival'));
 
 
 
@@ -126,6 +127,11 @@ const AnimatedRoutes = () => {
         <Route path="/tools" element={
           <Suspense fallback={<PageLoader />}>
             <PageTransition><Tools /></PageTransition>
+          </Suspense>
+        } />
+        <Route path="/code-carnival" element={
+          <Suspense fallback={<PageLoader />}>
+            <PageTransition><CodeCarnival /></PageTransition>
           </Suspense>
         } />
 
