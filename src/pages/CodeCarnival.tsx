@@ -305,6 +305,18 @@ const CodeCarnival = () => {
   const audio = useAudioPlayer();
   const registerSection = useSectionReveal();
 
+  // Lock scroll while splash screen is visible
+  useEffect(() => {
+    if (showSplash) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showSplash]);
+
   const handleEnter = () => {
     setShowSplash(false);
     audio.play();
