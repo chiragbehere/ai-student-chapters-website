@@ -106,12 +106,12 @@ const ChatbotWidget = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "tween", ease: "easeOut", duration: 0.4, delay: 0.3 }}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-[13.5rem] right-6 w-14 h-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center z-50 hover:scale-[1.05] active:scale-95 transition-transform duration-300 ${isOpen ? 'hidden' : 'flex'} group`}
+        className={`fixed bottom-[10rem] right-6 w-10 h-10 rounded-full bg-primary text-white shadow-md shadow-primary/30 flex items-center justify-center z-50 hover:scale-[1.05] active:scale-95 transition-transform duration-300 ${isOpen ? 'hidden' : 'flex'} group`}
         aria-label="Open AI Chat"
       >
-        <Sparkles size={24} className="group-hover:animate-pulse" />
+        <Sparkles size={18} className="group-hover:animate-pulse" />
         {/* AI badge */}
-        <span className="absolute -top-1 -left-1 px-1.5 py-0.5 bg-accent text-white text-[8px] font-bold rounded-full uppercase tracking-wider shadow-sm">
+        <span className="absolute -top-1 -left-1 px-1 py-0.5 bg-accent text-white text-[7px] font-bold rounded-full uppercase tracking-wider shadow-sm">
           AI
         </span>
       </motion.button>
