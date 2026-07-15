@@ -25,7 +25,9 @@
   overflow-x: hidden;
   position: relative;
   font-family: 'DM Mono', monospace;
-  scroll-behavior: smooth;
+  /* GPU: promote page to its own layer */
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Subtle Stranger Things background images */
@@ -36,7 +38,10 @@
   pointer-events: none;
   background:
     linear-gradient(180deg, rgba(26,26,46,0.82) 0%, rgba(18,18,31,0.75) 40%, rgba(26,26,46,0.82) 100%),
-    url('/images/st/upside-down-bg.png') center / cover no-repeat;
+    url('/images/st/upside-down-bg.webp') center / cover no-repeat;
+  /* GPU: own layer so scrolling doesn't repaint it */
+  transform: translateZ(0);
+  contain: strict;
 }
 
 /* Portal image — subtle, positioned */
@@ -47,7 +52,9 @@
   opacity: 0.18;
   pointer-events: none;
   z-index: 0;
-  background: url('/images/st/portal-gate.png') center / contain no-repeat;
+  background: url('/images/st/portal-gate.webp') center / contain no-repeat;
+  transform: translateZ(0);
+  contain: strict;
 }
 
 /* Demogorgon image — subtle, positioned */
@@ -58,7 +65,9 @@
   opacity: 0.14;
   pointer-events: none;
   z-index: 0;
-  background: url('/images/st/demogorgon.png') center / contain no-repeat;
+  background: url('/images/st/demogorgon.webp') center / contain no-repeat;
+  transform: translateZ(0);
+  contain: strict;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -85,13 +94,15 @@
   background: #0a0a0f;
   z-index: 1;
   transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .st-door-top {
   top: 0;
   background:
     linear-gradient(180deg, #080810 0%, #0e0e1a 100%),
-    url('/images/st/upside-down-bg.png') center top / cover no-repeat;
+    url('/images/st/upside-down-bg.webp') center top / cover no-repeat;
   background-blend-mode: overlay;
   border-bottom: 1px solid rgba(229, 9, 20, 0.2);
 }
@@ -100,7 +111,7 @@
   bottom: 0;
   background:
     linear-gradient(0deg, #080810 0%, #0e0e1a 100%),
-    url('/images/st/upside-down-bg.png') center bottom / cover no-repeat;
+    url('/images/st/upside-down-bg.webp') center bottom / cover no-repeat;
   background-blend-mode: overlay;
   border-top: 1px solid rgba(229, 9, 20, 0.2);
 }
@@ -122,7 +133,7 @@
 
 @keyframes st-crack-pulse {
   0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; box-shadow: 0 0 20px rgba(229, 9, 20, 0.4); }
+  50% { opacity: 1; }
 }
 
 /* Opening animation */
@@ -307,11 +318,12 @@
 
 .st-audio-toggle.playing {
   animation: st-audio-pulse 2s ease-in-out infinite;
+  will-change: opacity;
 }
 
 @keyframes st-audio-pulse {
-  0%, 100% { box-shadow: 0 0 5px rgba(229, 9, 20, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(229, 9, 20, 0.6); }
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -359,14 +371,18 @@
 
 .st-flicker {
   animation: st-flicker 4s infinite alternate;
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
 .st-flicker-subtle {
   animation: st-flicker-subtle 5s infinite;
+  will-change: opacity;
 }
 
 .st-flicker-fast {
   animation: st-flicker-fast 2s infinite;
+  will-change: opacity;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -385,10 +401,14 @@
   height: 3px;
   background: var(--st-red);
   border-radius: 50%;
-  box-shadow: 0 0 4px var(--st-red);
+  /* Removed box-shadow — use background glow instead */
+  background: radial-gradient(circle, var(--st-red) 30%, transparent 70%);
+  width: 6px;
+  height: 6px;
   animation: st-float linear infinite;
   pointer-events: none;
   will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -424,6 +444,7 @@
   z-index: 1;
   animation: st-light-twinkle var(--duration, 3s) var(--delay, 0s) ease-in-out infinite;
   will-change: opacity;
+  transform: translateZ(0);
 }
 
 /* Bulb cap */
@@ -439,9 +460,10 @@
   border-radius: 2px 2px 0 0;
 }
 
+/* GPU: use only opacity (no filter) to avoid repaint */
 @keyframes st-light-twinkle {
-  0%, 100% { opacity: 0.4; filter: brightness(0.6); }
-  50% { opacity: 1; filter: brightness(1.4); }
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -565,24 +587,26 @@
 /* ═══════════════════════════════════════════════════════
    GLITCH TEXT — kept for title
    ═══════════════════════════════════════════════════════ */
+/* GPU: glitch uses only transform (cheap) + clip-path promoted to own layer */
 @keyframes st-glitch-1 {
-  0%, 100% { clip-path: inset(0 0 95% 0); transform: translate(2px, -2px); }
-  20% { clip-path: inset(30% 0 50% 0); transform: translate(-2px, 2px); }
-  40% { clip-path: inset(70% 0 10% 0); transform: translate(2px, 0); }
-  60% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 1px); }
-  80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, -1px); }
+  0%, 100% { clip-path: inset(0 0 95% 0); transform: translate3d(2px, -2px, 0); }
+  20% { clip-path: inset(30% 0 50% 0); transform: translate3d(-2px, 2px, 0); }
+  40% { clip-path: inset(70% 0 10% 0); transform: translate3d(2px, 0, 0); }
+  60% { clip-path: inset(10% 0 70% 0); transform: translate3d(-1px, 1px, 0); }
+  80% { clip-path: inset(50% 0 30% 0); transform: translate3d(1px, -1px, 0); }
 }
 
 @keyframes st-glitch-2 {
-  0%, 100% { clip-path: inset(95% 0 0 0); transform: translate(-2px, 2px); }
-  20% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -1px); }
-  40% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 0); }
-  60% { clip-path: inset(70% 0 10% 0); transform: translate(1px, -2px); }
-  80% { clip-path: inset(30% 0 50% 0); transform: translate(-1px, 1px); }
+  0%, 100% { clip-path: inset(95% 0 0 0); transform: translate3d(-2px, 2px, 0); }
+  20% { clip-path: inset(50% 0 30% 0); transform: translate3d(2px, -1px, 0); }
+  40% { clip-path: inset(10% 0 70% 0); transform: translate3d(-2px, 0, 0); }
+  60% { clip-path: inset(70% 0 10% 0); transform: translate3d(1px, -2px, 0); }
+  80% { clip-path: inset(30% 0 50% 0); transform: translate3d(-1px, 1px, 0); }
 }
 
 .st-glitch {
   position: relative;
+  transform: translateZ(0);
 }
 
 .st-glitch::before,
@@ -593,6 +617,8 @@
   left: 0;
   width: 100%;
   height: 100%;
+  will-change: transform, clip-path;
+  transform: translateZ(0);
 }
 
 .st-glitch::before {
@@ -618,14 +644,14 @@
   position: relative;
   overflow: hidden;
   contain: content;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease, background 0.4s ease;
+  /* GPU: only transition transform + opacity (cheap composited properties) */
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  transform: translateZ(0);
 }
 
 .st-card:hover {
   border-color: rgba(229, 9, 20, 0.4);
-  box-shadow: 0 0 20px rgba(229, 9, 20, 0.1), 0 4px 16px rgba(0,0,0,0.3);
-  transform: translateY(-2px);
-  background: rgba(30, 30, 50, 0.9);
+  transform: translateY(-2px) translateZ(0);
 }
 
 .st-card::before {
@@ -666,21 +692,7 @@
 /* ═══════════════════════════════════════════════════════
    REGISTER BUTTON
    ═══════════════════════════════════════════════════════ */
-@keyframes st-btn-glow {
-  0%, 100% {
-    box-shadow:
-      0 0 10px rgba(229, 9, 20, 0.5),
-      0 0 20px rgba(229, 9, 20, 0.3),
-      0 0 40px rgba(229, 9, 20, 0.15);
-  }
-  50% {
-    box-shadow:
-      0 0 15px rgba(229, 9, 20, 0.7),
-      0 0 30px rgba(229, 9, 20, 0.4),
-      0 0 60px rgba(229, 9, 20, 0.2);
-  }
-}
-
+/* GPU: static box-shadow, animate opacity instead */
 .st-btn-register {
   display: inline-flex;
   align-items: center;
@@ -698,8 +710,11 @@
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  animation: st-btn-glow 3s ease-in-out infinite;
+  box-shadow:
+    0 0 12px rgba(229, 9, 20, 0.5),
+    0 0 24px rgba(229, 9, 20, 0.3);
   transition: transform 0.2s, background 0.2s;
+  transform: translateZ(0);
 }
 
 .st-btn-register:hover {
@@ -849,29 +864,23 @@
 /* ═══════════════════════════════════════════════════════
    NOSEBLEED DRIP on prize amounts
    ═══════════════════════════════════════════════════════ */
-@keyframes st-counter-glow {
-  0%, 100% {
-    text-shadow:
-      0 0 20px rgba(255, 215, 0, 0.5),
-      0 0 40px rgba(255, 215, 0, 0.3),
-      0 0 80px rgba(255, 215, 0, 0.15);
-    filter: brightness(1);
-  }
-  50% {
-    text-shadow:
-      0 0 30px rgba(255, 215, 0, 0.7),
-      0 0 60px rgba(255, 215, 0, 0.4),
-      0 0 100px rgba(255, 215, 0, 0.2);
-    filter: brightness(1.1);
-  }
-}
-
+/* GPU: static text-shadow, animate only opacity */
 .st-prize-amount {
   font-family: 'Libre Baskerville', serif;
   font-weight: 700;
   color: var(--st-gold);
-  animation: st-counter-glow 3s ease-in-out infinite;
+  text-shadow:
+    0 0 20px rgba(255, 215, 0, 0.5),
+    0 0 40px rgba(255, 215, 0, 0.3);
   position: relative;
+  animation: st-counter-glow 3s ease-in-out infinite;
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+@keyframes st-counter-glow {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
 }
 
 .st-prize-amount.nosebleed::after {
@@ -902,7 +911,8 @@
   position: relative;
   border-radius: 6px;
   contain: content;
-  transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  transform: translateZ(0);
 }
 
 .st-stat-box:hover {
@@ -1000,9 +1010,13 @@
    ═══════════════════════════════════════════════════════ */
 .st-section-animate {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(20px) translateZ(0);
   animation: st-section-reveal 0.6s ease-out forwards;
   animation-play-state: paused;
+  will-change: transform, opacity;
+  /* GPU: skip rendering of off-screen sections entirely */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 
 .st-section-animate.visible {
@@ -1010,7 +1024,7 @@
 }
 
 @keyframes st-section-reveal {
-  to { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0) translateZ(0); }
 }
 
 /* ═══════════════════════════════════════════════════════

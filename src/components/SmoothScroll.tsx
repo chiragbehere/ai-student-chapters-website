@@ -8,6 +8,9 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const isTouchDevice = window.innerWidth <= 768 || window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isTouchDevice) return; // let native scroll handle it on mobile
 
+    // Disable on Code Carnival page — Lenis rAF loop fights with heavy CSS animations
+    if (window.location.pathname === '/code-carnival') return;
+
     const lenis = new Lenis({
       duration: 1.0,        // slightly quicker feel (was 1.2)
       easing: (t) => 1 - Math.pow(1 - t, 3), // cubic ease-out — snappier
