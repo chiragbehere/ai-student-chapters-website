@@ -330,19 +330,9 @@
 @keyframes st-flicker {
   0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
     opacity: 1;
-    text-shadow:
-      0 0 4px #e50914,
-      0 0 10px #e50914,
-      0 0 20px #e50914,
-      0 0 40px #e50914,
-      0 0 80px rgba(229, 9, 20, 0.4),
-      0 0 120px rgba(229, 9, 20, 0.2);
   }
   20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
     opacity: 0.5;
-    text-shadow:
-      0 0 2px #e50914,
-      0 0 5px rgba(229, 9, 20, 0.5);
   }
 }
 
@@ -371,6 +361,11 @@
   animation: st-flicker 4s infinite alternate;
   will-change: opacity;
   transform: translateZ(0);
+  text-shadow:
+    0 0 4px #e50914,
+    0 0 10px #e50914,
+    0 0 20px rgba(229, 9, 20, 0.8),
+    0 0 40px rgba(229, 9, 20, 0.4);
 }
 
 .st-flicker-subtle {
@@ -492,20 +487,17 @@
 }
 
 .st-wall-letter.lit {
+  color: var(--light-color, #e50914);
+  text-shadow:
+    0 0 8px var(--light-color, #e50914),
+    0 0 20px rgba(229, 9, 20, 0.5);
   animation: st-wall-light 2s ease-in-out infinite;
+  will-change: opacity;
 }
 
 @keyframes st-wall-light {
-  0%, 100% {
-    color: rgba(232, 213, 181, 0.15);
-    text-shadow: none;
-  }
-  15%, 85% {
-    color: var(--light-color, #e50914);
-    text-shadow:
-      0 0 8px var(--light-color, #e50914),
-      0 0 20px var(--light-color, rgba(229, 9, 20, 0.5));
-  }
+  0%, 100% { opacity: 0.15; }
+  15%, 85% { opacity: 1; }
 }
 
 /* Fairy-light bulb dot above each letter */
@@ -522,6 +514,7 @@
   color: var(--light-color, #e50914);
   text-shadow: 0 0 6px var(--light-color, #e50914);
   animation: st-wall-light 2s ease-in-out infinite;
+  will-change: opacity;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -542,23 +535,18 @@
 }
 
 /* Gold glow for prizes — kept */
-@keyframes st-gold-pulse {
-  0%, 100% {
-    text-shadow:
-      0 0 10px rgba(255, 215, 0, 0.6),
-      0 0 20px rgba(255, 215, 0, 0.3),
-      0 0 40px rgba(255, 215, 0, 0.15);
-  }
-  50% {
-    text-shadow:
-      0 0 15px rgba(255, 215, 0, 0.8),
-      0 0 30px rgba(255, 215, 0, 0.5),
-      0 0 60px rgba(255, 215, 0, 0.25);
-  }
+.st-gold-glow {
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.6),
+    0 0 20px rgba(255, 215, 0, 0.3),
+    0 0 40px rgba(255, 215, 0, 0.15);
+  animation: st-gold-pulse 3s ease-in-out infinite;
+  will-change: opacity;
 }
 
-.st-gold-glow {
-  animation: st-gold-pulse 3s ease-in-out infinite;
+@keyframes st-gold-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -587,19 +575,19 @@
    ═══════════════════════════════════════════════════════ */
 /* GPU: glitch uses only transform (cheap) + clip-path promoted to own layer */
 @keyframes st-glitch-1 {
-  0%, 100% { clip-path: inset(0 0 95% 0); transform: translate3d(2px, -2px, 0); }
-  20% { clip-path: inset(30% 0 50% 0); transform: translate3d(-2px, 2px, 0); }
-  40% { clip-path: inset(70% 0 10% 0); transform: translate3d(2px, 0, 0); }
-  60% { clip-path: inset(10% 0 70% 0); transform: translate3d(-1px, 1px, 0); }
-  80% { clip-path: inset(50% 0 30% 0); transform: translate3d(1px, -1px, 0); }
+  0%, 100% { transform: translate3d(2px, -2px, 0); }
+  20% { transform: translate3d(-2px, 2px, 0); }
+  40% { transform: translate3d(2px, 0, 0); }
+  60% { transform: translate3d(-1px, 1px, 0); }
+  80% { transform: translate3d(1px, -1px, 0); }
 }
 
 @keyframes st-glitch-2 {
-  0%, 100% { clip-path: inset(95% 0 0 0); transform: translate3d(-2px, 2px, 0); }
-  20% { clip-path: inset(50% 0 30% 0); transform: translate3d(2px, -1px, 0); }
-  40% { clip-path: inset(10% 0 70% 0); transform: translate3d(-2px, 0, 0); }
-  60% { clip-path: inset(70% 0 10% 0); transform: translate3d(1px, -2px, 0); }
-  80% { clip-path: inset(30% 0 50% 0); transform: translate3d(-1px, 1px, 0); }
+  0%, 100% { transform: translate3d(-2px, 2px, 0); }
+  20% { transform: translate3d(2px, -1px, 0); }
+  40% { transform: translate3d(-2px, 0, 0); }
+  60% { transform: translate3d(1px, -2px, 0); }
+  80% { transform: translate3d(-1px, 1px, 0); }
 }
 
 .st-glitch {
@@ -615,19 +603,21 @@
   left: 0;
   width: 100%;
   height: 100%;
-  will-change: transform, clip-path;
+  will-change: transform;
   transform: translateZ(0);
 }
 
 .st-glitch::before {
+  clip-path: inset(20% 0 60% 0);
+  animation: st-glitch-1 3s infinite linear alternate-reverse;
   color: #0ff;
-  animation: st-glitch-1 3s infinite linear;
   opacity: 0.5;
 }
 
 .st-glitch::after {
+  clip-path: inset(70% 0 10% 0);
+  animation: st-glitch-2 2s infinite linear alternate-reverse;
   color: #f0f;
-  animation: st-glitch-2 3s infinite linear;
   opacity: 0.5;
 }
 
