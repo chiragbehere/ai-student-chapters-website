@@ -304,11 +304,11 @@ const CodeCarnival = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.9 }}
           className="text-lg sm:text-xl mb-6 max-w-lg mx-auto"
-          style={{ color: 'rgba(232,213,181,0.5)', fontFamily: "'Libre Baskerville', serif" }}
+          style={{ color: 'rgba(232,213,181,0.75)', fontFamily: "'Libre Baskerville', serif" }}
         >
           Enter the <span className="text-[#e50914] font-bold st-flicker-subtle">Upside Down</span> of Code.
           <br />
-          <span className="text-sm opacity-60">24 Hours. One Shot. Will you survive?</span>
+          <span className="text-sm opacity-80">24 Hours. One Shot. Will you survive?</span>
         </motion.p>
 
         {/* Prize Pool highlight */}
@@ -318,7 +318,7 @@ const CodeCarnival = () => {
           transition={{ delay: 2.1 }}
           className="mb-10"
         >
-          <p className="text-xs tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(232,213,181,0.3)' }}>
+          <p className="text-xs tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(232,213,181,0.55)' }}>
             Total Prize Pool
           </p>
           <p className="st-prize-amount text-5xl sm:text-6xl md:text-7xl">₹50,000+</p>
@@ -380,7 +380,7 @@ const CodeCarnival = () => {
               <p className="text-2xl sm:text-3xl font-bold mb-1" style={{ fontFamily: "'Libre Baskerville', serif", color: '#e8d5b5' }}>
                 {s.value}
               </p>
-              <p className="text-[10px] tracking-[0.2em] uppercase" style={{ color: 'rgba(232,213,181,0.4)' }}>
+              <p className="text-[10px] tracking-[0.2em] uppercase" style={{ color: 'rgba(232,213,181,0.65)' }}>
                 {s.label}
               </p>
             </div>
@@ -457,7 +457,7 @@ const CodeCarnival = () => {
               >
                 {h.title}
               </h3>
-              <p className="text-sm leading-relaxed" style={{ color: 'rgba(232,213,181,0.45)' }}>
+              <p className="text-sm leading-relaxed" style={{ color: 'rgba(232,213,181,0.7)' }}>
                 {h.desc}
               </p>
             </motion.div>
@@ -479,7 +479,7 @@ const CodeCarnival = () => {
           >
             Choose Your <span className="text-[#e50914]">Dimension</span>
           </h2>
-          <p className="text-sm mt-3 max-w-md mx-auto" style={{ color: 'rgba(232,213,181,0.4)' }}>
+          <p className="text-sm mt-3 max-w-md mx-auto" style={{ color: 'rgba(232,213,181,0.65)' }}>
             Pick a track or go rogue with Open Innovation
           </p>
         </motion.div>
@@ -501,7 +501,7 @@ const CodeCarnival = () => {
               <h3 className="text-base font-bold mb-2" style={{ fontFamily: "'Libre Baskerville', serif", color: '#e8d5b5' }}>
                 {t.name}
               </h3>
-              <p className="text-xs" style={{ color: 'rgba(232,213,181,0.4)' }}>{t.desc}</p>
+              <p className="text-xs" style={{ color: 'rgba(232,213,181,0.65)' }}>{t.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -536,7 +536,7 @@ const CodeCarnival = () => {
             <Trophy size={40} className="mx-auto mb-4" style={{ color: '#ffd700' }} />
             <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,215,0,0.6)' }}>1st Place</p>
             <p className="st-prize-amount text-4xl mb-2">₹25,000</p>
-            <p className="text-xs" style={{ color: 'rgba(232,213,181,0.4)' }}>+ Trophy + Certificates</p>
+            <p className="text-xs" style={{ color: 'rgba(232,213,181,0.65)' }}>+ Trophy + Certificates</p>
             <div className="mt-4 flex justify-center gap-1">
               {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#ffd700" color="#ffd700" />)}
             </div>
@@ -553,7 +553,7 @@ const CodeCarnival = () => {
             <Award size={32} className="mx-auto mb-4" style={{ color: '#c0c0c0' }} />
             <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(192,192,192,0.6)' }}>2nd Place</p>
             <p className="text-3xl font-bold mb-2" style={{ fontFamily: "'Libre Baskerville', serif", color: '#c0c0c0' }}>₹15,000</p>
-            <p className="text-xs" style={{ color: 'rgba(232,213,181,0.4)' }}>+ Trophy + Certificates</p>
+            <p className="text-xs" style={{ color: 'rgba(232,213,181,0.65)' }}>+ Trophy + Certificates</p>
             <div className="mt-4 flex justify-center gap-1">
               {[...Array(4)].map((_, i) => <Star key={i} size={10} fill="#c0c0c0" color="#c0c0c0" />)}
             </div>
@@ -570,7 +570,7 @@ const CodeCarnival = () => {
             <Award size={32} className="mx-auto mb-4" style={{ color: '#cd7f32' }} />
             <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(205,127,50,0.6)' }}>3rd Place</p>
             <p className="text-3xl font-bold mb-2" style={{ fontFamily: "'Libre Baskerville', serif", color: '#cd7f32' }}>₹10,000</p>
-            <p className="text-xs" style={{ color: 'rgba(232,213,181,0.4)' }}>+ Trophy + Certificates</p>
+            <p className="text-xs" style={{ color: 'rgba(232,213,181,0.65)' }}>+ Trophy + Certificates</p>
             <div className="mt-4 flex justify-center gap-1">
               {[...Array(3)].map((_, i) => <Star key={i} size={10} fill="#cd7f32" color="#cd7f32" />)}
             </div>
@@ -581,7 +581,7 @@ const CodeCarnival = () => {
         <motion.p
           {...fadeIn}
           className="text-center mt-8 text-sm"
-          style={{ color: 'rgba(232,213,181,0.35)' }}
+          style={{ color: 'rgba(232,213,181,0.65)' }}
         >
           + Certificates for all participants • Swag kits • Mentorship opportunities
         </motion.p>
@@ -601,7 +601,7 @@ const CodeCarnival = () => {
           >
             Hawkins Lab <span className="text-[#e50914]">Timeline</span>
           </h2>
-          <p className="text-sm mt-3 max-w-md mx-auto" style={{ color: 'rgba(232,213,181,0.4)' }}>
+          <p className="text-sm mt-3 max-w-md mx-auto" style={{ color: 'rgba(232,213,181,0.65)' }}>
             24 hours. 8 phases. Every minute counts.
           </p>
         </motion.div>
@@ -640,7 +640,7 @@ const CodeCarnival = () => {
                 >
                   {item.label}
                 </h3>
-                <p className="text-xs" style={{ color: 'rgba(232,213,181,0.4)' }}>{item.desc}</p>
+                <p className="text-xs" style={{ color: 'rgba(232,213,181,0.65)' }}>{item.desc}</p>
               </div>
             </motion.div>
           ))}
@@ -686,7 +686,7 @@ const CodeCarnival = () => {
                 >
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p className="text-sm leading-relaxed" style={{ color: 'rgba(232,213,181,0.6)' }}>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(232,213,181,0.85)' }}>
                   {rule}
                 </p>
               </motion.div>
@@ -711,7 +711,7 @@ const CodeCarnival = () => {
             <br />
             <span className="st-upside-down-flip">Upside Down</span>?
           </p>
-          <p className="text-sm mb-6 max-w-lg mx-auto" style={{ color: 'rgba(232,213,181,0.4)' }}>
+          <p className="text-sm mb-6 max-w-lg mx-auto" style={{ color: 'rgba(232,213,181,0.65)' }}>
             The gate is opening. 24 hours of chaos, code, and creation.
             <br />Secure your spot before it closes forever.
           </p>
@@ -741,7 +741,7 @@ const CodeCarnival = () => {
 
         <div className="st-divider max-w-5xl mx-auto mt-16" />
 
-        <p className="mt-8 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(232,213,181,0.15)', fontFamily: "'DM Mono', monospace" }}>
+        <p className="mt-8 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(232,213,181,0.35)', fontFamily: "'DM Mono', monospace" }}>
           CODE CARNIVAL 2.0 — AI STUDENT CHAPTERS — THE UPSIDE DOWN AWAITS — EST. 2025
         </p>
       </section>
