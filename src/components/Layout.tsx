@@ -50,11 +50,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               <img 
                 src="/images/club-logo.webp" 
                 alt="AI Student Chapters Logo" 
-                className="h-9 w-9 transition-transform duration-300 group-hover:rotate-6" 
+                className="club-logo h-9 w-9 transition-transform duration-300 group-hover:rotate-6" 
               />
               <span className="font-bold text-lg tracking-tight hidden sm:inline" style={{ fontFamily: "'Syne', sans-serif" }}>
                 <span style={{ color: 'var(--acid)' }}>AI</span>{' '}
-                <span style={{ color: 'rgb(var(--color-heading))' }}>Chapters</span>
+                <span style={{ color: 'rgb(var(--color-heading))' }}>Student Chapters</span>
               </span>
             </Link>
 
@@ -172,14 +172,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   <img 
                     src="/images/club-logo.webp" 
                     alt="Logo" 
-                    className="h-8 w-8 opacity-80"
-                    style={{ filter: 'brightness(1.2)' }}
+                    className="h-8 w-8 opacity-90"
                   />
-                  <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '18px', color: '#f3f0e9', letterSpacing: '-0.03em' }}>
+                  <h2 style={{ fontWeight: 800, fontSize: '18px', color: '#11110f', letterSpacing: '-0.03em' }}>
                     AI Student Chapters
                   </h2>
                 </div>
-                <p style={{ color: 'rgba(243,240,233,0.45)', fontSize: '12px', lineHeight: 1.7, maxWidth: '320px', fontFamily: "'DM Mono', monospace" }}>
+                <p style={{ color: 'rgba(17,17,15,0.6)', fontSize: '12px', lineHeight: 1.7, maxWidth: '320px' }}>
                   Where curiosity meets code. Built for students who want to shape the future with AI.
                 </p>
                 <div className="flex items-center gap-3 pt-1">
@@ -188,18 +187,18 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     target="_blank" 
                     rel="noreferrer" 
                     className="flex items-center justify-center transition-all duration-300"
-                    style={{ width: '36px', height: '36px', border: '1px solid rgba(243,240,233,0.15)', color: 'rgba(243,240,233,0.5)', background: 'transparent' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d8ff3e'; e.currentTarget.style.color = '#d8ff3e'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(243,240,233,0.15)'; e.currentTarget.style.color = 'rgba(243,240,233,0.5)'; }}
+                    style={{ width: '36px', height: '36px', border: '1px solid rgba(17,17,15,0.15)', color: 'rgba(17,17,15,0.6)', background: 'transparent' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#b500ff'; e.currentTarget.style.color = '#b500ff'; e.currentTarget.style.background = '#ecbcff'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(17,17,15,0.15)'; e.currentTarget.style.color = 'rgba(17,17,15,0.6)'; e.currentTarget.style.background = 'transparent'; }}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                   </a>
                   <a 
                     href="mailto:imrdaistudentclub@gmail.com" 
                     className="flex items-center justify-center transition-all duration-300"
-                    style={{ width: '36px', height: '36px', border: '1px solid rgba(243,240,233,0.15)', color: 'rgba(243,240,233,0.5)', background: 'transparent' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d8ff3e'; e.currentTarget.style.color = '#d8ff3e'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(243,240,233,0.15)'; e.currentTarget.style.color = 'rgba(243,240,233,0.5)'; }}
+                    style={{ width: '36px', height: '36px', border: '1px solid rgba(17,17,15,0.15)', color: 'rgba(17,17,15,0.6)', background: 'transparent' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#b500ff'; e.currentTarget.style.color = '#b500ff'; e.currentTarget.style.background = '#ecbcff'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(17,17,15,0.15)'; e.currentTarget.style.color = 'rgba(17,17,15,0.6)'; e.currentTarget.style.background = 'transparent'; }}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                   </a>
@@ -208,9 +207,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     target="_blank" 
                     rel="noreferrer" 
                     className="flex items-center justify-center transition-all duration-300"
-                    style={{ width: '36px', height: '36px', border: '1px solid rgba(243,240,233,0.15)', color: 'rgba(243,240,233,0.5)', background: 'transparent' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#d8ff3e'; e.currentTarget.style.color = '#d8ff3e'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(243,240,233,0.15)'; e.currentTarget.style.color = 'rgba(243,240,233,0.5)'; }}
+                    style={{ width: '36px', height: '36px', border: '1px solid rgba(17,17,15,0.15)', color: 'rgba(17,17,15,0.6)', background: 'transparent' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#b500ff'; e.currentTarget.style.color = '#b500ff'; e.currentTarget.style.background = '#ecbcff'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(17,17,15,0.15)'; e.currentTarget.style.color = 'rgba(17,17,15,0.6)'; e.currentTarget.style.background = 'transparent'; }}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                   </a>
@@ -219,7 +218,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
               {/* Quick Links */}
               <div className="md:col-span-3">
-                <h3 style={{ fontFamily: "'DM Mono', monospace", fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(243,240,233,0.35)', marginBottom: '20px' }}>
+                <h3 style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(17,17,15,0.4)', marginBottom: '20px' }}>
                   Navigate
                 </h3>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2">
@@ -227,10 +226,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     <Link 
                       key={link.path} 
                       to={link.path} 
-                      className="transition-colors duration-200 block"
-                      style={{ fontFamily: "'DM Mono', monospace", fontSize: '12px', color: 'rgba(243,240,233,0.5)', paddingBlock: '3px' }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = '#d8ff3e'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(243,240,233,0.5)'; }}
+                      className="transition-all duration-200 block px-1.5 py-1 rounded"
+                      style={{ fontSize: '12px', color: 'rgba(17,17,15,0.65)' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = '#b500ff'; e.currentTarget.style.background = '#ecbcff'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(17,17,15,0.65)'; e.currentTarget.style.background = 'transparent'; }}
                     >
                       {link.label}
                     </Link>
@@ -240,19 +239,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
               {/* Contact */}
               <div className="md:col-span-4">
-                <h3 style={{ fontFamily: "'DM Mono', monospace", fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(243,240,233,0.35)', marginBottom: '20px' }}>
+                <h3 style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(17,17,15,0.4)', marginBottom: '20px' }}>
                   Get in touch
                 </h3>
                 <a 
                   href="mailto:imrdaistudentclub@gmail.com" 
                   className="transition-colors duration-200 block"
-                  style={{ fontFamily: "'DM Mono', monospace", fontSize: '12px', color: 'rgba(243,240,233,0.5)', marginBottom: '12px' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = '#d8ff3e'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(243,240,233,0.5)'; }}
+                  style={{ fontSize: '12px', color: 'rgba(17,17,15,0.65)', marginBottom: '12px' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#b500ff'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(17,17,15,0.65)'; }}
                 >
                   imrdaistudentclub@gmail.com
                 </a>
-                <p style={{ fontFamily: "'DM Mono', monospace", fontSize: '12px', color: 'rgba(243,240,233,0.35)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: '12px', color: 'rgba(17,17,15,0.45)', lineHeight: 1.7 }}>
                   RCPIMRD, India
                 </p>
                 <a
@@ -260,9 +259,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 mt-4 transition-all duration-200"
-                  style={{ fontFamily: "'DM Mono', monospace", fontSize: '11px', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', background: '#d8ff3e', color: '#11110f', padding: '10px 16px' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px,-2px)'; e.currentTarget.style.boxShadow = '3px 3px 0 #a9c7ff'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}
+                  style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', background: '#ffffff', color: '#11110f', border: '1px solid #11110f', padding: '10px 16px' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px,-2px)'; e.currentTarget.style.background = '#b500ff'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = '#b500ff'; e.currentTarget.style.boxShadow = '3px 3px 0 #ecbcff'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.color = '#11110f'; e.currentTarget.style.borderColor = '#11110f'; e.currentTarget.style.boxShadow = 'none'; }}
                 >
                   Join the chapter <ArrowUpRight size={13} />
                 </a>
@@ -272,13 +271,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             {/* Bottom bar */}
             <div 
               className="flex flex-col sm:flex-row justify-between items-center gap-3 py-5"
-              style={{ borderTop: '1px solid rgba(243,240,233,0.1)' }}
+              style={{ borderTop: '1px solid rgba(17,17,15,0.1)' }}
             >
-              <p style={{ fontFamily: "'DM Mono', monospace", fontSize: '10px', letterSpacing: '0.06em', color: 'rgba(243,240,233,0.3)', textTransform: 'uppercase' }}>
+              <p style={{ fontSize: '10px', letterSpacing: '0.06em', color: 'rgba(17,17,15,0.5)', textTransform: 'uppercase' }}>
                 © {new Date().getFullYear()} AI Student Chapters, RCPIMRD
               </p>
-              <p style={{ fontFamily: "'Syne', sans-serif", fontSize: '11px', fontWeight: 600, color: 'rgba(243,240,233,0.45)', letterSpacing: '-0.01em' }}>
-                Designed by <span style={{ color: '#d8ff3e', fontWeight: 700 }}>Team AISC</span>
+              <p style={{ fontSize: '11px', fontWeight: 600, color: 'rgba(17,17,15,0.65)', letterSpacing: '-0.01em' }}>
+                Designed by <span style={{ color: '#b500ff', fontWeight: 700 }}>Team AISC</span>
               </p>
             </div>
           </div>
