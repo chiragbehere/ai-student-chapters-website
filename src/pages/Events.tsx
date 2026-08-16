@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { Medal, Award, Star, Calendar, Clock, Users, MapPin, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
+import { Medal, Award, Star, Calendar, Clock, Users, MapPin, ChevronDown, ChevronUp, ExternalLink, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { useEvents, useAllEventWinners, useAllEventTimelines } from '../hooks/useSupabaseData';
@@ -142,17 +142,37 @@ const Events = () => {
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="hidden sm:flex genz-btn-primary py-2 px-4 text-xs items-center gap-2"
+                className="flex genz-btn-primary py-2 px-4 text-xs items-center gap-2 cursor-pointer"
               >
-                Register <ExternalLink size={12} />
+                Register <ExternalLink size={12} className="pointer-events-none" />
               </a>
             )}
             <button 
-              onClick={(e) => { e.stopPropagation(); setExpandedId(isExpanded ? null : event.id); }}
-              className="w-10 h-10 flex items-center justify-center transition-colors"
-              style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.5)' }}
+              type="button"
+              aria-label={isExpanded ? "Collapse event details" : "Expand event details"}
+              onClick={(e) => { 
+                e.preventDefault();
+                e.stopPropagation(); 
+                setExpandedId(prev => prev === event.id ? null : event.id); 
+              }}
+              className="w-10 h-10 flex items-center justify-center cursor-pointer transition-all duration-200 z-10"
+              style={{ 
+                border: '1px solid rgb(var(--color-border))', 
+                color: isExpanded ? '#b500ff' : 'rgb(var(--color-foreground) / 0.7)',
+                background: isExpanded ? '#ecbcff' : 'transparent'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#b500ff';
+                e.currentTarget.style.color = '#b500ff';
+                e.currentTarget.style.background = '#ecbcff';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgb(var(--color-border))';
+                e.currentTarget.style.color = isExpanded ? '#b500ff' : 'rgb(var(--color-foreground) / 0.7)';
+                e.currentTarget.style.background = isExpanded ? '#ecbcff' : 'transparent';
+              }}
             >
-              {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              {isExpanded ? <ChevronUp size={20} className="pointer-events-none" /> : <ChevronDown size={20} className="pointer-events-none" />}
             </button>
           </div>
         </div>
@@ -345,11 +365,36 @@ const Events = () => {
         )}
 
         {/* Gallery CTA */}
-        <section className="py-16 mt-10 text-center">
-          <h2 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif" }}>Want to see more?</h2>
-          <p className="text-sm mb-6" style={{ color: 'rgb(var(--color-foreground) / 0.5)' }}>Check out our exclusive photo and video gallery from the events.</p>
-          <Link to="/gallery" className="genz-btn-primary inline-block">
-            Go to Gallery →
+        <section className="py-12 px-6 sm:px-10 mt-14 text-center glass-panel border border-[rgb(var(--color-border))] rounded-none max-w-3xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Want to see more?</h2>
+          <p className="text-sm mb-8 max-w-md mx-auto" style={{ color: 'rgb(var(--color-foreground) / 0.6)' }}>
+            Check out our exclusive photo and video gallery from past events and workshops.
+          </p>
+          <Link 
+            to="/gallery" 
+            className="inline-flex items-center gap-2.5 px-8 py-3.5 text-xs font-bold tracking-widest uppercase transition-all duration-300 shadow-md cursor-pointer"
+            style={{
+              background: '#ffffff',
+              color: '#11110f',
+              border: '1px solid #11110f',
+              boxShadow: '4px 4px 0 #ecbcff',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#b500ff';
+              e.currentTarget.style.color = '#ffffff';
+              e.currentTarget.style.borderColor = '#b500ff';
+              e.currentTarget.style.transform = 'translate(-3px, -3px)';
+              e.currentTarget.style.boxShadow = '6px 6px 0 #ecbcff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = '#ffffff';
+              e.currentTarget.style.color = '#11110f';
+              e.currentTarget.style.borderColor = '#11110f';
+              e.currentTarget.style.transform = 'none';
+              e.currentTarget.style.boxShadow = '4px 4px 0 #ecbcff';
+            }}
+          >
+            Go to Gallery <ArrowRight size={16} />
           </Link>
         </section>
       </div>
