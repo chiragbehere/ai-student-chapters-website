@@ -204,7 +204,7 @@ const Events = () => {
                       {event.location && <div className="pill flex items-center gap-1.5" style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}><MapPin size={14}/> {event.location}</div>}
                     </div>
 
-                    {/* Register Button — shown prominently when expanded for upcoming events */}
+                    {/* Action Buttons */}
                     {isUpcoming && event.registration_open && event.registration_url && (
                       <a
                         href={event.registration_url}
@@ -335,18 +335,71 @@ const Events = () => {
         ) : (
           <div className="space-y-16">
             {/* Upcoming / Ongoing Events */}
-            {upcomingEvents.length > 0 && (
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <h2 className="text-lg font-bold flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
-                    <span className="w-2 h-2" style={{ background: 'var(--acid)' }}></span>
-                    Upcoming Events
-                  </h2>
-                  <div className="h-px flex-1" style={{ background: 'rgb(var(--color-border))' }}></div>
-                </div>
-                {upcomingEvents.map(renderEventCard)}
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <h2 className="text-lg font-bold flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <span className="w-2 h-2" style={{ background: 'var(--acid)' }}></span>
+                  Upcoming Events
+                </h2>
+                <div className="h-px flex-1" style={{ background: 'rgb(var(--color-border))' }}></div>
               </div>
-            )}
+
+              {/* AI Research League 2.0 Compact Event Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-5 sm:p-6 transition-all duration-300 group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5"
+                style={{
+                  background: 'rgb(var(--color-card) / 0.6)',
+                  border: '1px solid rgb(var(--color-border))',
+                  boxShadow: '4px 4px 0 var(--sky)',
+                }}
+              >
+                <div className="flex items-start gap-4">
+                  <div 
+                    className="w-12 h-12 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform"
+                    style={{ border: '1px solid rgb(var(--color-border))', background: 'rgb(var(--color-muted))' }}
+                  >
+                    <Calendar className="w-6 h-6" style={{ color: 'var(--acid)' }} />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                      <span 
+                        className="pill text-[10px] uppercase font-bold tracking-wider"
+                        style={{
+                          background: 'rgba(216,255,62,0.15)',
+                          color: 'var(--acid)',
+                          border: '1px solid rgba(216,255,62,0.3)',
+                        }}
+                      >
+                        Team Registration Open
+                      </span>
+                      <span className="text-xs font-mono flex items-center gap-1" style={{ color: 'rgb(var(--color-foreground) / 0.6)' }}>
+                        <Users className="w-3.5 h-3.5" style={{ color: 'var(--sky)' }} /> Teams of 3
+                      </span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-black tracking-tight" style={{ fontFamily: "'Syne', sans-serif", color: 'rgb(var(--color-heading))' }}>
+                      AI Research League 2.0
+                    </h3>
+                    <p className="text-xs sm:text-sm mt-1 max-w-xl font-normal" style={{ color: 'rgb(var(--color-foreground) / 0.7)' }}>
+                      Join the AI research competition and compete in teams of 3.
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href="https://forms.gle/8LXcmfnCHFUhRFHf8"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="genz-btn-primary py-2.5 px-5 text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer flex-shrink-0"
+                >
+                  <span>Register Now</span>
+                  <ArrowRight size={14} />
+                </a>
+              </motion.div>
+
+              {upcomingEvents.map(renderEventCard)}
+            </div>
 
             {/* Completed / Previous Events */}
             {completedEvents.length > 0 && (

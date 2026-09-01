@@ -2,11 +2,13 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight, Sparkles, Users, CalendarDays, Trophy, BrainCircuit, Code2, MessagesSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import EventRegistrationModal from '../components/EventRegistrationModal';
 
 const Home = () => {
   const signals = ['AI labs', 'Hackathons', 'Build nights', 'Real community', 'Future-ready skills'];
   return <div className="new-home">
     <SEO title="AI Student Chapters" description="A student-led space to learn, build, and ship with AI." />
+    <EventRegistrationModal />
     <section className="home-hero"><div className="hero-orbit hero-orbit-one" /><div className="hero-orbit hero-orbit-two" /><div className="hero-noise" />
       <div className="home-shell home-hero-grid">
         <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
