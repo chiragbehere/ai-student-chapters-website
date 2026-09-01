@@ -1287,3 +1287,48 @@ p, span, a, div, button, input, textarea, select {
 .tool-icon-color {
   color: var(--ink, rgb(var(--color-foreground)));
 }
+
+/* ── Poster Overlay Custom Styles ─────────────────────────────────── */
+.poster-neon-glow {
+  text-shadow: 
+    0 0 10px rgba(0, 240, 255, 0.6),
+    0 0 20px rgba(181, 0, 255, 0.4),
+    0 0 35px rgba(0, 240, 255, 0.2);
+}
+
+.poster-neon-border {
+  box-shadow: 
+    0 0 15px rgba(0, 240, 255, 0.25),
+    inset 0 0 15px rgba(181, 0, 255, 0.15);
+}
+
+.poster-glass-panel {
+  background: rgba(8, 12, 28, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.poster-glass-panel-purple {
+  background: rgba(14, 8, 30, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(181, 0, 255, 0.25);
+}
+
+.poster-grid-bg {
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 60%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+}
+
+@keyframes posterPulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.animate-poster-glow {
+  animation: posterPulseGlow 4s ease-in-out infinite;
+}
