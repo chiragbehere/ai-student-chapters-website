@@ -1085,3 +1085,119 @@
     transition: opacity 0.3s;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   CINEMATIC 3D UPSIDE DOWN UPGRADES
+   ═══════════════════════════════════════════════════════ */
+
+/* 1980s Retro Title Typography with Supernatural Aura */
+.st-cinematic-title {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 0.12em;
+  line-height: 0.95;
+  filter: drop-shadow(0 0 25px rgba(229, 9, 20, 0.8))
+         drop-shadow(0 0 60px rgba(229, 9, 20, 0.4));
+}
+
+/* Dimensional Breach CTA Button */
+.st-dimensional-btn {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.st-dimensional-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: #ff1a26 !important;
+  box-shadow: 0 0 45px rgba(229, 9, 20, 0.6), inset 0 0 25px rgba(229, 9, 20, 0.4) !important;
+}
+
+.st-dimensional-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Procedural Vines & Roots Breathing Animation */
+@keyframes st-vine-pulse {
+  0%, 100% {
+    stroke-width: 7px;
+    opacity: 0.75;
+  }
+  50% {
+    stroke-width: 9px;
+    opacity: 0.95;
+  }
+}
+
+@keyframes st-vine-pulse-alt {
+  0%, 100% {
+    stroke-width: 4px;
+    opacity: 0.6;
+  }
+  50% {
+    stroke-width: 6px;
+    opacity: 0.85;
+  }
+}
+
+.st-vine-path {
+  animation: st-vine-pulse 6s ease-in-out infinite;
+}
+
+.st-vine-path-alt {
+  animation: st-vine-pulse-alt 7.5s ease-in-out infinite;
+}
+
+/* Reality Rupture Cracks Pulsing */
+@keyframes st-crack-glow {
+  0%, 100% {
+    opacity: 0.5;
+    filter: drop-shadow(0 0 4px #e50914);
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 14px #ff2233);
+  }
+}
+
+.st-crack-line {
+  animation: st-crack-glow 3s ease-in-out infinite;
+}
+
+.st-crack-branch {
+  animation: st-crack-glow 4.2s ease-in-out infinite 0.6s;
+}
+
+/* VHS Glitch Disturbance */
+.st-vhs-glitch-active {
+  animation: st-screen-glitch 0.25s steps(2) forwards;
+}
+
+@keyframes st-screen-glitch {
+  0% {
+    transform: translate(0, 0) skew(0deg);
+  }
+  20% {
+    transform: translate(-3px, 2px) skew(-0.5deg);
+  }
+  40% {
+    transform: translate(3px, -2px) skew(0.5deg);
+  }
+  60% {
+    transform: translate(-2px, 1px) skew(0deg);
+  }
+  80% {
+    transform: translate(2px, -1px) skew(-0.2deg);
+  }
+  100% {
+    transform: translate(0, 0) skew(0deg);
+  }
+}
+
+/* Corrupted Environment Container */
+.st-corrupted-world {
+  position: relative;
+  z-index: 10;
+  transition: opacity 1.2s ease-out;
+}
+

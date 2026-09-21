@@ -46,9 +46,39 @@ const Team = () => {
 
   const gradients = ['#11110f', '#a9c7ff', '#d8ff3e', '#11110f', '#a9c7ff'];
 
+  const teamSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "AI Student Chapters Core Committee",
+    "description": "Leadership and core team members of AI Student Chapters at RCPET's IMRD.",
+    "itemListElement": leaders.map((member, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Person",
+        "name": member.name,
+        "jobTitle": member.role,
+        "affiliation": {
+          "@type": "EducationalOrganization",
+          "name": "AI Student Chapters, RCPET's IMRD"
+        },
+        "image": member.image?.startsWith('http') ? member.image : `https://imrdaisc.vercel.app${member.image}`
+      }
+    }))
+  };
+
   return (
     <div className="w-full relative">
-      <SEO title="Team" description="Meet the people behind the AI Student Chapters." />
+      <SEO 
+        title="Core Team & Leadership | AI Student Chapters RCPIMRD" 
+        description="Meet the core committee, student leaders, and technical innovators powering the AI Student Chapters community at RCPIMRD."
+        url="https://imrdaisc.vercel.app/team"
+        schema={teamSchema}
+        breadcrumbs={[
+          { name: "Home", item: "/" },
+          { name: "Team", item: "/team" }
+        ]}
+      />
       {/* Hero */}
       <section className="editorial-hero">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

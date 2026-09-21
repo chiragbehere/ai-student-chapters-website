@@ -57,9 +57,32 @@ const Tools = () => {
     }
   };
 
+  const toolsSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AISC Certificate Studio",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All modern browsers",
+    "url": "https://certificate-aisc.vercel.app/",
+    "description": "Professional certificate generator utility designed for event participants, workshop attendees, and club members.",
+    "author": {
+      "@type": "Organization",
+      "name": "AI Student Chapters"
+    }
+  };
+
   return (
     <div className="w-full relative min-h-screen z-10">
-      <SEO title="Tools" description="Explore useful tools built by AI Student Chapters — certificate generators, AI utilities, and more." />
+      <SEO 
+        title="AI Tools & Utilities | AI Student Chapters" 
+        description="Explore innovative tools built by AI Student Chapters at RCPIMRD — AISC Certificate Studio, study materials, and AI developer utilities."
+        url="https://imrdaisc.vercel.app/tools"
+        schema={toolsSchema}
+        breadcrumbs={[
+          { name: "Home", item: "/" },
+          { name: "Tools", item: "/tools" }
+        ]}
+      />
 
       <AnimatePresence mode="wait">
         {!isUnlocked ? (

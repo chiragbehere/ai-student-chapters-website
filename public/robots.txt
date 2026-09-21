@@ -1,0 +1,56 @@
+# ============================================================
+# Robots.txt for AI Student Chapters (https://imrdaisc.vercel.app)
+# Designed for Search Engines, Answer Engines & AI Retrieval
+# ============================================================
+
+User-agent: *
+Allow: /
+Allow: /images/
+Allow: /team/
+Allow: /assets/
+Disallow: /admin
+Disallow: /api/
+
+# Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# AI Crawlers & Answer Engines (Permitted for indexing & citations)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+# Canonical XML Sitemap
+Sitemap: https://imrdaisc.vercel.app/sitemap.xml

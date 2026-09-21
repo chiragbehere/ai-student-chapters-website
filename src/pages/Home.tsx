@@ -2,13 +2,59 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight, Sparkles, Users, CalendarDays, Trophy, BrainCircuit, Code2, MessagesSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
-import EventRegistrationModal from '../components/EventRegistrationModal';
 
 const Home = () => {
   const signals = ['AI labs', 'Hackathons', 'Build nights', 'Real community', 'Future-ready skills'];
+
+  const homeSchemas = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "AI Student Chapters",
+      "alternateName": [
+        "imrdaisc",
+        "imrdaisc.vercel.app",
+        "AI Student Chapters",
+        "ai student chapters",
+        "aistudentchapters",
+        "AISC",
+        "AISC RCPIMRD",
+        "AI Student Chapters RCPIMRD"
+      ],
+      "url": "https://imrdaisc.vercel.app/"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "AI Student Chapters",
+      "alternateName": "AISC RCPIMRD",
+      "url": "https://imrdaisc.vercel.app/",
+      "logo": "https://imrdaisc.vercel.app/images/club-logo.png",
+      "description": "Student-led innovation community at RCPET's IMRD, Shirpur focused on Artificial Intelligence, machine learning, and collaborative hackathons.",
+      "parentOrganization": {
+        "@type": "CollegeOrUniversity",
+        "name": "RCPET's Institute of Management Research and Development (IMRD)",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Shirpur",
+          "addressRegion": "Maharashtra",
+          "addressCountry": "IN"
+        }
+      },
+      "sameAs": [
+        "https://www.instagram.com/ai.student_chapters/",
+        "https://chat.whatsapp.com/IfBOfK4bE7l1D0N5C9KXYv"
+      ]
+    }
+  ];
+
   return <div className="new-home">
-    <SEO title="AI Student Chapters" description="A student-led space to learn, build, and ship with AI." />
-    <EventRegistrationModal />
+    <SEO 
+      title="AI Student Chapters | RCPIMRD – Learn, Build & Ship with AI" 
+      description="Official website of AI Student Chapters at RCPIMRD. A student-led space to explore Artificial Intelligence, participate in hackathons, and build real-world AI projects."
+      url="https://imrdaisc.vercel.app/"
+      schema={homeSchemas}
+    />
     <section className="home-hero"><div className="hero-orbit hero-orbit-one" /><div className="hero-orbit hero-orbit-two" /><div className="hero-noise" />
       <div className="home-shell home-hero-grid">
         <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
