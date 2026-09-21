@@ -29,9 +29,39 @@ const Sessions = () => {
     downloadUrl: s.download_url || '',
   }));
 
+  const sessionsSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "AI Sessions & Technical Workshops",
+    "description": "Educational slide decks, hands-on tutorials, and workshop resources presented by AI Student Chapters.",
+    "itemListElement": workshops.map((session, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "LearningResource",
+        "name": session.title,
+        "educationalLevel": "Beginner to Advanced",
+        "learningResourceType": "Presentation / Workshop Slides",
+        "provider": {
+          "@type": "Organization",
+          "name": "AI Student Chapters"
+        }
+      }
+    }))
+  };
+
   return (
     <div className="w-full relative min-h-screen z-10">
-      <SEO title="Sessions & Workshops" description="Presentations and resources from our past AI sessions and workshops." />
+      <SEO 
+        title="AI Sessions & Workshops | AI Student Chapters" 
+        description="Access workshop presentation slides, hackathon primers, and hands-on AI learning materials from AI Student Chapters at RCPIMRD."
+        url="https://imrdaisc.vercel.app/sessions"
+        schema={sessionsSchema}
+        breadcrumbs={[
+          { name: "Home", item: "/" },
+          { name: "Sessions", item: "/sessions" }
+        ]}
+      />
       
       {/* Hero */}
       <section className="editorial-hero">

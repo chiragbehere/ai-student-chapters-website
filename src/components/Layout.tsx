@@ -35,6 +35,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
+  if (location.pathname === '/code-carnival') {
+    return (
+      <>
+        <ScrollToTop />
+        {children}
+      </>
+    );
+  }
+
   return (
     <>
       <ScrollToTop />
@@ -42,8 +51,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* ═══ Main App Shell ═══ */}
       <div className="min-h-screen flex flex-col" style={{ position: 'relative', zIndex: 2 }}>
 
-        {/* ═══════════════ Editorial Navbar ═══════════════ */}
-        <nav className="space-navbar" style={{ zIndex: 50 }}>
+        {/* ═══════════════ Editorial Navbar Header ═══════════════ */}
+        <header role="banner" className="space-navbar" style={{ zIndex: 50 }}>
           <div className="w-full h-full flex items-center justify-between">
             {/* Logo + Name */}
             <Link to="/" className="flex items-center gap-2.5 group shrink-0">
@@ -61,7 +70,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             {/* Right Side Nav Group */}
             <div className="flex items-center gap-4">
               {/* Desktop Nav Links */}
-              <div className="hidden lg:flex items-center">
+              <nav aria-label="Main Navigation" className="hidden lg:flex items-center">
                 <div className="space-nav-pill">
                   {links.map((link) => (
                     <Link
@@ -75,7 +84,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     </Link>
                   ))}
                 </div>
-              </div>
+              </nav>
 
               {/* Theme toggle + Mobile hamburger */}
               <div className="flex items-center gap-3">
@@ -100,6 +109,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <button
                   className="lg:hidden p-2 transition-all border"
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                   style={{
                     borderRadius: 0,
                     background: 'transparent',
@@ -127,7 +137,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   borderBottom: '1px solid rgb(var(--color-border))',
                 }}
               >
-                <div className="px-4 py-5 space-y-1 flex flex-col">
+                <nav aria-label="Mobile Navigation" className="px-4 py-5 space-y-1 flex flex-col">
                   {links.map((link) => (
                     <Link
                       key={link.path}
@@ -148,14 +158,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                       {link.label}
                     </Link>
                   ))}
-                </div>
+                </nav>
               </motion.div>
             )}
           </AnimatePresence>
-        </nav>
+        </header>
 
         {/* Main Content */}
-        <main className="flex-grow pt-[65px]">
+        <main role="main" className="flex-grow pt-[65px]">
           {children}
         </main>
 

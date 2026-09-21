@@ -296,9 +296,76 @@ const Events = () => {
     );
   }
 
+  const eventsSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Events and Competitions - AI Student Chapters",
+    "description": "Comprehensive listing of AI hackathons, research competitions, and technical workshops organized by AI Student Chapters at RCPET's IMRD.",
+    "url": "https://imrdaisc.vercel.app/events",
+    "hasPart": [
+      {
+        "@type": "Event",
+        "name": "Code Carnival 2026",
+        "startDate": "2026-03-24T09:00:00+05:30",
+        "endDate": "2026-03-24T17:00:00+05:30",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "RCPET's IMRD Campus",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Shirpur",
+            "addressRegion": "Maharashtra",
+            "addressCountry": "IN"
+          }
+        },
+        "description": "6-hour fast-paced student build sprint and AI hackathon across UG and PG divisions.",
+        "organizer": {
+          "@type": "Organization",
+          "name": "AI Student Chapters",
+          "url": "https://imrdaisc.vercel.app/"
+        }
+      },
+      {
+        "@type": "Event",
+        "name": "AI Research League 2.0",
+        "startDate": "2026-09-15T10:00:00+05:30",
+        "endDate": "2026-09-20T18:00:00+05:30",
+        "eventStatus": "https://schema.org/EventCompleted",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "RCPET's IMRD Campus",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Shirpur",
+            "addressRegion": "Maharashtra",
+            "addressCountry": "IN"
+          }
+        },
+        "description": "Competitive AI research challenge with 3-member student teams.",
+        "organizer": {
+          "@type": "Organization",
+          "name": "AI Student Chapters",
+          "url": "https://imrdaisc.vercel.app/"
+        }
+      }
+    ]
+  };
+
   return (
     <div className="w-full relative min-h-screen pb-20">
-      <SEO title="Events" description="Explore our upcoming and past events, hackathons, and results." />
+      <SEO 
+        title="AI Hackathons & Events | AI Student Chapters RCPIMRD" 
+        description="Explore upcoming and past AI hackathons, Code Carnival sprints, AI Research Leagues, and technical competitions at RCPIMRD."
+        url="https://imrdaisc.vercel.app/events"
+        schema={eventsSchema}
+        breadcrumbs={[
+          { name: "Home", item: "/" },
+          { name: "Events", item: "/events" }
+        ]}
+      />
       
       {/* Page Header */}
       <section className="editorial-hero">
@@ -335,16 +402,30 @@ const Events = () => {
         ) : (
           <div className="space-y-16">
             {/* Upcoming / Ongoing Events */}
+            {upcomingEvents.length > 0 && (
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <h2 className="text-lg font-bold flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <span className="w-2 h-2" style={{ background: 'var(--acid)' }}></span>
+                    Upcoming Events
+                  </h2>
+                  <div className="h-px flex-1" style={{ background: 'rgb(var(--color-border))' }}></div>
+                </div>
+                {upcomingEvents.map(renderEventCard)}
+              </div>
+            )}
+
+            {/* Completed / Previous Events */}
             <div className="space-y-6">
               <div className="flex items-center gap-4">
                 <h2 className="text-lg font-bold flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
-                  <span className="w-2 h-2" style={{ background: 'var(--acid)' }}></span>
-                  Upcoming Events
+                  <span className="w-2 h-2" style={{ background: 'rgb(var(--color-border))' }}></span>
+                  Previous Events
                 </h2>
                 <div className="h-px flex-1" style={{ background: 'rgb(var(--color-border))' }}></div>
               </div>
 
-              {/* AI Research League 2.0 Compact Event Card */}
+              {/* AI Research League 2.0 Event Card (Completed) */}
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -360,19 +441,19 @@ const Events = () => {
                     className="w-12 h-12 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform"
                     style={{ border: '1px solid rgb(var(--color-border))', background: 'rgb(var(--color-muted))' }}
                   >
-                    <Calendar className="w-6 h-6" style={{ color: 'var(--acid)' }} />
+                    <Calendar className="w-6 h-6" style={{ color: 'rgb(var(--color-foreground) / 0.5)' }} />
                   </div>
                   <div>
                     <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                       <span 
                         className="pill text-[10px] uppercase font-bold tracking-wider"
                         style={{
-                          background: 'rgba(216,255,62,0.15)',
-                          color: 'var(--acid)',
-                          border: '1px solid rgba(216,255,62,0.3)',
+                          background: 'rgb(var(--color-muted))',
+                          color: 'rgb(var(--color-foreground) / 0.6)',
+                          border: '1px solid rgb(var(--color-border))',
                         }}
                       >
-                        Team Registration Open
+                        Event Completed
                       </span>
                       <span className="text-xs font-mono flex items-center gap-1" style={{ color: 'rgb(var(--color-foreground) / 0.6)' }}>
                         <Users className="w-3.5 h-3.5" style={{ color: 'var(--sky)' }} /> Teams of 3
@@ -382,38 +463,25 @@ const Events = () => {
                       AI Research League 2.0
                     </h3>
                     <p className="text-xs sm:text-sm mt-1 max-w-xl font-normal" style={{ color: 'rgb(var(--color-foreground) / 0.7)' }}>
-                      Join the AI research competition and compete in teams of 3.
+                      AI research competition completed in teams of 3.
                     </p>
                   </div>
                 </div>
 
-                <a
-                  href="https://forms.gle/8LXcmfnCHFUhRFHf8"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="genz-btn-primary py-2.5 px-5 text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer flex-shrink-0"
+                <span 
+                  className="pill py-2 px-4 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 flex-shrink-0"
+                  style={{
+                    background: 'rgb(var(--color-muted))',
+                    color: 'rgb(var(--color-foreground) / 0.6)',
+                    border: '1px solid rgb(var(--color-border))',
+                  }}
                 >
-                  <span>Register Now</span>
-                  <ArrowRight size={14} />
-                </a>
+                  Event Completed
+                </span>
               </motion.div>
 
-              {upcomingEvents.map(renderEventCard)}
+              {completedEvents.map(renderEventCard)}
             </div>
-
-            {/* Completed / Previous Events */}
-            {completedEvents.length > 0 && (
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <h2 className="text-lg font-bold flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
-                    <span className="w-2 h-2" style={{ background: 'rgb(var(--color-border))' }}></span>
-                    Previous Events
-                  </h2>
-                  <div className="h-px flex-1" style={{ background: 'rgb(var(--color-border))' }}></div>
-                </div>
-                {completedEvents.map(renderEventCard)}
-              </div>
-            )}
           </div>
         )}
 

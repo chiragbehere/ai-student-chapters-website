@@ -38,9 +38,48 @@ const About = () => {
   const { data: faqsData } = useFaqs('about');
   const faqs = faqsData.map(f => ({ q: f.question, a: f.answer }));
 
+  const aboutSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About AI Student Chapters",
+    "description": "Information about AI Student Chapters at RCPET's IMRD, Shirpur, covering AI workshops, hackathons, and educational mission.",
+    "url": "https://imrdaisc.vercel.app/about",
+    "mainEntity": {
+      "@type": "EducationalOrganization",
+      "name": "AI Student Chapters",
+      "url": "https://imrdaisc.vercel.app/",
+      "parentOrganization": {
+        "@type": "CollegeOrUniversity",
+        "name": "RCPET's Institute of Management Research and Development, Shirpur"
+      }
+    }
+  };
+
+  const aboutFaqSchema = faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a
+      }
+    }))
+  } : null;
+
   return (
     <div className="w-full relative">
-      <SEO title="About" description="From hackathons to workshops — we cover every dimension of AI education." />
+      <SEO 
+        title="About AI Student Chapters | RCPIMRD" 
+        description="Learn about AI Student Chapters at RCPIMRD — our mission, hands-on AI workshops, hackathons, and student collective exploring cutting-edge artificial intelligence."
+        url="https://imrdaisc.vercel.app/about"
+        schema={aboutFaqSchema ? [aboutSchema, aboutFaqSchema] : [aboutSchema]}
+        breadcrumbs={[
+          { name: "Home", item: "/" },
+          { name: "About", item: "/about" }
+        ]}
+      />
       {/* Hero */}
       <section className="editorial-hero">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

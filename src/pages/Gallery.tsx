@@ -46,9 +46,26 @@ const Gallery = () => {
     desc: v.description || '',
   }));
 
+  const gallerySchema = {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "AI Student Chapters Media Gallery",
+    "description": "Photographs and event video highlights from workshops, guest lectures, and hackathons at RCPET's IMRD.",
+    "url": "https://imrdaisc.vercel.app/gallery"
+  };
+
   return (
     <div className="w-full">
-      <SEO title="Gallery" description="Photos and videos from AI Student Chapters events." />
+      <SEO 
+        title="Event Gallery & Highlights | AI Student Chapters" 
+        description="View event photos and video recaps from AI Student Chapters hackathons, workshops, and student tech meetups at RCPIMRD."
+        url="https://imrdaisc.vercel.app/gallery"
+        schema={gallerySchema}
+        breadcrumbs={[
+          { name: "Home", item: "/" },
+          { name: "Gallery", item: "/gallery" }
+        ]}
+      />
       {/* Hero */}
       <section className="editorial-hero">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

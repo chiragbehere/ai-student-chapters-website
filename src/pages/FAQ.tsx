@@ -78,9 +78,31 @@ const FAQ = () => {
     answer: f.answer,
   }));
 
+  const faqSchema = faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(item => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer
+      }
+    }))
+  } : null;
+
   return (
     <div className="w-full relative min-h-screen z-10">
-      <SEO title="FAQ" description="Frequently asked questions about AI Student Chapters" />
+      <SEO 
+        title="Frequently Asked Questions (FAQ) | AI Student Chapters" 
+        description="Find answers to common questions about joining AI Student Chapters at RCPIMRD, hackathon registrations, skill requirements, and activities."
+        url="https://imrdaisc.vercel.app/faq"
+        schema={faqSchema || undefined}
+        breadcrumbs={[
+          { name: "Home", item: "/" },
+          { name: "FAQ", item: "/faq" }
+        ]}
+      />
       
       {/* Hero */}
       <section className="editorial-hero">
