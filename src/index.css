@@ -47,9 +47,9 @@ p, span, a, div, button, input, textarea, select {
   }
 
   [data-theme='dark'] {
-    --color-background: 18 16 12;
-    /* warm dark */
-    --color-foreground: 232 228 220;
+    --color-background: 0 0 0;
+    /* pure black */
+    --color-foreground: 243 240 233;
     /* cream text */
     --color-primary: 216 255 62;
     /* acid green as primary in dark */
@@ -58,21 +58,21 @@ p, span, a, div, button, input, textarea, select {
     --color-accent: 169 199 255;
     --color-lime: 216 255 62;
     --color-coral: 251 113 133;
-    --color-muted: 28 26 22;
-    --color-border: 60 56 48;
-    --color-card: 28 26 22;
+    --color-muted: 18 18 18;
+    --color-border: 45 45 45;
+    --color-card: 16 16 16;
     --color-heading: 243 240 233;
     --ink: #f3f0e9;
-    --paper: #12100c;
+    --paper: #000000;
     --acid: #d8ff3e;
     --sky: #a9c7ff;
     --star-opacity: 0;
-    --space-nav: rgba(18, 16, 12, 0.94);
+    --space-nav: rgba(0, 0, 0, 0.94);
     --space-nav-shadow: transparent;
     --space-nav-pill: transparent;
     --space-nav-pill-border: rgba(216, 255, 62, 0.15);
     --space-link-hover: #d8ff3e;
-    --space-footer-bg: #0a0908;
+    --space-footer-bg: #000000;
   }
 
   html {
@@ -278,27 +278,24 @@ p, span, a, div, button, input, textarea, select {
 
 /* ── Editorial redesign: homepage ───────────────────────────────────────── */
 .new-home {
-  --ink: #11110f;
-  --paper: #f0f0f0;
-  --acid: #b500ff;
-  --sky: #ecbcff;
-  background: #f0f0f0;
+  background: var(--paper);
   color: var(--ink);
   overflow: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .home-shell {
   max-width: 1240px;
   margin-inline: auto;
   padding-inline: 28px;
-  background: #f0f0f0;
+  background: transparent;
 }
 
 .new-home .home-hero {
   min-height: 710px;
   position: relative;
-  background: #f0f0f0;
-  color: #11110f;
+  background: transparent;
+  color: var(--ink);
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -853,6 +850,120 @@ p, span, a, div, button, input, textarea, select {
 .home-footer-note a {
   color: var(--ink);
   text-decoration: underline;
+}
+
+/* ── Dark Mode Overrides for Homepage (Deep Black Theme) ────────────────── */
+[data-theme='dark'] .new-home {
+  --paper: #000000;
+  background: #000000;
+  color: var(--ink);
+}
+
+[data-theme='dark'] .new-home .home-shell,
+[data-theme='dark'] .new-home .home-hero {
+  background: transparent;
+  color: var(--ink);
+}
+
+[data-theme='dark'] .hero-copy {
+  color: rgba(243, 240, 233, 0.75);
+}
+
+[data-theme='dark'] .solid-action {
+  background: #161512;
+  color: #f3f0e9;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+[data-theme='dark'] .solid-action:hover {
+  background: var(--acid);
+  color: #000000;
+  border-color: var(--acid);
+  box-shadow: 4px 4px 0 var(--sky);
+}
+
+[data-theme='dark'] .text-action {
+  color: #f3f0e9;
+  border-bottom-color: rgba(243, 240, 233, 0.4);
+}
+
+[data-theme='dark'] .text-action:hover {
+  color: var(--acid);
+  border-bottom-color: var(--acid);
+}
+
+[data-theme='dark'] .hero-art {
+  background: #181524;
+  border: 1px solid rgba(216, 255, 62, 0.25);
+  box-shadow: 16px 16px 0 rgba(169, 199, 255, 0.15);
+}
+
+[data-theme='dark'] .hero-art::before {
+  border-color: rgba(243, 240, 233, 0.12);
+}
+
+[data-theme='dark'] .art-sphere {
+  border-color: var(--ink);
+  color: var(--acid);
+}
+
+[data-theme='dark'] .signal-strip {
+  color: #000000;
+  background: var(--acid);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='dark'] .signal-track i {
+  background: #000000;
+}
+
+[data-theme='dark'] .section-label {
+  color: rgba(243, 240, 233, 0.5);
+}
+
+[data-theme='dark'] .intro-lede span {
+  color: rgba(243, 240, 233, 0.5);
+}
+
+[data-theme='dark'] .underlined-link {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+[data-theme='dark'] .feature-main {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .stats-row > div {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+[data-theme='dark'] .stats-row p {
+  color: rgba(243, 240, 233, 0.6);
+}
+
+[data-theme='dark'] .open-call {
+  background: #111625;
+  border: 1px solid rgba(169, 199, 255, 0.2);
+  color: #f3f0e9;
+}
+
+[data-theme='dark'] .open-call h2 em {
+  color: var(--acid);
+}
+
+[data-theme='dark'] .open-call .solid-action {
+  background: var(--acid);
+  color: #000000;
+  border-color: var(--acid);
+}
+
+[data-theme='dark'] .home-footer-note {
+  color: rgba(243, 240, 233, 0.5);
+}
+
+[data-theme='dark'] .home-footer-note a {
+  color: var(--ink);
 }
 
 @keyframes editorial-ticker {
