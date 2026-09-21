@@ -43,7 +43,7 @@ p, span, a, div, button, input, textarea, select {
     --space-nav-pill: transparent;
     --space-nav-pill-border: transparent;
     --space-link-hover: #b500ff;
-    --space-footer-bg: #11110f;
+    --space-footer-bg: #ffffff;
   }
 
   [data-theme='dark'] {
@@ -1251,12 +1251,12 @@ p, span, a, div, button, input, textarea, select {
 /* ── Space Footer (editorial) ────────────────────────────────────────── */
 .space-footer {
   position: relative;
-  background: #ffffff;
-  color: #11110f;
+  background: var(--space-footer-bg, #ffffff);
+  color: rgb(var(--color-foreground));
   margin-top: 0;
   overflow: hidden;
   border-top: 1px solid rgb(var(--color-border));
-  transition: background 0.4s ease;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 .space-footer::before {
@@ -1266,7 +1266,17 @@ p, span, a, div, button, input, textarea, select {
   left: 0;
   right: 0;
   height: 2px;
-  background: #b500ff;
+  background: var(--acid);
+}
+
+[data-theme='dark'] .space-footer {
+  background: #000000 !important;
+  color: #f3f0e9 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .space-footer::before {
+  background: var(--acid);
 }
 
 /* ── Editorial page hero section ─────────────────────────────────────── */
