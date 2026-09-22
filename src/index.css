@@ -9,8 +9,20 @@
 *::after,
 html,
 body,
-h1, h2, h3, h4, h5, h6,
-p, span, a, div, button, input, textarea, select {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+div,
+button,
+input,
+textarea,
+select {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
@@ -1024,7 +1036,7 @@ p, span, a, div, button, input, textarea, select {
   color: var(--acid);
 }
 
-[data-theme='dark'] .stats-row > div {
+[data-theme='dark'] .stats-row>div {
   border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
@@ -1287,7 +1299,8 @@ p, span, a, div, button, input, textarea, select {
   border-bottom: 1px solid rgb(var(--color-border));
   position: relative;
   z-index: 10;
-  transition: background 0.3s ease;
+  \
+ transition: background 0.3s ease;
 }
 
 .editorial-hero h1 {
@@ -1541,14 +1554,14 @@ p, span, a, div, button, input, textarea, select {
 
 /* ── Poster Overlay Custom Styles ─────────────────────────────────── */
 .poster-neon-glow {
-  text-shadow: 
+  text-shadow:
     0 0 10px rgba(0, 240, 255, 0.6),
     0 0 20px rgba(181, 0, 255, 0.4),
     0 0 35px rgba(0, 240, 255, 0.2);
 }
 
 .poster-neon-border {
-  box-shadow: 
+  box-shadow:
     0 0 15px rgba(0, 240, 255, 0.25),
     inset 0 0 15px rgba(181, 0, 255, 0.15);
 }
@@ -1568,7 +1581,7 @@ p, span, a, div, button, input, textarea, select {
 }
 
 .poster-grid-bg {
-  background-image: 
+  background-image:
     radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 60%),
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
@@ -1576,10 +1589,19 @@ p, span, a, div, button, input, textarea, select {
 }
 
 @keyframes posterPulseGlow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.05); }
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
 }
 
 .animate-poster-glow {
   animation: posterPulseGlow 4s ease-in-out infinite;
-}
+}
