@@ -51,7 +51,7 @@ const Gallery = () => {
     "@type": "ImageGallery",
     "name": "AI Student Chapters Media Gallery",
     "description": "Photographs and event video highlights from workshops, guest lectures, and hackathons at RCPET's IMRD.",
-    "url": "https://imrdaisc.vercel.app/gallery"
+    "url": "https://aistudentchapter.vercel.app/gallery"
   };
 
   return (
@@ -59,7 +59,7 @@ const Gallery = () => {
       <SEO 
         title="Event Gallery & Highlights | AI Student Chapters" 
         description="View event photos and video recaps from AI Student Chapters hackathons, workshops, and student tech meetups at RCPIMRD."
-        url="https://imrdaisc.vercel.app/gallery"
+        url="https://aistudentchapter.vercel.app/gallery"
         schema={gallerySchema}
         breadcrumbs={[
           { name: "Home", item: "/" },

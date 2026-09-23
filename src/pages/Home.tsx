@@ -12,6 +12,8 @@ const Home = () => {
       "@type": "WebSite",
       "name": "AI Student Chapters",
       "alternateName": [
+        "aistudentchapter",
+        "aistudentchapter.vercel.app",
         "imrdaisc",
         "imrdaisc.vercel.app",
         "AI Student Chapters",
@@ -21,15 +23,15 @@ const Home = () => {
         "AISC RCPIMRD",
         "AI Student Chapters RCPIMRD"
       ],
-      "url": "https://imrdaisc.vercel.app/"
+      "url": "https://aistudentchapter.vercel.app/"
     },
     {
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
       "name": "AI Student Chapters",
       "alternateName": "AISC RCPIMRD",
-      "url": "https://imrdaisc.vercel.app/",
-      "logo": "https://imrdaisc.vercel.app/images/club-logo.png",
+      "url": "https://aistudentchapter.vercel.app/",
+      "logo": "https://aistudentchapter.vercel.app/images/club-logo.png",
       "description": "Student-led innovation community at RCPET's IMRD, Shirpur focused on Artificial Intelligence, machine learning, and collaborative hackathons.",
       "parentOrganization": {
         "@type": "CollegeOrUniversity",
@@ -52,7 +54,7 @@ const Home = () => {
     <SEO 
       title="AI Student Chapters | RCPIMRD – Learn, Build & Ship with AI" 
       description="Official website of AI Student Chapters at RCPIMRD. A student-led space to explore Artificial Intelligence, participate in hackathons, and build real-world AI projects."
-      url="https://imrdaisc.vercel.app/"
+      url="https://aistudentchapter.vercel.app/"
       schema={homeSchemas}
     />
     <section className="home-hero"><div className="hero-orbit hero-orbit-one" /><div className="hero-orbit hero-orbit-two" /><div className="hero-noise" />

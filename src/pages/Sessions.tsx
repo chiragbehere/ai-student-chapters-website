@@ -55,7 +55,7 @@ const Sessions = () => {
       <SEO 
         title="AI Sessions & Workshops | AI Student Chapters" 
         description="Access workshop presentation slides, hackathon primers, and hands-on AI learning materials from AI Student Chapters at RCPIMRD."
-        url="https://imrdaisc.vercel.app/sessions"
+        url="https://aistudentchapter.vercel.app/sessions"
         schema={sessionsSchema}
         breadcrumbs={[
           { name: "Home", item: "/" },

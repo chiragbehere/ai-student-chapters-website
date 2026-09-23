@@ -76,7 +76,7 @@ const Tools = () => {
       <SEO 
         title="AI Tools & Utilities | AI Student Chapters" 
         description="Explore innovative tools built by AI Student Chapters at RCPIMRD — AISC Certificate Studio, study materials, and AI developer utilities."
-        url="https://imrdaisc.vercel.app/tools"
+        url="https://aistudentchapter.vercel.app/tools"
         schema={toolsSchema}
         breadcrumbs={[
           { name: "Home", item: "/" },

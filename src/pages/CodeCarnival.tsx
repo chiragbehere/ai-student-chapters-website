@@ -365,7 +365,7 @@ export const CodeCarnival: React.FC = () => {
     organizer: {
       '@type': 'Organization',
       name: 'AI Student Chapters',
-      url: 'https://imrdaisc.vercel.app/',
+      url: 'https://aistudentchapter.vercel.app/',
     },
   };
 
@@ -374,7 +374,7 @@ export const CodeCarnival: React.FC = () => {
       <SEO
         title="Code Carnival 2.0 | State Level Hackathon | AI Student Chapters"
         description="Enter the Upside Down! Code Carnival 2.0 — a 24-hour State Level Hackathon with ₹50,000+ prize pool organized by AI Student Chapters at RCPET's IMRD."
-        url="https://imrdaisc.vercel.app/code-carnival"
+        url="https://aistudentchapter.vercel.app/code-carnival"
         schema={codeCarnivalSchema}
         breadcrumbs={[
           { name: 'Home', item: '/' },

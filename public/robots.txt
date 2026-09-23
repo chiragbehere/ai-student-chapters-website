@@ -1,5 +1,5 @@
 # ============================================================
-# Robots.txt for AI Student Chapters (https://imrdaisc.vercel.app)
+# Robots.txt for AI Student Chapters (https://aistudentchapter.vercel.app)
 # Designed for Search Engines, Answer Engines & AI Retrieval
 # ============================================================
 
@@ -53,4 +53,4 @@ User-agent: Amazonbot
 Allow: /
 
 # Canonical XML Sitemap
-Sitemap: https://imrdaisc.vercel.app/sitemap.xml
+Sitemap: https://aistudentchapter.vercel.app/sitemap.xml

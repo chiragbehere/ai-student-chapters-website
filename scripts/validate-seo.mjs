@@ -31,7 +31,7 @@ assert(fs.existsSync(robotsPath), 'robots.txt exists in public directory');
 
 if (fs.existsSync(robotsPath)) {
   const robotsContent = fs.readFileSync(robotsPath, 'utf8');
-  assert(robotsContent.includes('Sitemap: https://imrdaisc.vercel.app/sitemap.xml'), 'robots.txt references canonical sitemap.xml');
+  assert(robotsContent.includes('Sitemap: https://aistudentchapter.vercel.app/sitemap.xml'), 'robots.txt references canonical sitemap.xml');
   assert(robotsContent.includes('User-agent: GPTBot') && robotsContent.includes('Allow: /'), 'robots.txt explicitly accommodates GPTBot');
   assert(robotsContent.includes('User-agent: ClaudeBot') && robotsContent.includes('Allow: /'), 'robots.txt explicitly accommodates ClaudeBot');
   assert(robotsContent.includes('User-agent: PerplexityBot') && robotsContent.includes('Allow: /'), 'robots.txt explicitly accommodates PerplexityBot');
@@ -47,15 +47,15 @@ assert(fs.existsSync(sitemapPath), 'sitemap.xml exists in public directory');
 if (fs.existsSync(sitemapPath)) {
   const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
   const expectedRoutes = [
-    'https://imrdaisc.vercel.app/',
-    'https://imrdaisc.vercel.app/about',
-    'https://imrdaisc.vercel.app/events',
-    'https://imrdaisc.vercel.app/team',
-    'https://imrdaisc.vercel.app/sessions',
-    'https://imrdaisc.vercel.app/gallery',
-    'https://imrdaisc.vercel.app/tools',
-    'https://imrdaisc.vercel.app/code-carnival',
-    'https://imrdaisc.vercel.app/faq'
+    'https://aistudentchapter.vercel.app/',
+    'https://aistudentchapter.vercel.app/about',
+    'https://aistudentchapter.vercel.app/events',
+    'https://aistudentchapter.vercel.app/team',
+    'https://aistudentchapter.vercel.app/sessions',
+    'https://aistudentchapter.vercel.app/gallery',
+    'https://aistudentchapter.vercel.app/tools',
+    'https://aistudentchapter.vercel.app/code-carnival',
+    'https://aistudentchapter.vercel.app/faq'
   ];
 
   for (const route of expectedRoutes) {
@@ -63,7 +63,7 @@ if (fs.existsSync(sitemapPath)) {
   }
 
   assert(!sitemapContent.includes('/admin'), 'sitemap.xml excludes private /admin route');
-  assert(!sitemapContent.includes('aistudentchapters.vercel.app'), 'sitemap.xml has no outdated domain references');
+  assert(!sitemapContent.includes('imrdaisc.vercel.app'), 'sitemap.xml has no outdated domain references');
 }
 
 // 3. Validate index.html static baseline
@@ -75,7 +75,7 @@ if (fs.existsSync(indexPath)) {
   const indexContent = fs.readFileSync(indexPath, 'utf8');
   assert(indexContent.includes('<title>AI Student Chapters | RCPIMRD</title>'), 'index.html has title with entity branding');
   assert(indexContent.includes('meta name="description"'), 'index.html has meta description');
-  assert(indexContent.includes('rel="canonical" href="https://imrdaisc.vercel.app/"'), 'index.html has canonical link to imrdaisc.vercel.app');
+  assert(indexContent.includes('rel="canonical" href="https://aistudentchapter.vercel.app/"'), 'index.html has canonical link to aistudentchapter.vercel.app');
   assert(indexContent.includes('meta name="robots" content="index, follow"'), 'index.html has robots index, follow');
   assert(indexContent.includes('meta name="referrer" content="strict-origin-when-cross-origin"'), 'index.html has strict referrer policy');
   assert(indexContent.includes('"@type": "WebSite"'), 'index.html contains WebSite JSON-LD');

@@ -301,7 +301,7 @@ const Events = () => {
     "@type": "CollectionPage",
     "name": "Events and Competitions - AI Student Chapters",
     "description": "Comprehensive listing of AI hackathons, research competitions, and technical workshops organized by AI Student Chapters at RCPET's IMRD.",
-    "url": "https://imrdaisc.vercel.app/events",
+    "url": "https://aistudentchapter.vercel.app/events",
     "hasPart": [
       {
         "@type": "Event",
@@ -324,7 +324,7 @@ const Events = () => {
         "organizer": {
           "@type": "Organization",
           "name": "AI Student Chapters",
-          "url": "https://imrdaisc.vercel.app/"
+          "url": "https://aistudentchapter.vercel.app/"
         }
       },
       {
@@ -348,7 +348,7 @@ const Events = () => {
         "organizer": {
           "@type": "Organization",
           "name": "AI Student Chapters",
-          "url": "https://imrdaisc.vercel.app/"
+          "url": "https://aistudentchapter.vercel.app/"
         }
       }
     ]
@@ -359,7 +359,7 @@ const Events = () => {
       <SEO 
         title="AI Hackathons & Events | AI Student Chapters RCPIMRD" 
         description="Explore upcoming and past AI hackathons, Code Carnival sprints, AI Research Leagues, and technical competitions at RCPIMRD."
-        url="https://imrdaisc.vercel.app/events"
+        url="https://aistudentchapter.vercel.app/events"
         schema={eventsSchema}
         breadcrumbs={[
           { name: "Home", item: "/" },

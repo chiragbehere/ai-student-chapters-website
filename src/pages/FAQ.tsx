@@ -96,7 +96,7 @@ const FAQ = () => {
       <SEO 
         title="Frequently Asked Questions (FAQ) | AI Student Chapters" 
         description="Find answers to common questions about joining AI Student Chapters at RCPIMRD, hackathon registrations, skill requirements, and activities."
-        url="https://imrdaisc.vercel.app/faq"
+        url="https://aistudentchapter.vercel.app/faq"
         schema={faqSchema || undefined}
         breadcrumbs={[
           { name: "Home", item: "/" },

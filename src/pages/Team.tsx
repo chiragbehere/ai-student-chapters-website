@@ -62,7 +62,7 @@ const Team = () => {
           "@type": "EducationalOrganization",
           "name": "AI Student Chapters, RCPET's IMRD"
         },
-        "image": member.image?.startsWith('http') ? member.image : `https://imrdaisc.vercel.app${member.image}`
+        "image": member.image?.startsWith('http') ? member.image : `https://aistudentchapter.vercel.app${member.image}`
       }
     }))
   };
@@ -72,7 +72,7 @@ const Team = () => {
       <SEO 
         title="Core Team & Leadership | AI Student Chapters RCPIMRD" 
         description="Meet the core committee, student leaders, and technical innovators powering the AI Student Chapters community at RCPIMRD."
-        url="https://imrdaisc.vercel.app/team"
+        url="https://aistudentchapter.vercel.app/team"
         schema={teamSchema}
         breadcrumbs={[
           { name: "Home", item: "/" },

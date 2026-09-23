@@ -34,7 +34,7 @@ export default function SEO({
   breadcrumbs,
 }: SEOProps) {
   const location = useLocation();
-  const baseUrl = 'https://imrdaisc.vercel.app';
+  const baseUrl = 'https://aistudentchapter.vercel.app';
   const canonicalUrl = url || `${baseUrl}${location.pathname === '/' ? '' : location.pathname}`;
   
   const defaultDesc = "Exploring AI — we learn, we build, we compete, and we grow together at AI Student Chapters, RCPET's IMRD Shirpur.";
