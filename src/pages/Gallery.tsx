@@ -33,8 +33,7 @@ export const Gallery: React.FC = () => {
   };
 
   return (
-<<<<<<< Updated upstream
-    <div className="w-full">
+    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#ecefe9]">
       <SEO 
         title="Event Gallery & Highlights | AI Student Chapters" 
         description="View event photos and video recaps from AI Student Chapters hackathons, workshops, and student tech meetups at RCPIMRD."
@@ -45,46 +44,10 @@ export const Gallery: React.FC = () => {
           { name: "Gallery", item: "/gallery" }
         ]}
       />
-      {/* Hero */}
-      <section className="editorial-hero">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="pill mx-auto w-fit mb-6 flex items-center gap-2"
-            style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}
-          >
-            <ImageIcon size={14} />
-            captured moments
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black mb-3"
-          >
-            Our <span className="grad-text">Gallery</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="text-base max-w-lg mx-auto"
-            style={{ color: 'rgb(var(--color-foreground) / 0.5)', fontFamily: "'DM Mono', monospace", fontSize: '13px' }}
-          >
-            All the moments that made our journey special.
-          </motion.p>
-=======
-    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#ecefe9]">
-      <SEO
-        title="Event Gallery & Highlights | AI Student Chapter"
-        description="View event photos and video recaps from AI Student Chapter hackathons, workshops, and tech meetups."
-        url="https://aistudentchapter.vercel.app/gallery"
-      />
 
       <section className="text-center space-y-3 max-w-3xl mx-auto mb-10 pt-8 border-b border-[#cdd6cd] pb-8">
         <div className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#008736] uppercase tracking-widest">
           <Sparkles size={14} /> CAPTURED MOMENTS
->>>>>>> Stashed changes
         </div>
         <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-[#0a0a0a] uppercase tracking-tight leading-none">
           CHAPTER <span className="text-[#008736]">GALLERY</span> & MEDIA

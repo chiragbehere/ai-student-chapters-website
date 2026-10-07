@@ -3,13 +3,13 @@ import { Sparkles, ShieldCheck, Users } from 'lucide-react';
 import SEO from '../components/SEO';
 import { TEAM_POSITION_HOLDERS, TEAM_MEMBERS, FACULTY_ADVISORS } from '../data/chapterData';
 
-<<<<<<< Updated upstream
+export const Team: React.FC = () => {
   const teamSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "AI Student Chapters Core Committee",
-    "description": "Leadership and core team members of AI Student Chapters at RCPET's IMRD.",
-    "itemListElement": leaders.map((member, index) => ({
+    "description": "Leadership and core team members of AI Student Chapters at RCPET's IMRD, Shirpur.",
+    "itemListElement": [...TEAM_POSITION_HOLDERS, ...TEAM_MEMBERS].map((member, index) => ({
       "@type": "ListItem",
       "position": index + 1,
       "item": {
@@ -26,47 +26,16 @@ import { TEAM_POSITION_HOLDERS, TEAM_MEMBERS, FACULTY_ADVISORS } from '../data/c
   };
 
   return (
-    <div className="w-full relative">
-      <SEO 
-        title="Core Team & Leadership | AI Student Chapters RCPIMRD" 
-        description="Meet the core committee, student leaders, and technical innovators powering the AI Student Chapters community at RCPIMRD."
+    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#ecefe9]">
+      <SEO
+        title="Leadership & Core Team | AI Student Chapters RCPIMRD"
+        description="Meet the core committee, student council, and technical innovators guiding the AI Student Chapters community at RCPIMRD."
         url="https://aistudentchapter.vercel.app/team"
         schema={teamSchema}
         breadcrumbs={[
           { name: "Home", item: "/" },
           { name: "Team", item: "/team" }
         ]}
-      />
-      {/* Hero */}
-      <section className="editorial-hero">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pill mx-auto w-fit mb-6 flex items-center gap-2" style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}>
-            <Star size={14} /> the crew
-          </motion.div>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black mb-3"
-          >
-            Meet the <span className="grad-text">Team</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="text-base max-w-lg mx-auto"
-            style={{ color: 'rgb(var(--color-foreground) / 0.5)', fontFamily: "'DM Mono', monospace", fontSize: '13px' }}
-          >
-            The amazing humans behind AI Student Chapters.
-          </motion.p>
-=======
-export const Team: React.FC = () => {
-  return (
-    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#ecefe9]">
-      <SEO
-        title="Leadership & Core Team | AI Student Chapter"
-        description="Meet the student council, heads, and core members guiding the AI Student Chapter at RCPIMRD."
-        url="https://aistudentchapter.vercel.app/team"
       />
 
       {/* Header */}
@@ -165,10 +134,8 @@ export const Team: React.FC = () => {
               </div>
             </div>
           ))}
->>>>>>> Stashed changes
         </div>
       </section>
-
 
       {/* Team Members */}
       <section className="mb-16">

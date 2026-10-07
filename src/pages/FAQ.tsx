@@ -32,8 +32,7 @@ export const FAQ: React.FC = () => {
   } : null;
 
   return (
-<<<<<<< Updated upstream
-    <div className="w-full relative min-h-screen z-10">
+    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto bg-[#ecefe9]">
       <SEO 
         title="Frequently Asked Questions (FAQ) | AI Student Chapters" 
         description="Find answers to common questions about joining AI Student Chapters at RCPIMRD, hackathon registrations, skill requirements, and activities."
@@ -44,51 +43,10 @@ export const FAQ: React.FC = () => {
           { name: "FAQ", item: "/faq" }
         ]}
       />
-      
-      {/* Hero */}
-      <section className="editorial-hero">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, type: "tween", ease: "easeOut" }}
-            className="pill mx-auto w-fit mb-6 flex items-center gap-2"
-            style={{ border: '1px solid rgb(var(--color-border))', color: 'rgb(var(--color-foreground) / 0.6)' }}
-          >
-            <MessageCircleQuestion size={14} />
-            you asked, we answered
-          </motion.div>
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.05 }}
-            className="text-4xl md:text-5xl font-black leading-tight mb-3"
-          >
-            Frequently Asked <span className="grad-text">Questions</span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="text-base max-w-lg mx-auto"
-            style={{ color: 'rgb(var(--color-foreground) / 0.5)', fontFamily: "'DM Mono', monospace", fontSize: '13px' }}
-          >
-            Everything you need to know about joining and being part of our community.
-          </motion.p>
-=======
-    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto bg-[#ecefe9]">
-      <SEO
-        title="Frequently Asked Questions (FAQ) | AI Student Chapter"
-        description="Answers to common questions about joining AI Student Chapter at RCPIMRD, hackathons, and skill requirements."
-        url="https://aistudentchapter.vercel.app/faq"
-      />
 
       <section className="text-center space-y-3 mb-12 pt-8 border-b border-[#cdd6cd] pb-8">
         <div className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#008736] uppercase tracking-widest">
           <Sparkles size={14} /> KNOWLEDGE BASE
->>>>>>> Stashed changes
         </div>
         <h1 className="text-4xl sm:text-5xl font-display font-extrabold text-[#0a0a0a] uppercase tracking-tight leading-none">
           FREQUENTLY ASKED <span className="text-[#008736]">QUESTIONS</span>

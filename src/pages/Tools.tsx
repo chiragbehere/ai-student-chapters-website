@@ -57,8 +57,7 @@ export const Tools: React.FC = () => {
   };
 
   return (
-<<<<<<< Updated upstream
-    <div className="w-full relative min-h-screen z-10">
+    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto bg-[#ecefe9]">
       <SEO 
         title="AI Tools & Utilities | AI Student Chapters" 
         description="Explore innovative tools built by AI Student Chapters at RCPIMRD — AISC Certificate Studio, study materials, and AI developer utilities."
@@ -68,13 +67,6 @@ export const Tools: React.FC = () => {
           { name: "Home", item: "/" },
           { name: "Tools", item: "/tools" }
         ]}
-=======
-    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto bg-[#ecefe9]">
-      <SEO
-        title="AI Tools & Utilities | AI Student Chapter"
-        description="Explore tools built by AI Student Chapter at RCPIMRD—AISC Certificate Studio and academic resources."
-        url="https://aistudentchapter.vercel.app/tools"
->>>>>>> Stashed changes
       />
 
       <AnimatePresence mode="wait">

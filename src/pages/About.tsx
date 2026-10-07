@@ -13,10 +13,6 @@ export const About: React.FC = () => {
     { q: 'What is Vibe Coding?', a: 'Vibe coding is an intent-driven approach to building software using AI assistants and modern scaffolding to turn ideas into code fast.' },
   ];
 
-<<<<<<< Updated upstream
-  const { data: faqsData } = useFaqs('about');
-  const faqs = faqsData.map(f => ({ q: f.question, a: f.answer }));
-
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
@@ -48,7 +44,7 @@ export const About: React.FC = () => {
   } : null;
 
   return (
-    <div className="w-full relative">
+    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#ecefe9]">
       <SEO 
         title="About AI Student Chapters | RCPIMRD" 
         description="Learn about AI Student Chapters at RCPIMRD — our mission, hands-on AI workshops, hackathons, and student collective exploring cutting-edge artificial intelligence."
@@ -58,33 +54,6 @@ export const About: React.FC = () => {
           { name: "Home", item: "/" },
           { name: "About", item: "/about" }
         ]}
-      />
-      {/* Hero */}
-      <section className="editorial-hero">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black mb-3"
-          >
-            About <span className="grad-text">AI Chapters</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="text-base max-w-xl mx-auto"
-            style={{ color: 'rgb(var(--color-foreground) / 0.5)', fontFamily: "'DM Mono', monospace", fontSize: '13px' }}
-          >
-            From hackathons to workshops — we cover every dimension of AI education. Here's what we're about.
-          </motion.p>
-=======
-  return (
-    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#ecefe9]">
-      <SEO
-        title={`About ${CHAPTER_INFO.name} | RCPIMRD`}
-        description={`Learn about ${CHAPTER_INFO.name} at RCPIMRD—our mission, AI workshops, hackathons, and student collective.`}
-        url="https://aistudentchapter.vercel.app/about"
       />
 
       {/* Header */}
@@ -119,7 +88,6 @@ export const About: React.FC = () => {
             <span className="block text-4xl font-display font-black text-[#008736]">300+</span>
             <span className="font-mono text-xs text-[#0a0a0a] font-bold uppercase">Students Reached</span>
           </div>
->>>>>>> Stashed changes
         </div>
       </section>
 
