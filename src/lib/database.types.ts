@@ -121,6 +121,7 @@ export interface Database {
           title: string;
           embed_url: string;
           download_url: string | null;
+          slides?: string[];
           sort_order: number;
           created_at: string;
         };

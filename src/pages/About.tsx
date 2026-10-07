@@ -1,40 +1,19 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import type { Variants } from 'framer-motion';
-import { ChevronDown, Zap, Lightbulb, Users, Target } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronDown, Sparkles } from 'lucide-react';
 import SEO from '../components/SEO';
+import { CHAPTER_INFO, CORE_PRINCIPLES } from '../data/chapterData';
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.05,
-    }
-  }
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  show: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { type: "tween", ease: "easeOut", duration: 0.4 } 
-  }
-};
-
-import { useFaqs } from '../hooks/useSupabaseData';
-
-const About = () => {
+export const About: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const activities = [
-    { name: 'Hackathons', percent: 90, icon: <Zap size={24} style={{ color: 'var(--acid)' }} />, color: 'bg-[#11110f]', desc: 'High-intensity coding competitions where teams solve real-world challenges with AI.' },
-    { name: 'Workshops', percent: 85, icon: <Lightbulb size={24} style={{ color: 'var(--sky)' }} />, color: 'bg-[#a9c7ff]', desc: 'Hands-on sessions covering the latest AI tools — led by mentors & experienced peers.' },
-    { name: 'Research & Training', percent: 75, icon: <Target size={24} style={{ color: 'var(--acid)' }} />, color: 'bg-[#d8ff3e]', desc: 'Collaborative AI projects you can actually put on your resume.' },
-    { name: 'Networking', percent: 80, icon: <Users size={24} style={{ color: 'var(--sky)' }} />, color: 'bg-[#a9c7ff]', desc: 'Connect with AI enthusiasts, alumni, and professionals to build lasting tech relationships.' }
+  const faqs = [
+    { q: 'Who can join AI Student Chapter?', a: 'Any student enrolled at RCPIMRD across MCA and IMCA courses! All skill levels are welcome.' },
+    { q: 'Is there any registration fee?', a: 'No, joining the AISC community and participating in workshops or hackathons is 100% free of charge.' },
+    { q: 'Do I need prior programming experience?', a: 'Not at all! We host beginner-friendly sessions and pair new members with experienced student mentors.' },
+    { q: 'What is Vibe Coding?', a: 'Vibe coding is an intent-driven approach to building software using AI assistants and modern scaffolding to turn ideas into code fast.' },
   ];
 
+<<<<<<< Updated upstream
   const { data: faqsData } = useFaqs('about');
   const faqs = faqsData.map(f => ({ q: f.question, a: f.answer }));
 
@@ -99,102 +78,98 @@ const About = () => {
           >
             From hackathons to workshops — we cover every dimension of AI education. Here's what we're about.
           </motion.p>
+=======
+  return (
+    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#ecefe9]">
+      <SEO
+        title={`About ${CHAPTER_INFO.name} | RCPIMRD`}
+        description={`Learn about ${CHAPTER_INFO.name} at RCPIMRD—our mission, AI workshops, hackathons, and student collective.`}
+        url="https://aistudentchapter.vercel.app/about"
+      />
+
+      {/* Header */}
+      <section className="space-y-4 max-w-4xl mx-auto mb-16 pt-8 border-b border-[#cdd6cd] pb-8">
+        <div className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#008736] uppercase tracking-widest">
+          <Sparkles size={14} /> ABOUT OUR COMMUNITY
+        </div>
+        <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-[#0a0a0a] uppercase tracking-tight leading-none">
+          WE ARE BUILDING AN <span className="text-[#008736]">AI-FIRST</span> STUDENT COLLECTIVE.
+        </h1>
+        <p className="text-[#4e554e] text-base sm:text-lg font-body leading-relaxed">
+          {CHAPTER_INFO.subTagline}
+        </p>
+      </section>
+
+      {/* Origin */}
+      <section className="grid-box p-8 sm:p-12 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-8 space-y-4">
+            <span className="font-mono text-xs text-[#008736] uppercase tracking-widest font-bold">
+              ORIGIN & MISSION
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-[#0a0a0a]">
+              Demystifying Artificial Intelligence through Hands-On Engineering.
+            </h2>
+            <p className="text-[#4e554e] text-sm sm:text-base font-body leading-relaxed">
+              Founded at RCPET's Institute of Management Research & Development (IMRD), Shirpur under the guidance of Hon. Head of Department Dr. M. N. Behere, the AI Student Chapter bridges the gap between academic theory and modern AI product engineering.
+            </p>
+          </div>
+
+          <div className="lg:col-span-4 grid-box p-6 text-center space-y-2">
+            <span className="block text-4xl font-display font-black text-[#008736]">300+</span>
+            <span className="font-mono text-xs text-[#0a0a0a] font-bold uppercase">Students Reached</span>
+          </div>
+>>>>>>> Stashed changes
         </div>
       </section>
 
-      {/* Core Modules */}
-      <section className="py-16 editorial-section">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold">What We Do</h2>
-          </div>
+      {/* Pillars */}
+      <section className="mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-10 space-y-1">
+          <span className="font-mono text-xs text-[#008736] uppercase tracking-widest font-bold">METHODOLOGY</span>
+          <h2 className="text-3xl font-display font-extrabold text-[#0a0a0a]">FIVE CORE PILLARS</h2>
+        </div>
 
-          <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {activities.map((act) => (
-              <motion.div
-                key={act.name}
-                variants={itemVariants}
-                className="glass-panel p-7 flex flex-col sm:flex-row items-start gap-5 group relative overflow-hidden"
-              >
-                <div className="w-12 h-12 flex items-center justify-center flex-shrink-0" style={{ border: '1px solid rgb(var(--color-border))' }}>
-                  {act.icon}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {CORE_PRINCIPLES.map((principle) => (
+            <div key={principle.number} className="grid-box grid-box-hover p-6 flex flex-col justify-between space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between border-b border-[#cdd6cd] pb-2">
+                  <span className="font-mono text-2xl font-bold text-[#008736]">{principle.number}</span>
+                  <span className="text-[10px] font-mono uppercase bg-[#e2e7e2] px-2 py-0.5 font-bold text-[#0a0a0a]">PILLAR</span>
                 </div>
-
-                <div className="flex-1 w-full">
-                  <h3 className="text-lg font-bold mb-2">{act.name}</h3>
-                  <p className="text-sm mb-4 leading-relaxed" style={{ color: 'rgb(var(--color-foreground) / 0.45)' }}>{act.desc}</p>
-
-                  <div className="w-full">
-                    <div className="flex justify-between text-[10px] font-bold tracking-widest uppercase mb-1.5">
-                      <span style={{ color: 'rgb(var(--color-foreground) / 0.3)' }}>Engagement</span>
-                      <span>{act.percent}%</span>
-                    </div>
-                    <div className="h-2 w-full overflow-hidden" style={{ background: 'rgb(var(--color-muted))', border: '1px solid rgb(var(--color-border))' }}>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${act.percent}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
-                        className={`h-full ${act.color}`}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                <h3 className="text-lg font-heading font-bold text-[#0a0a0a]">{principle.title}</h3>
+                <p className="text-[#4e554e] text-xs font-body leading-relaxed">{principle.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-16 editorial-section editorial-divider">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold">Quick FAQ</h2>
-          </div>
+      <section className="max-w-3xl mx-auto">
+        <div className="text-center mb-8 space-y-1">
+          <span className="font-mono text-xs text-[#008736] uppercase tracking-widest font-bold">COMMON QUESTIONS</span>
+          <h2 className="text-3xl font-display font-extrabold text-[#0a0a0a]">STUDENT FAQ</h2>
+        </div>
 
-          <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} className="space-y-3">
-            {faqs.map((faq, idx) => (
-              <motion.div
-                key={idx}
-                variants={itemVariants}
-                className={`glass-panel overflow-hidden transition-all duration-300 ${openFaq === idx ? 'border-[var(--ink)]' : ''}`}
-                style={openFaq === idx ? { boxShadow: '4px 4px 0 var(--sky)' } : {}}
+        <div className="space-y-3">
+          {faqs.map((faq, idx) => (
+            <div key={idx} className="grid-box overflow-hidden">
+              <button
+                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                className="w-full p-5 text-left flex justify-between items-center gap-4 hover:bg-[#e2e7e2] transition-colors"
               >
-                <button
-                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full px-6 py-4 text-left flex justify-between items-center group"
-                >
-                  <span className="font-semibold text-sm transition-colors" style={{ fontFamily: "'Syne', sans-serif", color: openFaq === idx ? 'rgb(var(--color-heading))' : 'rgb(var(--color-foreground) / 0.7)' }}>{faq.q}</span>
-                  <motion.div
-                    animate={{ rotate: openFaq === idx ? 180 : 0 }}
-                    transition={{ duration: 0.3, type: "tween", ease: "easeOut" }}
-                    className="flex-shrink-0 w-7 h-7 flex items-center justify-center transition-colors"
-                    style={{
-                      background: openFaq === idx ? 'var(--ink)' : 'rgb(var(--color-muted))',
-                      color: openFaq === idx ? 'var(--acid)' : 'rgb(var(--color-foreground) / 0.3)',
-                    }}
-                  >
-                    <ChevronDown size={14} />
-                  </motion.div>
-                </button>
-                <AnimatePresence>
-                  {openFaq === idx && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                    >
-                      <div className="px-6 pb-4 pt-1 text-sm leading-relaxed" style={{ color: 'rgb(var(--color-foreground) / 0.5)', borderTop: '1px solid rgb(var(--color-border) / 0.3)' }}>
-                        {faq.a}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </motion.div>
+                <span className="font-heading font-bold text-base text-[#0a0a0a]">{faq.q}</span>
+                <ChevronDown size={18} className={`text-[#008736] shrink-0 transition-transform ${openFaq === idx ? 'rotate-180' : ''}`} />
+              </button>
+              {openFaq === idx && (
+                <div className="px-5 pb-5 text-xs text-[#4e554e] font-body border-t border-[#cdd6cd] pt-3 leading-relaxed">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </section>
     </div>

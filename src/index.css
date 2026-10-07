@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 @import url("https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
@@ -1582,4 +1583,130 @@ p, span, a, div, button, input, textarea, select {
 
 .animate-poster-glow {
   animation: posterPulseGlow 4s ease-in-out infinite;
-}
+}
+=======
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* GitHub Universe Light Editorial Visual System */
+  --bg-light: #ecefe9;
+  --bg-surface: #f4f6f2;
+  --bg-card: #f9faf8;
+  --bg-card-hover: #ffffff;
+  --border-grid: #cdd6cd;
+  --border-subtle: #dbe2db;
+  --text-primary: #0a0a0a;
+  --text-muted: #4e554e;
+  --text-dim: #717a71;
+  --brand-green: #008736;
+  --brand-green-hover: #00722d;
+  --accent-green-light: #e6f4ea;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+  background-color: var(--bg-light);
+}
+
+body {
+  background-color: var(--bg-light);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #ecefe9;
+}
+::-webkit-scrollbar-thumb {
+  background: #bcc8bc;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #008736;
+}
+
+/* Typography Utilities */
+.font-display {
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+}
+
+.font-heading {
+  font-family: 'Outfit', sans-serif;
+}
+
+.font-syne {
+  font-family: 'Syne', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Structural Grid Line Box */
+.grid-box {
+  background: #f7f9f7;
+  border: 1px solid var(--border-grid);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.grid-box-hover:hover {
+  background: #ffffff;
+  border-color: #a8b8a8;
+  box-shadow: 0 10px 30px -10px rgba(0, 135, 54, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Universal Green Button Style */
+.btn-green {
+  background-color: var(--brand-green);
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-green:hover {
+  background-color: var(--brand-green-hover);
+  box-shadow: 0 6px 20px rgba(0, 135, 54, 0.3);
+}
+
+/* Structural Line Grid Pattern Background */
+.bg-structural-grid {
+  background-size: 60px 60px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+/* Speaker / Team Card Treatment - Natural, crisp, and vibrant full-color portraits */
+.speaker-card-img {
+  filter: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .speaker-card-img {
+  transform: scale(1.04);
+}
+
+/* Selection Highlight */
+::selection {
+  background: rgba(0, 135, 54, 0.2);
+  color: #008736;
+}
+>>>>>>> Stashed changes

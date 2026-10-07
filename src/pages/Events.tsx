@@ -1,25 +1,24 @@
+<<<<<<< Updated upstream
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { Medal, Award, Star, Calendar, Clock, Users, MapPin, ChevronDown, ChevronUp, ExternalLink, ArrowRight } from 'lucide-react';
+=======
+import React, { useState } from 'react';
+import { Sparkles, Calendar, MapPin } from 'lucide-react';
+>>>>>>> Stashed changes
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
-import { useEvents, useAllEventWinners, useAllEventTimelines } from '../hooks/useSupabaseData';
-import Image from '../components/Image';
+import EventRegistrationModal from '../components/EventRegistrationModal';
+import { EVENTS, type EventItem } from '../data/chapterData';
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { 
-    opacity: 1, y: 0, 
-    transition: { type: "tween", ease: "easeOut", duration: 0.4 } 
-  }
-};
+export const Events: React.FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [registeringEvent, setRegisteringEvent] = useState<EventItem | null>(null);
 
-const Events = () => {
-  const { data: eventsData, loading: eventsLoading } = useEvents();
-  const { data: allWinners } = useAllEventWinners();
-  const { data: allTimelines } = useAllEventTimelines();
+  const categories = ['All', 'Hackathon', 'Workshop', 'Guest Lecture'];
 
+<<<<<<< Updated upstream
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
   // Separate events by status
@@ -295,6 +294,11 @@ const Events = () => {
       </div>
     );
   }
+=======
+  const filteredEvents = selectedCategory === 'All'
+    ? EVENTS
+    : EVENTS.filter((e) => e.category === selectedCategory);
+>>>>>>> Stashed changes
 
   const eventsSchema = {
     "@context": "https://schema.org",
@@ -355,6 +359,7 @@ const Events = () => {
   };
 
   return (
+<<<<<<< Updated upstream
     <div className="w-full relative min-h-screen pb-20">
       <SEO 
         title="AI Hackathons & Events | AI Student Chapters RCPIMRD" 
@@ -389,9 +394,29 @@ const Events = () => {
           >
             Hackathons, workshops, and competitions — all in one place.
           </motion.p>
+=======
+    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#ecefe9]">
+      <SEO
+        title="Events & Hackathons | AI Student Chapter"
+        description="Discover upcoming AI workshops, 6-hour hackathons, guest lectures, and build sprints at RCPIMRD."
+        url="https://aistudentchapter.vercel.app/events"
+      />
+
+      {/* Header */}
+      <section className="text-center space-y-3 max-w-3xl mx-auto mb-12 pt-8 border-b border-[#cdd6cd] pb-8">
+        <div className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#008736] uppercase tracking-widest">
+          <Sparkles size={14} /> SPRINTS & HACKATHONS
+>>>>>>> Stashed changes
         </div>
+        <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-[#0a0a0a] uppercase tracking-tight leading-none">
+          CHAPTER <span className="text-[#008736]">EVENTS</span> & LABS
+        </h1>
+        <p className="text-[#4e554e] text-base font-body leading-relaxed">
+          6-hour offline build sprints, hands-on PyTorch & LLM workshops, and guest lectures hosted by AISC at RCPIMRD.
+        </p>
       </section>
 
+<<<<<<< Updated upstream
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
         {eventsData.length === 0 ? (
           <div className="text-center py-20 glass-panel">
@@ -518,7 +543,86 @@ const Events = () => {
             Go to Gallery <ArrowRight size={16} />
           </Link>
         </section>
+=======
+      {/* Filter Tabs */}
+      <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setSelectedCategory(cat)}
+            className={`px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all border border-[#cdd6cd] ${
+              selectedCategory === cat
+                ? 'bg-[#008736] text-white'
+                : 'bg-[#f4f6f2] text-[#0a0a0a] hover:bg-[#e2e7e2]'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+>>>>>>> Stashed changes
       </div>
+
+      {/* Events Grid */}
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredEvents.map((event) => (
+          <div key={event.id} className="grid-box grid-box-hover p-8 flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b border-[#cdd6cd] pb-3">
+                <span className="px-3 py-1 bg-[#e2e7e2] text-[#0a0a0a] font-mono text-xs font-bold uppercase">
+                  {event.category}
+                </span>
+                <span className="text-xs font-mono font-bold text-[#008736] uppercase">
+                  {event.status}
+                </span>
+              </div>
+
+              <h3 className="text-xl font-heading font-bold text-[#0a0a0a] leading-snug">
+                {event.title}
+              </h3>
+
+              <p className="text-[#4e554e] text-sm font-body leading-relaxed">
+                {event.description}
+              </p>
+
+              <div className="space-y-1.5 pt-2 text-xs font-mono text-[#0a0a0a]">
+                <div className="flex items-center gap-2">
+                  <Calendar size={14} className="text-[#008736]" />
+                  <span>{event.date}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin size={14} className="text-[#008736]" />
+                  <span>{event.location}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-[#cdd6cd]">
+              {event.registrationUrl?.startsWith('/') ? (
+                <Link
+                  to={event.registrationUrl}
+                  className="btn-green w-full py-3 text-xs font-heading font-bold uppercase tracking-wider text-center block"
+                >
+                  Explore Event Details ↗
+                </Link>
+              ) : (
+                <button
+                  onClick={() => setRegisteringEvent(event)}
+                  className="w-full py-3 grid-box font-mono font-bold text-xs uppercase tracking-wider text-[#0a0a0a] hover:bg-[#e2e7e2] text-center"
+                >
+                  View Event Summary
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {registeringEvent && (
+        <EventRegistrationModal
+          event={registeringEvent as any}
+          onClose={() => setRegisteringEvent(null)}
+        />
+      )}
     </div>
   );
 };

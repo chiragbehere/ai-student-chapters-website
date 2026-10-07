@@ -4,10 +4,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
 import SmoothScroll from './components/SmoothScroll';
-import ChatbotWidget from './components/ChatbotWidget';
-import WhatsAppWidget from './components/WhatsAppWidget';
-import EmailWidget from './components/EmailWidget';
-import InstagramWidget from './components/InstagramWidget';
+import FloatingWidgets from './components/FloatingWidgets';
 import Home from './pages/Home';
 
 // Lazy-load all non-home pages for faster initial load
@@ -19,22 +16,6 @@ const FAQ = lazy(() => import('./pages/FAQ'));
 const Sessions = lazy(() => import('./pages/Sessions'));
 const Tools = lazy(() => import('./pages/Tools'));
 const CodeCarnival = lazy(() => import('./pages/CodeCarnival'));
-
-// Hide all floating widgets on the Code Carnival page (immersive themed experience)
-const WidgetsOverlay = () => {
-  const location = useLocation();
-  if (location.pathname === '/code-carnival') return null;
-  return (
-    <>
-      <ChatbotWidget />
-      <WhatsAppWidget />
-      <EmailWidget />
-      <InstagramWidget />
-    </>
-  );
-};
-
-
 
 // Page loading skeleton
 const PageLoader = () => (
@@ -165,7 +146,7 @@ function App() {
               <AnimatedRoutes />
             </ErrorBoundary>
           </Layout>
-          <WidgetsOverlay />
+          <FloatingWidgets />
           <Analytics />
         </SmoothScroll>
     </Router>

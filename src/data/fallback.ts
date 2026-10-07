@@ -42,7 +42,7 @@ export const fallbackMembers = [
 ];
 
 export const fallbackGalleryImages = [
-  { id: 1, type: 'image' as const, url: '/images/event1.webp', caption: 'Workshop on IMCA classes', title: null, description: null, sort_order: 1, created_at: '' },
+  { id: 1, type: 'image' as const, url: '/images/event1.jpg', caption: 'Workshop on IMCA classes', title: null, description: null, sort_order: 1, created_at: '' },
   { id: 2, type: 'image' as const, url: '/images/event2.webp', caption: 'Workshop on MCA classes', title: null, description: null, sort_order: 2, created_at: '' },
   { id: 3, type: 'image' as const, url: '/images/event3.webp', caption: 'Workshop by Hon. HOD Dr. M. N. Behere', title: null, description: null, sort_order: 3, created_at: '' },
   { id: 4, type: 'image' as const, url: '/images/event4.webp', caption: 'Mentors Meet', title: null, description: null, sort_order: 4, created_at: '' },
@@ -57,8 +57,44 @@ export const fallbackGalleryVideos = [
 ];
 
 export const fallbackSessions = [
-  { id: 1, title: '1. What is Hackathon', embed_url: 'https://docs.google.com/presentation/d/1mLfETYAr32KgcQeict9f856BxBwgRPye/embed?start=false&loop=false&delayms=3000', download_url: '/ppt/What is hackathon.pptx', sort_order: 1, created_at: '' },
-  { id: 2, title: '2. What is Vibe Coding', embed_url: 'https://docs.google.com/presentation/d/11B9NhHo_G7Jhv9G807eqxSyIQhddXCWh/embed?start=false&loop=false&delayms=3000', download_url: '/ppt/What is Vibe coding.pptx', sort_order: 2, created_at: '' },
+  {
+    id: 1,
+    title: '1. What is Hackathon',
+    embed_url: '/ppt/What is hackathon.pptx',
+    download_url: '/ppt/What is hackathon.pptx',
+    slides: [
+      '/ppt/slides/hackathon/slide_2.png',
+      '/ppt/slides/hackathon/slide_3.png',
+      '/ppt/slides/hackathon/slide_4.png',
+      '/ppt/slides/hackathon/slide_5.png',
+      '/ppt/slides/hackathon/slide_6.png',
+      '/ppt/slides/hackathon/slide_7.png',
+      '/ppt/slides/hackathon/slide_8.png',
+      '/ppt/slides/hackathon/slide_9.png',
+      '/ppt/slides/hackathon/slide_10.png',
+      '/ppt/slides/hackathon/slide_11.png',
+      '/ppt/slides/hackathon/slide_12.png',
+    ],
+    sort_order: 1,
+    created_at: '',
+  },
+  {
+    id: 2,
+    title: '2. What is Vibe Coding',
+    embed_url: '/ppt/What is Vibe coding.pptx',
+    download_url: '/ppt/What is Vibe coding.pptx',
+    slides: [
+      '/ppt/slides/vibe-coding/slide_1.png',
+      '/ppt/slides/vibe-coding/slide_2.png',
+      '/ppt/slides/vibe-coding/slide_3.png',
+      '/ppt/slides/vibe-coding/slide_4.png',
+      '/ppt/slides/vibe-coding/slide_5.png',
+      '/ppt/slides/vibe-coding/slide_6.png',
+      '/ppt/slides/vibe-coding/slide_7.png',
+    ],
+    sort_order: 2,
+    created_at: '',
+  },
 ];
 
 export const fallbackFaqPage = [

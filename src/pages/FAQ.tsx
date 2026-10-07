@@ -1,82 +1,22 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import type { Variants } from 'framer-motion';
-import { ChevronDown, MessageCircleQuestion, Send } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronDown, Sparkles, Mail } from 'lucide-react';
 import SEO from '../components/SEO';
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.05,
-    }
-  }
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  show: { 
-    opacity: 1, 
-    y: 0,
-    transition: { type: "tween", ease: "easeOut", duration: 0.4 } 
-  }
-};
-
-const FAQItem = ({ question, answer, isOpen, onClick }: { question: string, answer: string, isOpen: boolean, onClick: () => void }) => {
-  return (
-    <motion.div 
-      variants={itemVariants}
-      className={`glass-panel overflow-hidden mb-3 transition-all duration-300`}
-      style={isOpen ? { borderColor: 'var(--ink)', boxShadow: '4px 4px 0 var(--sky)' } : {}}
-    >
-      <button
-        onClick={onClick}
-        className="w-full text-left px-6 py-5 flex justify-between items-center group"
-      >
-        <span className="font-semibold text-base transition-colors duration-300 pr-4" style={{ fontFamily: "'Syne', sans-serif", color: isOpen ? 'rgb(var(--color-heading))' : 'rgb(var(--color-foreground) / 0.7)' }}>
-          {question}
-        </span>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3, type: "tween", ease: "easeOut" }}
-          className="flex-shrink-0 w-8 h-8 flex items-center justify-center transition-colors"
-          style={{
-            background: isOpen ? 'var(--ink)' : 'rgb(var(--color-muted))',
-            color: isOpen ? 'var(--acid)' : 'rgb(var(--color-foreground) / 0.4)',
-          }}
-        >
-          <ChevronDown size={16} />
-        </motion.div>
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            <div className="px-6 pb-5 pt-1 text-sm leading-relaxed" style={{ color: 'rgb(var(--color-foreground) / 0.6)', borderTop: '1px solid rgb(var(--color-border) / 0.5)' }}>
-              {answer}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-};
-
 import { useFaqs } from '../hooks/useSupabaseData';
+import { CHAPTER_INFO } from '../data/chapterData';
 
-const FAQ = () => {
+export const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const { data: faqsData } = useFaqs('faq');
 
-  const faqs = faqsData.map(f => ({
-    question: f.question,
-    answer: f.answer,
-  }));
+  const faqs = faqsData.length > 0
+    ? faqsData.map((f) => ({ question: f.question, answer: f.answer }))
+    : [
+        { question: 'What is AI Student Chapter? 🤔', answer: "We're a student-led AI community at RCPIMRD. We host 6-hour hackathons, Vibe Coding labs, workshops, and build real-world AI projects together!" },
+        { question: 'Who can join the chapter? 🙋', answer: "Any student at RCPIMRD (MCA and IMCA)! Whether you've never written a line of code or build apps daily, everyone is welcome." },
+        { question: 'Do I need prior coding experience? 💻', answer: 'Nope! We run beginner-friendly masterclasses and pair new members with experienced student mentors.' },
+        { question: 'What kind of events do you organize? 🎉', answer: "Hands-on workshops, PyTorch sessions, Vibe Coding masterclasses, and our flagship 'Code-Carnival' Hackathon." },
+        { question: 'How do I stay updated? 📱', answer: 'Join our official WhatsApp community and follow us on Instagram (@ai.student_chapters).' },
+      ];
 
   const faqSchema = faqs.length > 0 ? {
     "@context": "https://schema.org",
@@ -92,6 +32,7 @@ const FAQ = () => {
   } : null;
 
   return (
+<<<<<<< Updated upstream
     <div className="w-full relative min-h-screen z-10">
       <SEO 
         title="Frequently Asked Questions (FAQ) | AI Student Chapters" 
@@ -136,48 +77,59 @@ const FAQ = () => {
           >
             Everything you need to know about joining and being part of our community.
           </motion.p>
+=======
+    <div className="w-full relative text-[#0a0a0a] py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto bg-[#ecefe9]">
+      <SEO
+        title="Frequently Asked Questions (FAQ) | AI Student Chapter"
+        description="Answers to common questions about joining AI Student Chapter at RCPIMRD, hackathons, and skill requirements."
+        url="https://aistudentchapter.vercel.app/faq"
+      />
+
+      <section className="text-center space-y-3 mb-12 pt-8 border-b border-[#cdd6cd] pb-8">
+        <div className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#008736] uppercase tracking-widest">
+          <Sparkles size={14} /> KNOWLEDGE BASE
+>>>>>>> Stashed changes
         </div>
+        <h1 className="text-4xl sm:text-5xl font-display font-extrabold text-[#0a0a0a] uppercase tracking-tight leading-none">
+          FREQUENTLY ASKED <span className="text-[#008736]">QUESTIONS</span>
+        </h1>
       </section>
 
-      {/* FAQ List */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-          className="space-y-0"
-        >
-          {faqs.map((faq, index) => (
-            <FAQItem
-              key={index}
-              question={faq.question}
-              answer={faq.answer}
-              isOpen={openIndex === index}
-              onClick={() => setOpenIndex(openIndex === index ? null : index)}
-            />
-          ))}
-        </motion.div>
+      <div className="space-y-3">
+        {faqs.map((faq, index) => {
+          const isOpen = openIndex === index;
+          return (
+            <div key={index} className="grid-box overflow-hidden">
+              <button
+                onClick={() => setOpenIndex(isOpen ? null : index)}
+                className="w-full text-left p-5 flex items-center justify-between gap-4 hover:bg-[#e2e7e2] transition-colors"
+              >
+                <span className="font-heading font-bold text-base text-[#0a0a0a]">
+                  {faq.question}
+                </span>
+                <ChevronDown size={18} className={`text-[#008736] shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {isOpen && (
+                <div className="px-5 pb-5 text-xs text-[#4e554e] font-body border-t border-[#cdd6cd] pt-3 leading-relaxed">
+                  {faq.answer}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
 
-        {/* Bottom CTA */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center glass-panel p-8 md:p-10 relative overflow-hidden"
+      <div className="mt-16 text-center grid-box p-8 sm:p-12 space-y-4">
+        <h3 className="text-2xl font-heading font-bold text-[#0a0a0a]">Still have questions?</h3>
+        <p className="text-[#4e554e] text-sm font-body max-w-md mx-auto">
+          Reach out directly to our student leaders or drop us an email.
+        </p>
+        <a
+          href={`mailto:${CHAPTER_INFO.contactEmail}`}
+          className="btn-green inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-heading font-bold uppercase tracking-wider shadow-md"
         >
-          <div className="relative z-10">
-            <h3 className="text-xl font-bold mb-2">Still curious?</h3>
-            <p className="text-sm mb-5" style={{ color: 'rgb(var(--color-foreground) / 0.5)' }}>Drop us a message — we're super approachable, promise.</p>
-            <a
-              href="mailto:imrdaistudentclub@gmail.com"
-              className="genz-btn-primary inline-flex items-center gap-2"
-            >
-              <Send size={16} />
-              Reach Out
-            </a>
-          </div>
-        </motion.div>
+          <Mail size={16} /> Contact AISC Team ↗
+        </a>
       </div>
     </div>
   );

@@ -1,32 +1,18 @@
-import { motion } from 'framer-motion';
-import type { Variants } from 'framer-motion';
-import { Download, Star } from 'lucide-react';
+import React from 'react';
+import { Sparkles } from 'lucide-react';
 import SEO from '../components/SEO';
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    }
-  }
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { type: "tween", ease: "easeOut", duration: 0.4 } }
-};
-
 import { useSessions } from '../hooks/useSupabaseData';
+import { fallbackSessions } from '../data/fallback';
+import SlideViewer from '../components/SlideViewer';
 
-const Sessions = () => {
+export const Sessions: React.FC = () => {
   const { data: sessionsData } = useSessions();
 
-  const workshops = sessionsData.map(s => ({
+  const workshops = (sessionsData && sessionsData.length > 0 ? sessionsData : fallbackSessions).map((s) => ({
     title: s.title,
     embedUrl: s.embed_url,
-    downloadUrl: s.download_url || '',
+    downloadUrl: s.download_url || '#',
+    slides: s.slides || [],
   }));
 
   const sessionsSchema = {
@@ -51,6 +37,7 @@ const Sessions = () => {
   };
 
   return (
+<<<<<<< Updated upstream
     <div className="w-full relative min-h-screen z-10">
       <SEO 
         title="AI Sessions & Workshops | AI Student Chapters" 
@@ -95,45 +82,34 @@ const Sessions = () => {
           >
             Presentations and resources from our past sessions.
           </motion.p>
+=======
+    <div className="w-full max-w-5xl mx-auto relative text-[#0a0a0a] py-6 sm:py-12 px-2.5 sm:px-6 lg:px-8 bg-[#ecefe9] overflow-hidden">
+      <SEO
+        title="Sessions & Presentation Slides | AI Student Chapter"
+        description="Access updated workshop presentation slides, hackathon primers, and hands-on AI learning materials."
+        url="https://aistudentchapter.vercel.app/sessions"
+      />
+
+      <section className="text-center space-y-2.5 mb-8 sm:mb-12 pt-4 sm:pt-8 border-b border-[#cdd6cd] pb-6 sm:pb-8">
+        <div className="inline-flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-bold text-[#008736] uppercase tracking-widest">
+          <Sparkles size={14} /> LEARNING REPOSITORY
+>>>>>>> Stashed changes
         </div>
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-display font-extrabold text-[#0a0a0a] uppercase tracking-tight leading-tight">
+          WORKSHOP <span className="text-[#008736]">SESSIONS</span> & SLIDES
+        </h1>
       </section>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        {/* Workshop PPTs */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-          className="space-y-6"
-        >
-          {workshops.map((ws, idx) => (
-            <motion.div
-              key={idx}
-              variants={itemVariants}
-              className="glass-panel p-6 relative overflow-hidden"
-            >
-              <h3 className="text-base font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>{ws.title}</h3>
-              <div className="overflow-hidden mb-4" style={{ border: '1px solid rgb(var(--color-border))' }}>
-                <iframe
-                  src={ws.embedUrl}
-                  frameBorder="0"
-                  width="100%"
-                  height="400px"
-                  allowFullScreen
-                  style={{ border: 'none' }}
-                  title={ws.title}
-                />
-              </div>
-              <div className="text-center">
-                <a href={ws.downloadUrl} className="genz-btn-primary inline-flex items-center gap-2 text-sm py-2.5">
-                  <Download size={14} />
-                  Download PPT
-                </a>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+      <div className="space-y-12">
+        {workshops.map((ws, idx) => (
+          <SlideViewer
+            key={idx}
+            title={ws.title}
+            slides={ws.slides}
+            downloadUrl={ws.downloadUrl}
+            fallbackEmbedUrl={ws.embedUrl}
+          />
+        ))}
       </div>
     </div>
   );
