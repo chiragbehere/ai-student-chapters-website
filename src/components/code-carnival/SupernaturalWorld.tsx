@@ -1,42 +1,34 @@
 // SupernaturalWorld.tsx
-// Full-screen AAA 3D Spatial Universe spanning Chapters 01 to 06
-// 100% Authentic Stranger Things World:
-// - Ancient Gnarled Forest & Volumetric Ground Mist
-// - Hanging 3D Christmas Lights (Byers' House)
-// - Creeping Mind Flayer Tendril Vines
-// - Distant Looming Mind Flayer (Shadow Monster) Silhouette
-// - Hawkins Laboratory Industrial Bunker & CRT Console
-// - Authentic Lab Relics: EEG Station, Cerebro Radio, Security Fence, Spacetime Rift
-// - Heavy Blast Vault Door unsealing with golden treasure spill
-// - Hawkins Underground Tunnel Map Room
-// - Colossal Final Gate Singularity
-// - Distant Red Lightning & Upside Down Spores
+// 100% Authentic Stranger Things 3D Universe
+// Features:
+// - Cascading multi-string incandescent Christmas fairy lights framing the viewport (Byers' house)
+// - Vertical cascading Christmas light drops along the margins
+// - The 3D Byers' Alphabet Light Wall actively communicating letters & words in real-time
+// - Towering Mind Flayer silhouette emerging in the stormy red sky
+// - Rolling volumetric ground mist & soft floating Upside Down spores and rising embers
+// - The Central Glowing Dimensional Rift (The Gate)
+// - Distant red lightning strikes
+// (All unwanted abstract geometric primitive shapes, black worm tubes, and generic toruses purged)
 import React, { useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import ProceduralTrees from './ProceduralTrees';
 import ForestTerrain from './ForestTerrain';
-import StrangerChristmasLights from './StrangerChristmasLights';
-import CreepingMindFlayerVines from './CreepingMindFlayerVines';
-import MindFlayerShadow from './MindFlayerShadow';
-import BunkerEnvironment from './BunkerEnvironment';
-import ChallengeProps from './ChallengeProps';
-import VaultDoor from './VaultDoor';
-import TacticalCommandRoom from './TacticalCommandRoom';
-import FinalGatePortal from './FinalGatePortal';
+import { ChristmasLightGarland, ChristmasLightDrop } from './StrangerChristmasLights';
+import AlphabetLightsWall from './AlphabetLightsWall';
+import SupernaturalPortal from './SupernaturalPortal';
 import LightningDirector from './LightningDirector';
+import MindFlayerSky from './MindFlayerSky';
 import InstancedForestParticles from './InstancedForestParticles';
 import CinematicScrollCamera from './CinematicScrollCamera';
 import type { PerformanceSettings } from './PerformanceManager';
 
 interface SupernaturalWorldProps {
   scrollProgress: number; // 0.0 to 1.0
-  activeZoneIndex: number;
+  activeZoneIndex?: number;
   performance: PerformanceSettings;
 }
 
 export const SupernaturalWorld: React.FC<SupernaturalWorldProps> = ({
   scrollProgress,
-  activeZoneIndex,
   performance,
 }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -52,20 +44,10 @@ export const SupernaturalWorld: React.FC<SupernaturalWorldProps> = ({
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Compute adaptive fog color based on chapter
-  const fogColor =
-    scrollProgress < 0.15
-      ? '#020409'
-      : scrollProgress < 0.45
-      ? '#06070e'
-      : scrollProgress < 0.70
-      ? '#080507'
-      : '#030206';
-
   return (
     <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
       <Canvas
-        camera={{ position: [0, 0.6, 17.0], fov: performance.isMobile ? 65 : 55, near: 0.1, far: 95 }}
+        camera={{ position: [0, 0.5, 16.0], fov: performance.isMobile ? 65 : 55, near: 0.1, far: 85 }}
         dpr={performance.tier === 'HIGH' ? Math.min(window.devicePixelRatio, 2) : 1}
         gl={{
           antialias: performance.tier === 'HIGH',
@@ -75,50 +57,58 @@ export const SupernaturalWorld: React.FC<SupernaturalWorldProps> = ({
           depth: true,
         }}
       >
-        <color attach="background" args={[fogColor]} />
-        <fogExp2 attach="fog" args={[fogColor, 0.052]} />
+        {/* Dark Supernatural Void with Atmospheric Fog */}
+        <color attach="background" args={['#020308']} />
+        <fogExp2 attach="fog" args={['#02040a', 0.055]} />
 
         {/* Ambient & Moonlight Lighting */}
-        <ambientLight intensity={0.22} color="#151824" />
-        <directionalLight position={[0, 16, 10]} intensity={0.32} color="#2b3b5c" />
+        <ambientLight intensity={0.25} color="#181a28" />
+        <directionalLight position={[0, 16, 10]} intensity={0.25} color="#253046" />
 
-        {/* ── CHAPTER 01: Deep Supernatural Forest Realm (z: +18 to -4) ── */}
-        <ProceduralTrees isMobile={performance.isMobile} />
+        {/* 1. Deep Distant Mind Flayer Silhouette in the Storm Sky */}
+        <MindFlayerSky scrollProgress={scrollProgress} />
+
+        {/* 2. Corrupted Forest Ground & Drifting Volumetric Mist */}
         <ForestTerrain isMobile={performance.isMobile} />
-        <LightningDirector enabled={scrollProgress < 0.35} />
 
-        {/* ── Authentic Stranger Things Christmas Lights ── */}
-        <StrangerChristmasLights position={[0, 2.8, 12]} width={8.5} sag={0.8} />
-        <StrangerChristmasLights position={[0, 2.6, 4]} width={8.0} sag={0.9} />
+        {/* 3. The Iconic Stranger Things Christmas Lightings (The Hero Elements) */}
+        {/* String 1: Foreground entrance canopy draped gracefully across the top of the screen */}
+        <ChristmasLightGarland position={[0, 1.48, 14.5]} width={8.5} sag={0.52} bulbCount={18} />
 
-        {/* ── Creeping Mind Flayer Parasitic Tendril Vines ── */}
-        <CreepingMindFlayerVines scrollProgress={scrollProgress} />
+        {/* String 2: Upper swag just behind the foreground canopy */}
+        <ChristmasLightGarland position={[0, 1.88, 13.0]} width={9.5} sag={0.65} bulbCount={20} />
 
-        {/* ── Colossal Mind Flayer Shadow Monster in Distant Sky ── */}
-        <MindFlayerShadow scrollProgress={scrollProgress} />
+        {/* Vertical Light Drops: Framing the left and right sides of the viewport */}
+        <ChristmasLightDrop position={[-3.1, 1.38, 14.2]} length={2.2} bulbCount={8} />
+        <ChristmasLightDrop position={[3.1, 1.38, 14.2]} length={2.2} bulbCount={8} />
 
-        {/* ── CHAPTER 02 & 03: Hawkins Lab Bunker & CRT Station (z: +2 to -22) ── */}
-        <BunkerEnvironment scrollProgress={scrollProgress} />
+        {/* String 3: Midground draped garland crossing the corridor */}
+        <ChristmasLightGarland position={[0, 1.55, 10.5]} width={8.0} sag={0.6} bulbCount={18} />
 
-        {/* ── CHAPTER 03: Authentic Hawkins Lab Relics & Challenge Props (z: -9 to -23) ── */}
-        <ChallengeProps scrollProgress={scrollProgress} activeZoneIndex={activeZoneIndex} />
+        {/* 4. The 3D Byers' Alphabet Christmas Light Wall (Prominently visible ahead) */}
+        <AlphabetLightsWall position={[0, 0.35, 7.0]} scale={[0.88, 0.88, 0.88]} />
 
-        {/* ── CHAPTER 04: Heavy Hawkins Lab Blast Vault Door (z: -28) ── */}
-        <VaultDoor scrollProgress={scrollProgress} />
+        {/* String 4: Approaching the Portal Rift */}
+        <ChristmasLightGarland position={[0, 1.4, 2.5]} width={6.5} sag={0.5} bulbCount={16} />
 
-        {/* ── CHAPTER 05: Hawkins Underground Tunnel War-Room (z: -38) ── */}
-        <TacticalCommandRoom scrollProgress={scrollProgress} />
+        {/* 5. The Central Glowing Dimensional Rift (The Gate) */}
+        <group position={[0, 0, -4.5]}>
+          <SupernaturalPortal
+            awakenProgress={0.45 + scrollProgress * 0.55}
+            warpProgress={scrollProgress > 0.88 ? (scrollProgress - 0.88) * 8.0 : 0.0}
+          />
+        </group>
 
-        {/* ── CHAPTER 06: The Final Singularity Gate (z: -52) ── */}
-        <FinalGatePortal scrollProgress={scrollProgress} />
+        {/* 6. Distant Red Lightning Flashes illuminating the sky & Mind Flayer */}
+        <LightningDirector enabled={true} />
 
-        {/* Continuous Upside Down Spores & Rising Embers across the entire spatial realm */}
+        {/* 7. Soft Circular Drifting Spores & Rising Hot Embers */}
         <InstancedForestParticles
           count={performance.particleCount}
-          warpProgress={scrollProgress > 0.85 ? (scrollProgress - 0.85) * 6.0 : 0}
+          warpProgress={scrollProgress > 0.88 ? (scrollProgress - 0.88) * 5.0 : 0}
         />
 
-        {/* Spline-driven 6-Chapter Cinematic Camera */}
+        {/* 8. Cinematic Camera gliding forward under the Christmas light garlands */}
         <CinematicScrollCamera
           scrollProgress={scrollProgress}
           mousePos={mousePos}

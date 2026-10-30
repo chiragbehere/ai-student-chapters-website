@@ -1,25 +1,44 @@
 // SupernaturalPortal.tsx
-// AAA Procedural Upside-Down Dimensional Rift
-// Includes: Swirling GLSL vortex event horizon, 3D animated cracks, electric arcs, and inward gathering energy spirals
+// AAA Procedural Upside-Down Dimensional Rift (The Gate)
+// Features: Swirling GLSL vortex event horizon with feathered organic accretion edge, soft gathering energy motes, pulsating crimson light
+// (All geometric torus rings and harsh spiky wireframe cracks removed)
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 interface SupernaturalPortalProps {
-  awakenProgress: number; // 0 = dormant, 0.2 = faint glow, 0.6 = cracks/electricity, 1.0 = fully expanded
+  awakenProgress: number; // 0 = dormant, 0.4 = active, 1.0 = fully expanded
   warpProgress: number;   // 0 to 1 when transitioning through the gate
   isHovered?: boolean;
 }
 
-// 1. Swirling GLSL Vortex Event Horizon Shader
+// Procedural circular soft radial gradient texture for portal energy motes
+function createCircleTexture(): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas');
+  canvas.width = 64;
+  canvas.height = 64;
+  const ctx = canvas.getContext('2d')!;
+  const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+  gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.85)');
+  gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.25)');
+  gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 64, 64);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.needsUpdate = true;
+  return texture;
+}
+
+// Swirling GLSL Vortex Event Horizon Shader
 const VortexCoreShader = {
   uniforms: {
     uTime: { value: 0 },
     uAwakenProgress: { value: 0.0 },
     uWarp: { value: 0.0 },
-    uColorCore: { value: new THREE.Color('#ff2233') },
-    uColorMid: { value: new THREE.Color('#99000a') },
-    uColorDark: { value: new THREE.Color('#050106') },
+    uColorCore: { value: new THREE.Color('#ff1a26') },
+    uColorMid: { value: new THREE.Color('#88000a') },
+    uColorDark: { value: new THREE.Color('#030104') },
   },
   vertexShader: `
     varying vec2 vUv;
@@ -36,7 +55,7 @@ const VortexCoreShader = {
 
       float dist = length(uv - vec2(0.5));
       // Undulate surface based on awakening
-      float wave = sin(dist * 12.0 - uTime * (3.0 + uWarp * 8.0)) * 0.15 * uAwakenProgress;
+      float wave = sin(dist * 10.0 - uTime * (2.5 + uWarp * 6.0)) * 0.12 * uAwakenProgress;
       pos.z += wave;
 
       // Cone pull into depth at center
@@ -72,28 +91,28 @@ const VortexCoreShader = {
       float angle = atan(center.y, center.x);
 
       // Vortex logarithmic rotation
-      float speed = uTime * (1.2 + uWarp * 4.0);
-      float spiral = angle * 2.0 - dist * 8.0 + speed;
+      float speed = uTime * (1.1 + uWarp * 3.5);
+      float spiral = angle * 2.0 - dist * 7.0 + speed;
       vec2 spiralUv = vec2(cos(spiral), sin(spiral)) * dist;
 
-      float n1 = noise(spiralUv * 8.0 + vec2(speed * 0.5));
-      float n2 = noise(spiralUv * 16.0 - vec2(speed * 0.8));
+      float n1 = noise(spiralUv * 7.0 + vec2(speed * 0.4));
+      float n2 = noise(spiralUv * 14.0 - vec2(speed * 0.7));
       float turbulence = n1 * 0.6 + n2 * 0.4;
 
       // Color ramps based on distance from core & awaken progress
       vec3 col = mix(uColorDark, uColorMid, smoothstep(0.48, 0.15, dist));
-      col = mix(col, uColorCore, smoothstep(0.25, 0.0, dist) * (0.8 + turbulence * 0.4));
+      col = mix(col, uColorCore, smoothstep(0.24, 0.0, dist) * (0.85 + turbulence * 0.35));
 
-      // Electrical micro-filaments in accretion disk
-      float filaments = pow(turbulence, 3.5) * 2.5 * uAwakenProgress;
+      // Organic energy filaments in accretion disk
+      float filaments = pow(turbulence, 3.2) * 2.2 * uAwakenProgress;
       col += vec3(1.0, 0.3, 0.2) * filaments;
 
-      // Alpha edge feather
-      float alpha = smoothstep(0.5, 0.38, dist) * clamp(uAwakenProgress * 1.4, 0.0, 1.0);
+      // Soft feathered alpha edge (no sharp circular boundary)
+      float alpha = smoothstep(0.5, 0.36, dist) * clamp(uAwakenProgress * 1.3, 0.0, 1.0);
 
       // Blinding white-hot core during warp dive
       if (uWarp > 0.1) {
-        col = mix(col, vec3(1.0, 0.9, 0.95), uWarp * smoothstep(0.4, 0.0, dist));
+        col = mix(col, vec3(1.0, 0.92, 0.95), uWarp * smoothstep(0.4, 0.0, dist));
         alpha = mix(alpha, 1.0, uWarp);
       }
 
@@ -102,10 +121,17 @@ const VortexCoreShader = {
   `,
 };
 
-// 2. Procedural Inward-Gathering Energy Particles
-function GatheringEnergyParticles({ awakenProgress, warpProgress }: { awakenProgress: number; warpProgress: number }) {
-  const count = 160;
+// Procedural Soft Inward-Gathering Energy Particles
+function SoftGatheringEnergyParticles({
+  awakenProgress,
+  warpProgress,
+}: {
+  awakenProgress: number;
+  warpProgress: number;
+}) {
+  const count = 120;
   const pointsRef = useRef<THREE.Points>(null);
+  const circleTexture = useMemo(() => createCircleTexture(), []);
 
   const { initialPositions, speeds, angles, radii } = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -115,12 +141,12 @@ function GatheringEnergyParticles({ awakenProgress, warpProgress }: { awakenProg
 
     for (let i = 0; i < count; i++) {
       ang[i] = Math.random() * Math.PI * 2;
-      rad[i] = 1.0 + Math.random() * 3.5;
-      spd[i] = 0.8 + Math.random() * 1.5;
+      rad[i] = 1.0 + Math.random() * 3.2;
+      spd[i] = 0.7 + Math.random() * 1.4;
 
       pos[i * 3 + 0] = Math.cos(ang[i]) * rad[i];
       pos[i * 3 + 1] = Math.sin(ang[i]) * rad[i] * 1.3;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 1.2;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 1.0;
     }
     return { initialPositions: pos, speeds: spd, angles: ang, radii: rad };
   }, [count]);
@@ -136,21 +162,21 @@ function GatheringEnergyParticles({ awakenProgress, warpProgress }: { awakenProg
     const posAttr = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
     const array = posAttr.array as Float32Array;
 
-    const speedMultiplier = (0.5 + awakenProgress * 2.0 + warpProgress * 6.0) * delta;
+    const speedMultiplier = (0.5 + awakenProgress * 1.8 + warpProgress * 5.0) * delta;
 
     for (let i = 0; i < count; i++) {
       radii[i] -= speeds[i] * speedMultiplier;
-      angles[i] += speeds[i] * 2.5 * speedMultiplier;
+      angles[i] += speeds[i] * 2.2 * speedMultiplier;
 
       // Reset when particle enters rift core
       if (radii[i] < 0.15) {
-        radii[i] = 2.5 + Math.random() * 2.0;
+        radii[i] = 2.4 + Math.random() * 1.8;
         angles[i] = Math.random() * Math.PI * 2;
       }
 
       array[i * 3 + 0] = Math.cos(angles[i]) * radii[i];
-      array[i * 3 + 1] = Math.sin(angles[i]) * radii[i] * 1.35;
-      array[i * 3 + 2] = Math.sin(angles[i] * 2.0) * 0.3 - (1.0 - radii[i] / 4.0) * 0.6;
+      array[i * 3 + 1] = Math.sin(angles[i]) * radii[i] * 1.3;
+      array[i * 3 + 2] = Math.sin(angles[i] * 2.0) * 0.25 - (1.0 - radii[i] / 4.0) * 0.5;
     }
     posAttr.needsUpdate = true;
   });
@@ -158,132 +184,15 @@ function GatheringEnergyParticles({ awakenProgress, warpProgress }: { awakenProg
   return (
     <points ref={pointsRef} geometry={pGeom}>
       <pointsMaterial
-        size={0.065}
-        color="#ff3344"
+        map={circleTexture}
+        size={0.16}
+        color="#ff2b38"
         transparent
-        opacity={Math.min(awakenProgress * 1.2, 0.95)}
+        opacity={Math.min(awakenProgress * 0.9, 0.85)}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
     </points>
-  );
-}
-
-// 3. Procedural 3D Dimensional Cracks (Radiating fractured spacetime)
-function DimensionalCracks3D({ awakenProgress }: { awakenProgress: number }) {
-  const linesRef = useRef<THREE.LineSegments>(null);
-
-  const crackGeometry = useMemo(() => {
-    const points: number[] = [];
-    const crackBranches = 14;
-
-    for (let b = 0; b < crackBranches; b++) {
-      const baseAngle = (b / crackBranches) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
-      let curr = new THREE.Vector3(
-        Math.cos(baseAngle) * 1.35,
-        Math.sin(baseAngle) * 1.9,
-        (Math.random() - 0.5) * 0.2
-      );
-
-      const segments = 4 + Math.floor(Math.random() * 3);
-      for (let s = 0; s < segments; s++) {
-        const next = curr.clone().add(
-          new THREE.Vector3(
-            (Math.cos(baseAngle) + (Math.random() - 0.5) * 0.8) * 0.35,
-            (Math.sin(baseAngle) + (Math.random() - 0.5) * 0.8) * 0.45,
-            (Math.random() - 0.5) * 0.25
-          )
-        );
-        points.push(curr.x, curr.y, curr.z);
-        points.push(next.x, next.y, next.z);
-        curr = next;
-      }
-    }
-
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
-    return geo;
-  }, []);
-
-  useFrame((state) => {
-    if (linesRef.current) {
-      const mat = linesRef.current.material as THREE.LineBasicMaterial;
-      // Pulse crack illumination
-      const pulse = 0.5 + 0.5 * Math.sin(state.clock.getElapsedTime() * 8.0);
-      mat.opacity = Math.max(0, (awakenProgress - 0.25) * 1.4) * (0.6 + pulse * 0.4);
-    }
-  });
-
-  return (
-    <lineSegments ref={linesRef} geometry={crackGeometry}>
-      <lineBasicMaterial
-        color="#ff2233"
-        transparent
-        opacity={0}
-        linewidth={2}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </lineSegments>
-  );
-}
-
-// 4. Procedural Electric Arcs across the Portal Rim
-function ElectricArcs({ awakenProgress }: { awakenProgress: number }) {
-  const lineRef = useRef<THREE.LineSegments>(null);
-
-  const arcGeo = useMemo(() => {
-    const pts = new Float32Array(48 * 3);
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(pts, 3));
-    return geo;
-  }, []);
-
-  useFrame((state) => {
-    if (!lineRef.current || awakenProgress < 0.4) {
-      if (lineRef.current) {
-        (lineRef.current.material as THREE.LineBasicMaterial).opacity = 0;
-      }
-      return;
-    }
-
-    const posAttr = lineRef.current.geometry.attributes.position as THREE.BufferAttribute;
-    const array = posAttr.array as Float32Array;
-    const mat = lineRef.current.material as THREE.LineBasicMaterial;
-
-    // Trigger intermittent electric sparks
-    const isSparking = Math.sin(state.clock.getElapsedTime() * 18.0) > 0.2;
-    mat.opacity = isSparking ? 0.95 : 0.15;
-
-    for (let i = 0; i < 24; i += 2) {
-      const a1 = Math.random() * Math.PI * 2;
-      const a2 = a1 + (Math.random() - 0.5) * 1.2;
-      const r1 = 1.35 + (Math.random() - 0.5) * 0.3;
-      const r2 = 1.35 + (Math.random() - 0.5) * 0.3;
-
-      // Start point
-      array[i * 3 + 0] = Math.cos(a1) * r1;
-      array[i * 3 + 1] = Math.sin(a1) * r1 * 1.4;
-      array[i * 3 + 2] = (Math.random() - 0.5) * 0.3;
-
-      // End point
-      array[(i + 1) * 3 + 0] = Math.cos(a2) * r2;
-      array[(i + 1) * 3 + 1] = Math.sin(a2) * r2 * 1.4;
-      array[(i + 1) * 3 + 2] = (Math.random() - 0.5) * 0.3;
-    }
-    posAttr.needsUpdate = true;
-  });
-
-  return (
-    <lineSegments ref={lineRef} geometry={arcGeo}>
-      <lineBasicMaterial
-        color="#ff8899"
-        transparent
-        opacity={0}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </lineSegments>
   );
 }
 
@@ -307,23 +216,6 @@ export const SupernaturalPortal: React.FC<SupernaturalPortalProps> = ({
     });
   }, []);
 
-  // Organic fleshy rim perimeter geometry
-  const rimGeometry = useMemo(() => {
-    const geo = new THREE.TorusGeometry(1.4, 0.16, 16, 48);
-    geo.scale(1.0, 1.4, 0.4);
-    return geo;
-  }, []);
-
-  const rimMaterial = useMemo(() => {
-    return new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#1f0407'),
-      roughness: 0.6,
-      metalness: 0.2,
-      emissive: new THREE.Color('#7a000d'),
-      emissiveIntensity: 0.4,
-    });
-  }, []);
-
   useFrame((state, delta) => {
     const t = state.clock.getElapsedTime();
     if (vortexMatRef.current) {
@@ -344,43 +236,32 @@ export const SupernaturalPortal: React.FC<SupernaturalPortalProps> = ({
 
     if (portalGroupRef.current) {
       // Gentle dimensional breathing oscillation
-      const scaleMultiplier = (0.8 + awakenProgress * 0.35 + warpProgress * 2.5) * (isHovered ? 1.06 : 1.0);
-      const breath = 1.0 + Math.sin(t * 2.5) * 0.03;
+      const scaleMultiplier = (0.85 + awakenProgress * 0.35 + warpProgress * 2.5) * (isHovered ? 1.06 : 1.0);
+      const breath = 1.0 + Math.sin(t * 2.2) * 0.025;
       portalGroupRef.current.scale.set(
         scaleMultiplier * breath,
         scaleMultiplier * breath,
         scaleMultiplier
       );
-
-      // Subtle roll tilt
-      portalGroupRef.current.rotation.z = Math.sin(t * 0.5) * 0.04;
+      portalGroupRef.current.rotation.z = Math.sin(t * 0.4) * 0.03;
     }
   });
 
   return (
-    <group ref={portalGroupRef} position={[0, 0.5, -2]}>
+    <group ref={portalGroupRef} position={[0, 0.4, -2]}>
       {/* 1. Core Vortex Rift Disc */}
       <mesh>
-        <circleGeometry args={[1.5, 48]} />
+        <circleGeometry args={[1.65, 48]} />
         <primitive object={vortexMaterial} ref={vortexMatRef} attach="material" />
       </mesh>
 
-      {/* 2. Organic Perimeter Rim */}
-      <mesh geometry={rimGeometry} material={rimMaterial} />
+      {/* 2. Soft Inward Gathering Energy Sparks (round glowing particles) */}
+      <SoftGatheringEnergyParticles awakenProgress={awakenProgress} warpProgress={warpProgress} />
 
-      {/* 3. Inward Gathering Energy Sparks */}
-      <GatheringEnergyParticles awakenProgress={awakenProgress} warpProgress={warpProgress} />
-
-      {/* 4. Spacetime Dimensional Cracks */}
-      <DimensionalCracks3D awakenProgress={awakenProgress} />
-
-      {/* 5. Crackling Electric Arcs */}
-      <ElectricArcs awakenProgress={awakenProgress} />
-
-      {/* 6. Central Pulsating Dimensional Light */}
+      {/* 3. Central Pulsating Dimensional Light */}
       <pointLight
         color="#ff1a26"
-        intensity={(0.8 + awakenProgress * 2.2 + warpProgress * 8.0) * (isHovered ? 1.3 : 1.0)}
+        intensity={(0.9 + awakenProgress * 2.0 + warpProgress * 8.0) * (isHovered ? 1.3 : 1.0)}
         distance={14}
         decay={2}
       />
@@ -389,4 +270,3 @@ export const SupernaturalPortal: React.FC<SupernaturalPortalProps> = ({
 };
 
 export default SupernaturalPortal;
-

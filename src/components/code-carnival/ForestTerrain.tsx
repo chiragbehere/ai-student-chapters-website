@@ -1,5 +1,6 @@
 // ForestTerrain.tsx
-// Corrupted forest floor, crawling surface tendrils, and dynamic drifting ground fog plane
+// Corrupted forest floor and dynamic drifting volumetric ground mist plane
+// (All crawling tube noodles/tendrils removed)
 import React, { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -71,7 +72,7 @@ const GroundMistShader = {
       float edgeY = smoothstep(0.0, 0.25, vUv.y) * smoothstep(1.0, 0.75, vUv.y);
       float alpha = fogDensity * edgeX * edgeY * uOpacity;
 
-      // Color shift: reddish near portal (y near center), midnight dark at bounds
+      // Color shift: reddish near portal, midnight dark at bounds
       float distToCenter = length(vWorldPosition.xz - vec2(0.0, -2.0));
       vec3 col = mix(uColorNear, uColorFar, clamp(distToCenter / 15.0, 0.0, 1.0));
 
@@ -92,8 +93,7 @@ export const ForestTerrain: React.FC<ForestTerrainProps> = ({ isMobile = false }
     for (let i = 0; i < pos.count; i++) {
       const x = pos.getX(i);
       const z = pos.getZ(i);
-      // Subtle bumps and ruts in forest path
-      const pathMask = 1.0 - Math.exp(-Math.pow(x / 3.0, 2)); // flatter in middle path
+      const pathMask = 1.0 - Math.exp(-Math.pow(x / 3.0, 2));
       const bump = Math.sin(x * 0.4) * Math.cos(z * 0.3) * 0.35 * pathMask;
       pos.setY(i, bump - 1.85);
     }
@@ -101,46 +101,12 @@ export const ForestTerrain: React.FC<ForestTerrainProps> = ({ isMobile = false }
     return geo;
   }, [isMobile]);
 
-  // Creeping ground tendrils crawling toward portal
-  const tendrilCurves = useMemo(() => {
-    const curves: THREE.CatmullRomCurve3[] = [];
-    const count = isMobile ? 6 : 12;
-
-    for (let i = 0; i < count; i++) {
-      const angle = (i / count) * Math.PI * 2;
-      const startDist = 8 + (i % 3) * 2;
-      const p1 = new THREE.Vector3(Math.cos(angle) * startDist, -1.82, Math.sin(angle) * startDist - 2);
-      const p2 = new THREE.Vector3(
-        Math.cos(angle + 0.3) * (startDist * 0.6),
-        -1.83 + Math.sin(i) * 0.05,
-        Math.sin(angle + 0.3) * (startDist * 0.6) - 2
-      );
-      const p3 = new THREE.Vector3(
-        Math.cos(angle + 0.1) * (startDist * 0.25),
-        -1.84,
-        Math.sin(angle + 0.1) * (startDist * 0.25) - 2
-      );
-      const p4 = new THREE.Vector3(0, -1.85, -2.0);
-      curves.push(new THREE.CatmullRomCurve3([p1, p2, p3, p4]));
-    }
-    return curves;
-  }, [isMobile]);
-
-  // Ground material with dark muddy/charred tone and red specular reflection
   const groundMaterial = useMemo(() => {
     return new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#060810'),
+      color: new THREE.Color('#04060d'),
       roughness: 0.92,
       metalness: 0.15,
       flatShading: true,
-    });
-  }, []);
-
-  const tendrilMaterial = useMemo(() => {
-    return new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#140407'),
-      roughness: 0.75,
-      metalness: 0.3,
     });
   }, []);
 
@@ -166,13 +132,7 @@ export const ForestTerrain: React.FC<ForestTerrainProps> = ({ isMobile = false }
       {/* 1. Main Uneven Forest Floor */}
       <mesh geometry={groundGeometry} material={groundMaterial} receiveShadow={false} />
 
-      {/* 2. Crawling Dimensional Tendrils */}
-      {tendrilCurves.map((curve, idx) => {
-        const geo = new THREE.TubeGeometry(curve, 16, 0.08 * (1 - (idx % 2) * 0.3), 5, false);
-        return <mesh key={idx} geometry={geo} material={tendrilMaterial} />;
-      })}
-
-      {/* 3. Floating Drifting Volumetric Ground Mist */}
+      {/* 2. Floating Drifting Volumetric Ground Mist */}
       <mesh
         position={[0, -1.5, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
@@ -185,4 +145,3 @@ export const ForestTerrain: React.FC<ForestTerrainProps> = ({ isMobile = false }
 };
 
 export default ForestTerrain;
-
