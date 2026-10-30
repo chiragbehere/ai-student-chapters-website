@@ -432,3 +432,4 @@ export const GENERAL_RULES = [
   'Teams should show at least one measurable result, such as accuracy, time saved, loss avoided or users reached.',
   'Source code must be pushed to a public GitHub repository prior to the freeze.',
 ];
+
