@@ -108,3 +108,4 @@ export const FinalGatePortal: React.FC<FinalGatePortalProps> = ({ scrollProgress
 };
 
 export default FinalGatePortal;
+

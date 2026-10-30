@@ -176,7 +176,7 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
           >
             CODE
             <br />
-            CARNIVAL
+            CARNIVAL <span className="text-[#e50914] text-5xl sm:text-7xl md:text-8xl drop-shadow-[0_0_35px_#e50914]">2.0</span>
           </h1>
 
           <p
@@ -578,3 +578,4 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
 };
 
 export default CinematicChapters;
+

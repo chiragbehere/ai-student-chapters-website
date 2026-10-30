@@ -108,3 +108,4 @@ export const CinematicScrollCamera: React.FC<CinematicScrollCameraProps> = ({
 };
 
 export default CinematicScrollCamera;
+

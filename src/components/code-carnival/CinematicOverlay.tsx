@@ -123,8 +123,8 @@ export const CinematicOverlay: React.FC<CinematicOverlayProps> = ({
             ))}
           </div>
 
-          {/* Line 2: CARNIVAL */}
-          <div className="flex justify-center gap-1 sm:gap-2">
+          {/* Line 2: CARNIVAL 2.0 */}
+          <div className="flex justify-center items-center gap-1 sm:gap-2 flex-wrap">
             {titleLine2.map((char, index) => (
               <motion.span
                 key={`line2-${index}`}
@@ -132,7 +132,7 @@ export const CinematicOverlay: React.FC<CinematicOverlayProps> = ({
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 transition={{
                   duration: 0.6,
-                  delay: 2.7 + index * 0.1,
+                  delay: 2.7 + index * 0.08,
                   ease: [0.22, 1, 0.36, 1],
                 }}
                 className="st-cinematic-letter text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tight"
@@ -146,6 +146,25 @@ export const CinematicOverlay: React.FC<CinematicOverlayProps> = ({
                 {char}
               </motion.span>
             ))}
+
+            {/* Glowing 2.0 */}
+            <motion.span
+              initial={{ opacity: 0, scale: 0.6, filter: 'blur(6px)' }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+              transition={{
+                duration: 0.7,
+                delay: 3.4,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="text-[#e50914] text-5xl sm:text-7xl md:text-8xl font-black ml-2 sm:ml-4 inline-block align-baseline"
+              style={{
+                fontFamily: "'Libre Baskerville', serif",
+                textShadow:
+                  '0 0 25px #e50914, 0 0 55px rgba(229, 9, 20, 0.9), 0 0 90px #ff2233',
+              }}
+            >
+              2.0
+            </motion.span>
           </div>
         </div>
 
