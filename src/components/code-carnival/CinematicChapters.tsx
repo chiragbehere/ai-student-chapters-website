@@ -1,15 +1,22 @@
 // CinematicChapters.tsx
 // AAA Cinematic Scroll Storyboard: 6 Distinct Alternate-Dimension Chapters
-// The Breach -> The Transmission -> The Challenges -> The Reward Vault -> The Protocol -> The Final Gate
-import React from 'react';
-import { motion } from 'framer-motion';
+// The Breach -> The Transmission -> The Problem Statements -> The Reward Vault -> The Protocol -> The Final Gate
+import React, { useState, useMemo, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ExternalLink, Trophy, Shield, Flame, Eye, Target, Lightbulb,
   Award, Star, GitBranch, Cpu, Brain, Zap, Swords, Lock, Radio,
-  Terminal, AlertTriangle, ChevronDown, Mail
+  Terminal, AlertTriangle, ChevronDown, Mail, CheckCircle2,
+  FileText, X, ChevronRight, Info
 } from 'lucide-react';
 import { IconInstagram, IconGithub, IconWhatsapp } from '../SocialIcons';
 import { CHAPTER_INFO } from '../../data/chapterData';
+import {
+  PROBLEM_TRACKS,
+  PROBLEM_STATEMENTS,
+  JUDGING_CRITERIA,
+  type ProblemStatement,
+} from '../../data/codeCarnivalProblemStatements';
 
 const UNSTOP_URL = 'https://unstop.com';
 
@@ -26,6 +33,20 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
   setActiveZoneIndex,
   onNavigateChapter,
 }) => {
+  // Problem statement state
+  const [selectedTrackIndex, setSelectedTrackIndex] = useState(0);
+  const [selectedLevel, setSelectedLevel] = useState<'ALL' | 'Beginner' | 'Intermediate' | 'Advanced'>('ALL');
+  const [selectedStatement, setSelectedStatement] = useState<ProblemStatement | null>(null);
+
+  // Sync scroll-driven active zone with user selection
+  useEffect(() => {
+    if (activeZoneIndex >= 0 && activeZoneIndex < PROBLEM_TRACKS.length) {
+      setSelectedTrackIndex(activeZoneIndex);
+    }
+  }, [activeZoneIndex]);
+
+  const currentTrack = PROBLEM_TRACKS[selectedTrackIndex] || PROBLEM_TRACKS[0];
+
   // Current active chapter (1 to 6)
   const currentChapter =
     scrollProgress < 0.15
@@ -40,49 +61,23 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
       ? 5
       : 6;
 
-  // Chapter 3: 4 Challenge Tracks
-  const tracks = [
-    {
-      id: 0,
-      code: 'ZONE_01 // AI_ML',
-      name: 'Artificial Intelligence',
-      badge: 'Neural Architectures',
-      icon: <Brain size={28} className="text-[#00e5ff]" />,
-      accent: '#00e5ff',
-      desc: 'Build autonomous agent workflows, local LLM architectures, predictive neural models, and real-time computer vision systems.',
-      specs: ['Transformer Models', 'Agentic Systems', 'Quantized Inference', 'Neural APIs'],
-    },
-    {
-      id: 1,
-      code: 'ZONE_02 // IOT_HARDWARE',
-      name: 'IoT & Cyber-Physical',
-      badge: 'Hardware Interface',
-      icon: <Cpu size={28} className="text-[#00ff66]" />,
-      accent: '#00ff66',
-      desc: 'Connect microcontrollers, sensor arrays, robotics, and edge computing nodes to build responsive physical-digital hybrids.',
-      specs: ['Microcontrollers', 'Sensor Grids', 'Edge AI', 'Telemetry Streams'],
-    },
-    {
-      id: 2,
-      code: 'ZONE_03 // CYBERSECURITY',
-      name: 'Cybersecurity Defense',
-      badge: 'Threat Containment',
-      icon: <Shield size={28} className="text-[#ff0044]" />,
-      accent: '#ff0044',
-      desc: 'Architect resilient vulnerability shields, automated forensic detection, cryptographic proofs, and defensive anomaly containment.',
-      specs: ['Vulnerability Mitigation', 'Zero-Trust Architectures', 'Reverse Engineering', 'Anomaly Isolation'],
-    },
-    {
-      id: 3,
-      code: 'ZONE_04 // OPEN_INNOVATION',
-      name: 'Open Innovation',
-      badge: 'Rogue Protocol',
-      icon: <Zap size={28} className="text-[#ffaa00]" />,
-      accent: '#ffaa00',
-      desc: 'Zero domain boundaries. Pure developer freedom. Any framework, any bold disruptive idea that solves a real-world problem.',
-      specs: ['Unrestricted Tech Stack', 'Disruptive Products', 'Fullstack Software', 'Radical Utility'],
-    },
+  // Track icons
+  const trackIcons = [
+    <Shield size={20} className="text-[#ff0044]" />,
+    <Brain size={20} className="text-[#00e5ff]" />,
+    <Zap size={20} className="text-[#00ff66]" />,
+    <Cpu size={20} className="text-[#ffaa00]" />,
+    <Lightbulb size={20} className="text-[#a855f7]" />,
   ];
+
+  // Filtered statements for the active track and level
+  const displayedStatements = useMemo(() => {
+    return PROBLEM_STATEMENTS.filter((ps) => {
+      const matchTrack = ps.trackId === currentTrack.id;
+      const matchLevel = selectedLevel === 'ALL' || ps.level === selectedLevel;
+      return matchTrack && matchLevel;
+    });
+  }, [currentTrack.id, selectedLevel]);
 
   // Chapter 5: 24-Hour Timeline
   const timeline = [
@@ -96,16 +91,16 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
     { time: 'T+27:00', label: 'The Closing Gate', desc: 'Champions declared. Cash bounties and gold trophies presented.', icon: <Award size={15} /> },
   ];
 
-  // Chapter 5: 8 Official Lab Directives
+  // Chapter 5: Official Lab Directives & Rules from PDF
   const directives = [
-    'Squads of 2–4 verified members from any accredited state college.',
-    'All core coding and model engineering must occur inside the 24-hour sprint window.',
-    'Pre-existing open-source libraries, UI boilerplates, and APIs are permitted.',
-    'Modern AI developer tools (GitHub Copilot, Cursor, LLM APIs) are fully authorized.',
-    'Evaluations are weighted on Technical Execution (40%), Innovation (35%), and Impact (25%).',
-    'Source code must be pushed to a public GitHub repository prior to the freeze.',
-    'Squads must remain on-site at the IMRDA Campus for the entire competition duration.',
-    "Jury determinations are absolute — no appeals in the Upside Down.",
+    'CRITICAL SELECTION RULE: Each squad may choose ONLY ONE of the 20 official problem statements across all tracks.',
+    'SQUAD COMPOSITION: Squads of 2–4 verified members from any accredited state college.',
+    'DATA PRIVACY & INTEGRITY: Use only public datasets or realistic simulated data. Never use real personal, financial, or health records.',
+    'TRANSPARENT AI: Every submission must state data sources, assumptions and limitations. AI must contribute to analysis/prediction, not just text generation.',
+    'ETHICAL & SAFETY BOUNDARIES: Health, safety, and finance tools provide guidance only and must never replace professionals or official channels.',
+    'MEASURABLE BENCHMARKS: Squads must demonstrate at least one measurable result (e.g. accuracy, time saved, loss avoided, or users reached).',
+    'SOURCE CONTROL FREEZE: All source code must be committed to a public GitHub repository prior to the T+24:00 freeze. Zero extensions.',
+    'JURY RUBRIC: Technical Depth (25%), Problem Relevance (20%), Prototype Quality (20%), Explainability & Ethics (15%), Innovation (10%), Presentation (10%).',
   ];
 
   return (
@@ -115,7 +110,7 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
         {[
           { num: '01', title: 'THE BREACH' },
           { num: '02', title: 'TRANSMISSION' },
-          { num: '03', title: 'CHALLENGES' },
+          { num: '03', title: 'STATEMENTS' },
           { num: '04', title: 'THE VAULT' },
           { num: '05', title: 'PROTOCOLS' },
           { num: '06', title: 'FINAL GATE' },
@@ -187,7 +182,7 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
           </p>
 
           <p className="text-xs sm:text-sm text-[#e8d5b5]/70 max-w-lg mb-8 leading-relaxed">
-            Enter the 24-hour supernatural state-level hackathon arena. Travel through the breach to discover the mission.
+            Enter the 24-hour supernatural state-level hackathon arena. Travel through the breach to unseal the mission.
           </p>
 
           {/* Interactive Scroll Invitation */}
@@ -259,100 +254,314 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
       </section>
 
       {/* ═══════════════════════════════════════════════════
-          CHAPTER 03: THE CHALLENGE ZONES (30% to 50% Scroll)
+          CHAPTER 03: THE PROBLEM STATEMENTS (30% to 50% Scroll)
           ═══════════════════════════════════════════════════ */}
       <section className="min-h-screen flex flex-col items-center justify-center px-4 relative py-20">
-        <div className="w-full max-w-5xl pointer-events-auto">
+        <div className="w-full max-w-6xl pointer-events-auto">
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-900/40 bg-black/50 text-[11px] font-mono tracking-widest text-[#e50914] uppercase mb-2">
               <Terminal size={13} />
-              <span>SECTOR SELECTOR // 4 OPERATIONAL REALMS</span>
+              <span>THE 20 OFFICIAL CHALLENGES // 5 HACKATHON TRACKS</span>
             </div>
             <h2
               className="text-3xl sm:text-5xl font-bold text-white"
               style={{ fontFamily: "'Libre Baskerville', serif" }}
             >
-              Choose Your <span className="text-[#e50914]">Dimension</span>
+              Choose Your <span className="text-[#e50914]">Problem Statement</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#e8d5b5]/60 max-w-md mx-auto mt-2">
-              Select an experimental sector or scroll through each environment.
+            <p className="text-xs sm:text-sm text-[#e8d5b5]/60 max-w-xl mx-auto mt-2">
+              Theme: Open Innovation • Real-world gaps waiting to be solved with AI, Web, Mobile, IoT, and Security.
             </p>
           </div>
 
-          {/* Interactive Zone Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8">
-            {tracks.map((t, idx) => (
+          {/* ── CRITICAL DIRECTIVE BANNER: ONLY ONE PROBLEM STATEMENT CAN BE CHOSEN ── */}
+          <div className="mb-6 p-4 sm:p-5 rounded-sm border-2 border-[#e50914] bg-gradient-to-r from-red-950/70 via-[#0a0204]/90 to-red-950/70 shadow-[0_0_35px_rgba(229,9,20,0.35)] flex items-start gap-3.5 text-left relative overflow-hidden">
+            <div className="p-2 rounded bg-red-950/80 border border-red-700/60 text-[#ffd700] shrink-0 mt-0.5">
+              <AlertTriangle size={20} className="animate-pulse" />
+            </div>
+            <div className="flex-1">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <span className="text-xs sm:text-sm font-bold text-[#ffd700] tracking-widest uppercase">
+                  MANDATORY RULE: ONLY ONE PROBLEM STATEMENT CAN BE CHOSEN
+                </span>
+                <span className="px-2 py-0.5 rounded text-[10px] bg-red-900/60 text-white font-mono uppercase tracking-wider">
+                  1 PER SQUAD
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-[#e8d5b5]/90 leading-relaxed font-mono">
+                Participants may select any single problem statement from any track below. Your squad must dedicate the entire 24-hour hackathon to delivering one deep, functioning, measurable solution for that specific challenge.
+              </p>
+            </div>
+          </div>
+
+          {/* 5 Track Selector Tabs */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5 mb-6">
+            {PROBLEM_TRACKS.map((t, idx) => (
               <button
                 key={t.id}
-                onClick={() => setActiveZoneIndex(idx)}
-                className={`px-4 py-2 rounded-sm border text-xs font-mono tracking-wider transition-all duration-300 flex items-center gap-2 ${
-                  activeZoneIndex === idx
-                    ? 'border-white bg-white/10 text-white shadow-[0_0_15px_rgba(255,255,255,0.2)]'
-                    : 'border-red-950 bg-black/50 text-[#e8d5b5]/60 hover:text-white hover:border-red-800'
+                onClick={() => {
+                  setSelectedTrackIndex(idx);
+                  setActiveZoneIndex(idx);
+                }}
+                className={`p-3 rounded-sm border text-left transition-all duration-300 flex flex-col justify-between gap-2 ${
+                  selectedTrackIndex === idx
+                    ? 'border-white bg-white/10 text-white shadow-[0_0_20px_rgba(255,255,255,0.15)] scale-[1.02]'
+                    : 'border-red-950/70 bg-black/60 text-[#e8d5b5]/60 hover:text-white hover:border-red-800/80'
                 }`}
               >
-                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: t.accent }} />
-                <span>{t.badge}</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono tracking-widest font-bold" style={{ color: t.accent }}>
+                    {t.code}
+                  </span>
+                  <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-black/60 border border-white/10 text-white/70">
+                    {t.statementCount} PS
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 mt-1">
+                  {trackIcons[idx]}
+                  <span className="text-xs font-bold font-mono leading-tight">{t.name}</span>
+                </div>
               </button>
             ))}
           </div>
 
-          {/* Active Zone Full-Fidelity Holographic Chamber */}
-          <div
-            className="border bg-[#070914]/90 backdrop-blur-xl rounded-sm p-6 sm:p-10 shadow-2xl relative overflow-hidden transition-all duration-500"
-            style={{ borderColor: `${tracks[activeZoneIndex].accent}44` }}
-          >
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-6 pb-6 border-b border-white/10">
-              <div className="flex items-center gap-4">
-                <div
-                  className="p-3.5 rounded-sm border"
-                  style={{
-                    backgroundColor: `${tracks[activeZoneIndex].accent}15`,
-                    borderColor: `${tracks[activeZoneIndex].accent}40`,
-                  }}
-                >
-                  {tracks[activeZoneIndex].icon}
-                </div>
-                <div>
-                  <span
-                    className="text-[11px] font-mono tracking-widest uppercase font-bold block"
-                    style={{ color: tracks[activeZoneIndex].accent }}
-                  >
-                    {tracks[activeZoneIndex].code}
-                  </span>
-                  <h3
-                    className="text-2xl sm:text-3xl font-bold text-white"
-                    style={{ fontFamily: "'Libre Baskerville', serif" }}
-                  >
-                    {tracks[activeZoneIndex].name}
-                  </h3>
-                </div>
-              </div>
-
-              <span className="px-3 py-1 rounded bg-black/60 border border-white/20 text-xs font-mono text-white/80">
-                STATE COMPETITION TRACK
+          {/* Track Summary & Difficulty Filter */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-sm border border-red-900/30 bg-[#080914]/80 mb-6">
+            <div>
+              <span className="text-[10px] font-mono tracking-widest uppercase block text-white/50">
+                ACTIVE SECTOR
               </span>
+              <h3 className="text-lg font-bold text-white flex items-center gap-2" style={{ color: currentTrack.accent }}>
+                {currentTrack.name}
+              </h3>
+              <p className="text-xs text-[#e8d5b5]/70 font-mono mt-0.5 max-w-lg">
+                {currentTrack.tagline}
+              </p>
             </div>
 
-            <p className="text-sm sm:text-base text-[#e8d5b5]/90 leading-relaxed font-mono mb-8">
-              {tracks[activeZoneIndex].desc}
-            </p>
-
-            {/* Technical Specifications */}
-            <div className="flex flex-wrap gap-2">
-              {tracks[activeZoneIndex].specs.map((spec, sIdx) => (
-                <span
-                  key={sIdx}
-                  className="px-3 py-1 text-xs font-mono rounded-sm border border-white/15 bg-black/50 text-[#e8d5b5]/80"
+            {/* Level Filter Buttons */}
+            <div className="flex items-center gap-1.5 self-stretch sm:self-auto overflow-x-auto pb-1 sm:pb-0">
+              {(['ALL', 'Beginner', 'Intermediate', 'Advanced'] as const).map((level) => (
+                <button
+                  key={level}
+                  onClick={() => setSelectedLevel(level)}
+                  className={`px-3 py-1 rounded text-xs font-mono tracking-wider transition-all whitespace-nowrap ${
+                    selectedLevel === level
+                      ? 'bg-[#e50914] text-white font-bold shadow-[0_0_12px_rgba(229,9,20,0.6)]'
+                      : 'bg-black/60 border border-white/10 text-[#e8d5b5]/60 hover:text-white hover:border-white/30'
+                  }`}
                 >
-                  • {spec}
-                </span>
+                  {level === 'ALL' ? 'All Levels' : level}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Problem Statements Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+            {displayedStatements.map((ps) => {
+              const levelColor =
+                ps.level === 'Advanced'
+                  ? 'text-[#ff2233] border-red-800/60 bg-red-950/40'
+                  : ps.level === 'Intermediate'
+                  ? 'text-[#ffaa00] border-amber-800/60 bg-amber-950/40'
+                  : 'text-[#00ff66] border-emerald-800/60 bg-emerald-950/40';
+
+              return (
+                <div
+                  key={ps.id}
+                  onClick={() => setSelectedStatement(ps)}
+                  className="group cursor-pointer border border-red-900/40 bg-[#060812]/90 backdrop-blur-xl rounded-sm p-5 sm:p-6 hover:border-[#e50914] transition-all duration-300 hover:shadow-[0_0_25px_rgba(229,9,20,0.25)] flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Card Header: PS Number & Level */}
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded bg-black/80 border border-red-800/40 text-xs font-mono font-bold text-[#e50914]">
+                          PS #{String(ps.number).padStart(2, '0')}
+                        </span>
+                        <span className={`px-2 py-0.5 rounded border text-[10px] font-mono font-bold uppercase ${levelColor}`}>
+                          {ps.level}
+                        </span>
+                      </div>
+                      <ChevronRight size={16} className="text-[#e8d5b5]/40 group-hover:text-[#e50914] group-hover:translate-x-1 transition-all" />
+                    </div>
+
+                    {/* Problem Title */}
+                    <h4
+                      className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-[#ff3b47] transition-colors"
+                      style={{ fontFamily: "'Libre Baskerville', serif" }}
+                    >
+                      {ps.title}
+                    </h4>
+
+                    {/* Real-World Context Snippet */}
+                    <p className="text-xs text-[#e8d5b5]/75 line-clamp-3 leading-relaxed font-mono mb-4">
+                      {ps.context}
+                    </p>
+                  </div>
+
+                  <div>
+                    {/* Domains list */}
+                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/10">
+                      {ps.domains.map((d, dIdx) => (
+                        <span
+                          key={dIdx}
+                          className="px-2 py-0.5 rounded text-[10px] font-mono bg-black/70 border border-white/10 text-white/70"
+                        >
+                          {d}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* View Brief Prompt */}
+                    <div className="mt-4 flex items-center justify-between text-[11px] font-mono text-[#e50914] font-bold tracking-wider">
+                      <span>INSPECT CHALLENGE BRIEF</span>
+                      <FileText size={13} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {displayedStatements.length === 0 && (
+            <div className="p-12 text-center border border-red-950 bg-black/60 rounded-sm">
+              <p className="text-sm text-[#e8d5b5]/60 font-mono">
+                No problem statements match the selected difficulty level in this track.
+              </p>
+            </div>
+          )}
+
+          {/* 6 Judging Rubric Breakdown Snippet */}
+          <div className="mt-8 p-4 sm:p-5 rounded-sm border border-white/15 bg-black/60">
+            <span className="text-[10px] font-mono tracking-widest text-[#ffd700] uppercase font-bold block mb-3">
+              // OFFICIAL JUDGING RUBRIC (EVALUATION WEIGHTAGE)
+            </span>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+              {JUDGING_CRITERIA.map((crit, cIdx) => (
+                <div key={cIdx} className="p-2.5 bg-[#0a0d18] border border-white/10 rounded-sm text-center">
+                  <span className="text-lg font-black text-white block mb-0.5">{crit.weight}%</span>
+                  <span className="text-[10px] text-[#e8d5b5]/70 leading-tight block">{crit.label}</span>
+                </div>
               ))}
             </div>
           </div>
         </div>
       </section>
+
+      {/* ── Problem Statement Full Brief Modal ── */}
+      <AnimatePresence>
+        {selectedStatement && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md pointer-events-auto overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.25 }}
+              className="w-full max-w-3xl my-8 border-2 border-[#e50914] bg-[#070914] rounded-sm p-6 sm:p-8 shadow-[0_0_60px_rgba(229,9,20,0.5)] relative overflow-hidden"
+            >
+              {/* Modal Header */}
+              <div className="flex items-start justify-between gap-4 border-b border-white/15 pb-4 mb-6">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span className="px-2.5 py-1 rounded bg-[#e50914] text-white font-mono text-xs font-bold">
+                      PS #{String(selectedStatement.number).padStart(2, '0')}
+                    </span>
+                    <span className="px-2.5 py-1 rounded bg-black/60 border border-white/20 text-xs font-mono text-white/90">
+                      {selectedStatement.trackName}
+                    </span>
+                    <span className="px-2 py-0.5 rounded border border-amber-500/50 bg-amber-950/40 text-amber-300 text-xs font-mono">
+                      Level: {selectedStatement.level}
+                    </span>
+                  </div>
+                  <h3
+                    className="text-2xl sm:text-3xl font-black text-white"
+                    style={{ fontFamily: "'Libre Baskerville', serif" }}
+                  >
+                    {selectedStatement.title}
+                  </h3>
+                </div>
+
+                <button
+                  onClick={() => setSelectedStatement(null)}
+                  className="p-2 rounded-sm bg-black/60 border border-white/20 text-white/70 hover:text-white hover:border-red-600 transition-colors shrink-0"
+                  aria-label="Close Modal"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="space-y-6 text-xs sm:text-sm font-mono leading-relaxed max-h-[60vh] overflow-y-auto pr-2">
+                {/* Domains */}
+                <div>
+                  <span className="text-[10px] tracking-widest uppercase text-[#e50914] font-bold block mb-1">
+                    DOMAINS
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedStatement.domains.map((d, i) => (
+                      <span key={i} className="px-2.5 py-1 rounded bg-white/10 border border-white/20 text-white font-bold text-xs">
+                        {d}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Problem Context */}
+                <div className="p-4 rounded-sm bg-black/50 border border-white/10">
+                  <span className="text-[10px] tracking-widest uppercase text-[#ffd700] font-bold block mb-2 flex items-center gap-1.5">
+                    <Info size={13} />
+                    THE REAL-WORLD PROBLEM GAP
+                  </span>
+                  <p className="text-[#e8d5b5]/90">{selectedStatement.context}</p>
+                </div>
+
+                {/* Your Challenge */}
+                <div className="p-4 rounded-sm bg-red-950/30 border border-red-700/50">
+                  <span className="text-[10px] tracking-widest uppercase text-[#e50914] font-bold block mb-2 flex items-center gap-1.5">
+                    <Target size={14} />
+                    YOUR HACKATHON CHALLENGE
+                  </span>
+                  <p className="text-white font-medium">{selectedStatement.challenge}</p>
+                </div>
+
+                {/* Expected Outcome */}
+                <div className="p-4 rounded-sm bg-emerald-950/30 border border-emerald-700/50">
+                  <span className="text-[10px] tracking-widest uppercase text-[#00ff66] font-bold block mb-2 flex items-center gap-1.5">
+                    <CheckCircle2 size={14} />
+                    EXPECTED PROTOTYPE OUTCOME
+                  </span>
+                  <p className="text-white font-medium">{selectedStatement.expectedOutcome}</p>
+                </div>
+
+                {/* Critical Note & Constraints */}
+                <div className="p-4 rounded-sm bg-amber-950/30 border border-amber-700/50">
+                  <span className="text-[10px] tracking-widest uppercase text-[#ffd700] font-bold block mb-2 flex items-center gap-1.5">
+                    <AlertTriangle size={14} />
+                    RULES & ETHICAL CONSTRAINTS
+                  </span>
+                  <p className="text-[#ffd700]/90">{selectedStatement.note}</p>
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-6 mt-6 border-t border-white/15">
+                <div className="text-xs text-[#ffd700] font-mono font-bold">
+                  ⚡ Squads can choose ONLY 1 problem statement for the hackathon.
+                </div>
+                <button
+                  onClick={() => setSelectedStatement(null)}
+                  className="px-6 py-2.5 rounded-sm bg-[#e50914] hover:bg-[#ff1b27] text-white font-mono text-xs font-bold tracking-widest uppercase transition-all"
+                >
+                  CLOSE BRIEF
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* ═══════════════════════════════════════════════════
           CHAPTER 04: THE REWARD VAULT (50% to 70% Scroll)
@@ -492,10 +701,10 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
               </div>
             </div>
 
-            {/* Right: 8 Official Lab Directives */}
+            {/* Right: Official Lab Directives (Rules from Document) */}
             <div className="border border-red-900/30 bg-[#070914]/85 backdrop-blur-xl rounded-sm p-6 sm:p-8">
               <span className="text-xs font-mono tracking-widest text-[#e50914] uppercase block mb-4">
-                // CLASSIFIED LAB DIRECTIVES (RULES)
+                // OFFICIAL HACKATHON DIRECTIVES & RULES
               </span>
               <div className="space-y-3">
                 {directives.map((directive, idx) => (
@@ -535,7 +744,7 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
           </h2>
 
           <p className="text-sm sm:text-base text-[#e8d5b5]/80 max-w-lg mb-10 leading-relaxed font-mono">
-            The dimensional rift is closing. Gather your squad, arm your development environments, and claim your place in the arena.
+            The dimensional rift is closing. Gather your squad, choose your single problem statement, and claim your place in the arena.
           </p>
 
           {/* Primary Action Button */}
@@ -578,4 +787,3 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
 };
 
 export default CinematicChapters;
-

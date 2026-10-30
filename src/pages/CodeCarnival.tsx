@@ -83,10 +83,10 @@ export const CodeCarnival: React.FC = () => {
             if (chapter === 6) soundEngine.playPortalAwaken();
           }
 
-          // In Chapter 3 (0.30 to 0.50), dynamically update the active challenge zone based on scroll
+          // In Chapter 3 (0.30 to 0.50), dynamically update the active challenge zone based on scroll (5 tracks)
           if (p >= 0.30 && p < 0.50) {
             const zoneFraction = (p - 0.30) / 0.20;
-            const zoneIdx = Math.min(Math.floor(zoneFraction * 4), 3);
+            const zoneIdx = Math.min(Math.floor(zoneFraction * 5), 4);
             setActiveZoneIndex(zoneIdx);
           }
         },

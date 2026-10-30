@@ -107,3 +107,4 @@ export const MindFlayerSky: React.FC<MindFlayerSkyProps> = () => {
 };
 
 export default MindFlayerSky;
+
