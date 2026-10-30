@@ -121,6 +121,10 @@ export const ProceduralTrees: React.FC<ProceduralTreesProps> = ({ isMobile = fal
       scale: [number, number, number];
       seed: number;
     }> = [
+      // Foreground Rush Trees (Passing close to camera at start)
+      { position: [-2.6, -1.8, 17.5], rotation: [0.08, 0.6, -0.09], scale: [1.35, 1.4, 1.35], seed: 0.7 },
+      { position: [2.5, -1.8, 15.5], rotation: [-0.07, -0.8, 0.08], scale: [1.3, 1.35, 1.3], seed: 0.9 },
+
       // Left Forest Corridor
       { position: [-4.2, -1.8, 12], rotation: [0.05, 0.4, -0.05], scale: [1.1, 1.1, 1.1], seed: 1.2 },
       { position: [-5.5, -1.8, 8], rotation: [-0.04, 0.8, -0.08], scale: [1.25, 1.3, 1.25], seed: 2.7 },
@@ -162,3 +166,4 @@ export const ProceduralTrees: React.FC<ProceduralTreesProps> = ({ isMobile = fal
 };
 
 export default ProceduralTrees;
+

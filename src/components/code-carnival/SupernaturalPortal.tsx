@@ -389,3 +389,4 @@ export const SupernaturalPortal: React.FC<SupernaturalPortalProps> = ({
 };
 
 export default SupernaturalPortal;
+

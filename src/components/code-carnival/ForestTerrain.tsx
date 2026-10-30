@@ -185,3 +185,4 @@ export const ForestTerrain: React.FC<ForestTerrainProps> = ({ isMobile = false }
 };
 
 export default ForestTerrain;
+

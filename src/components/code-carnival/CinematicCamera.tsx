@@ -90,3 +90,4 @@ export const CinematicCamera: React.FC<CinematicCameraProps> = ({
 };
 
 export default CinematicCamera;
+

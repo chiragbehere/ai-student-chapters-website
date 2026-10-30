@@ -141,3 +141,4 @@ export const InstancedForestParticles: React.FC<InstancedForestParticlesProps> =
 };
 
 export default InstancedForestParticles;
+

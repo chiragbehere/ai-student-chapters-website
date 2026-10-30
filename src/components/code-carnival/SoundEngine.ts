@@ -1,6 +1,6 @@
 // SoundEngine.ts
 // AAA Game Audio Engine: Web Audio API procedural synthesis + Stranger Things theme track
-// Zero external asset dependency for sound effects, with user-gesture safety
+// Includes: Forest drone, distant thunder, CRT static/beeps, pneumatic vault unsealing, electric arcs, and warp dive impact
 
 class SupernaturalAudioEngine {
   private ctx: AudioContext | null = null;
@@ -11,15 +11,13 @@ class SupernaturalAudioEngine {
   private droneGain: GainNode | null = null;
   private masterGain: GainNode | null = null;
 
-  constructor() {
-    // Lazy initialized on first user interaction
-  }
-
   public init() {
     if (this.isInitialized) return;
 
     try {
-      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioContextClass =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (!AudioContextClass) return;
 
       this.ctx = new AudioContextClass();
@@ -66,7 +64,7 @@ class SupernaturalAudioEngine {
     return !this.isMuted && this.isInitialized && (this.musicAudio ? !this.musicAudio.paused : false);
   }
 
-  // 1. Play atmospheric forest sub-bass drone (40Hz binaural drone)
+  // 1. Atmospheric Forest Sub-Bass Drone
   public startAtmosphericDrone() {
     if (this.isMuted) return;
     const ctx = this.ensureContext();
@@ -100,9 +98,7 @@ class SupernaturalAudioEngine {
 
       this.droneOsc = osc;
       this.droneGain = gain;
-    } catch {
-      // Audio fallback silent
-    }
+    } catch {}
   }
 
   // 2. Play Theme Track
@@ -110,9 +106,7 @@ class SupernaturalAudioEngine {
     if (this.isMuted) return;
     this.ensureContext();
     if (this.musicAudio) {
-      this.musicAudio.play().catch(() => {
-        // Autoplay policy prevented immediate playback
-      });
+      this.musicAudio.play().catch(() => {});
     }
   }
 
@@ -153,12 +147,10 @@ class SupernaturalAudioEngine {
       gain.connect(this.masterGain);
 
       noise.start();
-    } catch {
-      // Audio error safety
-    }
+    } catch {}
   }
 
-  // 4. Synthesize Electric Crackle / Arc Sparks
+  // 4. Synthesize Electric Arc Sparks
   public playElectricArc() {
     if (this.isMuted) return;
     const ctx = this.ensureContext();
@@ -179,12 +171,82 @@ class SupernaturalAudioEngine {
 
       osc.start();
       osc.stop(ctx.currentTime + 0.16);
-    } catch {
-      // Audio error safety
-    }
+    } catch {}
   }
 
-  // 5. Portal Awakening Resonance Surge
+  // 5. CRT Terminal Teletype / Radio Transmission Beep
+  public playTransmissionBeep() {
+    if (this.isMuted) return;
+    const ctx = this.ensureContext();
+    if (!ctx || !this.masterGain) return;
+
+    try {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1200, ctx.currentTime);
+      osc.frequency.setValueAtTime(1600, ctx.currentTime + 0.04);
+
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.09);
+    } catch {}
+  }
+
+  // 6. Mechanical Hydraulic Vault Unsealing Clank
+  public playVaultUnseal() {
+    if (this.isMuted) return;
+    const ctx = this.ensureContext();
+    if (!ctx || !this.masterGain) return;
+
+    try {
+      // Metallic thud
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(90, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(35, ctx.currentTime + 0.6);
+
+      gain.gain.setValueAtTime(0.4, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.9);
+
+      // Pneumatic air hiss
+      const bufferSize = ctx.sampleRate * 0.8;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(2200, ctx.currentTime);
+      filter.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.7);
+
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.2, ctx.currentTime);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.75);
+
+      noise.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(this.masterGain);
+
+      noise.start();
+    } catch {}
+  }
+
+  // 7. Portal Awakening Resonance Surge
   public playPortalAwaken() {
     if (this.isMuted) return;
     const ctx = this.ensureContext();
@@ -214,19 +276,16 @@ class SupernaturalAudioEngine {
 
       osc.start();
       osc.stop(ctx.currentTime + 3.1);
-    } catch {
-      // Audio error safety
-    }
+    } catch {}
   }
 
-  // 6. Warp Dive Impact (When clicking "ENTER THE EXPERIENCE")
+  // 8. Warp Dive Impact
   public playWarpImpact() {
     if (this.isMuted) return;
     const ctx = this.ensureContext();
     if (!ctx || !this.masterGain) return;
 
     try {
-      // Sub boom
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';
@@ -240,62 +299,7 @@ class SupernaturalAudioEngine {
       gain.connect(this.masterGain);
       osc.start();
       osc.stop(ctx.currentTime + 1.6);
-
-      // Whoosh white noise
-      const bufferSize = ctx.sampleRate * 1.2;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-      }
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.Q.setValueAtTime(2.0, ctx.currentTime);
-      filter.frequency.setValueAtTime(400, ctx.currentTime);
-      filter.frequency.exponentialRampToValueAtTime(1600, ctx.currentTime + 0.6);
-      filter.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 1.2);
-
-      const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(0.01, ctx.currentTime);
-      noiseGain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + 0.4);
-      noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
-
-      noise.connect(filter);
-      filter.connect(noiseGain);
-      noiseGain.connect(this.masterGain);
-
-      noise.start();
-    } catch {
-      // Audio error safety
-    }
-  }
-
-  // 7. Click / UI feedback
-  public playClick() {
-    if (this.isMuted) return;
-    const ctx = this.ensureContext();
-    if (!ctx || !this.masterGain) return;
-
-    try {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.05);
-
-      gain.gain.setValueAtTime(0.1, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
-
-      osc.connect(gain);
-      gain.connect(this.masterGain);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.06);
-    } catch {
-      // Safety
-    }
+    } catch {}
   }
 
   public dispose() {

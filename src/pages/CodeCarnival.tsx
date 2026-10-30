@@ -1,93 +1,104 @@
 // CodeCarnival.tsx
-// AAA Cinematic 3D Supernatural Experience: Stranger Things-inspired Alternate Dimension
-// Features: Real-time 3D Forest, Procedural Portal Rift, Red Lightning, Shaders, Sound Engine, and Event Integration
+// Master AAA Cinematic Scroll Experience for Code Carnival 2.0
+// 6-Chapter Interactive Supernatural Journey driven by GSAP ScrollTrigger and Three.js
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import gsap from 'gsap';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Volume2, VolumeX, ExternalLink, Shield } from 'lucide-react';
 import SEO from '../components/SEO';
 import './CodeCarnival.css';
 
 // 3D & Cinematic Components
-import SupernaturalScene, { WebGLErrorBoundary } from '../components/code-carnival/SupernaturalScene';
+import SupernaturalWorld from '../components/code-carnival/SupernaturalWorld';
+import CinematicChapters from '../components/code-carnival/CinematicChapters';
 import WebGLFallback from '../components/code-carnival/WebGLFallback';
-import CinematicOverlay from '../components/code-carnival/CinematicOverlay';
-import EventWebsiteContent from '../components/code-carnival/EventWebsiteContent';
 import VHSOverlay from '../components/code-carnival/VHSOverlay';
 import { detectPerformance, type PerformanceSettings } from '../components/code-carnival/PerformanceManager';
 import soundEngine from '../components/code-carnival/SoundEngine';
 
-export type CinematicPhase =
-  | 'SCENE_1_INTRO'
-  | 'SCENE_2_AWAKEN'
-  | 'SCENE_3_REVEAL'
-  | 'SCENE_4_WARP'
-  | 'EXPLORING_SITE';
+gsap.registerPlugin(ScrollTrigger);
+
+const UNSTOP_URL = 'https://unstop.com';
+
+// WebGL Error Boundary
+class WebGLErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback: React.ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    console.warn('Supernatural 3D Scene Error fallback activated:', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
 
 export const CodeCarnival: React.FC = () => {
-  const [cinematicPhase, setCinematicPhase] = useState<CinematicPhase>('SCENE_1_INTRO');
-  const [awakenProgress, setAwakenProgress] = useState(0.15);
-  const [warpProgress, setWarpProgress] = useState(0.0);
-  const [scrollY, setScrollY] = useState(0);
-  const [isHoveredPortal, setIsHoveredPortal] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0.0);
+  const [activeZoneIndex, setActiveZoneIndex] = useState(0);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const [showWarpFlash, setShowWarpFlash] = useState(false);
   const [performance] = useState<PerformanceSettings>(() => detectPerformance());
 
-  const warpTimelineRef = useRef<gsap.core.Timeline | null>(null);
-  const isTransitioningRef = useRef(false);
+  // Track threshold crossed for audio triggers to prevent multiple plays in the same scroll direction
+  const lastCrossedChapter = useRef(1);
 
-  // 1. Scene Timeline Director: Progressively reveals Scenes 1, 2, and 3
+  // 1. GSAP ScrollTrigger Engine: Synchronizes scrollbar with the 6-chapter world
   useEffect(() => {
-    // Scene 2: Portal Awakening after 1.8 seconds
-    const awakenTimer = setTimeout(() => {
-      setCinematicPhase((prev) => {
-        if (prev === 'SCENE_1_INTRO') {
-          setAwakenProgress(0.7);
-          soundEngine.playPortalAwaken();
-          return 'SCENE_2_AWAKEN';
-        }
-        return prev;
-      });
-    }, 1800);
+    if (!containerRef.current) return;
 
-    // Scene 3: CODE CARNIVAL Title Reveal after 3.6 seconds
-    const revealTimer = setTimeout(() => {
-      setCinematicPhase((prev) => {
-        if (prev === 'SCENE_2_AWAKEN') {
-          setAwakenProgress(1.0);
-          return 'SCENE_3_REVEAL';
-        }
-        return prev;
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.6,
+        onUpdate: (self) => {
+          const p = self.progress;
+          setScrollProgress(p);
+
+          // Calculate chapter for sound cues
+          let chapter = 1;
+          if (p >= 0.85) chapter = 6;
+          else if (p >= 0.70) chapter = 5;
+          else if (p >= 0.50) chapter = 4;
+          else if (p >= 0.30) chapter = 3;
+          else if (p >= 0.15) chapter = 2;
+
+          // Sound cues on chapter entry
+          if (chapter !== lastCrossedChapter.current) {
+            lastCrossedChapter.current = chapter;
+            if (chapter === 2) soundEngine.playTransmissionBeep();
+            if (chapter === 4) soundEngine.playVaultUnseal();
+            if (chapter === 6) soundEngine.playPortalAwaken();
+          }
+
+          // In Chapter 3 (0.30 to 0.50), dynamically update the active challenge zone based on scroll
+          if (p >= 0.30 && p < 0.50) {
+            const zoneFraction = (p - 0.30) / 0.20;
+            const zoneIdx = Math.min(Math.floor(zoneFraction * 4), 3);
+            setActiveZoneIndex(zoneIdx);
+          }
+        },
       });
-    }, 3600);
+    }, containerRef);
 
     return () => {
-      clearTimeout(awakenTimer);
-      clearTimeout(revealTimer);
+      ctx.revert();
     };
   }, []);
 
-  // 2. Track Window Scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrollY(currentScrollY);
-
-      // If user scrolls during the opening scenes, automatically trigger the portal dive
-      if (
-        !isTransitioningRef.current &&
-        cinematicPhase !== 'SCENE_4_WARP' &&
-        cinematicPhase !== 'EXPLORING_SITE' &&
-        currentScrollY > 40
-      ) {
-        triggerEnterExperience();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [cinematicPhase]);
-
-  // 3. Audio Toggle Handler
+  // 2. Audio Toggle Handler
   const handleToggleAudio = useCallback(() => {
     soundEngine.init();
     const active = soundEngine.toggleMute();
@@ -98,108 +109,97 @@ export const CodeCarnival: React.FC = () => {
     }
   }, []);
 
-  // 4. Trigger Scene 4: "ENTER THE EXPERIENCE" Portal Dive Warp
-  const triggerEnterExperience = useCallback(() => {
-    if (isTransitioningRef.current) return;
-    isTransitioningRef.current = true;
-
-    // Start atmospheric audio if initialized
-    soundEngine.init();
-    soundEngine.playWarpImpact();
-    if (isPlayingAudio) {
-      soundEngine.playThemeMusic();
-    }
-
-    setCinematicPhase('SCENE_4_WARP');
-    setShowWarpFlash(true);
-
-    // GSAP Warp Progression
-    const warpObj = { progress: 0 };
-    warpTimelineRef.current = gsap.timeline({
-      onUpdate: () => {
-        setWarpProgress(warpObj.progress);
-      },
-      onComplete: () => {
-        setCinematicPhase('EXPLORING_SITE');
-        setShowWarpFlash(false);
-      },
-    });
-
-    warpTimelineRef.current.to(warpObj, {
-      progress: 1.0,
-      duration: 1.6,
-      ease: 'power3.inOut',
-    });
-  }, [isPlayingAudio]);
-
-  // 5. Callback when Three.js camera passes through the rift
-  const handleTransitionComplete = useCallback(() => {
-    setCinematicPhase('EXPLORING_SITE');
-    setShowWarpFlash(false);
+  // 3. Chapter HUD Navigation: Smooth scroll to selected chapter
+  const handleNavigateChapter = useCallback((chapterIndex: number) => {
+    if (!containerRef.current) return;
+    const totalHeight = containerRef.current.scrollHeight - window.innerHeight;
+    const targets = [0.0, 0.20, 0.38, 0.58, 0.76, 0.94];
+    const targetScrollY = totalHeight * targets[chapterIndex];
+    window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
   }, []);
 
-  // 6. Portal Hover Feedback
-  const handleHoverPortalStart = useCallback(() => {
-    setIsHoveredPortal(true);
-    soundEngine.playElectricArc();
-  }, []);
-
-  const handleHoverPortalEnd = useCallback(() => {
-    setIsHoveredPortal(false);
-  }, []);
-
-  // Cleanup audio & GSAP timelines on unmount
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       soundEngine.dispose();
-      if (warpTimelineRef.current) {
-        warpTimelineRef.current.kill();
-      }
     };
   }, []);
 
   return (
-    <div className="st-page relative min-h-screen bg-[#020409] text-[#e8d5b5] overflow-x-hidden selection:bg-[#e50914] selection:text-white">
+    <div
+      ref={containerRef}
+      className="st-page relative w-full bg-[#020409] text-[#e8d5b5] selection:bg-[#e50914] selection:text-white"
+    >
       <SEO
         title="Code Carnival 2.0 — The Upside Down of Code | AI Student Chapter"
-        description="Enter the Upside Down! Code Carnival 2.0 is an AAA cinematic 24-hour State Level Hackathon with ₹50K+ prize pool organized by AI Student Chapter, RCPET's IMRD."
+        description="Experience Code Carnival 2.0: A 24-hour State-Level Hackathon with ₹50K+ bounty presented by AI Student Chapter, RCPET's IMRD. Enter the Upside Down."
       />
 
-      {/* 1. Real-time 3D Supernatural Canvas with Error Boundary & CSS Fallback */}
-      <WebGLErrorBoundary fallback={<WebGLFallback entering={cinematicPhase === 'SCENE_4_WARP'} />}>
-        <SupernaturalScene
-          cinematicPhase={cinematicPhase}
-          awakenProgress={awakenProgress}
-          warpProgress={warpProgress}
-          scrollY={scrollY}
+      {/* ── Fixed Top Cinematic Control Bar ── */}
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 sm:px-8 py-4 backdrop-blur-md bg-black/40 border-b border-red-950/40">
+        <div className="flex items-center gap-3">
+          <a
+            href="/"
+            className="flex items-center gap-2 text-white font-bold tracking-widest text-xs hover:text-[#e50914] transition-colors"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#e50914] shadow-[0_0_8px_#e50914] animate-pulse" />
+            <span style={{ fontFamily: "'Libre Baskerville', serif", letterSpacing: '0.12em' }}>
+              CODE CARNIVAL 2.0
+            </span>
+          </a>
+          <span className="hidden sm:inline-block px-2.5 py-0.5 rounded text-[10px] font-mono tracking-widest text-[#ffd700] border border-[#ffd700]/30 bg-[#ffd700]/10">
+            <Shield size={10} className="inline mr-1" />
+            STATE LEVEL
+          </span>
+        </div>
+
+        <div className="flex items-center gap-3 font-mono text-xs">
+          {/* Audio Toggle */}
+          <button
+            onClick={handleToggleAudio}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] tracking-wider transition-all duration-300 ${
+              isPlayingAudio
+                ? 'border-[#e50914] text-[#e50914] bg-[#e50914]/15 shadow-[0_0_12px_rgba(229,9,20,0.4)]'
+                : 'border-[#e8d5b5]/25 text-[#e8d5b5]/60 hover:text-white hover:border-[#e8d5b5]/50'
+            }`}
+            title={isPlayingAudio ? 'Mute Ambience' : 'Enable Cinematic Audio'}
+            aria-label="Toggle Audio"
+          >
+            {isPlayingAudio ? <Volume2 size={13} className="text-[#e50914]" /> : <VolumeX size={13} />}
+            <span className="hidden sm:inline">{isPlayingAudio ? 'AUDIO ON' : 'AUDIO OFF'}</span>
+          </button>
+
+          {/* Quick Register Gateway */}
+          <a
+            href={UNSTOP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-sm bg-[#e50914] text-white font-bold tracking-widest text-[11px] uppercase shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:bg-[#ff1b27] transition-all"
+          >
+            <span>REGISTER</span>
+            <ExternalLink size={12} />
+          </a>
+        </div>
+      </header>
+
+      {/* ── Persistent Fullscreen 3D Spatial Universe (Pinned in Background) ── */}
+      <WebGLErrorBoundary fallback={<WebGLFallback intensity={1.2} />}>
+        <SupernaturalWorld
+          scrollProgress={scrollProgress}
+          activeZoneIndex={activeZoneIndex}
           performance={performance}
-          onTransitionComplete={handleTransitionComplete}
-          isHoveredPortal={isHoveredPortal}
         />
       </WebGLErrorBoundary>
 
-      {/* 2. Opening Cinematic UI Overlay (Scenes 1 to 4) */}
-      <CinematicOverlay
-        cinematicPhase={cinematicPhase}
-        onEnterExperience={triggerEnterExperience}
-        onHoverPortalStart={handleHoverPortalStart}
-        onHoverPortalEnd={handleHoverPortalEnd}
-        isPlayingAudio={isPlayingAudio}
-        onToggleAudio={handleToggleAudio}
+      {/* ── The 6-Chapter Narrative Storyboard Overlay ── */}
+      <CinematicChapters
+        scrollProgress={scrollProgress}
+        activeZoneIndex={activeZoneIndex}
+        setActiveZoneIndex={setActiveZoneIndex}
+        onNavigateChapter={handleNavigateChapter}
       />
 
-      {/* 3. Blinding Dimensional Warp Flash */}
-      {showWarpFlash && <div className="st-warp-flash" />}
-
-      {/* 4. Full Event Website Content (Revealed after portal dive) */}
-      {cinematicPhase === 'EXPLORING_SITE' && (
-        <EventWebsiteContent
-          isPlayingAudio={isPlayingAudio}
-          onToggleAudio={handleToggleAudio}
-        />
-      )}
-
-      {/* 5. Analog CRT Scanlines & Atmospheric Vignette */}
+      {/* ── Analog CRT Scanlines & Atmospheric Vignette ── */}
       <VHSOverlay />
     </div>
   );
