@@ -3,13 +3,11 @@ import { Sparkles, Calendar, MapPin, Trophy, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import EventRegistrationModal from '../components/EventRegistrationModal';
-import AirlReportModal from '../components/AirlReportModal';
 import { EVENTS, type EventItem } from '../data/chapterData';
 
 export const Events: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [registeringEvent, setRegisteringEvent] = useState<EventItem | null>(null);
-  const [isAirlReportOpen, setIsAirlReportOpen] = useState<boolean>(false);
 
   const categories = ['All', 'Research League', 'Hackathon', 'Workshop', 'Guest Lecture'];
 
@@ -132,13 +130,13 @@ export const Events: React.FC = () => {
             <div className="pt-6 border-t border-[#cdd6cd] space-y-2">
               {event.hasDetailedReport ? (
                 <div className="space-y-2">
-                  <button
-                    onClick={() => setIsAirlReportOpen(true)}
-                    className="btn-green w-full py-3 text-xs font-heading font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                  <Link
+                    to="/events/ai-research-league-2"
+                    className="btn-green w-full py-3 text-xs font-heading font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-sm"
                   >
                     <Trophy size={14} />
-                    <span>View Report & Winners 🏆</span>
-                  </button>
+                    <span>View Full Report & Winners 🏆 ↗</span>
+                  </Link>
                   {event.reportPdfUrl && (
                     <a
                       href={event.reportPdfUrl}
@@ -178,11 +176,6 @@ export const Events: React.FC = () => {
           onClose={() => setRegisteringEvent(null)}
         />
       )}
-
-      <AirlReportModal
-        isOpen={isAirlReportOpen}
-        onClose={() => setIsAirlReportOpen(false)}
-      />
     </div>
   );
 };

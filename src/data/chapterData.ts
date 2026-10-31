@@ -240,6 +240,7 @@ export const EVENTS: EventItem[] = [
     tags: ["Research League", "114 Builders", "36 Teams", "Live Prototypes", "UG & PG", "Winners Declared"],
     hasDetailedReport: true,
     reportPdfUrl: "/documents/report-airl-2.pdf",
+    registrationUrl: "/events/ai-research-league-2",
   },
   {
     id: "code-carnival-2026",

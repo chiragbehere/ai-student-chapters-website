@@ -15,6 +15,7 @@ const Gallery = lazy(() => import('./pages/Gallery'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const Sessions = lazy(() => import('./pages/Sessions'));
 const Tools = lazy(() => import('./pages/Tools'));
+const AirlReportPage = lazy(() => import('./pages/AirlReportPage'));
 import CodeCarnival from './pages/CodeCarnival';
 
 // Page loading skeleton
@@ -123,6 +124,16 @@ const AnimatedRoutes = () => {
         <Route path="/events" element={
           <Suspense fallback={<PageLoader />}>
             <PageTransition><Events /></PageTransition>
+          </Suspense>
+        } />
+        <Route path="/events/ai-research-league-2" element={
+          <Suspense fallback={<PageLoader />}>
+            <PageTransition><AirlReportPage /></PageTransition>
+          </Suspense>
+        } />
+        <Route path="/ai-research-league-2" element={
+          <Suspense fallback={<PageLoader />}>
+            <PageTransition><AirlReportPage /></PageTransition>
           </Suspense>
         } />
         <Route path="/team" element={

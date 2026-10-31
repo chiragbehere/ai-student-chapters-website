@@ -4,7 +4,7 @@
 // ============================================================
 
 export const fallbackEvents = [
-  { id: 2, title: 'AI Research League 2.0 – 2026', slug: 'ai-research-league-2', date: '2026-09-19', description: 'Premier multi-stage research competition where 114 participants across 36 UG & PG teams developed AI solutions and interactive web prototypes, evaluated by senior industry leaders from Tata Technologies, Hitachi Energy, and Aditya Birla Capital.', status: 'completed', location: 'Activity Hall & Classrooms, IMRD Shirpur', duration: 'Full Day', participants_count: 114, logo_url: '/images/airl-2/airl2_overall_winners_group.jpg', registration_url: null, registration_open: false, created_at: '' },
+  { id: 2, title: 'AI Research League 2.0 – 2026', slug: 'ai-research-league-2', date: '2026-09-19', description: 'Premier multi-stage research competition where 114 participants across 36 UG & PG teams developed AI solutions and interactive web prototypes, evaluated by senior industry leaders from Tata Technologies, Hitachi Energy, and Aditya Birla Capital.', status: 'completed', location: 'Activity Hall & Classrooms, IMRD Shirpur', duration: 'Full Day', participants_count: 114, logo_url: '/images/airl-2/airl2_overall_winners_group.jpg', registration_url: '/events/ai-research-league-2', registration_open: false, created_at: '' },
   { id: 1, title: 'Code Carnival', slug: 'code-carnival', date: '2026-03-24', description: 'The 6-hour build sprint was a massive success! 33 participants competed across UG & PG categories.', status: 'completed', location: 'On Campus', duration: '6 Hours', participants_count: 33, logo_url: '/images/code-carnival-logo.webp', registration_url: null, registration_open: false, created_at: '' },
 ];
 
