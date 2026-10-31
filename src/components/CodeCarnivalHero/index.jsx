@@ -15,8 +15,7 @@ import { LightningController, AudioManager } from './codecarnival-animations';
 const BASE = '/CodeCarnival_3D_Assets/';
 
 // Themed 3D Asset Loader using drei's useProgress
-function AssetLoadingScreen() {
-  const { progress } = useProgress();
+function AssetLoadingScreen({ progress = 0 }) {
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050308] text-white">
       <div className="w-16 h-16 rounded-full border-2 border-red-900 border-t-[#e50914] animate-spin mb-4" />
@@ -56,7 +55,24 @@ function WebGLStaticFallback({ onEnter }) {
   );
 }
 
+class CanvasErrorBoundary extends React.Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(err) {
+    console.warn("Canvas WebGL error caught:", err);
+  }
+  render() {
+    if (this.state.hasError) {
+      return <WebGLStaticFallback onEnter={this.props.onFallbackEnter} />;
+    }
+    return this.props.children;
+  }
+}
+
 export function CodeCarnivalHero({ onEnterComplete, isIntroActive = true }) {
+  const { progress, active } = useProgress();
   const [flashOpacity, setFlashOpacity] = useState(0);
   const [flashIndex, setFlashIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -142,7 +158,10 @@ export function CodeCarnivalHero({ onEnterComplete, isIntroActive = true }) {
   }
 
   return (
-    <div className="fixed inset-0 w-full h-full overflow-hidden select-none bg-[#050308]">
+    <div className="fixed inset-0 w-full h-full overflow-hidden select-none bg-[#050308] z-50">
+      {/* 0. Asset Preloader Screen */}
+      {active && progress < 100 && <AssetLoadingScreen progress={progress} />}
+
       {/* 1. Accessible Controls (Sound Toggle + Skip Button) */}
       <div className="fixed top-4 right-4 z-40 flex items-center gap-3">
         <SoundToggle audioManager={audioManager} />
@@ -157,22 +176,24 @@ export function CodeCarnivalHero({ onEnterComplete, isIntroActive = true }) {
       </div>
 
       {/* 2. 3D Canvas Scene */}
-      <Suspense fallback={<AssetLoadingScreen />}>
-        <div className="absolute inset-0 w-full h-full">
-          <HeroScene
-            activePresetName={lightingPreset}
-            lightningControllerRef={lightningControllerRef}
-            onFlashTriggered={(idx) => {
-              setFlashIndex(idx);
-              setFlashOpacity(0.9);
-              setTimeout(() => setFlashOpacity(0), 180);
-            }}
-            reducedMotion={reducedMotion}
-            isMobile={isMobile}
-            enableBloom={!isMobile}
-          />
-        </div>
-      </Suspense>
+      <CanvasErrorBoundary onFallbackEnter={handleSkipIntro}>
+        <Suspense fallback={<AssetLoadingScreen />}>
+          <div className="absolute inset-0 w-full h-full">
+            <HeroScene
+              activePresetName={lightingPreset}
+              lightningControllerRef={lightningControllerRef}
+              onFlashTriggered={(idx) => {
+                setFlashIndex(idx);
+                setFlashOpacity(0.9);
+                setTimeout(() => setFlashOpacity(0), 180);
+              }}
+              reducedMotion={reducedMotion}
+              isMobile={isMobile}
+              enableBloom={!isMobile}
+            />
+          </div>
+        </Suspense>
+      </CanvasErrorBoundary>
 
       {/* 3. Screen Overlays (Film grain, vignette, red glow, lightning flash) */}
       <Overlays
@@ -200,3 +221,4 @@ export function CodeCarnivalHero({ onEnterComplete, isIntroActive = true }) {
 }
 
 export default CodeCarnivalHero;
+

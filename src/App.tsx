@@ -51,7 +51,7 @@ class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean}
       return (
         <div className="min-h-screen flex items-center justify-center flex-col gap-4">
           <h2 className="text-xl text-heading font-bold font-heading">Syncing new updates...</h2>
-          <button onClick={() => window.location.reload()} className="px-6 py-2 bg-primary/20 text-primary border border-primary/20 rounded-full hover:bg-primary/30 transition-colors">
+          <button onClick={() => { try { sessionStorage.clear(); } catch(e){}; window.location.reload(); }} className="px-6 py-2 bg-primary/20 text-primary border border-primary/20 rounded-full hover:bg-primary/30 transition-colors">
             Tap to Reload
           </button>
         </div>

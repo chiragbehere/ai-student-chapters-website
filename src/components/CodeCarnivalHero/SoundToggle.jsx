@@ -48,3 +48,4 @@ export function SoundToggle({ audioManager, className = '' }) {
 }
 
 export default SoundToggle;
+

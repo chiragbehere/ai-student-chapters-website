@@ -161,9 +161,11 @@ export const CodeCarnival: React.FC = () => {
 
       {/* ── 3D Opening Cinematic Hero Scene (Mounted upon entry, once per session or on replay) ── */}
       {showHeroIntro && (
-        <Suspense fallback={<div className="fixed inset-0 bg-[#050308] z-50" />}>
-          <CodeCarnivalHero onEnterComplete={handleEnterSite} />
-        </Suspense>
+        <WebGLErrorBoundary fallback={null}>
+          <Suspense fallback={<div className="fixed inset-0 bg-[#050308] z-50 flex items-center justify-center text-[#e50914] font-mono tracking-widest text-xs">INITIALIZING RIFT...</div>}>
+            <CodeCarnivalHero onEnterComplete={handleEnterSite} />
+          </Suspense>
+        </WebGLErrorBoundary>
       )}
 
       {/* ── Fixed Top Cinematic Control Bar ── */}

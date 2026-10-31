@@ -22,27 +22,27 @@ export function useHeroTimeline({ audioManager, lightningController, onPortalOpe
     setPhase('FOREST');
     setLightingPreset('forest');
 
-    // Step 2: Electric crackle & first lightning after 2.2 seconds
+    // Step 2: Electric crackle & first lightning after 1.2 seconds
     const t1 = setTimeout(() => {
       setPhase('LIGHTNING');
       if (audioManager) audioManager.shot('crackle', 0.9);
       if (lightningController) lightningController.trigger();
-    }, 2200);
+    }, 1200);
 
-    // Step 3: Portal awakening after 4.0 seconds
+    // Step 3: Portal awakening after 2.0 seconds
     const t2 = setTimeout(() => {
       setPhase('PORTAL_OPEN');
       if (audioManager) audioManager.shot('open', 1.0);
       setLightingPreset('portal');
       if (onPortalOpen) onPortalOpen();
-    }, 4200);
+    }, 2000);
 
-    // Step 4: Cinematic impact & title reveal after 6.2 seconds
+    // Step 4: Cinematic impact & title reveal after 2.8 seconds
     const t3 = setTimeout(() => {
       setPhase('TITLE_REVEAL');
       if (audioManager) audioManager.shot('impact', 1.0);
       setTitleVisible(true);
-    }, 6200);
+    }, 2800);
 
     return () => {
       clearTimeout(t1);
@@ -82,3 +82,4 @@ export function useHeroTimeline({ audioManager, lightningController, onPortalOpe
 }
 
 export default useHeroTimeline;
+

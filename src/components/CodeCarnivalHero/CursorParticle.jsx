@@ -85,3 +85,4 @@ export function CursorParticle({ enabled = true }) {
 }
 
 export default CursorParticle;
+

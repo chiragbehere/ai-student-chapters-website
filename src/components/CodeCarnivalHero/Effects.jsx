@@ -37,3 +37,4 @@ export function Effects({ enabled = true, bloomStrength = 0.8, bloomThreshold = 
 }
 
 export default Effects;
+

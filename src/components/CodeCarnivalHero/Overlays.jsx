@@ -82,3 +82,4 @@ export function Overlays({ flashOpacity = 0, flashIndex = 1, reducedMotion = fal
 }
 
 export default Overlays;
+

@@ -3,7 +3,7 @@
 // Supports glTF animation clips, procedural particles, dynamic lightning, floating props, and lighting presets
 import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, useTexture } from '@react-three/drei';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import sceneLayout from './sceneLayout';
 import { PRESET_FOREST, PRESET_PORTAL, PRESET_RED_ALERT } from './lightingPresets';
@@ -143,25 +143,26 @@ function SceneRuntime({
 
   // Target lighting state for smooth cross-fading
   const targetLighting = useRef({
-    ambientColor: new THREE.Color(PRESET_FOREST.lights[0].color),
-    ambientIntensity: PRESET_FOREST.lights[0].intensity,
-    dirColor: new THREE.Color(PRESET_FOREST.lights[2].color),
-    dirIntensity: PRESET_FOREST.lights[2].intensity,
-    portalColor: new THREE.Color(PRESET_FOREST.lights[3].color),
-    portalIntensity: PRESET_FOREST.lights[3].intensity,
-    fogColor: new THREE.Color(PRESET_FOREST.fog.color),
-    fogDensity: PRESET_FOREST.fog.density,
-    bgColor: new THREE.Color(PRESET_FOREST.background),
+    ambientColor: new THREE.Color(PRESET_FOREST.ambient?.color || '#1a1530'),
+    ambientIntensity: PRESET_FOREST.ambient?.intensity ?? 0.45,
+    dirColor: new THREE.Color(PRESET_FOREST.directional?.[0]?.color || '#6f86d6'),
+    dirIntensity: PRESET_FOREST.directional?.[0]?.intensity ?? 0.9,
+    portalColor: new THREE.Color(PRESET_FOREST.points?.[0]?.color || '#ff2a14'),
+    portalIntensity: PRESET_FOREST.points?.[0]?.intensity ?? 40,
+    fogColor: new THREE.Color(PRESET_FOREST.fog?.color || '#120610'),
+    fogDensity: PRESET_FOREST.fog?.density ?? 0.018,
+    bgColor: new THREE.Color(PRESET_FOREST.background || '#0a0510'),
   });
 
-  // Load particle sprites
-  const [redParticle, ember, fog] = useTexture([
-    `${BASE}textures/particles/red_particle.png`,
-    `${BASE}textures/particles/particle_ember.png`,
-    `${BASE}textures/particles/fog_puff.png`,
-  ]);
-
-  const particleTextures = useMemo(() => ({ redParticle, ember, fog }), [redParticle, ember, fog]);
+  // Load particle sprites safely without suspending React
+  const particleTextures = useMemo(() => {
+    const loader = new THREE.TextureLoader();
+    return {
+      redParticle: loader.load(`${BASE}textures/particles/red_particle.png`),
+      ember: loader.load(`${BASE}textures/particles/particle_ember.png`),
+      fog: loader.load(`${BASE}textures/particles/fog_puff.png`),
+    };
+  }, []);
 
   // Handle register node from placements
   const handleRegisterNode = useMemo(
@@ -245,26 +246,29 @@ function SceneRuntime({
         ? PRESET_RED_ALERT
         : PRESET_FOREST;
 
-    targetLighting.current.bgColor.set(preset.background);
-    targetLighting.current.fogColor.set(preset.fog.color);
-    targetLighting.current.fogDensity = isMobile ? preset.fog.density * 0.8 : preset.fog.density;
-
-    const amb = preset.lights.find((l) => l.type === 'ambient');
-    if (amb) {
-      targetLighting.current.ambientColor.set(amb.color);
-      targetLighting.current.ambientIntensity = amb.intensity;
+    if (preset.background) targetLighting.current.bgColor.set(preset.background);
+    if (preset.fog) {
+      targetLighting.current.fogColor.set(preset.fog.color);
+      targetLighting.current.fogDensity = isMobile ? preset.fog.density * 0.8 : preset.fog.density;
     }
 
-    const dir = preset.lights.find((l) => l.type === 'directional');
-    if (dir) {
-      targetLighting.current.dirColor.set(dir.color);
-      targetLighting.current.dirIntensity = dir.intensity;
+    if (preset.ambient) {
+      targetLighting.current.ambientColor.set(preset.ambient.color);
+      targetLighting.current.ambientIntensity = preset.ambient.intensity;
     }
 
-    const point = preset.lights.find((l) => l.type === 'point');
-    if (point) {
-      targetLighting.current.portalColor.set(point.color);
-      targetLighting.current.portalIntensity = point.intensity;
+    if (preset.directional && preset.directional.length > 0) {
+      targetLighting.current.dirColor.set(preset.directional[0].color);
+      targetLighting.current.dirIntensity = preset.directional[0].intensity;
+    } else {
+      targetLighting.current.dirIntensity = 0;
+    }
+
+    if (preset.points && preset.points.length > 0) {
+      targetLighting.current.portalColor.set(preset.points[0].color);
+      targetLighting.current.portalIntensity = preset.points[0].intensity;
+    } else {
+      targetLighting.current.portalIntensity = 0;
     }
   }, [activePresetName, isMobile]);
 
@@ -446,18 +450,21 @@ export function HeroScene({
       <color attach="background" args={['#050308']} />
       <fogExp2 attach="fog" args={['#12040a', 0.02]} />
 
-      <SceneRuntime
-        activePresetName={activePresetName}
-        lightningControllerRef={lightningControllerRef}
-        onFlashTriggered={onFlashTriggered}
-        reducedMotion={reducedMotion}
-        isMobile={isMobile}
-        mousePos={mousePos}
-      />
+      <React.Suspense fallback={null}>
+        <SceneRuntime
+          activePresetName={activePresetName}
+          lightningControllerRef={lightningControllerRef}
+          onFlashTriggered={onFlashTriggered}
+          reducedMotion={reducedMotion}
+          isMobile={isMobile}
+          mousePos={mousePos}
+        />
 
-      <Effects enabled={enableBloom && !isMobile} bloomStrength={0.8} bloomThreshold={0.65} />
+        <Effects enabled={enableBloom && !isMobile} bloomStrength={0.8} bloomThreshold={0.65} />
+      </React.Suspense>
     </Canvas>
   );
 }
 
 export default HeroScene;
+

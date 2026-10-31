@@ -7,3 +7,4 @@ export interface CodeCarnivalHeroProps {
 
 export declare const CodeCarnivalHero: React.FC<CodeCarnivalHeroProps>;
 export default CodeCarnivalHero;
+
