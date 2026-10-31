@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { Sparkles, Calendar, MapPin } from 'lucide-react';
+import { Sparkles, Calendar, MapPin, Trophy, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import EventRegistrationModal from '../components/EventRegistrationModal';
+import AirlReportModal from '../components/AirlReportModal';
 import { EVENTS, type EventItem } from '../data/chapterData';
 
 export const Events: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [registeringEvent, setRegisteringEvent] = useState<EventItem | null>(null);
+  const [isAirlReportOpen, setIsAirlReportOpen] = useState<boolean>(false);
 
-  const categories = ['All', 'Hackathon', 'Workshop', 'Guest Lecture'];
+  const categories = ['All', 'Research League', 'Hackathon', 'Workshop', 'Guest Lecture'];
 
   const filteredEvents =
     selectedCategory === 'All'
@@ -127,8 +129,30 @@ export const Events: React.FC = () => {
               </div>
             </div>
 
-            <div className="pt-6 border-t border-[#cdd6cd]">
-              {event.registrationUrl?.startsWith('/') ? (
+            <div className="pt-6 border-t border-[#cdd6cd] space-y-2">
+              {event.hasDetailedReport ? (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setIsAirlReportOpen(true)}
+                    className="btn-green w-full py-3 text-xs font-heading font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                  >
+                    <Trophy size={14} />
+                    <span>View Report & Winners 🏆</span>
+                  </button>
+                  {event.reportPdfUrl && (
+                    <a
+                      href={event.reportPdfUrl}
+                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-2 grid-box font-mono text-[11px] font-bold uppercase tracking-wider text-[#525852] hover:text-[#008736] hover:bg-[#e2e7e2] text-center flex items-center justify-center gap-1.5 transition-colors"
+                    >
+                      <Download size={12} className="text-[#008736]" />
+                      <span>Download Official PDF (13 Pages)</span>
+                    </a>
+                  )}
+                </div>
+              ) : event.registrationUrl?.startsWith('/') ? (
                 <Link
                   to={event.registrationUrl}
                   className="btn-green w-full py-3 text-xs font-heading font-bold uppercase tracking-wider text-center block"
@@ -138,7 +162,7 @@ export const Events: React.FC = () => {
               ) : (
                 <button
                   onClick={() => setRegisteringEvent(event)}
-                  className="w-full py-3 grid-box font-mono font-bold text-xs uppercase tracking-wider text-[#0a0a0a] hover:bg-[#e2e7e2] text-center"
+                  className="w-full py-3 grid-box font-mono font-bold text-xs uppercase tracking-wider text-[#0a0a0a] hover:bg-[#e2e7e2] text-center cursor-pointer"
                 >
                   View Event Summary
                 </button>
@@ -154,6 +178,11 @@ export const Events: React.FC = () => {
           onClose={() => setRegisteringEvent(null)}
         />
       )}
+
+      <AirlReportModal
+        isOpen={isAirlReportOpen}
+        onClose={() => setIsAirlReportOpen(false)}
+      />
     </div>
   );
 };

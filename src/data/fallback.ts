@@ -4,6 +4,7 @@
 // ============================================================
 
 export const fallbackEvents = [
+  { id: 2, title: 'AI Research League 2.0 – 2026', slug: 'ai-research-league-2', date: '2026-09-19', description: 'Premier multi-stage research competition where 114 participants across 36 UG & PG teams developed AI solutions and interactive web prototypes, evaluated by senior industry leaders from Tata Technologies, Hitachi Energy, and Aditya Birla Capital.', status: 'completed', location: 'Activity Hall & Classrooms, IMRD Shirpur', duration: 'Full Day', participants_count: 114, logo_url: '/images/airl-2/airl2_overall_winners_group.jpg', registration_url: null, registration_open: false, created_at: '' },
   { id: 1, title: 'Code Carnival', slug: 'code-carnival', date: '2026-03-24', description: 'The 6-hour build sprint was a massive success! 33 participants competed across UG & PG categories.', status: 'completed', location: 'On Campus', duration: '6 Hours', participants_count: 33, logo_url: '/images/code-carnival-logo.webp', registration_url: null, registration_open: false, created_at: '' },
 ];
 
@@ -42,6 +43,11 @@ export const fallbackMembers = [
 ];
 
 export const fallbackGalleryImages = [
+  { id: 101, type: 'image' as const, url: '/images/airl-2/airl2_overall_winners_group.jpg', caption: 'AI Research League 2.0 — Overall Winners & Judges with Director', title: 'AIRL 2.0 Award Ceremony', description: 'Group photo of 1st, 2nd, 3rd, and Runner-up teams with industry judges and Director.', sort_order: 1, created_at: '' },
+  { id: 102, type: 'image' as const, url: '/images/airl-2/airl2_winner_1st_rank.jpg', caption: '1st Rank Winner: Team P4YL04D C4RT3L Felicitation', title: 'AIRL 2.0 Champions', description: 'Felicitation of Team P4YL04D C4RT3L by Director and Chief Guests.', sort_order: 2, created_at: '' },
+  { id: 103, type: 'image' as const, url: '/images/airl-2/airl2_opening_dignitaries.jpg', caption: 'Dignitaries, HODs, Director, and Industry Judges at Inauguration', title: 'AIRL 2.0 Opening Session', description: 'Inauguration and address by Director and guest judges.', sort_order: 3, created_at: '' },
+  { id: 104, type: 'image' as const, url: '/images/airl-2/airl2_classroom_eval_1.jpg', caption: 'Classroom Evaluation & Prototype Demonstration', title: 'AIRL 2.0 Presentation Rounds', description: 'Judges evaluating teams on methodology, PPT, and live web prototypes.', sort_order: 4, created_at: '' },
+  { id: 105, type: 'image' as const, url: '/images/airl-2/airl2_incoming_team.jpg', caption: 'AISC Executive Leadership Team Appointment', title: 'AISC Executive Team Welcome', description: 'Official appointment of the incoming AI Student Chapter leadership team.', sort_order: 5, created_at: '' },
   { id: 1, type: 'image' as const, url: '/images/event1.jpg', caption: 'Workshop on IMCA classes', title: null, description: null, sort_order: 1, created_at: '' },
   { id: 2, type: 'image' as const, url: '/images/event2.webp', caption: 'Workshop on MCA classes', title: null, description: null, sort_order: 2, created_at: '' },
   { id: 3, type: 'image' as const, url: '/images/event3.webp', caption: 'Workshop by Hon. HOD Dr. M. N. Behere', title: null, description: null, sort_order: 3, created_at: '' },

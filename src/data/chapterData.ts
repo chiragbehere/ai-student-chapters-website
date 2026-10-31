@@ -1,7 +1,7 @@
 export interface EventItem {
   id: string;
   title: string;
-  category: 'Hackathon' | 'Workshop' | 'Guest Lecture' | 'Build Sprint';
+  category: 'Hackathon' | 'Workshop' | 'Guest Lecture' | 'Build Sprint' | 'Research League';
   date: string;
   time?: string;
   location: string;
@@ -13,7 +13,11 @@ export interface EventItem {
   duration?: string;
   tags: string[];
   registrationUrl?: string;
+  reportPdfUrl?: string;
+  hasDetailedReport?: boolean;
 }
+
+export { AIRL_2_REPORT, type AIRLReport, type WinningTeam, type IndustryJudge } from './airlReportData';
 
 export interface ProjectItem {
   id: string;
@@ -137,16 +141,16 @@ export const CORE_PRINCIPLES = [
 
 export const CHAPTER_STATS: ChapterStat[] = [
   {
-    value: 33,
+    value: 114,
     suffix: "+",
-    label: "Hackathon Builders",
-    subtext: "Competed at Code Carnival 2026 across UG & PG tracks",
+    label: "League & Sprint Builders",
+    subtext: "Competed at AI Research League 2.0 & Code Carnival across UG & PG tracks",
   },
   {
-    value: 10,
+    value: 36,
     suffix: "+",
-    label: "Technical Workshops",
-    subtext: "Hands-on labs in Vibe Coding, PyTorch & LLMs",
+    label: "Research & Dev Teams",
+    subtext: "Investigated 12 AI domains with working interactive prototypes",
   },
   {
     value: 100,
@@ -220,6 +224,23 @@ export const INITIATIVES: InitiativeItem[] = [
 ];
 
 export const EVENTS: EventItem[] = [
+  {
+    id: "ai-research-league-2",
+    title: "AI Research League 2.0 – 2026",
+    category: "Research League",
+    date: "2026-09-19",
+    time: "10:00 AM - 05:30 PM",
+    location: "Activity Hall & Classrooms, IMRD Shirpur",
+    description: "Premier multi-stage research competition where 114 participants across 36 UG & PG teams developed AI solutions and interactive web prototypes, evaluated by senior industry leaders from Tata Technologies, Hitachi Energy, and Aditya Birla Capital.",
+    featured: true,
+    status: "Completed",
+    image: "/images/airl-2/airl2_overall_winners_group.jpg",
+    participantsCount: 114,
+    duration: "Full Day (Multi-Session)",
+    tags: ["Research League", "114 Builders", "36 Teams", "Live Prototypes", "UG & PG", "Winners Declared"],
+    hasDetailedReport: true,
+    reportPdfUrl: "/documents/report-airl-2.pdf",
+  },
   {
     id: "code-carnival-2026",
     title: "Code Carnival 2026: 6-Hour Offline AI Build Sprint",
@@ -308,6 +329,12 @@ export const RESEARCH_ITEMS: ResearchItem[] = [
 ];
 
 export const ACHIEVEMENTS = [
+  {
+    year: "2026",
+    title: "AI RESEARCH LEAGUE 2.0",
+    description: "Successfully concluded AI Research League 2.0 with 114 participants across 36 teams, evaluated by industry leaders from Tata Technologies, Hitachi Energy, and Aditya Birla Capital.",
+    milestones: ["114 UG & PG Participants", "36 Interactive Prototypes", "Industry Alumni Jury Panel", "Incoming Leadership Appointment"],
+  },
   {
     year: "2024",
     title: "FOUNDATION & CHARTER",
