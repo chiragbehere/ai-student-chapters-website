@@ -213,29 +213,51 @@ export function flicker(nodes, t, lights = []) {
   });
 }
 
-/** Audio stays silent until the visitor interacts. Call attach() once; user must opt in via enable()/toggle(). */
+/** Audio engine: plays ambient loops and oneshots with .ogg (fast load) and .wav fallback. */
 export class AudioManager {
   constructor(baseUrl = '/CodeCarnival_3D_Assets/audio/') {
     this.base = baseUrl;
     this.enabled = false;
     this.unlocked = false;
     this.loops = {};
-    this.volume = 0.6;
-    this.files = { forest: 'ambient_forest.wav', drone: 'dark_drone.wav', wind: 'wind_ambience.wav' };
+    this.volume = 0.75;
+    this.onStateChange = null;
+
+    // Check OGG support for faster decoding & low latency
+    const testAudio = typeof Audio !== 'undefined' ? new Audio() : null;
+    const canOgg = testAudio && !!testAudio.canPlayType('audio/ogg; codecs="vorbis"');
+    const ext = canOgg ? '.ogg' : '.wav';
+
+    this.files = {
+      forest: `ambient_forest${ext}`,
+      drone: `dark_drone${ext}`,
+      wind: `wind_ambience${ext}`,
+    };
     this.shots = {
-      crackle: 'electric_crackle.wav',
-      open: 'portal_open.wav',
-      transition: 'portal_transition.wav',
-      impact: 'cinematic_impact.wav',
+      crackle: `electric_crackle${ext}`,
+      open: `portal_open${ext}`,
+      transition: `portal_transition${ext}`,
+      impact: `cinematic_impact${ext}`,
     };
   }
-  attach(target = window) {
+
+  attach(target = typeof window !== 'undefined' ? window : null) {
+    if (!target) return;
     const unlock = () => {
       this.unlocked = true;
+      try {
+        const saved = localStorage.getItem('codecarnival_audio_enabled');
+        if (saved !== 'false') {
+          this.enable();
+        }
+      } catch {
+        this.enable();
+      }
       ['pointerdown', 'keydown', 'touchstart'].forEach((e) => target.removeEventListener(e, unlock));
     };
     ['pointerdown', 'keydown', 'touchstart'].forEach((e) => target.addEventListener(e, unlock, { once: false }));
   }
+
   _audio(file, loop) {
     const a = new Audio(this.base + file);
     a.loop = loop;
@@ -243,30 +265,51 @@ export class AudioManager {
     a.preload = 'auto';
     return a;
   }
+
   enable() {
     this.unlocked = true;
     this.enabled = true;
+    try {
+      localStorage.setItem('codecarnival_audio_enabled', 'true');
+    } catch {}
+
     for (const [k, f] of Object.entries(this.files)) {
       if (!this.loops[k]) this.loops[k] = this._audio(f, true);
-      this.loops[k].play().catch(() => {});
-      this._fade(this.loops[k], k === 'drone' ? this.volume * 0.7 : this.volume * 0.5);
+      const playPromise = this.loops[k].play();
+      if (playPromise) {
+        playPromise
+          .then(() => {
+            this._fade(this.loops[k], k === 'drone' ? this.volume * 0.8 : this.volume * 0.5);
+          })
+          .catch(() => {});
+      }
     }
+    if (this.onStateChange) this.onStateChange(true);
     return true;
   }
+
   disable() {
     this.enabled = false;
+    try {
+      localStorage.setItem('codecarnival_audio_enabled', 'false');
+    } catch {}
     Object.values(this.loops).forEach((a) => this._fade(a, 0, () => a.pause()));
+    if (this.onStateChange) this.onStateChange(false);
   }
+
   toggle() {
     return this.enabled ? (this.disable(), false) : this.enable();
   }
+
   shot(name, volume = 1) {
     if (!this.enabled || !this.shots[name]) return;
     const a = this._audio(this.shots[name], false);
-    a.volume = Math.min(1, this.volume * volume);
+    a.volume = Math.min(1.0, this.volume * volume);
     a.play().catch(() => {});
   }
+
   _fade(a, to, done) {
+    if (!a) return;
     const from = a.volume;
     const t0 = performance.now();
     const step = (now) => {
@@ -277,6 +320,7 @@ export class AudioManager {
     };
     requestAnimationFrame(step);
   }
+
   dispose() {
     this.disable();
     this.loops = {};

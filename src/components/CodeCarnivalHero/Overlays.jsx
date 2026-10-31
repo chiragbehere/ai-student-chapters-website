@@ -55,7 +55,7 @@ export function Overlays({ flashOpacity = 0, flashIndex = 1, reducedMotion = fal
 
       {/* 2. Red Supernatural Radial Ambient Glow */}
       <div
-        className="absolute inset-0 bg-center bg-no-repeat bg-cover opacity-60 mix-blend-color-dodge transition-opacity duration-1000"
+        className="absolute inset-0 bg-center bg-no-repeat bg-cover opacity-35 mix-blend-screen transition-opacity duration-1000"
         style={{
           backgroundImage: `url(${BASE}graphics/red_glow.png)`,
         }}

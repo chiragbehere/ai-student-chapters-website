@@ -5,29 +5,20 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 
 export function SoundToggle({ audioManager, className = '' }) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(() => audioManager?.enabled || false);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('codecarnival_audio_enabled');
-      if (saved === 'true' && audioManager) {
-        // User previously wanted audio, but browser autoplay rules require a gesture first
-        // AudioManager.attach() unlocks it on first pointer/touch
-      }
-    } catch {
-      // LocalStorage access may fail in private mode
-    }
+    if (!audioManager) return;
+    setIsPlaying(audioManager.enabled);
+    audioManager.onStateChange = (state) => {
+      setIsPlaying(state);
+    };
   }, [audioManager]);
 
   const handleToggle = useCallback(() => {
     if (!audioManager) return;
     const newState = audioManager.toggle();
     setIsPlaying(newState);
-    try {
-      localStorage.setItem('codecarnival_audio_enabled', String(newState));
-    } catch {
-      // Ignore storage errors
-    }
   }, [audioManager]);
 
   return (

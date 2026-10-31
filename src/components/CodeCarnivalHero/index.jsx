@@ -127,6 +127,8 @@ export function CodeCarnivalHero({ onEnterComplete, isIntroActive = true }) {
   const {
     lightingPreset,
     titleVisible,
+    ctaVisible,
+    telemetryMessage,
     transitionProgress,
     startTimeline,
     enterExperience,
@@ -163,6 +165,14 @@ export function CodeCarnivalHero({ onEnterComplete, isIntroActive = true }) {
       {active && progress < 100 && <AssetLoadingScreen progress={progress} />}
 
       {/* 1. Accessible Controls (Sound Toggle + Skip Button) */}
+      {/* Top Left Hawkins Anomaly Pill */}
+      <div className="fixed top-4 left-4 z-40 flex items-center gap-2 px-3 py-1.5 rounded-full border border-red-900/60 bg-black/70 backdrop-blur-md text-[10px] sm:text-xs font-mono tracking-widest text-[#e8d5b5]">
+        <span className="w-2 h-2 rounded-full bg-[#e50914] animate-pulse" />
+        <span className="text-red-400 font-bold">HAWKINS LAB</span>
+        <span className="hidden md:inline text-neutral-500">//</span>
+        <span className="hidden md:inline text-neutral-300 max-w-[240px] truncate">{telemetryMessage}</span>
+      </div>
+
       <div className="fixed top-4 right-4 z-40 flex items-center gap-3">
         <SoundToggle audioManager={audioManager} />
         <button
@@ -208,6 +218,8 @@ export function CodeCarnivalHero({ onEnterComplete, isIntroActive = true }) {
       {/* 5. Title & Call to Action Overlay */}
       <Title
         visible={titleVisible}
+        ctaVisible={ctaVisible}
+        telemetryMessage={telemetryMessage}
         onEnterExperience={handleEnterClick}
       />
 

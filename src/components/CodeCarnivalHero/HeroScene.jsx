@@ -373,7 +373,7 @@ function SceneRuntime({
         position={[-14, 34, 16]}
         intensity={0.7}
         color="#6f86d6"
-        castShadow={!isMobile}
+        castShadow={false}
       />
       <pointLight
         ref={portalPointLightRef}
@@ -439,7 +439,7 @@ export function HeroScene({
         near: 0.1,
         far: 300,
       }}
-      dpr={isMobile ? 1 : [1, 1.5]}
+      dpr={isMobile ? 1 : Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 1.25)}
       gl={{
         antialias: !isMobile,
         toneMapping: THREE.ACESFilmicToneMapping,

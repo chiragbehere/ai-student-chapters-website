@@ -226,14 +226,16 @@ export const CodeCarnival: React.FC = () => {
         </div>
       </header>
 
-      {/* ── Persistent Fullscreen 3D Spatial Universe (Pinned in Background) ── */}
-      <WebGLErrorBoundary fallback={<WebGLFallback intensity={1.2} />}>
-        <SupernaturalWorld
-          scrollProgress={scrollProgress}
-          activeZoneIndex={activeZoneIndex}
-          performance={performance}
-        />
-      </WebGLErrorBoundary>
+      {/* ── Persistent Fullscreen 3D Spatial Universe (Mounted only after intro to avoid dual-canvas GPU lag) ── */}
+      {!showHeroIntro && (
+        <WebGLErrorBoundary fallback={<WebGLFallback intensity={1.2} />}>
+          <SupernaturalWorld
+            scrollProgress={scrollProgress}
+            activeZoneIndex={activeZoneIndex}
+            performance={performance}
+          />
+        </WebGLErrorBoundary>
+      )}
 
       {/* ── The 6-Chapter Narrative Storyboard Overlay (With 20 Problem Statements) ── */}
       <CinematicChapters
