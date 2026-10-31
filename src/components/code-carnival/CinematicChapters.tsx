@@ -1,51 +1,35 @@
 // CinematicChapters.tsx
 // AAA Cinematic Scroll Storyboard: 6 Distinct Alternate-Dimension Chapters
-// The Breach -> The Transmission -> The Problem Statements -> The Reward Vault -> The Protocol -> The Final Gate
-import React, { useState, useMemo, useEffect } from 'react';
+// The Breach -> The Transmission -> The Official Guidelines -> The Reward Vault -> The Protocol -> The Final Gate
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ExternalLink, Trophy, Shield, Flame, Eye, Target, Lightbulb,
-  Award, Star, GitBranch, Cpu, Brain, Zap, Swords, Lock, Radio,
-  Terminal, AlertTriangle, ChevronDown, Mail, CheckCircle2,
-  FileText, X, ChevronRight, Info
+  Award, Star, GitBranch, Brain, Zap, Swords, Lock, Radio,
+  Terminal, AlertTriangle, ChevronDown, Mail,
+  FileText, X, ChevronRight, Users, Clock, Laptop, Wifi,
+  Camera, HeartHandshake, Image as ImageIcon
 } from 'lucide-react';
 import { IconInstagram, IconGithub, IconWhatsapp } from '../SocialIcons';
 import { CHAPTER_INFO } from '../../data/chapterData';
-import {
-  PROBLEM_TRACKS,
-  PROBLEM_STATEMENTS,
-  JUDGING_CRITERIA,
-  type ProblemStatement,
-} from '../../data/codeCarnivalProblemStatements';
+import { EVENT_RULES, POSTER_SLOGANS, type EventRule } from '../../data/codeCarnivalRules';
 
 const UNSTOP_URL = 'https://unstop.com';
+const POSTER_IMAGE = '/CodeCarnival_3D_Assets/graphics/event_warnings_poster.jpg';
 
 interface CinematicChaptersProps {
   scrollProgress: number; // 0.0 to 1.0
-  activeZoneIndex: number;
-  setActiveZoneIndex: (index: number) => void;
+  activeZoneIndex?: number;
+  setActiveZoneIndex?: (index: number) => void;
   onNavigateChapter: (chapterIndex: number) => void;
 }
 
 export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
   scrollProgress,
-  activeZoneIndex,
-  setActiveZoneIndex,
   onNavigateChapter,
 }) => {
-  // Problem statement state
-  const [selectedTrackIndex, setSelectedTrackIndex] = useState(0);
-  const [selectedLevel, setSelectedLevel] = useState<'ALL' | 'Beginner' | 'Intermediate' | 'Advanced'>('ALL');
-  const [selectedStatement, setSelectedStatement] = useState<ProblemStatement | null>(null);
-
-  // Sync scroll-driven active zone with user selection
-  useEffect(() => {
-    if (activeZoneIndex >= 0 && activeZoneIndex < PROBLEM_TRACKS.length) {
-      setSelectedTrackIndex(activeZoneIndex);
-    }
-  }, [activeZoneIndex]);
-
-  const currentTrack = PROBLEM_TRACKS[selectedTrackIndex] || PROBLEM_TRACKS[0];
+  const [showPosterModal, setShowPosterModal] = useState(false);
+  const [selectedRule, setSelectedRule] = useState<EventRule | null>(null);
 
   // Current active chapter (1 to 6)
   const currentChapter =
@@ -61,47 +45,48 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
       ? 5
       : 6;
 
-  // Track icons
-  const trackIcons = [
-    <Shield size={20} className="text-[#ff0044]" />,
-    <Brain size={20} className="text-[#00e5ff]" />,
-    <Zap size={20} className="text-[#00ff66]" />,
-    <Cpu size={20} className="text-[#ffaa00]" />,
-    <Lightbulb size={20} className="text-[#a855f7]" />,
-  ];
-
-  // Filtered statements for the active track and level
-  const displayedStatements = useMemo(() => {
-    return PROBLEM_STATEMENTS.filter((ps) => {
-      const matchTrack = ps.trackId === currentTrack.id;
-      const matchLevel = selectedLevel === 'ALL' || ps.level === selectedLevel;
-      return matchTrack && matchLevel;
-    });
-  }, [currentTrack.id, selectedLevel]);
-
   // Chapter 5: 24-Hour Timeline
   const timeline = [
     { time: 'T-00:00', label: 'The Gate Opens', desc: 'Bunker check-in & squad verification. Enter the Upside Down arena.', icon: <Eye size={15} /> },
-    { time: 'T+01:00', label: 'Opening Ceremony', desc: 'Classified problem briefs unsealed. Operational timer starts.', icon: <Flame size={15} /> },
-    { time: 'T+02:00', label: 'Hackathon Sprint Begins', desc: '24 hours of non-stop coding, model training, and debugging.', icon: <Zap size={15} /> },
-    { time: 'T+08:00', label: 'Midnight Checkpoint', desc: 'Round 1 mentor evaluation. Defend your technical architecture or pivot.', icon: <Target size={15} /> },
+    { time: 'T+01:00', label: 'Opening Ceremony', desc: 'Classified mission parameters unsealed. Operational timer starts.', icon: <Flame size={15} /> },
+    { time: 'T+02:00', label: 'Hackathon Sprint Begins', desc: '24 hours of non-stop coding, model training, and building.', icon: <Zap size={15} /> },
+    { time: 'T+08:00', label: 'Midnight Checkpoint', desc: 'Round 1 mentor evaluation. Defend your technical architecture.', icon: <Target size={15} /> },
     { time: 'T+16:00', label: 'The Demogorgon Round', desc: 'Surprise technical twist challenge. Adapt your deployment or perish.', icon: <Swords size={15} /> },
     { time: 'T+24:00', label: 'Submissions Freeze', desc: 'GitHub commits frozen. Repositories submitted. Zero extensions.', icon: <GitBranch size={15} /> },
     { time: 'T+25:00', label: 'Jury Pitches & Live Demos', desc: 'Live demonstrations in front of industry judges and faculty panels.', icon: <Lightbulb size={15} /> },
     { time: 'T+27:00', label: 'The Closing Gate', desc: 'Champions declared. Cash bounties and gold trophies presented.', icon: <Award size={15} /> },
   ];
 
-  // Chapter 5: Official Lab Directives & Rules from PDF
+  // Chapter 5: Official Lab Directives & Rules
   const directives = [
-    'CRITICAL SELECTION RULE: Each squad may choose ONLY ONE of the 20 official problem statements across all tracks.',
-    'SQUAD COMPOSITION: Squads of 2–4 verified members from any accredited state college.',
-    'DATA PRIVACY & INTEGRITY: Use only public datasets or realistic simulated data. Never use real personal, financial, or health records.',
-    'TRANSPARENT AI: Every submission must state data sources, assumptions and limitations. AI must contribute to analysis/prediction, not just text generation.',
-    'ETHICAL & SAFETY BOUNDARIES: Health, safety, and finance tools provide guidance only and must never replace professionals or official channels.',
-    'MEASURABLE BENCHMARKS: Squads must demonstrate at least one measurable result (e.g. accuracy, time saved, loss avoided, or users reached).',
-    'SOURCE CONTROL FREEZE: All source code must be committed to a public GitHub repository prior to the T+24:00 freeze. Zero extensions.',
-    'JURY RUBRIC: Technical Depth (25%), Problem Relevance (20%), Prototype Quality (20%), Explainability & Ethics (15%), Innovation (10%), Presentation (10%).',
+    'FAIR PLAY & ORIGINALITY: Projects must be your team\'s original idea and work. Zero plagiarism or misuse of AI tools.',
+    'SQUAD COMPOSITION: Follow team size limits as stated. Zero team changes permitted after the event starts.',
+    'STRICT SUBMISSION DEADLINE: Submissions freeze precisely at T+24:00. Late submissions will not be considered.',
+    'SECURITY & ETHICS: Do not attempt to harm, hack, spam or disrupt the event, networks or other participants.',
+    'NETWORK USAGE: Use only the provided internet. Avoid heavy downloads, streaming or non-event activities.',
+    'RESPONSIBLE AI: Allowed tools must be used responsibly. Do not generate harmful, misleading or offensive content.',
+    'CONDUCT & RESPECT: Maintain a respectful, inclusive and friendly environment. No hate speech or misconduct.',
+    'JURY AUTHORITY: All jury decisions are final and binding. No arguments or disputes will be entertained.',
   ];
+
+  // Rule icon helper
+  const getRuleIcon = (id: number) => {
+    switch (id) {
+      case 1: return <Users size={22} className="text-[#ff1a2b]" />;
+      case 2: return <FileText size={22} className="text-[#ff3b47]" />;
+      case 3: return <Users size={22} className="text-[#ff1a2b]" />;
+      case 4: return <Clock size={22} className="text-[#ff4d5a]" />;
+      case 5: return <Laptop size={22} className="text-[#ff1a2b]" />;
+      case 6: return <Wifi size={22} className="text-[#ff3b47]" />;
+      case 7: return <Brain size={22} className="text-[#ff1a2b]" />;
+      case 8: return <HeartHandshake size={22} className="text-[#ff4d5a]" />;
+      case 9: return <Camera size={22} className="text-[#ff1a2b]" />;
+      case 10: return <Lightbulb size={22} className="text-[#ff3b47]" />;
+      case 11: return <Shield size={22} className="text-[#ffd700]" />;
+      case 12: return <AlertTriangle size={22} className="text-[#ff1a2b]" />;
+      default: return <Flame size={22} className="text-[#ff1a2b]" />;
+    }
+  };
 
   return (
     <div className="relative z-10 w-full text-[#e8d5b5] font-mono selection:bg-[#e50914] selection:text-white pointer-events-none">
@@ -110,7 +95,7 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
         {[
           { num: '01', title: 'THE BREACH' },
           { num: '02', title: 'TRANSMISSION' },
-          { num: '03', title: 'STATEMENTS' },
+          { num: '03', title: 'GUIDELINES' },
           { num: '04', title: 'THE VAULT' },
           { num: '05', title: 'PROTOCOLS' },
           { num: '06', title: 'FINAL GATE' },
@@ -142,420 +127,311 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
       {/* ═══════════════════════════════════════════════════
           CHAPTER 01: THE BREACH (0% to 15% Scroll)
           ═══════════════════════════════════════════════════ */}
-      <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 relative">
-        <motion.div
-          style={{
-            opacity: scrollProgress < 0.14 ? 1 - scrollProgress * 6.5 : 0,
-            transform: `translateY(${scrollProgress * 150}px)`,
-          }}
-          className="max-w-4xl flex flex-col items-center pointer-events-auto"
-        >
-          {/* Classified Status Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-900/40 bg-black/60 backdrop-blur-md text-[11px] font-mono tracking-widest text-[#e8d5b5]/80 mb-6">
-            <span className="w-2 h-2 rounded-full bg-[#e50914] animate-ping" />
-            <span className="text-[#e50914] font-bold">HAWKINS LAB TELEMETRY</span>
-            <span className="opacity-30">//</span>
-            <span>DIMENSIONAL ANOMALY CONFIRMED</span>
+      <section className="min-h-screen flex flex-col items-center justify-center px-4 relative pt-24 pb-16 text-center">
+        <div className="w-full max-w-4xl pointer-events-auto flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-900/60 bg-black/60 text-[11px] font-mono tracking-widest text-[#e50914] uppercase mb-6 animate-pulse shadow-[0_0_15px_rgba(229,9,20,0.3)]">
+            <Radio size={13} />
+            <span>HAWKINS LAB TELEMETRY // DIMENSIONAL ANOMALY CONFIRMED</span>
           </div>
 
-          <p className="text-xs sm:text-sm font-mono tracking-[0.35em] text-[#e8d5b5]/80 uppercase mb-3">
+          <p className="text-xs sm:text-sm font-mono tracking-[0.4em] uppercase text-[#e8d5b5]/80 mb-3">
             AI STUDENT CHAPTER PRESENTS
           </p>
 
           <h1
-            className="st-cinematic-title text-6xl sm:text-8xl md:text-9xl font-black tracking-tight leading-none text-white mb-4"
+            className="text-5xl sm:text-7xl md:text-8xl font-black text-white tracking-wider mb-2 leading-none"
             style={{
               fontFamily: "'Libre Baskerville', serif",
-              textShadow: '0 0 25px #e50914, 0 0 60px rgba(229, 9, 20, 0.8), 0 0 100px rgba(229, 9, 20, 0.5)',
+              textShadow: '0 0 30px #e50914, 0 0 60px rgba(229, 9, 20, 0.8)',
             }}
           >
             CODE
             <br />
-            CARNIVAL <span className="text-[#e50914] text-5xl sm:text-7xl md:text-8xl drop-shadow-[0_0_35px_#e50914]">2.0</span>
+            <span className="text-[#e50914] drop-shadow-[0_0_35px_#e50914]">CARNIVAL 2.0</span>
           </h1>
 
-          <p
-            className="text-sm sm:text-lg md:text-xl font-bold tracking-[0.3em] uppercase text-[#e50914] mb-3"
-            style={{ textShadow: '0 0 14px rgba(229,9,20,0.8)' }}
-          >
-            THE UPSIDE DOWN OF CODE • SEASON 2.0
+          <p className="text-sm sm:text-lg font-mono tracking-[0.25em] text-[#ff4d4d] uppercase font-bold my-4 drop-shadow-[0_0_10px_rgba(229,9,20,0.8)]">
+            {POSTER_SLOGANS.header}
           </p>
 
-          <p className="text-xs sm:text-sm text-[#e8d5b5]/70 max-w-lg mb-8 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#e8d5b5]/75 max-w-lg font-mono leading-relaxed mb-8">
             Enter the 24-hour supernatural state-level hackathon arena. Travel through the breach to unseal the mission.
           </p>
 
-          {/* Interactive Scroll Invitation */}
-          <div className="inline-flex flex-col items-center gap-2 text-[10px] tracking-[0.25em] uppercase text-[#e8d5b5]/50 animate-pulse">
+          <div className="flex flex-col items-center gap-2 text-xs text-[#e8d5b5]/60 font-mono tracking-widest uppercase">
             <span>SCROLL DOWN TO DIVE INTO THE UNKNOWN</span>
-            <ChevronDown size={16} className="text-[#e50914]" />
+            <ChevronDown size={16} className="text-[#e50914] animate-bounce" />
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════
           CHAPTER 02: THE TRANSMISSION (15% to 30% Scroll)
           ═══════════════════════════════════════════════════ */}
       <section className="min-h-screen flex flex-col items-center justify-center px-4 relative py-20">
-        <div className="w-full max-w-4xl border border-red-900/50 bg-[#060810]/90 backdrop-blur-xl rounded-sm p-6 sm:p-10 shadow-[0_0_50px_rgba(229,9,20,0.15)] pointer-events-auto relative overflow-hidden">
-          {/* Holographic scanning overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-950/10 to-transparent pointer-events-none" />
-
-          {/* CRT Header */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-red-900/30 pb-4 mb-6 text-xs text-[#e8d5b5]/70">
-            <div className="flex items-center gap-2">
-              <Radio size={16} className="text-[#e50914] animate-pulse" />
-              <span className="text-[#e50914] font-bold">INTERCEPTED TRANSMISSION</span>
-              <span className="opacity-30">//</span>
-              <span>FREQ: 104.3 MHz</span>
+        <div className="w-full max-w-4xl pointer-events-auto">
+          {/* Section Header */}
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-900/40 bg-black/50 text-[11px] font-mono tracking-widest text-[#e50914] uppercase mb-3">
+              <Terminal size={13} />
+              <span>INTERCEPTED TRANSMISSION // FREQ: 104.7 MHz</span>
             </div>
-            <div className="flex items-center gap-2 font-mono text-[11px] text-[#22ff66]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#22ff66] animate-ping" />
-              <span>DEPT. OF ENERGY // HAWKINS BUNKER 04</span>
-            </div>
-          </div>
-
-          {/* Terminal Content */}
-          <div className="space-y-4 mb-8">
             <h2
-              className="text-2xl sm:text-4xl font-bold text-white leading-tight"
+              className="text-3xl sm:text-5xl font-bold text-white tracking-wide"
               style={{ fontFamily: "'Libre Baskerville', serif" }}
             >
-              Code Carnival 2.0: <span className="text-[#e50914]">The State-Level Breach</span>
+              The Hawkins <span className="text-[#e50914]">Lab Briefing</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#e8d5b5]/85 leading-relaxed font-mono">
-              [DECRYPTED BROADCAST] The AI Student Chapter at <span className="text-white font-semibold">{CHAPTER_INFO.institution}</span> hereby issues an open summons to collegiate builders, system hackers, and algorithmic minds across the state.
-            </p>
-            <p className="text-xs sm:text-sm text-[#e8d5b5]/75 leading-relaxed font-mono">
-              You will be sealed inside a high-intensity 24-hour development chamber. The environment is engineered to test your resilience, architectural ingenuity, and speed under supernatural constraints.
+            <p className="text-xs sm:text-sm text-[#e8d5b5]/70 max-w-md mx-auto mt-2">
+              Classified dispatch for registered squads across Maharashtra.
             </p>
           </div>
 
-          {/* Intercepted Metrics Telemetry Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 border-t border-red-900/30 pt-6">
-            <div className="p-3 bg-black/40 border border-red-950/60 rounded-sm">
-              <span className="text-[10px] tracking-widest uppercase text-[#e8d5b5]/50 block mb-1">DURATION</span>
-              <span className="text-lg font-bold text-white">24H NON-STOP</span>
+          {/* Interactive CRT Terminal Window */}
+          <div className="border border-red-900/50 bg-[#070914]/90 backdrop-blur-xl rounded-sm p-6 sm:p-8 shadow-[0_0_40px_rgba(229,9,20,0.15)] relative overflow-hidden">
+            {/* Terminal Window Header Bar */}
+            <div className="flex items-center justify-between border-b border-red-950 pb-3 mb-6">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-red-600/80" />
+                <span className="w-3 h-3 rounded-full bg-amber-500/80" />
+                <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                <span className="ml-2 text-xs font-mono text-[#e8d5b5]/60">bunker_terminal_v2.0.sh</span>
+              </div>
+              <span className="text-[10px] text-[#e50914] font-mono tracking-widest uppercase">
+                STATUS: BROADCASTING
+              </span>
             </div>
-            <div className="p-3 bg-black/40 border border-red-950/60 rounded-sm">
-              <span className="text-[10px] tracking-widest uppercase text-[#e8d5b5]/50 block mb-1">VENUE</span>
-              <span className="text-lg font-bold text-white">IMRDA CAMPUS</span>
+
+            {/* Terminal Body */}
+            <div className="space-y-4 text-xs sm:text-sm font-mono leading-relaxed">
+              <p className="text-[#e50914] font-bold">
+                &gt; INITIALIZING HAWKINS LAB PROTOCOL CC-2026...
+              </p>
+              <p className="text-[#e8d5b5]/90">
+                A massive trans-dimensional breach has opened inside the IMRD campus in Shirpur. We are recruiting elite developer squads to reverse-engineer anomalous phenomena, deploy mission-critical systems, and restore stability before the rift becomes permanent.
+              </p>
+              <p className="text-[#e8d5b5]/90">
+                You will have exactly <span className="text-white font-bold">24 continuous hours</span>. Food, fuel, caffeine, and high-speed network will be provided inside the containment perimeter.
+              </p>
+              <div className="p-3 bg-red-950/30 border border-red-900/40 rounded text-xs text-[#e8d5b5]/80 space-y-1">
+                <div>• <span className="text-white font-bold">VENUE:</span> RCPET&apos;s IMRD Campus, Shirpur</div>
+                <div>• <span className="text-white font-bold">ELIGIBILITY:</span> College students across Maharashtra (UG &amp; PG)</div>
+                <div>• <span className="text-white font-bold">TEAM SIZE:</span> 2 to 4 developers per squad</div>
+                <div>• <span className="text-white font-bold">REGISTRATION:</span> Exclusively on Unstop</div>
+              </div>
             </div>
-            <div className="p-3 bg-black/40 border border-red-950/60 rounded-sm">
-              <span className="text-[10px] tracking-widest uppercase text-[#e8d5b5]/50 block mb-1">SQUAD SIZE</span>
-              <span className="text-lg font-bold text-white">2–4 CODERS</span>
-            </div>
-            <div className="p-3 bg-black/40 border border-red-950/60 rounded-sm">
-              <span className="text-[10px] tracking-widest uppercase text-[#e8d5b5]/50 block mb-1">PRIZE POOL</span>
-              <span className="text-lg font-bold text-[#ffd700]">₹50,000+</span>
+
+            {/* Quick Metrics Footer */}
+            <div className="mt-8 pt-4 border-t border-red-950 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+              <div>
+                <span className="text-[10px] text-[#e8d5b5]/50 uppercase tracking-widest block">DURATION</span>
+                <span className="text-lg font-bold text-white">24 HOURS</span>
+              </div>
+              <div>
+                <span className="text-[10px] text-[#e8d5b5]/50 uppercase tracking-widest block">LEVEL</span>
+                <span className="text-lg font-bold text-[#ffd700]">STATE-WIDE</span>
+              </div>
+              <div>
+                <span className="text-[10px] text-[#e8d5b5]/50 uppercase tracking-widest block">SQUAD SIZE</span>
+                <span className="text-lg font-bold text-white">2-4 MEMBERS</span>
+              </div>
+              <div>
+                <span className="text-[10px] text-[#e8d5b5]/50 uppercase tracking-widest block">BOUNTY POOL</span>
+                <span className="text-lg font-bold text-[#ffd700]">₹50,000+</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════
-          CHAPTER 03: THE PROBLEM STATEMENTS (30% to 50% Scroll)
+          CHAPTER 03: EVENT WARNINGS // OFFICIAL GUIDELINES
           ═══════════════════════════════════════════════════ */}
       <section className="min-h-screen flex flex-col items-center justify-center px-4 relative py-20">
         <div className="w-full max-w-6xl pointer-events-auto">
           {/* Header */}
-          <div className="text-center mb-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-900/40 bg-black/50 text-[11px] font-mono tracking-widest text-[#e50914] uppercase mb-2">
-              <Terminal size={13} />
-              <span>THE 20 OFFICIAL CHALLENGES // 5 HACKATHON TRACKS</span>
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-700/60 bg-red-950/40 text-[11px] font-mono tracking-widest text-[#ff2233] uppercase mb-3 shadow-[0_0_15px_rgba(229,9,20,0.35)]">
+              <AlertTriangle size={14} className="text-[#ffd700] animate-pulse" />
+              <span>{POSTER_SLOGANS.introTag}</span>
             </div>
             <h2
-              className="text-3xl sm:text-5xl font-bold text-white"
-              style={{ fontFamily: "'Libre Baskerville', serif" }}
+              className="text-3xl sm:text-5xl font-black text-white tracking-wide"
+              style={{
+                fontFamily: "'Libre Baskerville', serif",
+                textShadow: '0 0 25px rgba(229,9,20,0.85)',
+              }}
             >
-              Choose Your <span className="text-[#e50914]">Problem Statement</span>
+              EVENT <span className="text-[#e50914]">WARNINGS</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#e8d5b5]/60 max-w-xl mx-auto mt-2">
-              Theme: Open Innovation • Real-world gaps waiting to be solved with AI, Web, Mobile, IoT, and Security.
+            <p className="text-xs sm:text-sm text-[#ffdd55] font-mono font-bold tracking-[0.15em] uppercase max-w-2xl mx-auto mt-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              {POSTER_SLOGANS.tagline}
             </p>
-          </div>
 
-          {/* ── CRITICAL DIRECTIVE BANNER: ONLY ONE PROBLEM STATEMENT CAN BE CHOSEN ── */}
-          <div className="mb-6 p-4 sm:p-5 rounded-sm border-2 border-[#e50914] bg-gradient-to-r from-red-950/70 via-[#0a0204]/90 to-red-950/70 shadow-[0_0_35px_rgba(229,9,20,0.35)] flex items-start gap-3.5 text-left relative overflow-hidden">
-            <div className="p-2 rounded bg-red-950/80 border border-red-700/60 text-[#ffd700] shrink-0 mt-0.5">
-              <AlertTriangle size={20} className="animate-pulse" />
-            </div>
-            <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-2 mb-1">
-                <span className="text-xs sm:text-sm font-bold text-[#ffd700] tracking-widest uppercase">
-                  MANDATORY RULE: ONLY ONE PROBLEM STATEMENT CAN BE CHOSEN
-                </span>
-                <span className="px-2 py-0.5 rounded text-[10px] bg-red-900/60 text-white font-mono uppercase tracking-wider">
-                  1 PER SQUAD
-                </span>
-              </div>
-              <p className="text-xs sm:text-sm text-[#e8d5b5]/90 leading-relaxed font-mono">
-                Participants may select any single problem statement from any track below. Your squad must dedicate the entire 24-hour hackathon to delivering one deep, functioning, measurable solution for that specific challenge.
-              </p>
-            </div>
-          </div>
-
-          {/* 5 Track Selector Tabs */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5 mb-6">
-            {PROBLEM_TRACKS.map((t, idx) => (
+            {/* Poster Viewer Trigger Button */}
+            <div className="mt-4">
               <button
-                key={t.id}
-                onClick={() => {
-                  setSelectedTrackIndex(idx);
-                  setActiveZoneIndex(idx);
-                }}
-                className={`p-3 rounded-sm border text-left transition-all duration-300 flex flex-col justify-between gap-2 ${
-                  selectedTrackIndex === idx
-                    ? 'border-white bg-white/10 text-white shadow-[0_0_20px_rgba(255,255,255,0.15)] scale-[1.02]'
-                    : 'border-red-950/70 bg-black/60 text-[#e8d5b5]/60 hover:text-white hover:border-red-800/80'
-                }`}
+                onClick={() => setShowPosterModal(true)}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-sm border border-red-700/70 bg-black/60 hover:bg-red-950/50 text-[#e8d5b5] hover:text-white text-xs font-mono tracking-wider transition-all duration-300 shadow-[0_0_15px_rgba(229,9,20,0.3)] cursor-pointer"
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono tracking-widest font-bold" style={{ color: t.accent }}>
-                    {t.code}
-                  </span>
-                  <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-black/60 border border-white/10 text-white/70">
-                    {t.statementCount} PS
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 mt-1">
-                  {trackIcons[idx]}
-                  <span className="text-xs font-bold font-mono leading-tight">{t.name}</span>
-                </div>
+                <ImageIcon size={14} className="text-[#e50914]" />
+                <span>VIEW OFFICIAL POSTER ARTWORK</span>
               </button>
+            </div>
+          </div>
+
+          {/* 12 Rules Grid (Exact poster replica) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4.5">
+            {EVENT_RULES.map((rule) => (
+              <div
+                key={rule.id}
+                onClick={() => setSelectedRule(rule)}
+                className="group relative cursor-pointer border border-red-900/50 bg-[#060309]/92 backdrop-blur-xl rounded-xl p-5 hover:border-[#e50914] transition-all duration-300 hover:shadow-[0_0_30px_rgba(229,9,20,0.4)] flex flex-col justify-between hover:-translate-y-1"
+              >
+                {/* Glowing Corner Accents */}
+                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-red-700/60 rounded-tr group-hover:border-[#e50914]" />
+                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-red-700/60 rounded-bl group-hover:border-[#e50914]" />
+
+                <div>
+                  {/* Rule Header: Icon & Number */}
+                  <div className="flex items-center justify-between mb-3.5">
+                    <div className="p-2.5 rounded-lg bg-red-950/60 border border-red-800/40 group-hover:border-[#e50914] group-hover:shadow-[0_0_15px_rgba(229,9,20,0.5)] transition-all">
+                      {getRuleIcon(rule.id)}
+                    </div>
+                    <span className="text-xs font-mono font-black text-red-500/80 group-hover:text-[#ffd700] tracking-widest">
+                      #{rule.number}
+                    </span>
+                  </div>
+
+                  {/* Rule Title */}
+                  <h3
+                    className="text-base sm:text-lg font-bold text-white mb-2 group-hover:text-[#ff3b47] transition-colors uppercase tracking-wider"
+                    style={{ fontFamily: "'Libre Baskerville', serif" }}
+                  >
+                    {rule.id}. {rule.title}
+                  </h3>
+
+                  {/* Rule Description */}
+                  <p className="text-xs text-[#cbd5e1] leading-relaxed font-mono font-medium">
+                    {rule.description}
+                  </p>
+                </div>
+
+                {/* Footer Tag */}
+                <div className="mt-4 pt-3 border-t border-red-950/60 flex items-center justify-between text-[10px] font-mono text-red-400 font-bold tracking-widest uppercase">
+                  <span>{rule.tag}</span>
+                  <ChevronRight size={13} className="text-red-500 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
             ))}
           </div>
 
-          {/* Track Summary & Difficulty Filter */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-sm border border-red-900/30 bg-[#080914]/80 mb-6">
-            <div>
-              <span className="text-[10px] font-mono tracking-widest uppercase block text-white/50">
-                ACTIVE SECTOR
-              </span>
-              <h3 className="text-lg font-bold text-white flex items-center gap-2" style={{ color: currentTrack.accent }}>
-                {currentTrack.name}
-              </h3>
-              <p className="text-xs text-[#e8d5b5]/70 font-mono mt-0.5 max-w-lg">
-                {currentTrack.tagline}
-              </p>
-            </div>
-
-            {/* Level Filter Buttons */}
-            <div className="flex items-center gap-1.5 self-stretch sm:self-auto overflow-x-auto pb-1 sm:pb-0">
-              {(['ALL', 'Beginner', 'Intermediate', 'Advanced'] as const).map((level) => (
-                <button
-                  key={level}
-                  onClick={() => setSelectedLevel(level)}
-                  className={`px-3 py-1 rounded text-xs font-mono tracking-wider transition-all whitespace-nowrap ${
-                    selectedLevel === level
-                      ? 'bg-[#e50914] text-white font-bold shadow-[0_0_12px_rgba(229,9,20,0.6)]'
-                      : 'bg-black/60 border border-white/10 text-[#e8d5b5]/60 hover:text-white hover:border-white/30'
-                  }`}
-                >
-                  {level === 'ALL' ? 'All Levels' : level}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Problem Statements Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-            {displayedStatements.map((ps) => {
-              const levelColor =
-                ps.level === 'Advanced'
-                  ? 'text-[#ff2233] border-red-800/60 bg-red-950/40'
-                  : ps.level === 'Intermediate'
-                  ? 'text-[#ffaa00] border-amber-800/60 bg-amber-950/40'
-                  : 'text-[#00ff66] border-emerald-800/60 bg-emerald-950/40';
-
-              return (
-                <div
-                  key={ps.id}
-                  onClick={() => setSelectedStatement(ps)}
-                  className="group cursor-pointer border border-red-900/40 bg-[#060812]/90 backdrop-blur-xl rounded-sm p-5 sm:p-6 hover:border-[#e50914] transition-all duration-300 hover:shadow-[0_0_25px_rgba(229,9,20,0.25)] flex flex-col justify-between"
-                >
-                  <div>
-                    {/* Card Header: PS Number & Level */}
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded bg-black/80 border border-red-800/40 text-xs font-mono font-bold text-[#e50914]">
-                          PS #{String(ps.number).padStart(2, '0')}
-                        </span>
-                        <span className={`px-2 py-0.5 rounded border text-[10px] font-mono font-bold uppercase ${levelColor}`}>
-                          {ps.level}
-                        </span>
-                      </div>
-                      <ChevronRight size={16} className="text-[#e8d5b5]/40 group-hover:text-[#e50914] group-hover:translate-x-1 transition-all" />
-                    </div>
-
-                    {/* Problem Title */}
-                    <h4
-                      className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-[#ff3b47] transition-colors"
-                      style={{ fontFamily: "'Libre Baskerville', serif" }}
-                    >
-                      {ps.title}
-                    </h4>
-
-                    {/* Real-World Context Snippet */}
-                    <p className="text-xs text-[#e8d5b5]/75 line-clamp-3 leading-relaxed font-mono mb-4">
-                      {ps.context}
-                    </p>
-                  </div>
-
-                  <div>
-                    {/* Domains list */}
-                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/10">
-                      {ps.domains.map((d, dIdx) => (
-                        <span
-                          key={dIdx}
-                          className="px-2 py-0.5 rounded text-[10px] font-mono bg-black/70 border border-white/10 text-white/70"
-                        >
-                          {d}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* View Brief Prompt */}
-                    <div className="mt-4 flex items-center justify-between text-[11px] font-mono text-[#e50914] font-bold tracking-wider">
-                      <span>INSPECT CHALLENGE BRIEF</span>
-                      <FileText size={13} />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {displayedStatements.length === 0 && (
-            <div className="p-12 text-center border border-red-950 bg-black/60 rounded-sm">
-              <p className="text-sm text-[#e8d5b5]/60 font-mono">
-                No problem statements match the selected difficulty level in this track.
-              </p>
-            </div>
-          )}
-
-          {/* 6 Judging Rubric Breakdown Snippet */}
-          <div className="mt-8 p-4 sm:p-5 rounded-sm border border-white/15 bg-black/60">
-            <span className="text-[10px] font-mono tracking-widest text-[#ffd700] uppercase font-bold block mb-3">
-              // OFFICIAL JUDGING RUBRIC (EVALUATION WEIGHTAGE)
-            </span>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
-              {JUDGING_CRITERIA.map((crit, cIdx) => (
-                <div key={cIdx} className="p-2.5 bg-[#0a0d18] border border-white/10 rounded-sm text-center">
-                  <span className="text-lg font-black text-white block mb-0.5">{crit.weight}%</span>
-                  <span className="text-[10px] text-[#e8d5b5]/70 leading-tight block">{crit.label}</span>
-                </div>
-              ))}
-            </div>
+          {/* Bottom Poster Banner */}
+          <div className="mt-10 p-5 sm:p-6 rounded-xl border border-red-600/50 bg-gradient-to-r from-red-950/70 via-black/90 to-red-950/70 text-center shadow-[0_0_35px_rgba(229,9,20,0.3)]">
+            <p className="text-sm sm:text-base font-serif font-black tracking-[0.2em] text-[#ffde59] uppercase mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+              {POSTER_SLOGANS.bannerTop}
+            </p>
+            <p className="text-xs sm:text-sm font-mono tracking-[0.35em] text-white/90 uppercase font-bold">
+              {POSTER_SLOGANS.bannerBottom}
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ── Problem Statement Full Brief Modal ── */}
+      {/* ── Official Poster Modal ── */}
       <AnimatePresence>
-        {selectedStatement && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md pointer-events-auto overflow-y-auto">
+        {showPosterModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl pointer-events-auto">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.25 }}
-              className="w-full max-w-3xl my-8 border-2 border-[#e50914] bg-[#070914] rounded-sm p-6 sm:p-8 shadow-[0_0_60px_rgba(229,9,20,0.5)] relative overflow-hidden"
+              className="relative max-w-2xl w-full max-h-[90vh] bg-[#070308] border-2 border-[#e50914] rounded-xl p-4 shadow-[0_0_80px_rgba(229,9,20,0.7)] flex flex-col items-center overflow-hidden"
             >
-              {/* Modal Header */}
-              <div className="flex items-start justify-between gap-4 border-b border-white/15 pb-4 mb-6">
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <span className="px-2.5 py-1 rounded bg-[#e50914] text-white font-mono text-xs font-bold">
-                      PS #{String(selectedStatement.number).padStart(2, '0')}
-                    </span>
-                    <span className="px-2.5 py-1 rounded bg-black/60 border border-white/20 text-xs font-mono text-white/90">
-                      {selectedStatement.trackName}
-                    </span>
-                    <span className="px-2 py-0.5 rounded border border-amber-500/50 bg-amber-950/40 text-amber-300 text-xs font-mono">
-                      Level: {selectedStatement.level}
-                    </span>
-                  </div>
-                  <h3
-                    className="text-2xl sm:text-3xl font-black text-white"
-                    style={{ fontFamily: "'Libre Baskerville', serif" }}
-                  >
-                    {selectedStatement.title}
-                  </h3>
-                </div>
-
+              <div className="w-full flex items-center justify-between pb-3 mb-2 border-b border-red-900/50">
+                <span className="text-xs font-mono font-bold tracking-widest text-[#ffd700] uppercase flex items-center gap-2">
+                  <Shield size={14} className="text-[#e50914]" />
+                  CODE CARNIVAL 2.0 // OFFICIAL GUIDELINES POSTER
+                </span>
                 <button
-                  onClick={() => setSelectedStatement(null)}
-                  className="p-2 rounded-sm bg-black/60 border border-white/20 text-white/70 hover:text-white hover:border-red-600 transition-colors shrink-0"
-                  aria-label="Close Modal"
+                  onClick={() => setShowPosterModal(false)}
+                  className="p-1.5 rounded bg-black/80 border border-red-800 text-white/80 hover:text-white transition-colors cursor-pointer"
+                  aria-label="Close Poster Modal"
                 >
                   <X size={18} />
                 </button>
               </div>
 
-              {/* Modal Body */}
-              <div className="space-y-6 text-xs sm:text-sm font-mono leading-relaxed max-h-[60vh] overflow-y-auto pr-2">
-                {/* Domains */}
+              <div className="overflow-y-auto max-h-[75vh] w-full flex justify-center p-2 rounded bg-black/60">
+                <img
+                  src={POSTER_IMAGE}
+                  alt="Code Carnival 2.0 Official Guidelines Poster"
+                  className="max-w-full h-auto rounded shadow-2xl object-contain"
+                />
+              </div>
+
+              <div className="mt-3 w-full flex items-center justify-between text-xs font-mono text-[#e8d5b5]/70 pt-2 border-t border-red-950">
+                <span>IMRD SHIRPUR // AI STUDENT CHAPTER</span>
+                <button
+                  onClick={() => setShowPosterModal(false)}
+                  className="px-4 py-1.5 rounded bg-[#e50914] text-white font-bold hover:bg-[#ff1b27] transition-all cursor-pointer"
+                >
+                  CLOSE
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Rule Detail Modal ── */}
+      <AnimatePresence>
+        {selectedRule && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md pointer-events-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              className="max-w-md w-full bg-[#070308] border-2 border-[#e50914] rounded-xl p-6 shadow-[0_0_50px_rgba(229,9,20,0.6)] relative"
+            >
+              <div className="flex items-center justify-between pb-3 border-b border-red-950 mb-4">
+                <span className="text-xs font-mono text-[#ffd700] font-bold tracking-widest uppercase">
+                  PROTOCOL RULE #{selectedRule.number}
+                </span>
+                <button
+                  onClick={() => setSelectedRule(null)}
+                  className="p-1 rounded bg-black/80 border border-white/20 text-white/80 hover:text-white cursor-pointer"
+                  aria-label="Close"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-3 rounded-lg bg-red-950/70 border border-red-700/60">
+                  {getRuleIcon(selectedRule.id)}
+                </div>
                 <div>
-                  <span className="text-[10px] tracking-widest uppercase text-[#e50914] font-bold block mb-1">
-                    DOMAINS
+                  <h4 className="text-lg font-bold text-white uppercase font-serif">
+                    {selectedRule.title}
+                  </h4>
+                  <span className="text-[10px] text-red-400 font-mono tracking-widest uppercase font-bold">
+                    TAG: {selectedRule.tag}
                   </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {selectedStatement.domains.map((d, i) => (
-                      <span key={i} className="px-2.5 py-1 rounded bg-white/10 border border-white/20 text-white font-bold text-xs">
-                        {d}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Problem Context */}
-                <div className="p-4 rounded-sm bg-black/50 border border-white/10">
-                  <span className="text-[10px] tracking-widest uppercase text-[#ffd700] font-bold block mb-2 flex items-center gap-1.5">
-                    <Info size={13} />
-                    THE REAL-WORLD PROBLEM GAP
-                  </span>
-                  <p className="text-[#e8d5b5]/90">{selectedStatement.context}</p>
-                </div>
-
-                {/* Your Challenge */}
-                <div className="p-4 rounded-sm bg-red-950/30 border border-red-700/50">
-                  <span className="text-[10px] tracking-widest uppercase text-[#e50914] font-bold block mb-2 flex items-center gap-1.5">
-                    <Target size={14} />
-                    YOUR HACKATHON CHALLENGE
-                  </span>
-                  <p className="text-white font-medium">{selectedStatement.challenge}</p>
-                </div>
-
-                {/* Expected Outcome */}
-                <div className="p-4 rounded-sm bg-emerald-950/30 border border-emerald-700/50">
-                  <span className="text-[10px] tracking-widest uppercase text-[#00ff66] font-bold block mb-2 flex items-center gap-1.5">
-                    <CheckCircle2 size={14} />
-                    EXPECTED PROTOTYPE OUTCOME
-                  </span>
-                  <p className="text-white font-medium">{selectedStatement.expectedOutcome}</p>
-                </div>
-
-                {/* Critical Note & Constraints */}
-                <div className="p-4 rounded-sm bg-amber-950/30 border border-amber-700/50">
-                  <span className="text-[10px] tracking-widest uppercase text-[#ffd700] font-bold block mb-2 flex items-center gap-1.5">
-                    <AlertTriangle size={14} />
-                    RULES & ETHICAL CONSTRAINTS
-                  </span>
-                  <p className="text-[#ffd700]/90">{selectedStatement.note}</p>
                 </div>
               </div>
 
-              {/* Modal Footer */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-6 mt-6 border-t border-white/15">
-                <div className="text-xs text-[#ffd700] font-mono font-bold">
-                  ⚡ Squads can choose ONLY 1 problem statement for the hackathon.
-                </div>
+              <p className="text-sm font-mono text-[#f1f5f9] leading-relaxed p-4 rounded bg-black/60 border border-red-900/40 my-4">
+                {selectedRule.description}
+              </p>
+
+              <div className="flex justify-end pt-2">
                 <button
-                  onClick={() => setSelectedStatement(null)}
-                  className="px-6 py-2.5 rounded-sm bg-[#e50914] hover:bg-[#ff1b27] text-white font-mono text-xs font-bold tracking-widest uppercase transition-all"
+                  onClick={() => setSelectedRule(null)}
+                  className="px-5 py-2 rounded bg-[#e50914] text-white text-xs font-mono font-bold tracking-wider uppercase hover:bg-[#ff1b27] transition-all cursor-pointer"
                 >
-                  CLOSE BRIEF
+                  UNDERSTOOD
                 </button>
               </div>
             </motion.div>
@@ -701,10 +577,10 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
               </div>
             </div>
 
-            {/* Right: Official Lab Directives (Rules from Document) */}
+            {/* Right: Official Lab Directives */}
             <div className="border border-red-900/30 bg-[#070914]/85 backdrop-blur-xl rounded-sm p-6 sm:p-8">
               <span className="text-xs font-mono tracking-widest text-[#e50914] uppercase block mb-4">
-                // OFFICIAL HACKATHON DIRECTIVES & RULES
+                // CODE CARNIVAL 2.0 DIRECTIVES
               </span>
               <div className="space-y-3">
                 {directives.map((directive, idx) => (
@@ -744,7 +620,7 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
           </h2>
 
           <p className="text-sm sm:text-base text-[#e8d5b5]/80 max-w-lg mb-10 leading-relaxed font-mono">
-            The dimensional rift is closing. Gather your squad, choose your single problem statement, and claim your place in the arena.
+            The dimensional rift is closing. Gather your squad, follow the directives, and claim your place in the arena.
           </p>
 
           {/* Primary Action Button */}
@@ -752,33 +628,34 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
             href={UNSTOP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="st-btn-cinematic-enter inline-flex items-center gap-3 px-10 sm:px-14 py-5 bg-[#e50914] text-white font-mono text-base font-bold tracking-[0.25em] uppercase rounded-sm shadow-[0_0_50px_rgba(229,9,20,0.9)] hover:bg-[#ff1b27] hover:shadow-[0_0_80px_rgba(255,27,39,1)] transition-all duration-300 transform active:scale-95 mb-14"
+            className="inline-flex items-center gap-3 px-10 sm:px-14 py-4 sm:py-5 bg-[#e50914] text-white font-bold tracking-[0.2em] uppercase rounded-sm shadow-[0_0_50px_rgba(229,9,20,0.8)] hover:bg-[#ff1b27] hover:scale-105 active:scale-95 transition-all duration-300 text-sm sm:text-base"
           >
-            <span>REGISTER ON UNSTOP</span>
-            <ExternalLink size={20} />
+            <Flame size={20} className="text-[#ffd700] animate-pulse" />
+            <span>ENTER THE ARENA — REGISTER ON UNSTOP</span>
+            <ExternalLink size={18} />
           </a>
 
-          {/* Base Personnel Log (Organizing Chapter & Contacts) */}
-          <div className="w-full max-w-3xl border border-red-950/60 bg-black/60 rounded-sm p-6 text-xs text-[#e8d5b5]/70 font-mono">
-            <p className="text-white font-bold tracking-wider mb-1">
-              ORGANIZED BY {CHAPTER_INFO.name} ({CHAPTER_INFO.shortName} '26)
-            </p>
-            <p className="text-[#e8d5b5]/60 mb-4">{CHAPTER_INFO.institution}</p>
-
-            <div className="flex flex-wrap items-center justify-center gap-6 pt-4 border-t border-white/10 text-white/80">
-              <a href={CHAPTER_INFO.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[#e50914] flex items-center gap-1.5 transition-colors">
-                <IconInstagram size={14} /> Instagram
-              </a>
-              <a href={CHAPTER_INFO.whatsappGroup} target="_blank" rel="noopener noreferrer" className="hover:text-[#e50914] flex items-center gap-1.5 transition-colors">
-                <IconWhatsapp size={14} /> WhatsApp Community
-              </a>
-              <a href={CHAPTER_INFO.github} target="_blank" rel="noopener noreferrer" className="hover:text-[#e50914] flex items-center gap-1.5 transition-colors">
-                <IconGithub size={14} /> GitHub
-              </a>
-              <span className="flex items-center gap-1.5 text-[#e8d5b5]/60">
-                <Mail size={14} className="text-[#e50914]" /> {CHAPTER_INFO.contactEmail}
-              </span>
+          {/* Footer Metadata */}
+          <div className="mt-16 pt-8 border-t border-red-950/60 w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#e8d5b5]/50 font-mono">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#e50914] animate-pulse" />
+              <span>AI STUDENT CHAPTER • RCPET&apos;S IMRD, SHIRPUR</span>
             </div>
+            <div className="flex items-center gap-4 text-sm text-[#e8d5b5]/70">
+              <a href={CHAPTER_INFO.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[#e50914] transition-colors" aria-label="Instagram">
+                <IconInstagram size={16} />
+              </a>
+              <a href={CHAPTER_INFO.github} target="_blank" rel="noopener noreferrer" className="hover:text-[#e50914] transition-colors" aria-label="GitHub">
+                <IconGithub size={16} />
+              </a>
+              <a href={CHAPTER_INFO.whatsappGroup} target="_blank" rel="noopener noreferrer" className="hover:text-[#e50914] transition-colors" aria-label="WhatsApp Community">
+                <IconWhatsapp size={16} />
+              </a>
+              <a href={`mailto:${CHAPTER_INFO.contactEmail}`} className="hover:text-[#e50914] transition-colors" aria-label="Email">
+                <Mail size={16} />
+              </a>
+            </div>
+            <span>ALL RIGHTS RESERVED © 2026</span>
           </div>
         </div>
       </section>

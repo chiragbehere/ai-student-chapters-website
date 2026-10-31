@@ -124,7 +124,7 @@ export function Title({
                 <Award size={12} className="text-[#ffd700]" /> ₹50,000+ BOUNTY
               </span>
               <span className="px-2.5 py-1 rounded bg-neutral-900 border border-neutral-700 font-semibold flex items-center gap-1.5">
-                <Cpu size={12} className="text-red-400" /> 5 TRACKS • 20 PROBLEM STATEMENTS
+                <Shield size={12} className="text-red-400" /> OPEN INNOVATION • 12 RULES
               </span>
             </motion.div>
 
@@ -135,7 +135,8 @@ export function Title({
               transition={{ delay: 0.65, duration: 0.6 }}
               className="text-xs sm:text-sm text-[#f1f5f9] font-mono max-w-lg mx-auto mb-6 leading-relaxed font-normal"
             >
-              Enter the Upside Down of code. Will your squad conquer the breach and claim victory?
+              Enter the Upside Down of code. 24 hours of adrenaline, algorithms, and glory.
+              Same ideas, different realities. Will your squad conquer the breach and claim victory?
             </motion.p>
 
             {/* 7. Enter the Experience CTA (Emerges after title reveal) */}

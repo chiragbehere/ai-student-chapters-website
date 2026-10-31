@@ -237,7 +237,7 @@ export const CodeCarnival: React.FC = () => {
         </WebGLErrorBoundary>
       )}
 
-      {/* ── The 6-Chapter Narrative Storyboard Overlay (With 20 Problem Statements) ── */}
+      {/* ── The 6-Chapter Narrative Storyboard Overlay (With 12 Official Event Guidelines) ── */}
       <CinematicChapters
         scrollProgress={scrollProgress}
         activeZoneIndex={activeZoneIndex}
