@@ -1,0 +1,234 @@
+/* ══════════════════════════════════════════════════════════════════
+   CODE CARNIVAL 2.0 — CLASSIFIED GOVERNMENT DOSSIER OPENING GATE
+   Aged Parchment, 1980s Hawkins Lab Investigation Document Aesthetic
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Desk Environment */
+.dossier-desk-env {
+  background-color: #17130f;
+  background-image: 
+    radial-gradient(circle at 50% 38%, rgba(214, 194, 159, 0.08) 0%, rgba(18, 14, 11, 0.85) 60%, rgba(10, 8, 6, 0.98) 100%),
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.03) 0px, rgba(0, 0, 0, 0.03) 2px, transparent 2px, transparent 6px);
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Central Dossier Physical Paper */
+.dossier-sheet {
+  background: 
+    radial-gradient(circle at 65% 25%, #f6edd9 0%, #ecdcc0 50%, #d8c39e 100%);
+  color: #211c18;
+  position: relative;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 15px 35px rgba(0, 0, 0, 0.65),
+    0 35px 85px rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(135, 69, 46, 0.35);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  font-family: 'Courier Prime', monospace;
+}
+
+/* Aged Paper Grain Overlay */
+.dossier-sheet::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.045'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+  border-radius: inherit;
+}
+
+/* Subtle Fold Creases */
+.dossier-crease-h {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.25), rgba(40, 25, 15, 0.1));
+  pointer-events: none;
+}
+
+.dossier-crease-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(40, 25, 15, 0.08));
+  pointer-events: none;
+}
+
+/* Coffee Stain Ring */
+.coffee-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 4px solid rgba(135, 69, 46, 0.18);
+  box-shadow: 
+    inset 0 0 8px rgba(135, 69, 46, 0.12),
+    0 0 6px rgba(135, 69, 46, 0.08);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Red Rubber Stamp: TOP SECRET */
+.stamp-top-secret {
+  display: inline-block;
+  border: 3.5px solid #a52a24;
+  outline: 1.5px solid #a52a24;
+  outline-offset: 2.5px;
+  padding: 5px 22px;
+  color: #a52a24;
+  font-family: 'Special Elite', monospace;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  background-color: rgba(165, 42, 36, 0.06);
+  transform: rotate(-1.5deg);
+  box-shadow: 0 0 0 1px rgba(165, 42, 36, 0.15);
+  text-shadow: 0 0 1px rgba(165, 42, 36, 0.4);
+  mix-blend-mode: multiply;
+}
+
+/* Small Rubber Stamp: TOP SECRET (Angled Desk Card) */
+.stamp-top-secret-angled {
+  border: 2px solid #a52a24;
+  outline: 1px solid #a52a24;
+  outline-offset: 2px;
+  padding: 3px 12px;
+  color: #a52a24;
+  font-family: 'Special Elite', monospace;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background-color: rgba(165, 42, 36, 0.08);
+  mix-blend-mode: multiply;
+}
+
+/* Circular Seal Stamp: IMRD RESEARCH DIVISION */
+.circular-seal {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 2px dashed rgba(81, 69, 54, 0.65);
+  outline: 1.5px solid rgba(81, 69, 54, 0.55);
+  outline-offset: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #514536;
+  font-family: 'Special Elite', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transform: rotate(12deg);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Solid Black Redacted Bar */
+.redacted-bar {
+  display: inline-block;
+  background-color: #211c18;
+  height: 1.15em;
+  vertical-align: middle;
+  border-radius: 1px;
+}
+
+/* Masking Tape */
+.masking-tape {
+  background-color: rgba(228, 212, 168, 0.75);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(0.5px);
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Stamped Action Button */
+.dossier-action-btn {
+  background-color: #a52a24;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12) 0%, transparent 70%),
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.05) 0px, rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 4px);
+  border: 2px solid #6e1b17;
+  color: #f2e7d0;
+  font-family: 'Special Elite', monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 8px 18px rgba(165, 42, 36, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.dossier-action-btn:hover {
+  background-color: #b82f28;
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.4),
+    0 12px 25px rgba(165, 42, 36, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.dossier-action-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    inset 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Handwritten script annotation */
+.handwritten-note {
+  font-family: 'Caveat', cursive;
+  line-height: 1.15;
+}
+
+/* Typewriter Title styling */
+.typewriter-title {
+  font-family: 'Special Elite', monospace;
+  color: #211c18;
+  letter-spacing: 0.06em;
+  line-height: 0.95;
+  text-shadow: 0 0.5px 0.5px rgba(33, 28, 24, 0.4);
+}
+
+/* Identification Table Styling */
+.dossier-id-table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1.5px solid #b9a582;
+  font-family: 'Courier Prime', monospace;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.dossier-id-table td,
+.dossier-id-table th {
+  border: 1px solid #b9a582;
+  padding: 6px 10px;
+  vertical-align: top;
+}
+
+/* Underline in pen red */
+.pen-underline {
+  border-bottom: 1.5px solid #a52a24;
+  padding-bottom: 1px;
+}
