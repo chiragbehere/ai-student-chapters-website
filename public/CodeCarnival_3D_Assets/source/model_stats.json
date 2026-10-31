@@ -1,0 +1,1137 @@
+[
+ {
+  "file": "environment_ground.glb",
+  "bytes": 571312,
+  "nodes": 1,
+  "meshes": 1,
+  "unique_tris": 20000,
+  "unique_verts": 10201,
+  "instanced_tris": 20000,
+  "instanced_points": 0,
+  "materials": [
+   "ground"
+  ],
+  "images": [
+   "../../textures/pbr/ground_basecolor.png",
+   "../../textures/pbr/ground_roughness.png",
+   "../../textures/pbr/ground_normal.png",
+   "../../textures/pbr/cracked_ground.png"
+  ],
+  "mesh_stats": [
+   {
+    "name": "ground",
+    "tris": 20000,
+    "verts": 10201,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "environment_dead_trees.glb",
+  "bytes": 147824,
+  "nodes": 4,
+  "meshes": 4,
+  "unique_tris": 4696,
+  "unique_verts": 3174,
+  "instanced_tris": 4696,
+  "instanced_points": 0,
+  "materials": [
+   "bark"
+  ],
+  "images": [
+   "../../textures/pbr/bark_basecolor.png",
+   "../../textures/pbr/bark_roughness.png",
+   "../../textures/pbr/bark_normal.png"
+  ],
+  "mesh_stats": [
+   {
+    "name": "dead_tree_A",
+    "tris": 1287,
+    "verts": 875,
+    "points": 0
+   },
+   {
+    "name": "dead_tree_B",
+    "tris": 1176,
+    "verts": 796,
+    "points": 0
+   },
+   {
+    "name": "dead_tree_C",
+    "tris": 1334,
+    "verts": 902,
+    "points": 0
+   },
+   {
+    "name": "dead_tree_D",
+    "tris": 899,
+    "verts": 601,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "environment_dark_forest.glb",
+  "bytes": 182060,
+  "nodes": 74,
+  "meshes": 6,
+  "unique_tris": 4959,
+  "unique_verts": 3353,
+  "instanced_tris": 68335,
+  "instanced_points": 0,
+  "materials": [
+   "bark"
+  ],
+  "images": [
+   "../../textures/pbr/bark_basecolor.png",
+   "../../textures/pbr/bark_roughness.png",
+   "../../textures/pbr/bark_normal.png"
+  ],
+  "mesh_stats": [
+   {
+    "name": "dead_tree_A",
+    "tris": 1287,
+    "verts": 875,
+    "points": 0
+   },
+   {
+    "name": "dead_tree_B",
+    "tris": 1176,
+    "verts": 796,
+    "points": 0
+   },
+   {
+    "name": "dead_tree_C",
+    "tris": 1334,
+    "verts": 902,
+    "points": 0
+   },
+   {
+    "name": "dead_tree_D",
+    "tris": 899,
+    "verts": 601,
+    "points": 0
+   },
+   {
+    "name": "fallen_log",
+    "tris": 233,
+    "verts": 156,
+    "points": 0
+   },
+   {
+    "name": "tree_stump",
+    "tris": 30,
+    "verts": 23,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "environment_distant_forest.glb",
+  "bytes": 86344,
+  "nodes": 139,
+  "meshes": 9,
+  "unique_tris": 1329,
+  "unique_verts": 1105,
+  "instanced_tris": 19971,
+  "instanced_points": 0,
+  "materials": [
+   "silhouette"
+  ],
+  "images": [],
+  "mesh_stats": [
+   {
+    "name": "near_tree_0",
+    "tris": 156,
+    "verts": 130,
+    "points": 0
+   },
+   {
+    "name": "near_tree_1",
+    "tris": 156,
+    "verts": 130,
+    "points": 0
+   },
+   {
+    "name": "near_tree_2",
+    "tris": 156,
+    "verts": 130,
+    "points": 0
+   },
+   {
+    "name": "mid_tree_0",
+    "tris": 126,
+    "verts": 104,
+    "points": 0
+   },
+   {
+    "name": "mid_tree_1",
+    "tris": 156,
+    "verts": 130,
+    "points": 0
+   },
+   {
+    "name": "mid_tree_2",
+    "tris": 141,
+    "verts": 117,
+    "points": 0
+   },
+   {
+    "name": "far_tree_0",
+    "tris": 126,
+    "verts": 104,
+    "points": 0
+   },
+   {
+    "name": "far_tree_1",
+    "tris": 156,
+    "verts": 130,
+    "points": 0
+   },
+   {
+    "name": "far_tree_2",
+    "tris": 156,
+    "verts": 130,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "environment_vines.glb",
+  "bytes": 191084,
+  "nodes": 39,
+  "meshes": 38,
+  "unique_tris": 4280,
+  "unique_verts": 2838,
+  "instanced_tris": 4280,
+  "instanced_points": 0,
+  "materials": [
+   "vines",
+   "bark"
+  ],
+  "images": [
+   "../../textures/pbr/vines_basecolor.png",
+   "../../textures/pbr/bark_basecolor.png",
+   "../../textures/pbr/bark_roughness.png",
+   "../../textures/pbr/bark_normal.png"
+  ],
+  "mesh_stats": [
+   {
+    "name": "vine_00",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_01",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_02",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_03",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_04",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_05",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_06",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_07",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_08",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_09",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_10",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_11",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_12",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_13",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_14",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_15",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_16",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_17",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_18",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_19",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_20",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_21",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_22",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_23",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_24",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_25",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_26",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "vine_27",
+    "tris": 95,
+    "verts": 61,
+    "points": 0
+   },
+   {
+    "name": "hanging_root_00",
+    "tris": 162,
+    "verts": 113,
+    "points": 0
+   },
+   {
+    "name": "hanging_root_01",
+    "tris": 162,
+    "verts": 113,
+    "points": 0
+   },
+   {
+    "name": "hanging_root_02",
+    "tris": 162,
+    "verts": 113,
+    "points": 0
+   },
+   {
+    "name": "hanging_root_03",
+    "tris": 162,
+    "verts": 113,
+    "points": 0
+   },
+   {
+    "name": "hanging_root_04",
+    "tris": 162,
+    "verts": 113,
+    "points": 0
+   },
+   {
+    "name": "hanging_root_05",
+    "tris": 162,
+    "verts": 113,
+    "points": 0
+   },
+   {
+    "name": "hanging_root_06",
+    "tris": 162,
+    "verts": 113,
+    "points": 0
+   },
+   {
+    "name": "hanging_root_07",
+    "tris": 162,
+    "verts": 113,
+    "points": 0
+   },
+   {
+    "name": "hanging_root_08",
+    "tris": 162,
+    "verts": 113,
+    "points": 0
+   },
+   {
+    "name": "hanging_root_09",
+    "tris": 162,
+    "verts": 113,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "environment_floating_debris.glb",
+  "bytes": 48684,
+  "nodes": 73,
+  "meshes": 4,
+  "unique_tris": 124,
+  "unique_verts": 336,
+  "instanced_tris": 2080,
+  "instanced_points": 0,
+  "materials": [
+   "debris"
+  ],
+  "images": [],
+  "mesh_stats": [
+   {
+    "name": "debris_shard",
+    "tris": 20,
+    "verts": 60,
+    "points": 0
+   },
+   {
+    "name": "debris_chunk",
+    "tris": 80,
+    "verts": 240,
+    "points": 0
+   },
+   {
+    "name": "debris_plank",
+    "tris": 12,
+    "verts": 24,
+    "points": 0
+   },
+   {
+    "name": "debris_leaf",
+    "tris": 12,
+    "verts": 12,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "environment_fog_particles.glb",
+  "bytes": 49804,
+  "nodes": 11,
+  "meshes": 6,
+  "unique_tris": 2,
+  "unique_verts": 2144,
+  "instanced_tris": 10,
+  "instanced_points": 2140,
+  "materials": [
+   "fog_sheet",
+   "particle"
+  ],
+  "images": [
+   "../../textures/particles/fog_noise.png"
+  ],
+  "mesh_stats": [
+   {
+    "name": "fog_sheet",
+    "tris": 2,
+    "verts": 4,
+    "points": 0
+   },
+   {
+    "name": "fog_wisps",
+    "tris": 0,
+    "verts": 420,
+    "points": 420
+   },
+   {
+    "name": "dust_motes",
+    "tris": 0,
+    "verts": 900,
+    "points": 900
+   },
+   {
+    "name": "ash_flakes",
+    "tris": 0,
+    "verts": 320,
+    "points": 320
+   },
+   {
+    "name": "embers",
+    "tris": 0,
+    "verts": 260,
+    "points": 260
+   },
+   {
+    "name": "spores",
+    "tris": 0,
+    "verts": 240,
+    "points": 240
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "portal_main.glb",
+  "bytes": 55424,
+  "nodes": 6,
+  "meshes": 3,
+  "unique_tris": 2152,
+  "unique_verts": 1155,
+  "instanced_tris": 4584,
+  "instanced_points": 0,
+  "materials": [
+   "portal_swirl",
+   "portal_void",
+   "portal_glow"
+  ],
+  "images": [
+   "../../textures/portal/portal_emission.png"
+  ],
+  "mesh_stats": [
+   {
+    "name": "portal_disc",
+    "tris": 1216,
+    "verts": 641,
+    "points": 0
+   },
+   {
+    "name": "portal_void",
+    "tris": 336,
+    "verts": 193,
+    "points": 0
+   },
+   {
+    "name": "portal_core_glow",
+    "tris": 600,
+    "verts": 321,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "portal_ring.glb",
+  "bytes": 114660,
+  "nodes": 7,
+  "meshes": 6,
+  "unique_tris": 3692,
+  "unique_verts": 2383,
+  "instanced_tris": 3692,
+  "instanced_points": 0,
+  "materials": [
+   "portal_ring"
+  ],
+  "images": [],
+  "mesh_stats": [
+   {
+    "name": "ring_outer",
+    "tris": 1920,
+    "verts": 1067,
+    "points": 0
+   },
+   {
+    "name": "ring_inner",
+    "tris": 768,
+    "verts": 455,
+    "points": 0
+   },
+   {
+    "name": "ring_shards",
+    "tris": 140,
+    "verts": 336,
+    "points": 0
+   },
+   {
+    "name": "ring_arc_0",
+    "tris": 288,
+    "verts": 175,
+    "points": 0
+   },
+   {
+    "name": "ring_arc_1",
+    "tris": 288,
+    "verts": 175,
+    "points": 0
+   },
+   {
+    "name": "ring_arc_2",
+    "tris": 288,
+    "verts": 175,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "portal_cracks.glb",
+  "bytes": 128204,
+  "nodes": 4,
+  "meshes": 3,
+  "unique_tris": 3460,
+  "unique_verts": 2883,
+  "instanced_tris": 3460,
+  "instanced_points": 0,
+  "materials": [
+   "glow_ribbon"
+  ],
+  "images": [],
+  "mesh_stats": [
+   {
+    "name": "cracks_primary",
+    "tris": 1208,
+    "verts": 981,
+    "points": 0
+   },
+   {
+    "name": "cracks_secondary",
+    "tris": 1252,
+    "verts": 1038,
+    "points": 0
+   },
+   {
+    "name": "cracks_fine",
+    "tris": 1000,
+    "verts": 864,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "portal_particles.glb",
+  "bytes": 58532,
+  "nodes": 2,
+  "meshes": 2,
+  "unique_tris": 0,
+  "unique_verts": 2820,
+  "instanced_tris": 0,
+  "instanced_points": 2820,
+  "materials": [
+   "particle"
+  ],
+  "images": [],
+  "mesh_stats": [
+   {
+    "name": "portal_particles",
+    "tris": 0,
+    "verts": 2400,
+    "points": 2400
+   },
+   {
+    "name": "portal_sparks",
+    "tris": 0,
+    "verts": 420,
+    "points": 420
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "red_lightning_effect.glb",
+  "bytes": 189504,
+  "nodes": 7,
+  "meshes": 6,
+  "unique_tris": 5376,
+  "unique_verts": 4176,
+  "instanced_tris": 5376,
+  "instanced_points": 0,
+  "materials": [
+   "glow_ribbon"
+  ],
+  "images": [],
+  "mesh_stats": [
+   {
+    "name": "lightning_bolt_0",
+    "tris": 896,
+    "verts": 696,
+    "points": 0
+   },
+   {
+    "name": "lightning_bolt_1",
+    "tris": 896,
+    "verts": 696,
+    "points": 0
+   },
+   {
+    "name": "lightning_bolt_2",
+    "tris": 896,
+    "verts": 696,
+    "points": 0
+   },
+   {
+    "name": "lightning_bolt_3",
+    "tris": 896,
+    "verts": 696,
+    "points": 0
+   },
+   {
+    "name": "lightning_bolt_4",
+    "tris": 896,
+    "verts": 696,
+    "points": 0
+   },
+   {
+    "name": "lightning_bolt_5",
+    "tris": 896,
+    "verts": 696,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "energy_ribbons.glb",
+  "bytes": 64028,
+  "nodes": 7,
+  "meshes": 6,
+  "unique_tris": 1704,
+  "unique_verts": 1296,
+  "instanced_tris": 1704,
+  "instanced_points": 0,
+  "materials": [
+   "glow_ribbon"
+  ],
+  "images": [],
+  "mesh_stats": [
+   {
+    "name": "energy_ribbon_0",
+    "tris": 284,
+    "verts": 216,
+    "points": 0
+   },
+   {
+    "name": "energy_ribbon_1",
+    "tris": 284,
+    "verts": 216,
+    "points": 0
+   },
+   {
+    "name": "energy_ribbon_2",
+    "tris": 284,
+    "verts": 216,
+    "points": 0
+   },
+   {
+    "name": "energy_ribbon_3",
+    "tris": 284,
+    "verts": 216,
+    "points": 0
+   },
+   {
+    "name": "energy_ribbon_4",
+    "tris": 284,
+    "verts": 216,
+    "points": 0
+   },
+   {
+    "name": "energy_ribbon_5",
+    "tris": 284,
+    "verts": 216,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "abandoned_sign.glb",
+  "bytes": 6964,
+  "nodes": 4,
+  "meshes": 3,
+  "unique_tris": 45,
+  "unique_verts": 65,
+  "instanced_tris": 45,
+  "instanced_points": 0,
+  "materials": [
+   "wood_old"
+  ],
+  "images": [
+   "../../textures/pbr/bark_basecolor.png",
+   "../../textures/pbr/bark_roughness.png",
+   "../../textures/pbr/bark_normal.png"
+  ],
+  "mesh_stats": [
+   {
+    "name": "sign_post",
+    "tris": 21,
+    "verts": 17,
+    "points": 0
+   },
+   {
+    "name": "sign_board",
+    "tris": 12,
+    "verts": 24,
+    "points": 0
+   },
+   {
+    "name": "sign_plank_broken",
+    "tris": 12,
+    "verts": 24,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "broken_electric_pole.glb",
+  "bytes": 18064,
+  "nodes": 5,
+  "meshes": 4,
+  "unique_tris": 354,
+  "unique_verts": 309,
+  "instanced_tris": 354,
+  "instanced_points": 0,
+  "materials": [
+   "wood_old",
+   "metal_rust",
+   "wire"
+  ],
+  "images": [
+   "../../textures/pbr/bark_basecolor.png",
+   "../../textures/pbr/bark_roughness.png",
+   "../../textures/pbr/bark_normal.png"
+  ],
+  "mesh_stats": [
+   {
+    "name": "pole_shaft",
+    "tris": 54,
+    "verts": 83,
+    "points": 0
+   },
+   {
+    "name": "pole_crossarm",
+    "tris": 84,
+    "verts": 84,
+    "points": 0
+   },
+   {
+    "name": "wire_a",
+    "tris": 108,
+    "verts": 71,
+    "points": 0
+   },
+   {
+    "name": "wire_b",
+    "tris": 108,
+    "verts": 71,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "old_lamp.glb",
+  "bytes": 9392,
+  "nodes": 4,
+  "meshes": 3,
+  "unique_tris": 204,
+  "unique_verts": 145,
+  "instanced_tris": 204,
+  "instanced_points": 0,
+  "materials": [
+   "metal_rust",
+   "lamp_glass"
+  ],
+  "images": [],
+  "mesh_stats": [
+   {
+    "name": "lamp_post",
+    "tris": 84,
+    "verts": 66,
+    "points": 0
+   },
+   {
+    "name": "lamp_housing",
+    "tris": 40,
+    "verts": 37,
+    "points": 0
+   },
+   {
+    "name": "lamp_glass",
+    "tris": 80,
+    "verts": 42,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "floating_rocks.glb",
+  "bytes": 264836,
+  "nodes": 8,
+  "meshes": 7,
+  "unique_tris": 2240,
+  "unique_verts": 6720,
+  "instanced_tris": 2240,
+  "instanced_points": 0,
+  "materials": [
+   "rock"
+  ],
+  "images": [],
+  "mesh_stats": [
+   {
+    "name": "floating_rock_0",
+    "tris": 320,
+    "verts": 960,
+    "points": 0
+   },
+   {
+    "name": "floating_rock_1",
+    "tris": 320,
+    "verts": 960,
+    "points": 0
+   },
+   {
+    "name": "floating_rock_2",
+    "tris": 320,
+    "verts": 960,
+    "points": 0
+   },
+   {
+    "name": "floating_rock_3",
+    "tris": 320,
+    "verts": 960,
+    "points": 0
+   },
+   {
+    "name": "floating_rock_4",
+    "tris": 320,
+    "verts": 960,
+    "points": 0
+   },
+   {
+    "name": "floating_rock_5",
+    "tris": 320,
+    "verts": 960,
+    "points": 0
+   },
+   {
+    "name": "floating_rock_6",
+    "tris": 320,
+    "verts": 960,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "dead_branches.glb",
+  "bytes": 39684,
+  "nodes": 7,
+  "meshes": 6,
+  "unique_tris": 1026,
+  "unique_verts": 710,
+  "instanced_tris": 1026,
+  "instanced_points": 0,
+  "materials": [
+   "bark"
+  ],
+  "images": [
+   "../../textures/pbr/bark_basecolor.png",
+   "../../textures/pbr/bark_roughness.png",
+   "../../textures/pbr/bark_normal.png"
+  ],
+  "mesh_stats": [
+   {
+    "name": "dead_branch_0",
+    "tris": 183,
+    "verts": 127,
+    "points": 0
+   },
+   {
+    "name": "dead_branch_1",
+    "tris": 147,
+    "verts": 101,
+    "points": 0
+   },
+   {
+    "name": "dead_branch_2",
+    "tris": 183,
+    "verts": 127,
+    "points": 0
+   },
+   {
+    "name": "dead_branch_3",
+    "tris": 147,
+    "verts": 101,
+    "points": 0
+   },
+   {
+    "name": "dead_branch_4",
+    "tris": 183,
+    "verts": 127,
+    "points": 0
+   },
+   {
+    "name": "dead_branch_5",
+    "tris": 183,
+    "verts": 127,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "mysterious_crystals.glb",
+  "bytes": 34728,
+  "nodes": 4,
+  "meshes": 3,
+  "unique_tris": 270,
+  "unique_verts": 810,
+  "instanced_tris": 270,
+  "instanced_points": 0,
+  "materials": [
+   "crystal"
+  ],
+  "images": [],
+  "mesh_stats": [
+   {
+    "name": "crystal_cluster_0",
+    "tris": 90,
+    "verts": 270,
+    "points": 0
+   },
+   {
+    "name": "crystal_cluster_1",
+    "tris": 90,
+    "verts": 270,
+    "points": 0
+   },
+   {
+    "name": "crystal_cluster_2",
+    "tris": 90,
+    "verts": 270,
+    "points": 0
+   }
+  ],
+  "problems": []
+ },
+ {
+  "file": "forest_roots.glb",
+  "bytes": 95428,
+  "nodes": 6,
+  "meshes": 5,
+  "unique_tris": 3054,
+  "unique_verts": 1964,
+  "instanced_tris": 3054,
+  "instanced_points": 0,
+  "materials": [
+   "bark"
+  ],
+  "images": [
+   "../../textures/pbr/bark_basecolor.png",
+   "../../textures/pbr/bark_roughness.png",
+   "../../textures/pbr/bark_normal.png"
+  ],
+  "mesh_stats": [
+   {
+    "name": "root_bundle_0",
+    "tris": 516,
+    "verts": 334,
+    "points": 0
+   },
+   {
+    "name": "root_bundle_1",
+    "tris": 510,
+    "verts": 320,
+    "points": 0
+   },
+   {
+    "name": "root_bundle_2",
+    "tris": 582,
+    "verts": 372,
+    "points": 0
+   },
+   {
+    "name": "root_bundle_3",
+    "tris": 828,
+    "verts": 540,
+    "points": 0
+   },
+   {
+    "name": "root_bundle_4",
+    "tris": 618,
+    "verts": 398,
+    "points": 0
+   }
+  ],
+  "problems": []
+ }
+]

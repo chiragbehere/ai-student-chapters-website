@@ -1,0 +1,175 @@
+{
+  "units": "metres, Y-up, -Z into the screen",
+  "camera": {
+    "start": [
+      0,
+      1.7,
+      9.0
+    ],
+    "look_at": [
+      0.0,
+      4.8,
+      -18.0
+    ],
+    "fov": 50
+  },
+  "portal_anchor": [
+    0.0,
+    4.8,
+    -18.0
+  ],
+  "fog": {
+    "color": "#12040a",
+    "density": 0.02
+  },
+  "placement": {
+    "environment/environment_ground.glb": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "note": "the node already carries translation z=-30; do not offset again"
+    },
+    "environment/environment_dark_forest.glb": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "note": "trees are pre-placed in world coordinates"
+    },
+    "environment/environment_distant_forest.glb": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "note": "silhouette arcs centred behind the portal"
+    },
+    "environment/environment_vines.glb": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "note": "children pre-placed; origin at anchor points"
+    },
+    "environment/environment_floating_debris.glb": {
+      "position": [
+        0,
+        0,
+        0
+      ]
+    },
+    "environment/environment_fog_particles.glb": {
+      "position": [
+        0,
+        0,
+        0
+      ]
+    },
+    "trees/environment_dead_trees.glb": {
+      "position": [
+        -14,
+        0,
+        -4
+      ],
+      "note": "hero trees for close-ups"
+    },
+    "portal/portal_main.glb": {
+      "position": [
+        0.0,
+        4.8,
+        -18.0
+      ]
+    },
+    "portal/portal_ring.glb": {
+      "position": [
+        0.0,
+        4.8,
+        -18.0
+      ]
+    },
+    "portal/portal_cracks.glb": {
+      "position": [
+        0.0,
+        4.8,
+        -18.0
+      ]
+    },
+    "portal/portal_particles.glb": {
+      "position": [
+        0.0,
+        4.8,
+        -18.0
+      ]
+    },
+    "effects/energy_ribbons.glb": {
+      "position": [
+        0.0,
+        4.8,
+        -18.0
+      ]
+    },
+    "effects/red_lightning_effect.glb": {
+      "position": [
+        10,
+        0,
+        -30
+      ],
+      "note": "re-position per strike"
+    },
+    "props/abandoned_sign.glb": {
+      "position": [
+        3.2,
+        0.0,
+        -2.0
+      ],
+      "rotationY": -0.5
+    },
+    "props/broken_electric_pole.glb": {
+      "position": [
+        -6.5,
+        0.0,
+        -9.0
+      ]
+    },
+    "props/old_lamp.glb": {
+      "position": [
+        4.6,
+        0.0,
+        -9.5
+      ]
+    },
+    "props/floating_rocks.glb": {
+      "position": [
+        0,
+        3.2,
+        -26
+      ],
+      "note": "row of 7 rocks; split into separate placements as desired"
+    },
+    "props/dead_branches.glb": {
+      "position": [
+        0,
+        0,
+        -4
+      ]
+    },
+    "props/mysterious_crystals.glb": {
+      "position": [
+        -5.5,
+        0,
+        -14
+      ]
+    },
+    "props/forest_roots.glb": {
+      "position": [
+        0,
+        0,
+        -12
+      ]
+    }
+  }
+}

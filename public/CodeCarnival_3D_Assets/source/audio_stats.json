@@ -1,0 +1,79 @@
+{
+ "ambient_forest.wav": {
+  "seconds": 24.0,
+  "sample_rate": 22050,
+  "channels": 1,
+  "bit_depth": 16,
+  "peak_dbfs": -3.1,
+  "rms_dbfs": -17.91,
+  "loop_seam_jump": 0.0374,
+  "wav_kb": 1034,
+  "ogg_kb": 94
+ },
+ "cinematic_impact.wav": {
+  "seconds": 5.0,
+  "sample_rate": 44100,
+  "channels": 1,
+  "bit_depth": 16,
+  "peak_dbfs": -0.92,
+  "rms_dbfs": -18.77,
+  "loop_seam_jump": 0.0,
+  "wav_kb": 431,
+  "ogg_kb": 33
+ },
+ "dark_drone.wav": {
+  "seconds": 20.0,
+  "sample_rate": 44100,
+  "channels": 1,
+  "bit_depth": 16,
+  "peak_dbfs": -1.94,
+  "rms_dbfs": -6.18,
+  "loop_seam_jump": 0.0016,
+  "wav_kb": 1723,
+  "ogg_kb": 41
+ },
+ "electric_crackle.wav": {
+  "seconds": 4.0,
+  "sample_rate": 44100,
+  "channels": 1,
+  "bit_depth": 16,
+  "peak_dbfs": -1.41,
+  "rms_dbfs": -27.21,
+  "loop_seam_jump": 0.0,
+  "wav_kb": 345,
+  "ogg_kb": 45
+ },
+ "portal_open.wav": {
+  "seconds": 7.0,
+  "sample_rate": 44100,
+  "channels": 1,
+  "bit_depth": 16,
+  "peak_dbfs": -1.41,
+  "rms_dbfs": -20.63,
+  "loop_seam_jump": 0.0,
+  "wav_kb": 603,
+  "ogg_kb": 61
+ },
+ "portal_transition.wav": {
+  "seconds": 3.5,
+  "sample_rate": 44100,
+  "channels": 1,
+  "bit_depth": 16,
+  "peak_dbfs": -1.41,
+  "rms_dbfs": -16.98,
+  "loop_seam_jump": 0.0,
+  "wav_kb": 302,
+  "ogg_kb": 33
+ },
+ "wind_ambience.wav": {
+  "seconds": 24.0,
+  "sample_rate": 22050,
+  "channels": 1,
+  "bit_depth": 16,
+  "peak_dbfs": -2.51,
+  "rms_dbfs": -21.17,
+  "loop_seam_jump": 0.0085,
+  "wav_kb": 1034,
+  "ogg_kb": 130
+ }
+}

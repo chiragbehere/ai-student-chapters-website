@@ -1,0 +1,65 @@
+{
+ "name": "forest",
+ "description": "Cold moonlit dead forest; the portal is a distant red glow.",
+ "background": "#0a0510",
+ "fog": {
+  "type": "FogExp2",
+  "color": "#120610",
+  "density": 0.018
+ },
+ "exposure": 0.9,
+ "ambient": {
+  "color": "#1a1530",
+  "intensity": 0.45
+ },
+ "hemisphere": {
+  "sky": "#2a2048",
+  "ground": "#1a0508",
+  "intensity": 0.35
+ },
+ "directional": [
+  {
+   "name": "moon",
+   "color": "#6f86d6",
+   "intensity": 0.9,
+   "position": [
+    -14,
+    28,
+    18
+   ],
+   "castShadow": true
+  }
+ ],
+ "points": [
+  {
+   "name": "portal_glow",
+   "color": "#ff2a14",
+   "intensity": 40,
+   "distance": 40,
+   "decay": 2,
+   "position": [
+    0,
+    4.9,
+    -8
+   ]
+  },
+  {
+   "name": "lamp_glow",
+   "color": "#ff5a2a",
+   "intensity": 6,
+   "distance": 9,
+   "decay": 2,
+   "position": [
+    -6.3,
+    3.7,
+    -5.5
+   ],
+   "flicker": true
+  }
+ ],
+ "bloom": {
+  "strength": 0.8,
+  "radius": 0.6,
+  "threshold": 0.65
+ }
+}

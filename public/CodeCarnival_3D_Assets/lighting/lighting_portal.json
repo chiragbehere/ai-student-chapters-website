@@ -1,0 +1,70 @@
+{
+ "name": "portal",
+ "description": "Portal active: strong red-orange key light, redder fog, dimmer moon.",
+ "background": "#12050a",
+ "fog": {
+  "type": "FogExp2",
+  "color": "#2a0810",
+  "density": 0.022
+ },
+ "exposure": 1.0,
+ "ambient": {
+  "color": "#301020",
+  "intensity": 0.5
+ },
+ "hemisphere": {
+  "sky": "#40182a",
+  "ground": "#200608",
+  "intensity": 0.4
+ },
+ "directional": [
+  {
+   "name": "moon",
+   "color": "#6f86d6",
+   "intensity": 0.45,
+   "position": [
+    -14,
+    28,
+    18
+   ],
+   "castShadow": true
+  }
+ ],
+ "points": [
+  {
+   "name": "portal_key",
+   "color": "#ff3a1a",
+   "intensity": 120,
+   "distance": 55,
+   "decay": 2,
+   "position": [
+    0,
+    4.9,
+    -7
+   ],
+   "pulse": {
+    "frequency": 0.4,
+    "min": 0.8,
+    "max": 1.2
+   }
+  },
+  {
+   "name": "portal_rim_low",
+   "color": "#ff6a2a",
+   "intensity": 30,
+   "distance": 18,
+   "decay": 2,
+   "position": [
+    0,
+    0.8,
+    -6
+   ],
+   "flicker": true
+  }
+ ],
+ "bloom": {
+  "strength": 1.1,
+  "radius": 0.7,
+  "threshold": 0.55
+ }
+}

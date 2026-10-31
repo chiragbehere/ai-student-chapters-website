@@ -1,0 +1,11 @@
+{
+  "note": "Reference values for the procedural animations; the GLBs already carry per-node values in glTF extras (read as object.userData in Three.js).",
+  "floating_portal_energy": { "driver": "ribbon_flow + spin", "nodes": "energy_ribbons_group/*, portal_main/portal_swirl_*", "speed_rad_per_s": [0.06, 0.17] },
+  "pulsating_portal": { "driver": "pulse", "node": "portal_core_glow", "amp": 0.12, "speed_hz_rad": 1.4 },
+  "moving_vines": { "driver": "vertex shader using _SWAY attribute", "amp_m": [0.05, 0.12], "period_s": [7, 16] },
+  "swaying_branches": { "driver": "sway", "max_rotation_rad": 0.012, "period_s": [12, 25] },
+  "lightning_flashes": { "driver": "flash scheduler", "interval_s": [3, 9], "duration_s": 0.18, "overlays": "textures/overlays/lightning_flash_0{1..3}.png", "light_preset": "lighting/lighting_red_alert.json" },
+  "floating_embers": { "driver": "rise (particle shader)", "node": "embers", "sprite": "textures/particles/particle_ember.png" },
+  "slow_fog": { "driver": "uv_scroll", "nodes": "fog_sheet_0..4", "speed_uv_per_s": [0.004, 0.012] },
+  "environment_particles": { "driver": "drift / fall / float", "nodes": "dust_motes, ash_flakes, spores, fog_wisps" }
+}
