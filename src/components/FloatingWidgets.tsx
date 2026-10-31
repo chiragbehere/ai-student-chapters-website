@@ -1,139 +1,168 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Share2, Sparkles } from 'lucide-react';
+import { X, Sparkles, MessageCircle, Mail, ChevronUp } from 'lucide-react';
+import { IconInstagram } from './SocialIcons';
 import ChatbotWidget from './ChatbotWidget';
-import WhatsAppWidget from './WhatsAppWidget';
-import EmailWidget from './EmailWidget';
-import InstagramWidget from './InstagramWidget';
+import { CHAPTER_INFO } from '../data/chapterData';
 
 export const FloatingWidgets = () => {
   const location = useLocation();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Hide on Code Carnival immersive page
   if (location.pathname === '/code-carnival') return null;
 
+  // Watch for any open modal to hide floating widgets completely
+  useEffect(() => {
+    const checkModal = () => {
+      setIsModalOpen(document.body.getAttribute('data-modal-open') === 'true');
+    };
+
+    checkModal();
+    const observer = new MutationObserver(checkModal);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['data-modal-open'] });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // If a modal is open, do not render or hide completely
+  if (isModalOpen) return null;
+
   return (
     <>
-      {/* Desktop View: Render standard vertical floating stack */}
-      <div className="hidden sm:block">
-        <ChatbotWidget />
-        <WhatsAppWidget />
-        <EmailWidget />
-        <InstagramWidget />
-      </div>
+      {/* AI Chatbot Window */}
+      <ChatbotWidget
+        isOpen={isChatOpen}
+        onOpenChange={setIsChatOpen}
+        hideTrigger={true}
+      />
 
-      {/* Mobile / Small Screen View (< 640px): Seamless unified bottom dock */}
-      <div className="sm:hidden">
-        {/* Render Chatbot Modal with custom trigger */}
-        <ChatbotWidget
-          isOpen={isChatOpen}
-          onOpenChange={setIsChatOpen}
-          hideTrigger={true}
-        />
-
-        {/* Unified Bottom Floating Dock on Mobile */}
-        <div className="fixed bottom-4 right-4 z-40 flex items-center gap-2.5">
-          {/* Quick Links Speed Dial */}
-          <div className="relative">
-            <AnimatePresence>
-              {isMobileMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 15, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                  className="absolute bottom-full right-0 mb-3 flex flex-col items-end gap-2.5"
-                >
-                  {/* WhatsApp */}
-                  <a
-                    href="https://chat.whatsapp.com/FQdz9mHb4y37ooH1JxiYoF"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#25D366] text-white shadow-lg text-xs font-bold font-mono active:scale-95 whitespace-nowrap"
-                  >
-                    <span>WhatsApp Group</span>
-                    <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
-                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.488-1.761-1.663-2.059-.175-.297-.019-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                      </svg>
-                    </div>
-                  </a>
-
-                  {/* Email */}
-                  <a
-                    href="https://mail.google.com/mail/?view=cm&fs=1&to=imrdaistudentclub@gmail.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white text-[#0a0a0a] border border-[#cdd6cd] shadow-lg text-xs font-bold font-mono active:scale-95 whitespace-nowrap"
-                  >
-                    <span>Email Us</span>
-                    <div className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center">
-                      <svg viewBox="0 0 24 24" className="w-4 h-4">
-                        <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="url(#gmail-gradient-mob)"/>
-                        <defs>
-                          <linearGradient id="gmail-gradient-mob" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-                            <stop stopColor="#EA4335"/>
-                            <stop offset="0.33" stopColor="#FBBC04"/>
-                            <stop offset="0.66" stopColor="#34A853"/>
-                            <stop offset="1" stopColor="#4285F4"/>
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                    </div>
-                  </a>
-
-                  {/* Instagram */}
-                  <a
-                    href="https://www.instagram.com/ai.student_chapters/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] text-white shadow-lg text-xs font-bold font-mono active:scale-95 whitespace-nowrap"
-                  >
-                    <span>Instagram</span>
-                    <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4">
-                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-                      </svg>
-                    </div>
-                  </a>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Quick Links Toggle Button */}
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(!isMobileMenuOpen);
-              }}
-              className="w-11 h-11 rounded-full bg-[#0a0a0a] text-white shadow-lg flex items-center justify-center border-2 border-white active:scale-95 transition-transform"
-              aria-label="Toggle Quick Links"
-              title="Social & Contact Links"
+      {/* Unified Compact Floating Action Hub (Non-intrusive on desktop & mobile) */}
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end">
+        {/* Expanded Speed-Dial Card */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 15, scale: 0.92 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.92 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="mb-3 w-56 bg-white/95 backdrop-blur-md border border-[#cdd6cd] shadow-2xl rounded-xl p-2.5 space-y-1.5 font-body"
             >
-              {isMobileMenuOpen ? <X size={18} /> : <Share2 size={18} />}
-            </button>
-          </div>
+              <div className="flex items-center justify-between px-2 py-1 border-b border-[#cdd6cd]/60 mb-1">
+                <span className="font-mono text-[10px] font-bold text-[#008736] uppercase tracking-wider flex items-center gap-1.5">
+                  <Sparkles size={11} /> AISC Connect
+                </span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-1 text-slate-400 hover:text-black transition-colors cursor-pointer"
+                  aria-label="Close menu"
+                >
+                  <X size={13} />
+                </button>
+              </div>
 
-          {/* ChaptersBot AI Trigger Button */}
+              {/* 1. AI Chatbot Trigger */}
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  setIsChatOpen(true);
+                }}
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#e6f4ea] text-[#008736] hover:bg-[#008736] hover:text-white transition-all text-left text-xs font-heading font-bold uppercase tracking-wider group cursor-pointer shadow-xs"
+              >
+                <div className="w-6 h-6 rounded-md bg-[#008736] group-hover:bg-white text-white group-hover:text-[#008736] flex items-center justify-center shrink-0 transition-colors">
+                  <Sparkles size={13} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="block leading-none">ChaptersBot AI</span>
+                  <span className="text-[9px] font-mono font-normal opacity-80 block truncate">Instant Q&A Assistant</span>
+                </div>
+              </button>
+
+              {/* 2. WhatsApp Community */}
+              <a
+                href={CHAPTER_INFO.whatsappGroup}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsOpen(false)}
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#f4f6f2] hover:bg-[#25D366] hover:text-white text-[#0a0a0a] transition-all text-xs font-mono font-medium group cursor-pointer"
+              >
+                <div className="w-6 h-6 rounded-md bg-[#25D366] text-white flex items-center justify-center shrink-0">
+                  <MessageCircle size={13} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="font-bold block leading-none">WhatsApp Group</span>
+                  <span className="text-[9px] text-slate-500 group-hover:text-white/90 block truncate">Community & Updates</span>
+                </div>
+              </a>
+
+              {/* 3. Email Us */}
+              <a
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CHAPTER_INFO.contactEmail}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsOpen(false)}
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#f4f6f2] hover:bg-[#EA4335] hover:text-white text-[#0a0a0a] transition-all text-xs font-mono font-medium group cursor-pointer"
+              >
+                <div className="w-6 h-6 rounded-md bg-[#EA4335] text-white flex items-center justify-center shrink-0">
+                  <Mail size={13} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="font-bold block leading-none">Email Club</span>
+                  <span className="text-[9px] text-slate-500 group-hover:text-white/90 block truncate">Official Inquiries</span>
+                </div>
+              </a>
+
+              {/* 4. Instagram */}
+              <a
+                href={CHAPTER_INFO.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsOpen(false)}
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#f4f6f2] hover:bg-[#dc2743] hover:text-white text-[#0a0a0a] transition-all text-xs font-mono font-medium group cursor-pointer"
+              >
+                <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center shrink-0">
+                  <IconInstagram size={13} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="font-bold block leading-none">Instagram</span>
+                  <span className="text-[9px] text-slate-500 group-hover:text-white/90 block truncate">@ai.student_chapters</span>
+                </div>
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Primary Floating Action Pill / FAB */}
+        <div className="flex items-center gap-2">
+          {/* Direct AI trigger on desktop */}
           <button
             onClick={() => {
-              setIsMobileMenuOpen(false);
+              setIsOpen(false);
               setIsChatOpen(true);
             }}
-            className="w-11 h-11 rounded-full bg-[#008736] text-white shadow-xl shadow-[#008736]/30 flex items-center justify-center border-2 border-white active:scale-95 transition-transform relative"
-            aria-label="Open ChaptersBot AI"
-            title="Chat with ChaptersBot AI"
+            className="hidden sm:inline-flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-[#008736] text-white shadow-lg hover:bg-[#00722d] hover:shadow-xl transition-all duration-200 text-xs font-mono font-bold uppercase tracking-wider cursor-pointer border border-[#a8d5b5]"
+            title="Ask ChaptersBot AI"
           >
-            <Sparkles size={18} />
-            <span className="absolute -top-1 -left-1 px-1 py-0.5 bg-[#0a0a0a] text-white text-[7px] font-bold rounded-full uppercase tracking-wider shadow-sm">
-              AI
-            </span>
+            <Sparkles size={14} className="animate-spin-slow" />
+            <span>Ask AI</span>
+          </button>
+
+          {/* Social & Connect Hub Toggle */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className={`w-11 h-11 rounded-full text-white shadow-xl flex items-center justify-center border-2 border-white transition-all duration-200 cursor-pointer ${
+              isOpen
+                ? 'bg-[#0a0a0a] rotate-90 scale-105'
+                : 'bg-[#0a0a0a] hover:bg-[#1f241f] hover:scale-105'
+            }`}
+            aria-label={isOpen ? 'Close Quick Hub' : 'Open Connect Hub'}
+            title="Connect & Social Hub"
+          >
+            {isOpen ? <X size={18} /> : <ChevronUp size={18} className="animate-bounce" />}
           </button>
         </div>
       </div>

@@ -21,20 +21,39 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const location = useLocation();
 
+  // Smart Header: Auto-compact & auto-hide when scrolling down to maximize reading space
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 15);
+
+      // Keep header visible if mobile drawer is open or near the very top
+      if (isMobileMenuOpen || currentScrollY < 60) {
+        setIsVisible(true);
+      } else {
+        // Hide when scrolling down past 60px, reveal when scrolling up
+        if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > 6) {
+          setIsVisible(false);
+        } else if (lastScrollY - currentScrollY > 6) {
+          setIsVisible(true);
+        }
+      }
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY, isMobileMenuOpen]);
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setIsVisible(true);
   }, [location.pathname]);
 
   if (location.pathname === '/code-carnival') {
@@ -61,19 +80,21 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <ScrollToTop />
       <CustomCursor />
 
-      {/* Structural Header Grid */}
+      {/* Structural Header Grid — Smart auto-hide on scroll-down, compact on scroll */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b border-[#cdd6cd] ${
-          isScrolled ? 'bg-[#ecefe9]/95 backdrop-blur-md shadow-sm py-3' : 'bg-[#ecefe9] py-4'
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 border-b border-[#cdd6cd] ${
+          isVisible ? 'translate-y-0' : '-translate-y-full shadow-none'
+        } ${
+          isScrolled ? 'bg-[#ecefe9]/95 backdrop-blur-md shadow-xs py-2 sm:py-2.5' : 'bg-[#ecefe9] py-2.5 sm:py-3.5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex items-center justify-between gap-1 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 overflow-hidden">
           {/* Brand Logo & Name */}
-          <Link to="/" className="flex items-center gap-1.5 sm:gap-3 group shrink-0 min-w-0">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0">
             <img
               src="/images/club-logo.webp"
               alt="AI Student Chapter"
-              className="h-7 w-7 sm:h-9 sm:w-9 rounded-full object-cover border border-[#b8c6b8] group-hover:scale-105 transition-transform shrink-0"
+              className="h-8 w-8 sm:h-9 sm:w-9 rounded-full object-cover border border-[#b8c6b8] group-hover:scale-105 transition-transform shrink-0"
             />
             <div className="flex flex-col min-w-0">
               <span className="font-display font-black text-sm sm:text-xl tracking-tight text-[#0a0a0a] uppercase leading-none truncate">
@@ -93,7 +114,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-4 py-2.5 text-xs font-mono font-semibold tracking-wider border-r last:border-r-0 border-[#cdd6cd] transition-colors ${
+                  className={`px-3.5 py-2 text-xs font-mono font-semibold tracking-wider border-r last:border-r-0 border-[#cdd6cd] transition-colors ${
                     isActive
                       ? 'bg-[#008736] text-white font-bold'
                       : 'text-[#111111] hover:bg-[#e2e7e2] hover:text-[#008736]'
@@ -109,16 +130,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             <button
               onClick={() => setIsJoinModalOpen(true)}
-              className="btn-green px-2 py-1 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs font-heading font-bold rounded-none uppercase tracking-wider flex items-center gap-1 active:scale-95 shrink-0 leading-none"
+              className="btn-green px-3 py-1.5 sm:px-4 sm:py-2 text-[11px] sm:text-xs font-heading font-bold rounded-none uppercase tracking-wider flex items-center gap-1 active:scale-95 shrink-0 leading-none cursor-pointer shadow-xs"
             >
-              <span className="hidden min-[340px]:inline">GET </span>
-              <span>PASSES</span>
+              <span>GET PASSES</span>
               <ArrowUpRight size={13} className="shrink-0" />
             </button>
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-1 sm:p-2 border border-[#cdd6cd] bg-[#f4f6f2] text-[#0a0a0a] hover:bg-[#e2e7e2] shrink-0"
+              className="lg:hidden p-1.5 sm:p-2 border border-[#cdd6cd] bg-[#f4f6f2] text-[#0a0a0a] hover:bg-[#e2e7e2] shrink-0 cursor-pointer"
               aria-label="Toggle Menu"
             >
               {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -135,7 +155,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden bg-[#ecefe9] border-t border-[#cdd6cd] overflow-hidden"
             >
-              <div className="px-4 py-4 space-y-1">
+              <div className="px-4 py-3 space-y-1">
                 {navLinks.map((link) => {
                   const isActive = location.pathname === link.path;
                   return (
@@ -143,7 +163,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                       key={link.path}
                       to={link.path}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block px-4 py-3 text-xs font-mono font-semibold tracking-widest border border-[#cdd6cd] mb-2 ${
+                      className={`block px-4 py-2.5 text-xs font-mono font-semibold tracking-widest border border-[#cdd6cd] mb-1.5 ${
                         isActive ? 'bg-[#008736] text-white' : 'bg-[#f4f6f2] text-[#0a0a0a]'
                       }`}
                     >
@@ -157,13 +177,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         </AnimatePresence>
       </header>
 
-      {/* Main Content */}
-      <main className="relative z-10 pt-20">
+      {/* Main Content — Unobstructed reading space */}
+      <main className="min-h-[calc(100vh-140px)] pt-16 sm:pt-20">
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 bg-[#e5e9e5] border-t border-[#cdd6cd] pt-16 pb-12 mt-20">
+      <footer className="relative bg-[#e5e9e5] border-t border-[#cdd6cd] pt-14 pb-12 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-[#cdd6cd]">
             <div className="lg:col-span-2 space-y-4">
@@ -174,7 +194,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </span>
               </div>
               <p className="text-[#4e554e] text-sm max-w-sm font-body leading-relaxed">
-                Official AI Student Chapter community at RCPET's IMRD, Shirpur. Exploring artificial intelligence, machine learning, build sprints, and real-world code.
+                Official AI Student Chapter community at RCPET&apos;s IMRD, Shirpur. Exploring artificial intelligence, machine learning, build sprints, and real-world code.
               </p>
               <div className="flex items-center gap-3 pt-2">
                 <a
@@ -220,7 +240,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <div className="text-sm text-[#4e554e] space-y-2 font-body">
                 <p className="flex items-start gap-2 text-[#0a0a0a] font-medium">
                   <GraduationCap size={18} className="text-[#008736] shrink-0 mt-0.5" />
-                  <span>RCPET's Institute of Management Research & Development</span>
+                  <span>RCPET&apos;s Institute of Management Research & Development</span>
                 </p>
                 <p className="text-xs text-slate-600">Shirpur, Maharashtra, India</p>
               </div>

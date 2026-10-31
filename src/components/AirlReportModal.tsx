@@ -1,6 +1,7 @@
 // AirlReportModal.tsx
 // Comprehensive Official Report & Winners Showcase Modal for AI Research League 2.0 (AY 2026-27)
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   X,
   Trophy,
@@ -26,27 +27,54 @@ export const AirlReportModal: React.FC<AirlReportModalProps> = ({ isOpen, onClos
   const [activeTab, setActiveTab] = useState<'winners' | 'matrix' | 'judges' | 'photos' | 'report'>('winners');
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
 
+  // Lock body scroll and mark modal open so background and widgets don't clash
+  useEffect(() => {
+    if (!isOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.body.setAttribute('data-modal-open', 'true');
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (selectedPhoto) setSelectedPhoto(null);
+        else onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.body.removeAttribute('data-modal-open');
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, selectedPhoto, onClose]);
+
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-md overflow-y-auto">
+      <div 
+        className="fixed inset-0 z-[99999] flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md overflow-hidden"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.96, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 15 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
-          className="relative w-full max-w-5xl my-auto bg-[#ecefe9] text-[#0a0a0a] border border-[#cdd6cd] shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
+          className="relative w-full max-w-5xl h-[94vh] sm:h-[88vh] max-h-[850px] bg-[#ecefe9] text-[#0a0a0a] border border-[#cdd6cd] shadow-2xl overflow-hidden flex flex-col rounded-sm"
         >
           {/* Top Title Bar */}
-          <div className="px-5 py-4 bg-[#f4f6f2] border-b border-[#cdd6cd] flex items-center justify-between gap-4 shrink-0">
-            <div className="flex items-center gap-2.5 min-w-0">
+          <div className="px-4 sm:px-6 py-3 sm:py-3.5 bg-[#f4f6f2] border-b border-[#cdd6cd] flex items-center justify-between gap-3 shrink-0">
+            <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
               <span className="w-2.5 h-2.5 rounded-full bg-[#008736] animate-pulse shrink-0" />
               <div className="min-w-0">
-                <span className="font-mono text-[11px] font-bold tracking-widest text-[#008736] uppercase block truncate">
+                <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-widest text-[#008736] uppercase block truncate">
                   AI STUDENT CHAPTER • IMRD SHIRPUR
                 </span>
-                <h2 className="font-display font-extrabold text-base sm:text-lg text-[#0a0a0a] truncate leading-tight">
+                <h2 className="font-display font-extrabold text-sm sm:text-base md:text-lg text-[#0a0a0a] truncate leading-tight">
                   AI Research League 2.0 — Official Report & Winners Declaration
                 </h2>
               </div>
@@ -67,7 +95,7 @@ export const AirlReportModal: React.FC<AirlReportModalProps> = ({ isOpen, onClos
 
               <button
                 onClick={onClose}
-                className="p-1.5 bg-white border border-[#cdd6cd] text-[#0a0a0a] hover:bg-[#e2e7e2] transition-colors cursor-pointer"
+                className="p-1.5 sm:p-2 bg-white border border-[#cdd6cd] text-[#0a0a0a] hover:bg-[#e2e7e2] transition-colors cursor-pointer"
                 aria-label="Close Modal"
               >
                 <X size={18} />
@@ -503,22 +531,24 @@ export const AirlReportModal: React.FC<AirlReportModalProps> = ({ isOpen, onClos
           </div>
 
           {/* Footer Bar */}
-          <div className="px-5 py-3.5 bg-[#f4f6f2] border-t border-[#cdd6cd] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono shrink-0">
-            <span className="text-[#525852]">
+          <div className="px-4 sm:px-6 py-3 bg-[#f4f6f2] border-t border-[#cdd6cd] flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs font-mono shrink-0">
+            <span className="text-[#525852] text-[11px] hidden md:inline">
               R. C. Patel Educational Trust&apos;s IMRD, Shirpur • AI Student Chapter
             </span>
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
               <a
                 href={AIRL_2_REPORT.pdfUrl}
                 download
-                className="btn-green py-2 px-4 text-xs font-heading font-bold uppercase tracking-wider flex items-center justify-center gap-2 flex-1 sm:flex-none"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-green py-2 px-3 sm:px-4 text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 flex-1 sm:flex-none cursor-pointer shadow-sm"
               >
-                <Download size={14} />
+                <Download size={13} />
                 <span>Download Report PDF</span>
               </a>
               <button
                 onClick={onClose}
-                className="py-2 px-4 grid-box font-mono font-bold text-xs uppercase tracking-wider text-[#0a0a0a] hover:bg-[#e2e7e2] transition-colors"
+                className="py-2 px-4 grid-box font-mono font-bold text-xs uppercase tracking-wider text-[#0a0a0a] hover:bg-[#e2e7e2] transition-colors cursor-pointer"
               >
                 Close
               </button>
@@ -530,7 +560,7 @@ export const AirlReportModal: React.FC<AirlReportModalProps> = ({ isOpen, onClos
         {selectedPhoto && (
           <div
             onClick={() => setSelectedPhoto(null)}
-            className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/90 cursor-zoom-out"
+            className="fixed inset-0 z-[100000] flex items-center justify-center p-4 bg-black/95 cursor-zoom-out"
           >
             <div className="relative max-w-4xl max-h-[90vh]">
               <img
@@ -540,7 +570,7 @@ export const AirlReportModal: React.FC<AirlReportModalProps> = ({ isOpen, onClos
               />
               <button
                 onClick={() => setSelectedPhoto(null)}
-                className="absolute top-2 right-2 p-2 bg-black/70 text-white rounded-full hover:bg-black"
+                className="absolute top-2 right-2 p-2 bg-black/70 text-white rounded-full hover:bg-black cursor-pointer"
                 aria-label="Close Preview"
               >
                 <X size={20} />
@@ -549,7 +579,8 @@ export const AirlReportModal: React.FC<AirlReportModalProps> = ({ isOpen, onClos
           </div>
         )}
       </div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 
