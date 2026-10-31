@@ -394,8 +394,16 @@ function SceneRuntime({
 
       {/* All Placements from scene_layout.json */}
       {sceneLayout.placements.map((p, idx) => {
-        // Drop distant forest on mobile to keep 60fps
-        if (isMobile && p.file.includes('distant_forest')) return null;
+        // Streamline on mobile to keep 60fps and avoid memory pressure on Android
+        if (
+          isMobile &&
+          (p.file.includes('distant_forest') ||
+            p.file.includes('debris') ||
+            p.file.includes('floating_rocks') ||
+            p.file.includes('vines'))
+        ) {
+          return null;
+        }
         return (
           <PlacedModel
             key={idx}
@@ -435,7 +443,7 @@ export function HeroScene({
     <Canvas
       camera={{
         position: sceneLayout.camera.position,
-        fov: sceneLayout.camera.fov_y_degrees,
+        fov: isMobile ? 72 : sceneLayout.camera.fov_y_degrees,
         near: 0.1,
         far: 300,
       }}
@@ -444,7 +452,7 @@ export function HeroScene({
         antialias: !isMobile,
         toneMapping: THREE.ACESFilmicToneMapping,
         toneMappingExposure: 1.0,
-        powerPreference: 'high-performance',
+        powerPreference: isMobile ? 'default' : 'high-performance',
       }}
     >
       <color attach="background" args={['#050308']} />

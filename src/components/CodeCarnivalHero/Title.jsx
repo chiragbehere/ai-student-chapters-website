@@ -37,7 +37,7 @@ export function Title({
           className="fixed inset-0 pointer-events-none z-30 flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 select-none"
         >
           {/* ── High-Contrast Hawkins Lab Tactical Terminal Card ── */}
-          <div className="relative pointer-events-auto max-w-xl sm:max-w-2xl w-full mx-auto my-auto rounded-2xl bg-[#040108]/96 backdrop-blur-3xl border border-red-500/50 p-5 sm:p-7 md:p-8 text-center shadow-[0_0_150px_rgba(0,0,0,1),0_0_60px_rgba(229,9,20,0.45)] max-h-[90vh] overflow-y-auto">
+          <div className="relative pointer-events-auto max-w-xl sm:max-w-2xl w-full mx-auto my-auto rounded-2xl bg-[#040108]/96 backdrop-blur-3xl border border-red-500/50 p-3.5 sm:p-7 md:p-8 text-center shadow-[0_0_150px_rgba(0,0,0,1),0_0_60px_rgba(229,9,20,0.45)] max-h-[92vh] overflow-y-auto">
             {/* Glowing Hawkins Corner Crosshair Brackets */}
             <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-2 border-l-2 border-[#e50914] shadow-[0_0_10px_#e50914]" />
             <div className="absolute -top-1.5 -right-1.5 w-4 h-4 border-t-2 border-r-2 border-[#e50914] shadow-[0_0_10px_#e50914]" />
@@ -151,7 +151,7 @@ export function Title({
                 >
                   <button
                     onClick={onEnterExperience}
-                    className="group relative px-10 sm:px-14 py-4 sm:py-4.5 bg-[#e50914] text-white font-mono text-sm sm:text-base font-black tracking-[0.25em] uppercase rounded-sm shadow-[0_0_50px_rgba(229,9,20,0.95)] hover:bg-[#ff1b27] hover:shadow-[0_0_75px_rgba(255,27,39,1)] hover:scale-[1.03] active:scale-95 transition-all duration-300 flex items-center gap-3 overflow-hidden cursor-pointer"
+                    className="group relative w-full sm:w-auto px-5 sm:px-14 py-3.5 sm:py-4.5 bg-[#e50914] text-white font-mono text-xs sm:text-base font-black tracking-[0.2em] sm:tracking-[0.25em] uppercase rounded-sm shadow-[0_0_50px_rgba(229,9,20,0.95)] hover:bg-[#ff1b27] hover:shadow-[0_0_75px_rgba(255,27,39,1)] hover:scale-[1.03] active:scale-95 transition-all duration-300 flex items-center justify-center gap-2.5 sm:gap-3 overflow-hidden cursor-pointer"
                   >
                     <div className="absolute inset-0 w-1/3 bg-white/25 skew-x-12 -translate-x-full group-hover:translate-x-[450%] transition-transform duration-1000 ease-out" />
                     <Flame size={20} className="text-[#ffd700] animate-pulse" />

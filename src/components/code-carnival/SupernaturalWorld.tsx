@@ -48,11 +48,11 @@ export const SupernaturalWorld: React.FC<SupernaturalWorldProps> = ({
     <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
       <Canvas
         camera={{ position: [0, 0.5, 16.0], fov: performance.isMobile ? 65 : 55, near: 0.1, far: 85 }}
-        dpr={performance.tier === 'HIGH' ? Math.min(window.devicePixelRatio, 2) : 1}
+        dpr={performance.tier === 'HIGH' ? Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2) : 1}
         gl={{
-          antialias: performance.tier === 'HIGH',
+          antialias: performance.tier === 'HIGH' && !performance.isMobile,
           alpha: true,
-          powerPreference: 'high-performance',
+          powerPreference: performance.isMobile ? 'default' : 'high-performance',
           stencil: false,
           depth: true,
         }}

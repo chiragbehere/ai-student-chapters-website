@@ -104,3 +104,4 @@ export const POSTER_SLOGANS = {
   bannerTop: "SOME IDEAS SHOULDN'T STAY HIDDEN",
   bannerBottom: 'PLAY FAIR • BUILD BOLD • KEEP IT REAL',
 };
+

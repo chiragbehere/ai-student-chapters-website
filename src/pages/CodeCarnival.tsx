@@ -2,7 +2,7 @@
 // Master AAA Cinematic 3D Experience for Code Carnival 2.0
 // 1. Procedural 3D Cinematic Opening Scene (CodeCarnivalHero with glTF models, portal, lightning, and audio)
 // 2. 6-Chapter Interactive Supernatural Journey driven by GSAP ScrollTrigger and Three.js
-import React, { useEffect, useState, useRef, useCallback, lazy, Suspense } from 'react';
+import React, { useEffect, useState, useRef, useCallback, Suspense } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Volume2, VolumeX, ExternalLink, Shield, Play } from 'lucide-react';
@@ -17,8 +17,8 @@ import VHSOverlay from '../components/code-carnival/VHSOverlay';
 import { detectPerformance, type PerformanceSettings } from '../components/code-carnival/PerformanceManager';
 import soundEngine from '../components/code-carnival/SoundEngine';
 
-// Lazy-load the AAA 3D Hero Scene
-const CodeCarnivalHero = lazy(() => import('../components/CodeCarnivalHero'));
+// AAA 3D Hero Scene
+import CodeCarnivalHero from '../components/CodeCarnivalHero';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,7 +26,7 @@ const UNSTOP_URL = 'https://unstop.com';
 
 // WebGL Error Boundary
 class WebGLErrorBoundary extends React.Component<
-  { children: React.ReactNode; fallback: React.ReactNode },
+  { children: React.ReactNode; fallback: React.ReactNode; onError?: () => void },
   { hasError: boolean }
 > {
   state = { hasError: false };
@@ -37,6 +37,11 @@ class WebGLErrorBoundary extends React.Component<
 
   componentDidCatch(error: Error) {
     console.warn('Supernatural 3D Scene Error fallback activated:', error);
+    if (this.props.onError) {
+      try {
+        this.props.onError();
+      } catch {}
+    }
   }
 
   render() {
@@ -161,7 +166,12 @@ export const CodeCarnival: React.FC = () => {
 
       {/* ── 3D Opening Cinematic Hero Scene (Mounted upon entry, once per session or on replay) ── */}
       {showHeroIntro && (
-        <WebGLErrorBoundary fallback={null}>
+        <WebGLErrorBoundary
+          fallback={null}
+          onError={() => {
+            setShowHeroIntro(false);
+          }}
+        >
           <Suspense fallback={<div className="fixed inset-0 bg-[#050308] z-50 flex items-center justify-center text-[#e50914] font-mono tracking-widest text-xs">INITIALIZING RIFT...</div>}>
             <CodeCarnivalHero onEnterComplete={handleEnterSite} />
           </Suspense>
@@ -251,4 +261,45 @@ export const CodeCarnival: React.FC = () => {
   );
 };
 
-export default CodeCarnival;
+class CodeCarnivalPageErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(err: Error) {
+    console.error('Code Carnival 3D runtime error caught, safely falling back to 2D event layout:', err);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="relative w-full min-h-screen bg-[#020409] text-[#e8d5b5] font-mono">
+          <SEO
+            title="Code Carnival 2.0 — The Upside Down of Code | AI Student Chapter"
+            description="Experience Code Carnival 2.0: A 24-hour State-Level Hackathon with ₹50K+ bounty presented by AI Student Chapter, RCPET's IMRD. Enter the Upside Down."
+          />
+          <WebGLFallback intensity={1.0} />
+          <CinematicChapters
+            scrollProgress={0}
+            onNavigateChapter={() => {}}
+          />
+          <VHSOverlay />
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+export default function SafeCodeCarnival() {
+  return (
+    <CodeCarnivalPageErrorBoundary>
+      <CodeCarnival />
+    </CodeCarnivalPageErrorBoundary>
+  );
+}

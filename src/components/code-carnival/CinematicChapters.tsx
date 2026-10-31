@@ -628,7 +628,7 @@ export const CinematicChapters: React.FC<CinematicChaptersProps> = ({
             href={UNSTOP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-10 sm:px-14 py-4 sm:py-5 bg-[#e50914] text-white font-bold tracking-[0.2em] uppercase rounded-sm shadow-[0_0_50px_rgba(229,9,20,0.8)] hover:bg-[#ff1b27] hover:scale-105 active:scale-95 transition-all duration-300 text-sm sm:text-base"
+            className="inline-flex items-center justify-center gap-2.5 sm:gap-3 w-full sm:w-auto px-6 sm:px-14 py-3.5 sm:py-5 bg-[#e50914] text-white font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase rounded-sm shadow-[0_0_50px_rgba(229,9,20,0.8)] hover:bg-[#ff1b27] hover:scale-105 active:scale-95 transition-all duration-300 text-xs sm:text-base text-center"
           >
             <Flame size={20} className="text-[#ffd700] animate-pulse" />
             <span>ENTER THE ARENA — REGISTER ON UNSTOP</span>

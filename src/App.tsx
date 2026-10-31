@@ -15,7 +15,7 @@ const Gallery = lazy(() => import('./pages/Gallery'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const Sessions = lazy(() => import('./pages/Sessions'));
 const Tools = lazy(() => import('./pages/Tools'));
-const CodeCarnival = lazy(() => import('./pages/CodeCarnival'));
+import CodeCarnival from './pages/CodeCarnival';
 
 // Page loading skeleton
 const PageLoader = () => (
@@ -27,21 +27,25 @@ const PageLoader = () => (
   </div>
 );
 
-// Handle lazy load chunk errors (stuck "Loading..." upon deployment)
-class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean}> {
+// Handle route-level and lazy load chunk errors with safe recovery
+class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean; error: Error | null}> {
   constructor(props: {children: ReactNode}) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(_: Error) {
-    return { hasError: true };
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Route Error:", error, errorInfo);
-    // If we fail to fetch a component chunk (meaning a new deployment happened), auto-reload it
-    if (error.name === 'ChunkLoadError' || error.message.includes('dynamically imported module') || error.message.includes('fetch') || error.message.toLowerCase().includes('syntaxerror')) {
+    const isChunkError = error.name === 'ChunkLoadError' || 
+                         error.message?.includes('dynamically imported module') || 
+                         error.message?.includes('fetch') ||
+                         error.message?.toLowerCase().includes('syntaxerror');
+    if (isChunkError && !sessionStorage.getItem('chunk_reload_attempted')) {
+      sessionStorage.setItem('chunk_reload_attempted', 'true');
       window.location.reload();
     }
   }
@@ -49,11 +53,38 @@ class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean}
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center flex-col gap-4">
-          <h2 className="text-xl text-heading font-bold font-heading">Syncing new updates...</h2>
-          <button onClick={() => { try { sessionStorage.clear(); } catch(e){}; window.location.reload(); }} className="px-6 py-2 bg-primary/20 text-primary border border-primary/20 rounded-full hover:bg-primary/30 transition-colors">
-            Tap to Reload
-          </button>
+        <div className="min-h-screen flex items-center justify-center flex-col gap-4 bg-[#050308] text-white p-6 text-center">
+          <div className="w-12 h-12 rounded-full border-2 border-red-800 border-t-[#e50914] animate-spin mb-2" />
+          <h2 className="text-xl font-bold font-mono tracking-wider text-white">Updating Application...</h2>
+          <p className="text-xs text-neutral-400 font-mono max-w-sm">
+            A newer version was deployed or an asset is synchronizing.
+          </p>
+          <div className="flex items-center gap-3 mt-4">
+            <button
+              onClick={() => {
+                try {
+                  sessionStorage.clear();
+                  localStorage.removeItem('codecarnival_intro_seen');
+                } catch (e) {}
+                window.location.reload();
+              }}
+              className="px-6 py-2.5 bg-[#e50914] text-white font-mono text-xs font-bold tracking-widest uppercase rounded shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:bg-[#ff1b27] transition-all cursor-pointer"
+            >
+              Tap to Reload
+            </button>
+            <a
+              href="/"
+              onClick={() => {
+                try {
+                  sessionStorage.clear();
+                  localStorage.removeItem('codecarnival_intro_seen');
+                } catch (e) {}
+              }}
+              className="px-6 py-2.5 border border-white/20 bg-black/60 text-white font-mono text-xs font-bold tracking-widest uppercase rounded hover:bg-white/10 transition-all"
+            >
+              Return Home
+            </a>
+          </div>
         </div>
       );       
     }
@@ -125,9 +156,7 @@ const AnimatedRoutes = () => {
           </Suspense>
         } />
         <Route path="/code-carnival" element={
-          <Suspense fallback={<PageLoader />}>
-            <PageTransition><CodeCarnival /></PageTransition>
-          </Suspense>
+          <PageTransition><CodeCarnival /></PageTransition>
         } />
 
       </Routes>
