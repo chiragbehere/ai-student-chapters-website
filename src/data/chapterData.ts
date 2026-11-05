@@ -93,7 +93,7 @@ export const CHAPTER_INFO = {
   shortPositioning: "Building. Learning. Researching. Innovating with AI.",
   contactEmail: "imrdaistudentclub@gmail.com",
   instagram: "https://www.instagram.com/ai.student_chapters/",
-  whatsappGroup: "https://chat.whatsapp.com/IfBOfK4bE7l1D0N5C9KXYv",
+  whatsappGroup: "https://chat.whatsapp.com/FQdz9mHb4y37ooH1JxiYoF",
   github: "https://github.com/ai-student-chapter",
 };
 
@@ -269,7 +269,7 @@ export const EVENTS: EventItem[] = [
     status: "Registration Open",
     duration: "3 Hours",
     tags: ["Agentic AI", "Prompt Engineering", "Vite & React"],
-    registrationUrl: "https://chat.whatsapp.com/IfBOfK4bE7l1D0N5C9KXYv",
+    registrationUrl: "https://chat.whatsapp.com/FQdz9mHb4y37ooH1JxiYoF",
   },
   {
     id: "ml-foundations-session",

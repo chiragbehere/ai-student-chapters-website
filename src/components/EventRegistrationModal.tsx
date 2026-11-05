@@ -47,7 +47,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({ 
     }
   };
 
-  const registrationUrl = event?.registrationUrl || 'https://chat.whatsapp.com/IfBOfK4bE7l1D0N5C9KXYv';
+  const registrationUrl = event?.registrationUrl || 'https://chat.whatsapp.com/FQdz9mHb4y37ooH1JxiYoF';
   const title = event?.title || 'Code Carnival 2026: 6-Hour AI Build Sprint';
   const description = event?.description || 'Join our flagship AI build sprint where student teams turn ideas into working prototypes.';
   const date = event?.date || 'October 2026';
