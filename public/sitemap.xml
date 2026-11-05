@@ -6,7 +6,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://aistudentchapter.vercel.app/</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -14,15 +14,23 @@
   <!-- Events & Competitions -->
   <url>
     <loc>https://aistudentchapter.vercel.app/events</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- AI Research League 2.0 Official Report -->
+  <url>
+    <loc>https://aistudentchapter.vercel.app/events/ai-research-league-2</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
 
   <!-- About the Chapter & Institution -->
   <url>
     <loc>https://aistudentchapter.vercel.app/about</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -30,7 +38,7 @@
   <!-- Core Leadership & Team -->
   <url>
     <loc>https://aistudentchapter.vercel.app/team</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -38,7 +46,7 @@
   <!-- AI Utilities & Tools Studio -->
   <url>
     <loc>https://aistudentchapter.vercel.app/tools</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -46,7 +54,7 @@
   <!-- Technical Sessions & Workshops -->
   <url>
     <loc>https://aistudentchapter.vercel.app/sessions</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -54,15 +62,7 @@
   <!-- Event Photo & Video Gallery -->
   <url>
     <loc>https://aistudentchapter.vercel.app/gallery</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Code Carnival Flagship Hackathon Archive -->
-  <url>
-    <loc>https://aistudentchapter.vercel.app/code-carnival</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -70,7 +70,7 @@
   <!-- Frequently Asked Questions -->
   <url>
     <loc>https://aistudentchapter.vercel.app/faq</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
