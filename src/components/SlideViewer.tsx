@@ -77,25 +77,25 @@ export const SlideViewer: React.FC<SlideViewerProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`grid-box overflow-hidden flex flex-col transition-all ${
-        isFullscreen ? 'fixed inset-0 z-[100] bg-[#0a0a0a] text-white p-4 sm:p-6 justify-center' : 'p-4 sm:p-6 md:p-8 space-y-4'
+      className={`club-card overflow-hidden flex flex-col transition-all ${
+        isFullscreen ? 'fixed inset-0 z-[100] bg-[#101A14] text-[#E8DCC4] p-4 sm:p-6 justify-center' : 'p-4 sm:p-6 md:p-8 space-y-4'
       }`}
     >
       {/* Title & Badge Header */}
       {!isFullscreen && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#cdd6cd] pb-3 gap-2">
-          <h3 className="text-base sm:text-lg font-heading font-bold text-[#0a0a0a] flex items-center gap-2 leading-snug">
-            <Presentation size={18} className="text-[#008736] shrink-0" /> 
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#E8DCC4]/15 pb-3 gap-2">
+          <h3 className="text-base sm:text-lg font-heading font-bold text-[#E8DCC4] flex items-center gap-2 leading-snug">
+            <Presentation size={18} className="text-[#8B5CF6] shrink-0" /> 
             <span>{title}</span>
           </h3>
-          <span className="px-2.5 py-1 bg-[#008736] text-white font-mono text-[10px] sm:text-xs font-bold uppercase shrink-0 w-fit">
+          <span className="px-3 py-1 bg-[#8B5CF6] text-white font-mono text-[10px] sm:text-xs font-bold uppercase rounded-lg shrink-0 w-fit shadow-[0_0_12px_rgba(139,92,246,0.4)]">
             SLIDE DECK ({totalSlides} SLIDES)
           </span>
         </div>
       )}
 
       {/* Main Slide Display Stage */}
-      <div className="relative aspect-[16/9] w-full bg-[#0d1117] border border-[#cdd6cd] rounded-none overflow-hidden flex items-center justify-center group shadow-sm">
+      <div className="relative aspect-[16/9] w-full bg-[#101A14] border border-[#E8DCC4]/15 rounded-xl overflow-hidden flex items-center justify-center group shadow-md">
         <img
           src={slides[currentIndex]}
           alt={`${title} - Slide ${currentIndex + 1}`}
@@ -105,48 +105,50 @@ export const SlideViewer: React.FC<SlideViewerProps> = ({
         {/* Overlay Navigation Buttons */}
         <button
           onClick={prevSlide}
-          className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-[#008736] text-white flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 shadow-lg"
+          className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#142B20]/80 hover:bg-[#8B5CF6] text-[#E8DCC4] hover:text-white border border-[#E8DCC4]/20 flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 shadow-lg cursor-pointer"
           aria-label="Previous Slide"
         >
           <ChevronLeft size={20} />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-[#008736] text-white flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 shadow-lg"
+          className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#142B20]/80 hover:bg-[#8B5CF6] text-[#E8DCC4] hover:text-white border border-[#E8DCC4]/20 flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 shadow-lg cursor-pointer"
           aria-label="Next Slide"
         >
           <ChevronRight size={20} />
         </button>
 
         {/* Top Floating Badge */}
-        <div className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2.5 py-0.5 sm:py-1 bg-black/75 backdrop-blur-md text-white font-mono text-[10px] sm:text-xs font-bold rounded-sm border border-white/10">
+        <div className="absolute top-2 left-2 sm:top-3 sm:left-3 px-3 py-1 bg-[#142B20]/85 backdrop-blur-md text-[#E8DCC4] font-mono text-[10px] sm:text-xs font-bold rounded-lg border border-[#E8DCC4]/20">
           Slide {currentIndex + 1} / {totalSlides}
         </div>
       </div>
 
       {/* Mobile-Responsive Controls Toolbar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between p-2 sm:p-3 bg-[#f4f6f2] border border-[#cdd6cd] gap-2 overflow-hidden">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between p-2.5 sm:p-3 bg-[#142B20] border border-[#E8DCC4]/15 rounded-xl gap-2 overflow-hidden">
         {/* Navigation & Auto Play */}
-        <div className="flex items-center justify-between sm:justify-start gap-1 sm:gap-2 overflow-x-auto scrollbar-none">
+        <div className="flex items-center justify-between sm:justify-start gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none">
           <div className="flex items-center gap-1 shrink-0">
             <button
               onClick={prevSlide}
-              className="px-2 py-1 sm:px-2.5 sm:py-1.5 bg-white border border-[#cdd6cd] hover:bg-[#008736] hover:text-white text-[#0a0a0a] font-mono text-[10px] sm:text-xs font-bold transition-all flex items-center gap-0.5 active:scale-95 shrink-0"
+              className="px-2.5 py-1.5 bg-[#193426] border border-[#E8DCC4]/20 hover:border-[#8B5CF6] text-[#E8DCC4] font-mono text-[10px] sm:text-xs font-bold rounded-lg transition-all flex items-center gap-1 active:scale-95 shrink-0 cursor-pointer"
             >
-              <ChevronLeft size={12} className="sm:w-3.5 sm:h-3.5" /> <span>Prev</span>
+              <ChevronLeft size={13} /> <span>Prev</span>
             </button>
             <button
               onClick={nextSlide}
-              className="px-2 py-1 sm:px-2.5 sm:py-1.5 bg-white border border-[#cdd6cd] hover:bg-[#008736] hover:text-white text-[#0a0a0a] font-mono text-[10px] sm:text-xs font-bold transition-all flex items-center gap-0.5 active:scale-95 shrink-0"
+              className="px-2.5 py-1.5 bg-[#193426] border border-[#E8DCC4]/20 hover:border-[#8B5CF6] text-[#E8DCC4] font-mono text-[10px] sm:text-xs font-bold rounded-lg transition-all flex items-center gap-1 active:scale-95 shrink-0 cursor-pointer"
             >
-              <span>Next</span> <ChevronRight size={12} className="sm:w-3.5 sm:h-3.5" />
+              <span>Next</span> <ChevronRight size={13} />
             </button>
           </div>
 
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className={`px-2 py-1 sm:px-2.5 sm:py-1.5 border font-mono text-[10px] sm:text-xs font-bold transition-all flex items-center gap-1 active:scale-95 shrink-0 ${
-              isPlaying ? 'bg-[#008736] text-white border-[#008736]' : 'bg-white text-[#0a0a0a] border-[#cdd6cd] hover:bg-slate-100'
+            className={`px-3 py-1.5 border font-mono text-[10px] sm:text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 active:scale-95 shrink-0 cursor-pointer ${
+              isPlaying
+                ? 'bg-[#8B5CF6] text-white border-[#8B5CF6] shadow-[0_0_12px_rgba(139,92,246,0.4)]'
+                : 'bg-[#193426] text-[#E8DCC4] border-[#E8DCC4]/20 hover:border-[#8B5CF6]'
             }`}
           >
             {isPlaying ? <Pause size={12} /> : <Play size={12} />}
@@ -155,22 +157,22 @@ export const SlideViewer: React.FC<SlideViewerProps> = ({
         </div>
 
         {/* Fullscreen & Download */}
-        <div className="flex items-center justify-between sm:justify-end gap-1.5 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-[#cdd6cd] shrink-0">
+        <div className="flex items-center justify-between sm:justify-end gap-2 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-[#E8DCC4]/10 shrink-0">
           <button
             onClick={toggleFullscreen}
-            className="px-2 py-1 sm:px-2.5 sm:py-1.5 bg-white border border-[#cdd6cd] hover:bg-[#008736] hover:text-white text-[#0a0a0a] font-mono text-[10px] sm:text-xs font-bold transition-all flex items-center gap-1 active:scale-95 shrink-0"
+            className="px-2.5 py-1.5 bg-[#193426] border border-[#E8DCC4]/20 hover:border-[#8B5CF6] text-[#E8DCC4] font-mono text-[10px] sm:text-xs font-bold rounded-lg transition-all flex items-center gap-1 active:scale-95 shrink-0 cursor-pointer"
             title="Toggle Fullscreen"
           >
-            {isFullscreen ? <Minimize size={12} /> : <Maximize size={12} />}
+            {isFullscreen ? <Minimize size={13} /> : <Maximize size={13} />}
             <span>{isFullscreen ? 'Exit' : 'Fullscreen'}</span>
           </button>
           {!isFullscreen && (
             <a
               href={downloadUrl}
               download
-              className="btn-green px-2.5 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-mono font-bold uppercase flex items-center gap-1 active:scale-95 shrink-0 leading-none"
+              className="btn-primary px-3 py-1.5 text-[10px] sm:text-xs font-mono font-bold uppercase flex items-center gap-1.5 active:scale-95 shrink-0 leading-none"
             >
-              <Download size={12} /> <span>(.PPTX)</span>
+              <Download size={13} /> <span>(.PPTX)</span>
             </a>
           )}
         </div>
@@ -183,12 +185,14 @@ export const SlideViewer: React.FC<SlideViewerProps> = ({
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
-              className={`relative flex-shrink-0 w-16 sm:w-20 aspect-video border-2 overflow-hidden transition-all ${
-                currentIndex === idx ? 'border-[#008736] scale-105 shadow-md' : 'border-[#cdd6cd] opacity-60 hover:opacity-100'
+              className={`relative flex-shrink-0 w-16 sm:w-20 aspect-video rounded-lg border-2 overflow-hidden transition-all cursor-pointer ${
+                currentIndex === idx
+                  ? 'border-[#8B5CF6] scale-105 shadow-[0_0_12px_rgba(139,92,246,0.4)]'
+                  : 'border-[#E8DCC4]/20 opacity-60 hover:opacity-100 hover:border-[#E8DCC4]/40'
               }`}
             >
               <img src={slideImg} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
-              <span className="absolute bottom-0.5 right-0.5 px-1 bg-black/80 text-white font-mono text-[9px] font-bold">
+              <span className="absolute bottom-0.5 right-0.5 px-1 bg-black/80 text-white font-mono text-[9px] font-bold rounded">
                 {idx + 1}
               </span>
             </button>

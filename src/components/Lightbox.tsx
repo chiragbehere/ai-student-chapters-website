@@ -58,16 +58,16 @@ const Lightbox = ({ images, currentIndex, isOpen, onClose, onNavigate }: Lightbo
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95"
+          className="fixed inset-0 z-[99999] flex items-center justify-center bg-[#101A14]/95 backdrop-blur-md"
           onClick={onClose}
         >
           {/* Close button */}
           <button
             onClick={onClose}
             aria-label="Close image preview"
-            className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10 cursor-pointer"
+            className="absolute top-6 right-6 p-2.5 rounded-full bg-[#193426] hover:bg-[#8B5CF6] text-[#E8DCC4] hover:text-white border border-[#E8DCC4]/20 transition-all z-10 cursor-pointer shadow-lg"
           >
-            <X size={24} />
+            <X size={22} />
           </button>
 
           {/* Prev button */}
@@ -78,9 +78,9 @@ const Lightbox = ({ images, currentIndex, isOpen, onClose, onNavigate }: Lightbo
                 handlePrev();
               }}
               aria-label="Previous image"
-              className="absolute left-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10 cursor-pointer"
+              className="absolute left-6 p-3 rounded-full bg-[#193426] hover:bg-[#8B5CF6] text-[#E8DCC4] hover:text-white border border-[#E8DCC4]/20 transition-all z-10 cursor-pointer shadow-lg"
             >
-              <ChevronLeft size={28} />
+              <ChevronLeft size={26} />
             </button>
           )}
 
@@ -92,9 +92,9 @@ const Lightbox = ({ images, currentIndex, isOpen, onClose, onNavigate }: Lightbo
                 handleNext();
               }}
               aria-label="Next image"
-              className="absolute right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10 cursor-pointer"
+              className="absolute right-6 p-3 rounded-full bg-[#193426] hover:bg-[#8B5CF6] text-[#E8DCC4] hover:text-white border border-[#E8DCC4]/20 transition-all z-10 cursor-pointer shadow-lg"
             >
-              <ChevronRight size={28} />
+              <ChevronRight size={26} />
             </button>
           )}
 
@@ -111,7 +111,7 @@ const Lightbox = ({ images, currentIndex, isOpen, onClose, onNavigate }: Lightbo
               transition={{ duration: 0.2 }}
               src={images[currentIndex].src}
               alt={images[currentIndex].caption || 'Enlarged gallery view'}
-              className="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl"
+              className="max-h-[75vh] max-w-full object-contain rounded-2xl border border-[#E8DCC4]/15 shadow-2xl"
             />
             
             {/* Caption */}
@@ -120,10 +120,10 @@ const Lightbox = ({ images, currentIndex, isOpen, onClose, onNavigate }: Lightbo
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="mt-6 text-white text-center font-heading text-lg max-w-2xl px-4"
+                className="mt-5 text-[#E8DCC4] text-center font-heading text-base sm:text-lg max-w-2xl px-4"
               >
                 {images[currentIndex].caption}
-                <div className="text-white/40 text-xs font-body mt-1">
+                <div className="text-[#C9BDA7] text-xs font-mono mt-1">
                   {currentIndex + 1} / {images.length}
                 </div>
               </motion.div>

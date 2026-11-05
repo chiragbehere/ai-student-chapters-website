@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
 import SmoothScroll from './components/SmoothScroll';
@@ -16,14 +16,13 @@ const FAQ = lazy(() => import('./pages/FAQ'));
 const Sessions = lazy(() => import('./pages/Sessions'));
 const Tools = lazy(() => import('./pages/Tools'));
 const AirlReportPage = lazy(() => import('./pages/AirlReportPage'));
-import CodeCarnival from './pages/CodeCarnival';
 
 // Page loading skeleton
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center">
+  <div className="min-h-screen flex items-center justify-center bg-[#1F3D2B]">
     <div className="flex flex-col items-center gap-4">
-      <div className="w-10 h-10 border-3 border-primary/30 border-t-primary rounded-full animate-spin" />
-      <p className="text-foreground/40 text-sm font-heading font-medium tracking-wider">Loading...</p>
+      <div className="w-10 h-10 border-3 border-[#8B5CF6]/30 border-t-[#8B5CF6] rounded-full animate-spin shadow-[0_0_15px_rgba(139,92,246,0.3)]" />
+      <p className="text-[#E8DCC4]/60 text-sm font-heading font-medium tracking-wider">Loading...</p>
     </div>
   </div>
 );
@@ -54,10 +53,10 @@ class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean;
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center flex-col gap-4 bg-[#050308] text-white p-6 text-center">
-          <div className="w-12 h-12 rounded-full border-2 border-red-800 border-t-[#e50914] animate-spin mb-2" />
-          <h2 className="text-xl font-bold font-mono tracking-wider text-white">Updating Application...</h2>
-          <p className="text-xs text-neutral-400 font-mono max-w-sm">
+        <div className="min-h-screen flex items-center justify-center flex-col gap-4 bg-[#142B20] text-[#E8DCC4] p-6 text-center">
+          <div className="w-12 h-12 rounded-full border-2 border-[#8B5CF6]/30 border-t-[#8B5CF6] animate-spin mb-2" />
+          <h2 className="text-xl font-bold font-mono tracking-wider text-[#E8DCC4]">Updating Application...</h2>
+          <p className="text-xs text-[#C9BDA7] font-mono max-w-sm">
             A newer version was deployed or an asset is synchronizing.
           </p>
           <div className="flex items-center gap-3 mt-4">
@@ -69,7 +68,7 @@ class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean;
                 } catch (e) {}
                 window.location.reload();
               }}
-              className="px-6 py-2.5 bg-[#e50914] text-white font-mono text-xs font-bold tracking-widest uppercase rounded shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:bg-[#ff1b27] transition-all cursor-pointer"
+              className="px-6 py-2.5 bg-[#8B5CF6] text-white font-mono text-xs font-bold tracking-widest uppercase rounded-xl shadow-[0_0_20px_rgba(139,92,246,0.5)] hover:bg-[#A78BFA] transition-all cursor-pointer"
             >
               Tap to Reload
             </button>
@@ -81,7 +80,7 @@ class ErrorBoundary extends Component<{children: ReactNode}, {hasError: boolean;
                   localStorage.removeItem('codecarnival_intro_seen');
                 } catch (e) {}
               }}
-              className="px-6 py-2.5 border border-white/20 bg-black/60 text-white font-mono text-xs font-bold tracking-widest uppercase rounded hover:bg-white/10 transition-all"
+              className="px-6 py-2.5 border border-[#E8DCC4]/20 bg-[#193426] text-[#E8DCC4] font-mono text-xs font-bold tracking-widest uppercase rounded-xl hover:bg-[#1F3D2B] transition-all"
             >
               Return Home
             </a>
@@ -167,7 +166,7 @@ const AnimatedRoutes = () => {
           </Suspense>
         } />
         <Route path="/code-carnival" element={
-          <PageTransition><CodeCarnival /></PageTransition>
+          <Navigate to="/events" replace />
         } />
 
       </Routes>

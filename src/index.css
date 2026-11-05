@@ -1,38 +1,55 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* GitHub Universe Light Editorial Visual System */
-  --bg-light: #ecefe9;
-  --bg-surface: #f4f6f2;
-  --bg-card: #f9faf8;
-  --bg-card-hover: #ffffff;
-  --border-grid: #cdd6cd;
-  --border-subtle: #dbe2db;
-  --text-primary: #0a0a0a;
-  --text-muted: #4e554e;
-  --text-dim: #717a71;
-  --brand-green: #008736;
-  --brand-green-hover: #00722d;
-  --accent-green-light: #e6f4ea;
+  /* Brand Palette — 45% Forest Green, 40% Sand Beige, 15% Electric Purple */
+  --color-forest: #1F3D2B;
+  --color-forest-dark: #142B20;
+  --color-forest-surface: #193426;
+  --color-forest-text: #1F3D2B;
+  --color-forest-muted: #526457;
+
+  --color-beige: #E8DCC4;
+  --color-beige-light: #F4EBDD;
+  --color-beige-card: #EFE5D3;
+  --color-beige-muted: #C9BDA7;
+
+  --color-purple: #8B5CF6;
+  --color-purple-hover: #A78BFA;
+  --color-purple-dark: #7040D5;
+
+  --color-border-beige: rgba(232, 220, 196, 0.16);
+  --color-border-forest: rgba(31, 61, 43, 0.14);
+  --color-border-active: rgba(139, 92, 246, 0.65);
+  --color-purple-glow: rgba(139, 92, 246, 0.25);
+
+  --radius-card: 18px;
+  --radius-large: 24px;
+  --radius-button: 12px;
+
+  --transition-fast: 150ms ease;
+  --transition-smooth: 250ms ease-in-out;
+  --transition-slow: 450ms ease-in-out;
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: light;
-  background-color: var(--bg-light);
+  color-scheme: dark;
+  background-color: var(--color-forest);
 }
 
 body {
-  background-color: var(--bg-light);
-  color: var(--text-primary);
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--color-forest);
+  color: var(--color-beige);
+  font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom Scrollbar */
@@ -40,79 +57,218 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #ecefe9;
+  background: var(--color-forest-dark);
 }
 ::-webkit-scrollbar-thumb {
-  background: #bcc8bc;
+  background: rgba(232, 220, 196, 0.25);
   border-radius: 4px;
+  border: 2px solid var(--color-forest-dark);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #008736;
+  background: var(--color-purple);
+}
+
+/* Selection Highlight */
+::selection {
+  background: rgba(139, 92, 246, 0.4);
+  color: #FFFFFF;
 }
 
 /* Typography Utilities */
 .font-display {
-  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-family: 'Sora', 'Plus Jakarta Sans', sans-serif;
 }
 
 .font-heading {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Sora', 'Plus Jakarta Sans', sans-serif;
 }
 
-.font-syne {
-  font-family: 'Syne', sans-serif;
+.font-body {
+  font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+}
+
+.font-stat {
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
 }
 
 .font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
-.font-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+/* ════════════════════════════════════════════════════════════
+   FULL-WIDTH SECTION THEMES (RHYTHMIC ALTERNATION)
+════════════════════════════════════════════════════════════ */
+.section-forest {
+  background-color: #1F3D2B;
+  color: #E8DCC4;
+  background-image:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(139, 92, 246, 0.18),
+      transparent 55%
+    ),
+    radial-gradient(
+      rgba(232, 220, 196, 0.08) 1px,
+      transparent 1px
+    );
+  background-size:
+    auto,
+    22px 22px;
 }
 
-/* Structural Grid Line Box */
-.grid-box {
-  background: #f7f9f7;
-  border: 1px solid var(--border-grid);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.section-beige {
+  background-color: #E8DCC4;
+  color: #1F3D2B;
+  background-image:
+    radial-gradient(
+      rgba(31, 61, 43, 0.06) 1px,
+      transparent 1px
+    );
+  background-size: 24px 24px;
 }
 
-.grid-box-hover:hover {
-  background: #ffffff;
-  border-color: #a8b8a8;
-  box-shadow: 0 10px 30px -10px rgba(0, 135, 54, 0.12);
-  transform: translateY(-2px);
+/* ════════════════════════════════════════════════════════════
+   TWO GLOBALLY REUSABLE CARD VARIANTS
+════════════════════════════════════════════════════════════ */
+
+/* Variant 1: Dark Surface Card (Used on Forest Green sections) */
+.card-forest, .club-card {
+  background-color: #193426;
+  color: #E8DCC4;
+  border: 1px solid rgba(232, 220, 196, 0.16);
+  border-radius: var(--radius-card);
+  box-shadow: 0 10px 30px -10px rgba(16, 26, 20, 0.65);
+  transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
 }
 
-.glass-panel {
-  background: #f7f9f7;
-  border: 1px solid var(--border-grid);
+.card-forest:hover, .club-card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(139, 92, 246, 0.65);
+  box-shadow: 0 14px 34px -8px rgba(139, 92, 246, 0.28);
 }
 
-/* Universal Green Button Style */
-.btn-green {
-  background-color: var(--brand-green);
-  color: #ffffff;
-  font-family: 'Outfit', sans-serif;
+/* Variant 2: Beige Surface Card (Used on Beige sections or Hero accent) */
+.card-beige {
+  background-color: #F4EBDD;
+  color: #1F3D2B;
+  border: 1px solid rgba(31, 61, 43, 0.12);
+  border-radius: var(--radius-card);
+  box-shadow: 0 10px 30px -10px rgba(31, 61, 43, 0.12);
+  transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.card-beige:hover {
+  transform: translateY(-4px);
+  border-color: rgba(139, 92, 246, 0.55);
+  box-shadow: 0 14px 34px -8px rgba(139, 92, 246, 0.22);
+}
+
+/* Button Design System */
+.btn-primary, .btn-green {
+  background-color: var(--color-purple);
+  color: #FFFFFF;
+  font-family: 'Sora', sans-serif;
   font-weight: 700;
-  transition: all 0.2s ease-in-out;
+  border-radius: var(--radius-button);
+  border: 1px solid transparent;
+  box-shadow: 0 4px 18px rgba(139, 92, 246, 0.35);
+  transition: all var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn-green:hover {
-  background-color: var(--brand-green-hover);
-  box-shadow: 0 6px 20px rgba(0, 135, 54, 0.3);
+.btn-primary:hover, .btn-green:hover {
+  background-color: var(--color-purple-hover);
+  box-shadow: 0 6px 24px rgba(139, 92, 246, 0.55);
+  transform: translateY(-1px);
 }
 
-/* Structural Line Grid Pattern Background */
-.bg-structural-grid {
-  background-size: 60px 60px;
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+.btn-primary:active, .btn-green:active {
+  transform: translateY(0);
 }
 
-/* Speaker / Team Card Treatment - Natural, crisp, and vibrant full-color portraits */
+/* Secondary Button — Adaptive */
+.btn-secondary {
+  background: transparent;
+  color: var(--color-beige);
+  border: 1px solid rgba(232, 220, 196, 0.25);
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  border-radius: var(--radius-button);
+  transition: all var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(139, 92, 246, 0.7);
+  background: rgba(139, 92, 246, 0.12);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+/* Secondary Button on Beige */
+.btn-secondary-beige {
+  background: transparent;
+  color: #1F3D2B;
+  border: 1px solid rgba(31, 61, 43, 0.25);
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  border-radius: var(--radius-button);
+  transition: all var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary-beige:hover {
+  border-color: #8B5CF6;
+  background: rgba(139, 92, 246, 0.1);
+  color: #8B5CF6;
+  transform: translateY(-1px);
+}
+
+/* Input Fields & Forms */
+.club-input {
+  background-color: #142B20;
+  color: var(--color-beige);
+  border: 1px solid rgba(232, 220, 196, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: all var(--transition-smooth);
+  outline: none;
+}
+
+.club-input::placeholder {
+  color: var(--color-beige-muted);
+  opacity: 0.7;
+}
+
+.club-input:focus {
+  border-color: var(--color-purple);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.35);
+  background-color: #162f23;
+}
+
+/* Input on Beige Surfaces */
+.club-input-beige {
+  background-color: #FFFFFF;
+  color: #1F3D2B;
+  border: 1px solid rgba(31, 61, 43, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: all var(--transition-smooth);
+  outline: none;
+}
+
+.club-input-beige:focus {
+  border-color: var(--color-purple);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.35);
+}
+
+/* Team / Speaker Image Treatment */
 .speaker-card-img {
   filter: none;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -120,10 +276,4 @@ body {
 
 .group:hover .speaker-card-img {
   transform: scale(1.04);
-}
-
-/* Selection Highlight */
-::selection {
-  background: rgba(0, 135, 54, 0.2);
-  color: #008736;
 }

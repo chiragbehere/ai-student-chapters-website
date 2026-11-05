@@ -37,7 +37,7 @@ export const Sessions: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto relative text-[#0a0a0a] py-6 sm:py-12 px-2.5 sm:px-6 lg:px-8 bg-[#ecefe9] overflow-hidden">
+    <div className="w-full text-[#E8DCC4] overflow-hidden">
       <SEO 
         title="AI Sessions & Workshops | AI Student Chapters" 
         description="Access workshop presentation slides, hackathon primers, and hands-on AI learning materials from AI Student Chapters at RCPIMRD."
@@ -49,26 +49,35 @@ export const Sessions: React.FC = () => {
         ]}
       />
 
-      <section className="text-center space-y-2.5 mb-8 sm:mb-12 pt-4 sm:pt-8 border-b border-[#cdd6cd] pb-6 sm:pb-8">
-        <div className="inline-flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-bold text-[#008736] uppercase tracking-widest">
-          <Sparkles size={14} /> LEARNING REPOSITORY
+      {/* Hero Header — Forest Green */}
+      <section className="w-full section-forest border-b border-[#E8DCC4]/15 py-12 sm:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center space-y-4">
+          <div className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[#8B5CF6] uppercase tracking-widest bg-[#142B20] px-4 py-1.5 rounded-full border border-[#E8DCC4]/15 shadow-sm">
+            <Sparkles size={14} /> LEARNING REPOSITORY
+          </div>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-black text-[#E8DCC4] uppercase tracking-tight leading-tight">
+            WORKSHOP <span className="text-[#8B5CF6]">SESSIONS</span> & SLIDES
+          </h1>
+          <p className="text-[#C9BDA7] text-sm sm:text-base font-body max-w-xl mx-auto">
+            Explore slide decks and materials presented during AI Student Chapter masterclasses and hackathon primers.
+          </p>
         </div>
-        <h1 className="text-2xl sm:text-4xl md:text-5xl font-display font-extrabold text-[#0a0a0a] uppercase tracking-tight leading-tight">
-          WORKSHOP <span className="text-[#008736]">SESSIONS</span> & SLIDES
-        </h1>
       </section>
 
-      <div className="space-y-12">
-        {workshops.map((ws, idx) => (
-          <SlideViewer
-            key={idx}
-            title={ws.title}
-            slides={ws.slides}
-            downloadUrl={ws.downloadUrl}
-            fallbackEmbedUrl={ws.embedUrl}
-          />
-        ))}
-      </div>
+      {/* Slides Content — Sand Beige */}
+      <section className="w-full section-beige py-16 sm:py-24 px-3 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto space-y-12">
+          {workshops.map((ws, idx) => (
+            <div key={idx} className="card-beige p-4 sm:p-8 shadow-xl">
+              <SlideViewer
+                title={ws.title}
+                slides={ws.slides}
+                downloadUrl={ws.downloadUrl}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

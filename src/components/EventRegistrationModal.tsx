@@ -58,46 +58,46 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({ 
       {isOpen && (
         <div
           onClick={handleBackdropClick}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-md overflow-y-auto"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-[540px] p-5 sm:p-8 overflow-hidden bg-white border border-[#cdd6cd] shadow-2xl text-[#0a0a0a] rounded-sm my-auto"
+            className="relative w-full max-w-[540px] p-6 sm:p-8 overflow-hidden bg-[#193426] border border-[#E8DCC4]/20 shadow-2xl text-[#E8DCC4] rounded-2xl my-auto font-body"
           >
             {/* Close Button */}
             <button
               onClick={handleClose}
               aria-label="Close modal"
-              className="absolute top-4 right-4 p-2 bg-[#f4f6f2] hover:bg-[#e2e7e2] text-[#0a0a0a] transition-colors border border-[#cdd6cd] cursor-pointer"
+              className="absolute top-4 right-4 p-2 bg-[#142B20] hover:bg-[#1F3D2B] text-[#C9BDA7] hover:text-[#E8DCC4] transition-colors border border-[#E8DCC4]/15 rounded-xl cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
 
             {/* Modal Content */}
             <div className="flex flex-col items-center text-center space-y-4 pt-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 font-mono text-xs font-bold text-[#008736] uppercase tracking-wider bg-[#e6f4ea] border border-[#008736]/20">
-                <Rocket className="w-3.5 h-3.5 text-[#008736]" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 font-mono text-xs font-bold text-[#8B5CF6] uppercase tracking-wider bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 rounded-full">
+                <Rocket className="w-3.5 h-3.5 text-[#8B5CF6]" />
                 <span>OFFICIAL EVENT REGISTRATION</span>
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-display font-extrabold text-[#0a0a0a] leading-tight">
+              <h2 className="text-xl sm:text-2xl font-display font-extrabold text-[#E8DCC4] leading-tight">
                 {title}
               </h2>
 
-              <p className="text-xs sm:text-sm text-[#4e554e] font-body leading-relaxed max-w-md">
+              <p className="text-xs sm:text-sm text-[#C9BDA7] font-body leading-relaxed max-w-md">
                 {description}
               </p>
 
-              <div className="w-full bg-[#f4f6f2] border border-[#cdd6cd] p-3 text-xs font-mono text-[#0a0a0a] space-y-1.5 text-left">
+              <div className="w-full bg-[#142B20] border border-[#E8DCC4]/15 rounded-xl p-3.5 text-xs font-mono text-[#E8DCC4] space-y-2 text-left">
                 <div className="flex items-center gap-2">
-                  <Calendar size={13} className="text-[#008736] shrink-0" />
+                  <Calendar size={14} className="text-[#8B5CF6] shrink-0" />
                   <span className="truncate">{date}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPin size={13} className="text-[#008736] shrink-0" />
+                  <MapPin size={14} className="text-[#8B5CF6] shrink-0" />
                   <span className="truncate">{location}</span>
                 </div>
               </div>
@@ -107,7 +107,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({ 
                   href={registrationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-green w-full py-3.5 px-6 font-heading font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                  className="btn-primary w-full py-3.5 px-6 font-heading font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.35)] cursor-pointer"
                 >
                   <span>Proceed to Registration</span>
                   <ExternalLink className="w-4 h-4" />
@@ -115,7 +115,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({ 
 
                 <button
                   onClick={handleClose}
-                  className="w-full py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-[#525852] hover:text-[#0a0a0a] transition-colors cursor-pointer"
+                  className="w-full py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-[#C9BDA7] hover:text-[#E8DCC4] transition-colors cursor-pointer"
                 >
                   Close
                 </button>

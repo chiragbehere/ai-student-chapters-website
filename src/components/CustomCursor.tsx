@@ -70,22 +70,22 @@ export const CustomCursor: React.FC = () => {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden hidden lg:block">
-      {/* Inner Dot */}
+      {/* Inner Dot — Electric Purple */}
       <div
-        className="fixed w-2.5 h-2.5 bg-[#00f0ff] rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_10px_#00f0ff] transition-transform duration-75"
+        className="fixed w-2.5 h-2.5 bg-[#8B5CF6] rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_12px_#8B5CF6] transition-transform duration-75"
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
-          transform: `translate(-50%, -50%) scale(${isHovered ? 0.5 : 1})`,
+          transform: `translate(-50%, -50%) scale(${isHovered ? 0.6 : 1})`,
         }}
       />
 
-      {/* Trailing Ring */}
+      {/* Trailing Ring — Electric Purple glow & Sand Beige accent */}
       <div
         className={`fixed rounded-full -translate-x-1/2 -translate-y-1/2 border transition-all duration-200 ${
           isHovered
-            ? 'w-12 h-12 border-[#00f0ff] bg-[#00f0ff]/10 scale-110 shadow-[0_0_20px_rgba(0,240,255,0.3)]'
-            : 'w-8 h-8 border-white/30 bg-transparent'
+            ? 'w-11 h-11 border-[#8B5CF6] bg-[#8B5CF6]/15 scale-110 shadow-[0_0_20px_rgba(139,92,246,0.35)]'
+            : 'w-8 h-8 border-[#E8DCC4]/30 bg-transparent'
         }`}
         style={{
           left: `${trailingPos.x}px`,
